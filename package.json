@@ -1,0 +1,26 @@
+{
+  "name": "moq.ts",
+  "version": "0.0.0",
+  "description": "Moq library for Typescript inspired by moq",
+  "author": {
+    "name": "Dmitry V. Abuzyarov",
+    "email": "dvabuzyarov@gmail.com"
+  },
+  "dependencies": {
+    "es6-module-loader": "^0.17.11",
+    "es6-shim": "^0.35.1",
+    "jasmine": "^2.4.1",
+    "jasmine-core": "^2.4.1",
+    "jasmine-expect": "^2.0.2",
+    "jasmine-sinon": "^0.4.0",
+    "karma": "1.1.1",
+    "karma-chrome-launcher": "1.0.1",
+    "karma-firefox-launcher": "1.0.0",
+    "karma-jasmine": "1.0.2",
+    "karma-jasmine-matchers": "^2.0.1",
+    "karma-sinon": "^1.0.4",
+    "karma-systemjs": "^0.14.0",
+    "systemjs": "0.19.38",
+    "typescript": "^2.0.0"
+  }
+}
