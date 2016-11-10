@@ -57,7 +57,7 @@ describe('Expression', () => {
     });
 
     it('Resolves expression predicate', ()=> {
-        const actual = reflectExpression(instance => It.Is(instance=> {}));
+        const actual = reflectExpression(instance => It.Is(()=> {}));
 
         expect(actual).toEqual(jasmine.any(It));
     });

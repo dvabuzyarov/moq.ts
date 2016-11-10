@@ -1,14 +1,14 @@
-﻿export interface IExpressionPredicate<T> {
+﻿export interface IPredicate<T> {
     (instance: T): boolean;
 }
 
 
 export class It<T> {
-    constructor(private predicate: IExpressionPredicate<T>){
+    constructor(private predicate: IPredicate<T>){
 
     }
 
-    public static Is(predicate: IExpressionPredicate): It<T> {
+    public static Is(predicate: IPredicate): It<T> {
         return new It(predicate);
     }
 

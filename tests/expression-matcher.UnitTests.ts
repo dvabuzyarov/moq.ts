@@ -5,7 +5,7 @@ import {IArgumentsMatcher} from '../lib/arguments-matcher';
 
 describe('Expression matcher', () => {
 
-    function ArgumebtsMatcherFactory(matched?: (left: any[], right: (any|It<any>)[])=> boolean): IArgumentsMatcher {
+    function ArgumentsMatcherFactory(matched?: (left: any[], right: (any|It<any>)[])=> boolean): IArgumentsMatcher {
         return {
             matched: matched
         }
@@ -15,7 +15,7 @@ describe('Expression matcher', () => {
         const left = undefined;
         const right = undefined;
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory());
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory());
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -25,7 +25,7 @@ describe('Expression matcher', () => {
         const left = null;
         const right = null;
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory());
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory());
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -34,7 +34,7 @@ describe('Expression matcher', () => {
     it('Returns true when both are the same object', ()=> {
         const expressionInfo: IExpressionInfo = {};
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory());
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory());
         const actual = matcher.matched(expressionInfo, expressionInfo);
 
         expect(actual).toBe(true);
@@ -44,7 +44,7 @@ describe('Expression matcher', () => {
         const left: IExpressionInfo = {};
         const right: IExpressionInfo = {};
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory());
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory());
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -54,7 +54,7 @@ describe('Expression matcher', () => {
         const left: IExpressionInfo = {name: 'name', arguments: []};
         const right: IExpressionInfo = {};
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory());
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory());
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -71,7 +71,7 @@ describe('Expression matcher', () => {
             return true;
         };
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory(matched));
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -87,7 +87,7 @@ describe('Expression matcher', () => {
             return true;
         };
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory(matched));
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -104,7 +104,21 @@ describe('Expression matcher', () => {
             return true;
         };
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory(matched));
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(true);
+    });
+
+    it('Returns true when right is predicate that returns true', ()=> {
+        const name = 'name';
+        const left: IExpressionInfo = {name: name, arguments: []};
+        const right = It.Is((value)=> {
+            expect(value).toBe(left);
+            return true;
+        });
+
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory());
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -120,7 +134,7 @@ describe('Expression matcher', () => {
             return true;
         };
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory(matched));
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -136,7 +150,7 @@ describe('Expression matcher', () => {
             return false;
         };
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory(matched));
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -153,7 +167,7 @@ describe('Expression matcher', () => {
             return false;
         };
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory(matched));
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -169,7 +183,21 @@ describe('Expression matcher', () => {
             return true;
         };
 
-        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory(matched));
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(false);
+    });
+
+    it('Returns false when right is predicate that returns false', ()=> {
+        const name = 'name';
+        const left: IExpressionInfo = {name: name, arguments: []};
+        const right = It.Is((value)=> {
+            expect(value).toBe(left);
+            return false;
+        });
+
+        const matcher = new ExpressionMatcher(ArgumentsMatcherFactory());
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
