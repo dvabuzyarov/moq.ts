@@ -1,10 +1,9 @@
-import {It} from '../lib/expression-predicates';
 import {ArgumentsMatcher} from '../lib/arguments-matcher';
-import {ConstantMatcher} from '../lib/constant-matcher';
+import {IConstantMatcher} from '../lib/constant-matcher';
 
 describe('Arguments matcher', () => {
 
-    function ConstantMatcherFactory(matched?: (left, right)=> boolean): ConstantMatcher {
+    function ConstantMatcherFactory(matched?: (left, right)=> boolean): IConstantMatcher {
         return {
             matched: matched
         }

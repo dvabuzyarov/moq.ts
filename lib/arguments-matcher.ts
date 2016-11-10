@@ -1,14 +1,16 @@
 import {It} from './expression-predicates';
-import {ConstantMatcher} from './constant-matcher';
+import {IConstantMatcher} from './constant-matcher';
 
-export class ArgumentsMatcher {
-    constructor(private constantMatcher: ConstantMatcher){
+export interface IArgumentsMatcher{
+    matched(left: any[], right: (any|It<any>)[]): boolean;
+}
+
+export class ArgumentsMatcher implements IArgumentsMatcher {
+    constructor(private constantMatcher: IConstantMatcher){
 
     }
 
     public matched(left: any[], right: (any|It<any>)[]): boolean{
-        if (left === undefined && right === undefined) return true;
-        if (left === null && right === null) return true;
         if (left === right) return true;
         if (left.length !== right.length) return false;
 

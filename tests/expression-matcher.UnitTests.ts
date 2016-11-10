@@ -1,121 +1,176 @@
 ﻿import {IExpressionInfo} from '../lib/expression';
 import {It} from '../lib/expression-predicates';
-import {IExecutedExpressionInfo, executionEqualsExpression} from '../lib/expression-matcher';
+import {ExpressionMatcher} from '../lib/expression-matcher';
+import {IArgumentsMatcher} from '../lib/arguments-matcher';
 
-describe('Execution equals an expression', () => {
+describe('Expression matcher', () => {
 
-    it('Returns true when execution and expression are empty', ()=> {
-        const execution: IExecutedExpressionInfo = {};
-        const expression: IExpressionInfo = {};
+    function ArgumebtsMatcherFactory(matched?: (left: any[], right: (any|It<any>)[])=> boolean): IArgumentsMatcher {
+        return {
+            matched: matched
+        }
+    }
 
-        const actual = executionEqualsExpression(execution, expression);
+    it('Returns true when both are undefined', ()=> {
+        const left = undefined;
+        const right = undefined;
+
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory());
+        const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
     });
 
-    it('Returns true when execution is not empty but expression is empty', ()=> {
-        const execution: IExecutedExpressionInfo = {name: 'name', arguments: []};
-        const expression: IExpressionInfo = {};
+    it('Returns true when both are null', ()=> {
+        const left = null;
+        const right = null;
 
-        const actual = executionEqualsExpression(execution, expression);
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory());
+        const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
     });
 
-    it('Returns true when execution fits expression by name', ()=> {
+    it('Returns true when both are the same object', ()=> {
+        const expressionInfo: IExpressionInfo = {};
+
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory());
+        const actual = matcher.matched(expressionInfo, expressionInfo);
+
+        expect(actual).toBe(true);
+    });
+
+    it('Returns true when both are empty', ()=> {
+        const left: IExpressionInfo = {};
+        const right: IExpressionInfo = {};
+
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory());
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(true);
+    });
+
+    it('Returns true when left is not empty but right is empty', ()=> {
+        const left: IExpressionInfo = {name: 'name', arguments: []};
+        const right: IExpressionInfo = {};
+
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory());
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(true);
+    });
+
+    it('Returns true when left fits right by name', ()=> {
         const name = 'name';
-        const execution: IExecutedExpressionInfo = {name: name};
-        const expression: IExpressionInfo = {name: name};
+        const left: IExpressionInfo = {name: name};
+        const right: IExpressionInfo = {name: name};
 
-        const actual = executionEqualsExpression(execution, expression);
-
-        expect(actual).toBe(true);
-    });
-
-    it('Returns true when execution fits expression by simple arguments', ()=> {
-        var arg = 'argument';
-        const execution: IExecutedExpressionInfo = {arguments: [arg]};
-        const expression: IExpressionInfo = {arguments: [arg]};
-
-        const actual = executionEqualsExpression(execution, expression);
-
-        expect(actual).toBe(true);
-    });
-
-    it('Returns true when execution fits expression by name and simple arguments', ()=> {
-        const name = 'name';
-        const arg = 'argument';
-        const execution: IExecutedExpressionInfo = {name: name, arguments: [arg]};
-        const expression: IExpressionInfo = {name: name, arguments: [arg]};
-
-        const actual = executionEqualsExpression(execution, expression);
-
-        expect(actual).toBe(true);
-    });
-
-    it('Returns true when execution fits expression by name and predicated arguments', ()=> {
-        const name = 'name';
-        const arg = 'argument';
-        const execution: IExecutedExpressionInfo = {name: name, arguments: [arg]};
-        const expression: IExpressionInfo = {name: name, arguments:  [It.Is((instance)=> {
-            expect(instance).toBe(arg);
+        const matched = (lvalue, rvalue): boolean =>{
+            expect(lvalue).toBeUndefined();
+            expect(rvalue).toBeUndefined();
             return true;
-        })]};
+        };
 
-        const actual = executionEqualsExpression(execution, expression);
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
     });
 
-    it('Returns false when execution does not fit expression by name', ()=> {
-        const execution: IExecutedExpressionInfo = {name: 'execution name'};
-        const expression: IExpressionInfo = {name: 'expression name'};
+    it('Returns true when left fits right by arguments', ()=> {
+        const left: IExpressionInfo = {arguments: []};
+        const right: IExpressionInfo = {arguments: []};
 
-        const actual = executionEqualsExpression(execution, expression);
+        const matched = (lvalue, rvalue): boolean =>{
+            expect(lvalue).toBe(left.arguments);
+            expect(rvalue).toBe(right.arguments);
+            return true;
+        };
 
-        expect(actual).toBe(false);
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(true);
     });
 
-    it('Returns false when execution does not fit expression by simple arguments', ()=> {
-        const execution: IExecutedExpressionInfo = {arguments: ['execution argument']};
-        const expression: IExpressionInfo = {arguments: ['expression argument']};
-
-        const actual = executionEqualsExpression(execution, expression);
-
-        expect(actual).toBe(false);
-    });
-
-    it('Returns false when execution does not fit expression by array of simple arguments', ()=> {
-        const arg = 'argument';
-        const execution: IExecutedExpressionInfo = {arguments: [arg, 'execution argument']};
-        const expression: IExpressionInfo = {arguments: [arg, 'expression argument']};
-
-        const actual = executionEqualsExpression(execution, expression);
-
-        expect(actual).toBe(false);
-    });
-
-    it('Returns false when execution does not fit expression by array of simple arguments with different order', ()=> {
-        const arg1 = 'argument 1';
-        const arg2 = 'argument 2';
-        const execution: IExecutedExpressionInfo = {arguments: [arg1, arg2]};
-        const expression: IExpressionInfo = {arguments: [arg2, arg1]};
-
-        const actual = executionEqualsExpression(execution, expression);
-
-        expect(actual).toBe(false);
-    });
-
-    it('Returns false when execution does not fit expression by name and predicated arguments', ()=> {
+    it('Returns true when left fits right by name and arguments', ()=> {
         const name = 'name';
-        const arg = 'argument';
-        const execution: IExecutedExpressionInfo = {name: name, arguments: [arg]};
-        const expression: IExpressionInfo = {name: name, arguments:  [It.Is((instance)=> {
-            expect(instance).toBe(arg);
-            return false;
-        })]};
+        const left: IExpressionInfo = {name: name, arguments: []};
+        const right: IExpressionInfo = {name: name, arguments: []};
 
-        const actual = executionEqualsExpression(execution, expression);
+        const matched = (lvalue, rvalue): boolean =>{
+            expect(lvalue).toBe(left.arguments);
+            expect(rvalue).toBe(right.arguments);
+            return true;
+        };
+
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(true);
+    });
+
+    it('Returns false when left does not fit right by name', ()=> {
+        const left: IExpressionInfo = {name: 'left name'};
+        const right: IExpressionInfo = {name: 'right name'};
+
+        const matched = (lvalue, rvalue): boolean =>{
+            expect(lvalue).toBeUndefined();
+            expect(rvalue).toBeUndefined();
+            return true;
+        };
+
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(false);
+    });
+
+    it('Returns false when left does not fit right by arguments', ()=> {
+        const left: IExpressionInfo = {arguments: []};
+        const right: IExpressionInfo = {arguments: []};
+
+        const matched = (lvalue, rvalue): boolean =>{
+            expect(lvalue).toBe(left.arguments);
+            expect(rvalue).toBe(right.arguments);
+            return false;
+        };
+
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(false);
+    });
+
+    it('Returns false when left fits right by name but does not fit by arguments', ()=> {
+        const name = 'name';
+        const left: IExpressionInfo = {name: name, arguments: []};
+        const right: IExpressionInfo = {name: name, arguments: []};
+
+        const matched = (lvalue, rvalue): boolean =>{
+            expect(lvalue).toBe(left.arguments);
+            expect(rvalue).toBe(right.arguments);
+            return false;
+        };
+
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(false);
+    });
+
+    it('Returns false when left does not fit right by name but fits by arguments', ()=> {
+        const left: IExpressionInfo = {name: 'left name', arguments: []};
+        const right: IExpressionInfo = {name: 'right name', arguments: []};
+
+        const matched = (lvalue, rvalue): boolean =>{
+            expect(lvalue).toBe(left.arguments);
+            expect(rvalue).toBe(right.arguments);
+            return true;
+        };
+
+        const matcher = new ExpressionMatcher(ArgumebtsMatcherFactory(matched));
+        const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
     });
