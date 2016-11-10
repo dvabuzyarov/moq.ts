@@ -1,11 +1,24 @@
-import {Setup} from './setup';
 import {IExpression} from './expression';
 
-export class Mock<T>{
+export interface ISetup<T>{
+    returns<TValue>(value: TValue): IMock<T>;
+    throws<TException>(exception: TException): IMock<T>;
+    callback<TValue>(callback: (...args: any[])=> TValue): IMock<T>;
+}
 
-    public setup(expression: IExpression): Setup<T>{
+export interface ISetupInvoke<T> extends ISetup<T> {
+    invoke<TResult>(args?: any[]): TResult;
+}
+
+export interface IMock<T>{
+    object:T;
+    setup(expression: IExpression): ISetup<T>;
+}
+
+export class Mock<T> implements IMock<T> {
+
+    public setup(expression: IExpression): ISetup<T> {
         throw new Error('Not implemented');
-        //return new Setup(this, member);
     }
 
     public get object(): T{
