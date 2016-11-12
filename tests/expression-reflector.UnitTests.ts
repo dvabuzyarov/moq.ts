@@ -4,7 +4,7 @@ import {
     NamedMethodInfo
 } from '../lib/expression-reflector';
 
-describe('Expression', () => {
+describe('Expression Reflector', () => {
 
     it('Resolves undefined expression', ()=> {
         const reflector = new ExpressionReflector();
@@ -24,8 +24,7 @@ describe('Expression', () => {
         const reflector = new ExpressionReflector();
         const actual = reflector.reflect(instance => instance());
 
-        const expected = new MethodInfo();
-        expected.arguments = [];
+        const expected = new MethodInfo([]);
         expect(actual).toEqual(expected);
     });
 
@@ -34,49 +33,45 @@ describe('Expression', () => {
         const reflector = new ExpressionReflector();
         const actual = reflector.reflect(instance => instance(arg));
 
-        const expected = new MethodInfo();
-        expected.arguments = [arg];
+        const expected = new MethodInfo([arg]);
         expect(actual).toEqual(expected);
     });
 
     it('Resolves get property', ()=> {
+        const name = 'member_name';
         const reflector = new ExpressionReflector();
-        const actual = reflector.reflect(instance => instance.member);
+        const actual = reflector.reflect(instance => instance[name]);
 
-        const expected = new GetPropertyInfo();
-        expected.name = 'member';
+        const expected = new GetPropertyInfo(name);
         expect(actual).toEqual(expected);
     });
 
     it('Resolves set property', ()=> {
+        const name = 'member_name';
         const arg = 'argument';
         const reflector = new ExpressionReflector();
-        const actual = reflector.reflect(instance => {instance.member = arg});
+        const actual = reflector.reflect(instance => {instance[name] = arg});
 
-        const expected = new SetPropertyInfo();
-        expected.name = 'member';
-        expected.value = arg;
+        const expected = new SetPropertyInfo(name, arg);
         expect(actual).toEqual(expected);
     });
 
     it('Resolves named method call', ()=> {
+        const name = 'member_name';
         const reflector = new ExpressionReflector();
-        const actual = reflector.reflect(instance => instance.member());
+        const actual = reflector.reflect(instance => instance[name]());
 
-        const expected = new NamedMethodInfo();
-        expected.name = 'member';
-        expected.arguments = [];
+        const expected = new NamedMethodInfo(name, []);
         expect(actual).toEqual(expected);
     });
 
     it('Resolves named method call with argument', ()=> {
+        const name = 'member_name';
         const arg = 'argument';
         const reflector = new ExpressionReflector();
-        const actual = reflector.reflect(instance => instance.member(arg));
+        const actual = reflector.reflect(instance => instance[name](arg));
 
-        const expected = new NamedMethodInfo();
-        expected.name = 'member';
-        expected.arguments = [arg];
+        const expected = new NamedMethodInfo(name, [arg]);
         expect(actual).toEqual(expected);
     });
 

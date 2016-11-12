@@ -5,20 +5,32 @@ export interface IExpression<T> {
 }
 
 export class NamedMethodInfo {
-    name: string;
-    arguments: any[];
+    public arguments: any[];
+
+    constructor(public name: string,
+                args: any[]) {
+        this.arguments = args;
+    }
 }
 
 export class MethodInfo {
-    arguments: any[];
+    public arguments: any[];
+
+    constructor(args: any[]) {
+        this.arguments = args;
+    }
 }
 
 export class GetPropertyInfo {
-    name: string;
+    constructor(public name: string) {
+
+    }
 }
 export class SetPropertyInfo {
-    name: string;
-    value: any;
+    constructor(public name: string,
+                public value: any) {
+
+    }
 }
 
 export class ExpressionReflector {
@@ -29,25 +41,19 @@ export class ExpressionReflector {
 
         const options = {
             get: (target, name) => {
-                this.reflectedInfo = new GetPropertyInfo();
-                this.reflectedInfo.name = name;
+                this.reflectedInfo = new GetPropertyInfo(name);
                 return (...args)=> {
-                    this.reflectedInfo = new NamedMethodInfo();
-                    this.reflectedInfo.name = name;
-                    this.reflectedInfo.arguments = args
+                    this.reflectedInfo = new NamedMethodInfo(name, args);
                 }
             },
 
             set: (target, name, value, receiver) => {
-                this.reflectedInfo = new SetPropertyInfo();
-                this.reflectedInfo.name = name;
-                this.reflectedInfo.value = value;
+                this.reflectedInfo = new SetPropertyInfo(name,value);
                 return true;
             },
 
             apply: (target, thisArg, args)=> {
-                this.reflectedInfo = new MethodInfo();
-                this.reflectedInfo.arguments = args;
+                this.reflectedInfo = new MethodInfo(args);
             }
         };
 
