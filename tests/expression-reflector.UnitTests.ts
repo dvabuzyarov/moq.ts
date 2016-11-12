@@ -1,5 +1,8 @@
 ﻿import {It} from '../lib/expression-predicates';
-import {ExpressionReflector, MethodInfo, GetPropertyInfo, SetPropertyInfo} from '../lib/expression-reflector';
+import {
+    ExpressionReflector, MethodInfo, GetPropertyInfo, SetPropertyInfo,
+    NamedMethodInfo
+} from '../lib/expression-reflector';
 
 describe('Expression', () => {
 
@@ -60,7 +63,7 @@ describe('Expression', () => {
         const reflector = new ExpressionReflector();
         const actual = reflector.reflect(instance => instance.member());
 
-        const expected = new MethodInfo();
+        const expected = new NamedMethodInfo();
         expected.name = 'member';
         expected.arguments = [];
         expect(actual).toEqual(expected);
@@ -71,7 +74,7 @@ describe('Expression', () => {
         const reflector = new ExpressionReflector();
         const actual = reflector.reflect(instance => instance.member(arg));
 
-        const expected = new MethodInfo();
+        const expected = new NamedMethodInfo();
         expected.name = 'member';
         expected.arguments = [arg];
         expect(actual).toEqual(expected);

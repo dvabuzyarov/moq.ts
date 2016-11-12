@@ -4,9 +4,13 @@ export interface IExpression<T> {
     (instance: T): void | It<T>;
 }
 
+export class NamedMethodInfo {
+    name: string;
+    arguments: any[];
+}
+
 export class MethodInfo {
-    name?: string;
-    arguments?: any[];
+    arguments: any[];
 }
 
 export class GetPropertyInfo {
@@ -28,11 +32,12 @@ export class ExpressionReflector {
                 this.reflectedInfo = new GetPropertyInfo();
                 this.reflectedInfo.name = name;
                 return (...args)=> {
-                    this.reflectedInfo = new MethodInfo();
+                    this.reflectedInfo = new NamedMethodInfo();
                     this.reflectedInfo.name = name;
                     this.reflectedInfo.arguments = args
                 }
             },
+
             set: (target, name, value, receiver) => {
                 this.reflectedInfo = new SetPropertyInfo();
                 this.reflectedInfo.name = name;
@@ -50,7 +55,7 @@ export class ExpressionReflector {
         }, options);
     }
 
-    public reflect<T>(expression: IExpression<T>): MethodInfo | GetPropertyInfo | SetPropertyInfo | It<T> {
+    public reflect<T>(expression: IExpression<T>): MethodInfo | GetPropertyInfo | SetPropertyInfo | NamedMethodInfo | It<T> {
         this.reflectedInfo = undefined;
 
         const proxy = this.expressionProxy();
