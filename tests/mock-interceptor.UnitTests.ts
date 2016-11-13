@@ -11,6 +11,14 @@ describe('Mock interceptor', () => {
         expect(actual).not.toBeUndefined();
     });
 
+    it('Returns the same proxy object', ()=> {
+        const interceptor = new MockInterceptor(undefined, undefined, undefined);
+        const first = interceptor.object;
+        const second = interceptor.object;
+
+        expect(first === second).toBe(true);
+    });
+
     it('Notifies about method interception', ()=> {
         const arg = 'argument';
         const intercepted = jasmine.createSpy('intercepted');
@@ -85,6 +93,34 @@ describe('Mock interceptor', () => {
         const object = interceptor.object;
 
         object[name] = arg;
+    });
+
+    it('Returns the last set value on a property', ()=> {
+        const arg = 'argument';
+        const name = 'some_property_name';
+        const intercepted = jasmine.createSpy('intercepted callback').and.returnValue(true);
+        const interceptor = new MockInterceptor<Function>(intercepted, undefined, undefined);
+        const object = interceptor.object;
+
+        object[name] = arg;
+
+        expect(object[name]).toBe(arg);
+    });
+
+    it('Returns the previous set value on a property if set operation is not allowed', ()=> {
+        const arg1 = 'argument 1';
+        const arg2 = 'argument 2';
+        const name = 'some_property_name';
+        const intercepted = jasmine.createSpy('intercepted callback').and.returnValues(true, false);
+        const interceptor = new MockInterceptor<Function>(intercepted, undefined, undefined);
+        const object = interceptor.object;
+
+        object[name] = arg1;
+        try {
+            object[name] = arg2;
+        } catch(e){}
+
+        expect(object[name]).toBe(arg1);
     });
 
     it('Throws TypeError from set property interception', ()=> {
