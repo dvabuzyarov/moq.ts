@@ -1,5 +1,4 @@
-﻿import {IExpressionInfo} from '../lib/expression';
-import {It} from '../lib/expression-predicates';
+﻿import {It} from '../lib/expression-predicates';
 import {ExpressionMatcher} from '../lib/expression-matcher';
 import {IArgumentsMatcher} from '../lib/arguments-matcher';
 
