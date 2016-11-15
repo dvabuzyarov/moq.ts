@@ -13,7 +13,7 @@ describe('Expression Reflector', () => {
         expect(actual).toBeUndefined();
     });
 
-    it('Resolves empty', ()=> {
+    it('Resolves empty expression', ()=> {
         const reflector = new ExpressionReflector();
         const actual = reflector.reflect(instance => instance);
 
