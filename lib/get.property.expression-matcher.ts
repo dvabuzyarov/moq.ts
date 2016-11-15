@@ -3,10 +3,6 @@ import {GetPropertyInfo} from './expression-reflector';
 
 export class GetPropertyExpressionMatcher{
 
-    constructor(){
-
-    }
-
     public matched(left: GetPropertyInfo, right: GetPropertyInfo|It<any>): boolean{
         if (left === right) return true;
         if (right instanceof It)
