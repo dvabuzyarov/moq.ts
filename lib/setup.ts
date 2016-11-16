@@ -1,4 +1,4 @@
-import {IMock, ISetupInvoke} from './mock';
+import {ISetupInvoke, IMock} from './moq';
 
 export class Setup<T> implements ISetupInvoke<T> {
     private action: Function;

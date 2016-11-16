@@ -1,12 +1,8 @@
-import {It} from './expression-predicates';
-import {IConstantMatcher} from './constant-matcher';
+import {It} from '../expected-expressions/expression-predicates';
+import {ConstantMatcher} from './constant-matcher';
 
-export interface IArgumentsMatcher{
-    matched(left: any[], right: (any|It<any>)[]): boolean;
-}
-
-export class ArgumentsMatcher implements IArgumentsMatcher {
-    constructor(private constantMatcher: IConstantMatcher){
+export class ArgumentsMatcher  {
+    constructor(private constantMatcher: ConstantMatcher){
 
     }
 

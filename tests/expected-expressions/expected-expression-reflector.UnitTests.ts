@@ -1,82 +1,83 @@
-﻿import {It} from '../lib/expression-predicates';
+﻿import {ExpectedExpressionReflector} from '../../lib/expected-expressions/expected-expression-reflector';
 import {
-    ExpressionReflector, MethodInfo, GetPropertyInfo, SetPropertyInfo,
-    NamedMethodInfo
-} from '../lib/expression-reflector';
+    ExpectedMethodExpression,
+    ExpectedGetPropertyExpression, ExpectedSetPropertyExpression, ExpectedNamedMethodExpression
+} from '../../lib/expected-expressions/expected-expressions';
+import {It} from '../../lib/expected-expressions/expression-predicates';
 
-describe('Expression Reflector', () => {
+describe('Expected Expression Reflector', () => {
 
     it('Resolves undefined expression', ()=> {
-        const reflector = new ExpressionReflector();
+        const reflector = new ExpectedExpressionReflector();
         const actual = reflector.reflect(instance => undefined);
 
         expect(actual).toBeUndefined();
     });
 
     it('Resolves empty expression', ()=> {
-        const reflector = new ExpressionReflector();
+        const reflector = new ExpectedExpressionReflector();
         const actual = reflector.reflect(instance => instance);
 
         expect(actual).toBeUndefined();
     });
 
     it('Resolves empty method call', ()=> {
-        const reflector = new ExpressionReflector();
-        const actual = reflector.reflect(instance => instance());
+        const reflector = new ExpectedExpressionReflector();
+        const actual = reflector.reflect<Function>(instance => instance());
 
-        const expected = new MethodInfo([]);
+        const expected = new ExpectedMethodExpression([]);
         expect(actual).toEqual(expected);
     });
 
     it('Resolves method call with argument', ()=> {
         const arg = 'argument';
-        const reflector = new ExpressionReflector();
-        const actual = reflector.reflect(instance => instance(arg));
+        const reflector = new ExpectedExpressionReflector();
+        const actual = reflector.reflect<any>(instance => instance(arg));
 
-        const expected = new MethodInfo([arg]);
+        const expected = new ExpectedMethodExpression([arg]);
         expect(actual).toEqual(expected);
     });
 
     it('Resolves get property', ()=> {
         const name = 'member_name';
-        const reflector = new ExpressionReflector();
+        const reflector = new ExpectedExpressionReflector();
         const actual = reflector.reflect(instance => instance[name]);
 
-        const expected = new GetPropertyInfo(name);
+        const expected = new ExpectedGetPropertyExpression(name);
         expect(actual).toEqual(expected);
     });
 
     it('Resolves set property', ()=> {
         const name = 'member_name';
         const arg = 'argument';
-        const reflector = new ExpressionReflector();
+        const reflector = new ExpectedExpressionReflector();
         const actual = reflector.reflect(instance => {instance[name] = arg});
 
-        const expected = new SetPropertyInfo(name, arg);
+        const expected = new ExpectedSetPropertyExpression(name, arg);
         expect(actual).toEqual(expected);
     });
 
     it('Resolves named method call', ()=> {
         const name = 'member_name';
-        const reflector = new ExpressionReflector();
+        const reflector = new ExpectedExpressionReflector();
         const actual = reflector.reflect(instance => instance[name]());
 
-        const expected = new NamedMethodInfo(name, []);
+        const expected = new ExpectedNamedMethodExpression(name, []);
         expect(actual).toEqual(expected);
     });
 
     it('Resolves named method call with argument', ()=> {
         const name = 'member_name';
         const arg = 'argument';
-        const reflector = new ExpressionReflector();
+        const reflector = new ExpectedExpressionReflector();
         const actual = reflector.reflect(instance => instance[name](arg));
 
-        const expected = new NamedMethodInfo(name, [arg]);
+        const expected = new ExpectedNamedMethodExpression(name, [arg]);
         expect(actual).toEqual(expected);
     });
 
     it('Resolves expression predicate', ()=> {
-        const reflector = new ExpressionReflector();
+        const reflector = new ExpectedExpressionReflector();
         const actual = reflector.reflect(instance => It.Is(()=> {
         }));
 

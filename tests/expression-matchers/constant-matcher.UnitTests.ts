@@ -1,5 +1,5 @@
-import {It} from '../lib/expression-predicates';
-import {ConstantMatcher} from '../lib/constant-matcher';
+import {ConstantMatcher} from '../../lib/expression-matchers/constant-matcher';
+import {It} from '../../lib/expected-expressions/expression-predicates';
 
 describe('Constant matcher', () => {
 

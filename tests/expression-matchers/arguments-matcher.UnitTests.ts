@@ -1,9 +1,9 @@
-import {ArgumentsMatcher} from '../lib/arguments-matcher';
-import {IConstantMatcher} from '../lib/constant-matcher';
+import {ArgumentsMatcher} from '../../lib/expression-matchers/arguments-matcher';
+import {ConstantMatcher} from '../../lib/expression-matchers/constant-matcher';
 
 describe('Arguments matcher', () => {
 
-    function ConstantMatcherFactory(matched?: (left, right)=> boolean): IConstantMatcher {
+    function constantMatcherFactory(matched?: (left, right)=> boolean): ConstantMatcher {
         return {
             matched: matched
         }
@@ -13,7 +13,7 @@ describe('Arguments matcher', () => {
         const left = undefined;
         const right = undefined;
 
-        const matcher = new ArgumentsMatcher(ConstantMatcherFactory());
+        const matcher = new ArgumentsMatcher(constantMatcherFactory());
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -23,7 +23,7 @@ describe('Arguments matcher', () => {
         const left = null;
         const right = null;
 
-        const matcher = new ArgumentsMatcher(ConstantMatcherFactory());
+        const matcher = new ArgumentsMatcher(constantMatcherFactory());
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -32,7 +32,7 @@ describe('Arguments matcher', () => {
     it('Returns true when both are same object', ()=> {
         const value = [];
 
-        const matcher = new ArgumentsMatcher(ConstantMatcherFactory());
+        const matcher = new ArgumentsMatcher(constantMatcherFactory());
         const actual = matcher.matched(value, value);
 
         expect(actual).toBe(true);
@@ -48,7 +48,7 @@ describe('Arguments matcher', () => {
             return true;
         };
 
-        const matcher = new ArgumentsMatcher(ConstantMatcherFactory(matched));
+        const matcher = new ArgumentsMatcher(constantMatcherFactory(matched));
         const actual = matcher.matched([left], [right]);
 
         expect(actual).toBe(true);
@@ -59,7 +59,7 @@ describe('Arguments matcher', () => {
         const left = [];
         const right = [1];
 
-        const matcher = new ArgumentsMatcher(ConstantMatcherFactory());
+        const matcher = new ArgumentsMatcher(constantMatcherFactory());
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -75,7 +75,7 @@ describe('Arguments matcher', () => {
             return  lvalue === rvalue;
         };
 
-        const matcher = new ArgumentsMatcher(ConstantMatcherFactory(matched));
+        const matcher = new ArgumentsMatcher(constantMatcherFactory(matched));
         const actual = matcher.matched([value, left], [value, right]);
 
         expect(actual).toBe(false);

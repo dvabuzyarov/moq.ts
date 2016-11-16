@@ -16,7 +16,8 @@ module.exports = function (config) {
             configFile: './system.conf.js',
             serveFiles: [
                 '/lib/*.ts',
-                '/mocks.ts',
+                '/lib/expected-expressions/*.ts',
+                '/lib/expression-matchers/*.ts'
             ],
             includeFiles: [
                 'node_modules/es6-shim/es6-shim.js'
