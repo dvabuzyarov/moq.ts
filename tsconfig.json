@@ -4,17 +4,9 @@
     "target": "es6",
     "module": "commonjs",
     "noImplicitAny": false,
-    "rootDir": ".",
     "sourceMap": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noEmit": true
-  },
-  "include": [
-    "*"
-  ],
-  "exclude": [
-    "node_modules",
-    "typings"
-  ]
+  }
 }

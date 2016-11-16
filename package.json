@@ -21,6 +21,6 @@
     "karma-sinon": "^1.0.4",
     "karma-systemjs": "^0.14.0",
     "systemjs": "0.19.38",
-    "typescript": "^2.0.0"
+    "typescript": "^2.1.1"
   }
 }
