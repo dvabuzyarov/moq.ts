@@ -13,11 +13,12 @@ describe('Mock', () => {
 
     it('Get property', () => {
         const value = 'value';
-        const mock = new Mock<ITestObject>()
+        const object = new Mock<ITestObject>()
             .setup(instance => instance.property)
-            .returns(value);
+            .returns(value)
+            .object;
 
-        const actual = mock.object.property;
+        const actual = object.property;
 
         expect(actual).toBe(value);
     });
@@ -25,53 +26,51 @@ describe('Mock', () => {
     it('Set property', () => {
         const value = 'value';
 
-        const mock = new Mock<ITestObject>()
+        const object = new Mock<ITestObject>()
             .setup(instance => instance.property = value)
-            .returns(true);
+            .returns(true)
+            .object;
 
-        mock.object.property = value;
+        object.property = value;
 
-        expect(mock.object.property).toBe(value);
+        expect(object.property).toBe(value);
     });
 
     it('Prevents to set property', () => {
         const value = 'value';
 
-        const mock = new Mock<ITestObject>()
+        const object = new Mock<ITestObject>()
             .setup(instance => instance.property = value)
-            .returns(false);
+            .returns(false)
+            .object;
 
-        expect(() => mock.object.property = value).toThrow(jasmine.any(TypeError));
+        expect(() => object.property = value).toThrow(jasmine.any(TypeError));
+    });
+
+    it('Returns value from named method', () => {
+        const value = 'value';
+        const arg = 'argument';
+
+        const object = new Mock<ITestObject>()
+            .setup(instance => instance.method(arg))
+            .returns(value)
+            .object;
+
+        const actual = object.method(arg);
+        expect(actual).toBe(value);
     });
 
     it('Returns value from method', () => {
         const value = 'value';
         const arg = 'argument';
 
-        const mock = new Mock<ITestObject>()
-            .setup(instance => instance.method(arg))
-            .returns(value);
+        const object = new Mock<ITestMethod>()
+            .setup(instance => instance(arg))
+            .returns(value)
+            .object;
 
-        const actual = mock.object.method(arg);
+        const actual = object(arg);
         expect(actual).toBe(value);
     });
 
-    it('Returns value from method', () => {
-        const value1 = 'value1';
-        const value2 = 'value2';
-        const arg1 = 'argument1';
-        const arg2 = 'argument2';
-
-        const mock = new Mock<ITestObject>()
-            .setup(instance => instance.method(arg1))
-            .returns(value1)
-            .setup(instance => instance.method(arg2))
-            .returns(value2);
-
-        const actual1 = mock.object.method(arg1);
-        const actual2 = mock.object.method(arg2);
-
-        expect(actual1).toBe(value1);
-        expect(actual2).toBe(value2);
-    });
 });

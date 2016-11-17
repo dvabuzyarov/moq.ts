@@ -6,9 +6,11 @@ import {DefinedSetups} from './defined-setups';
 import {MethodExpression, GetPropertyExpression, SetPropertyExpression, NamedMethodExpression} from './expressions';
 import {Setup} from './setup';
 import {expressionMatcherFactory} from './expression-matchers/factories';
+import {Times} from './times';
 
 
 export class MockCore<T> implements IMock<T> {
+
     private interceptor: Interceptor<T>;
 
     constructor(private expressionReflector: ExpectedExpressionReflector,
@@ -39,6 +41,10 @@ export class MockCore<T> implements IMock<T> {
         const expectedExpression = this.expressionReflector.reflect(expression);
         this.definedSetups.add(expectedExpression, setup);
         return setup;
+    }
+
+    public verify(expression: IExpectedExpression<T>, times: Times): boolean {
+        throw new Error('not implemented');
     }
 
     public get object(): T {

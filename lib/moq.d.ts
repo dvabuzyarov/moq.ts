@@ -1,5 +1,6 @@
 import {IExpectedExpression} from './expected-expressions/expected-expression-reflector';
 import {Tracker} from './tracker';
+import {Times} from './times';
 
 export interface ISetup<T> {
     returns<TValue>(value: TValue): IMock<T>;
@@ -15,4 +16,5 @@ export interface IMock<T> {
     object: T;
     setup(expression: IExpectedExpression<T>): ISetup<T>;
     tracker: Tracker;
+    verify(expression: IExpectedExpression<T>, times: Times): boolean;
 }
