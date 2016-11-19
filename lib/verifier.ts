@@ -1,12 +1,16 @@
 import {Times} from './times';
 import {Expressions} from './expressions';
 import {IExpectedExpression, ExpectedExpressionReflector} from './expected-expressions/expected-expression-reflector';
-import {CallCounter} from './call-counter';
+import {CallCounter, callCounterFactory} from './call-counter';
 
 export class VerifyError extends Error{
     constructor(message: string){
         super(message);
     }
+}
+
+export function verifierFactory<T>(): Verifier<T> {
+    return new Verifier<T>(new ExpectedExpressionReflector(), callCounterFactory());
 }
 
 export class Verifier<T>{

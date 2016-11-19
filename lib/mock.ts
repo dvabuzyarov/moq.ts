@@ -7,6 +7,7 @@ import {MethodExpression, GetPropertyExpression, SetPropertyExpression, NamedMet
 import {Setup} from './setup';
 import {expressionMatcherFactory} from './expression-matchers/factories';
 import {Times} from './times';
+import {Verifier, verifierFactory} from './verifier';
 
 
 export class MockCore<T> implements IMock<T> {
@@ -17,7 +18,8 @@ export class MockCore<T> implements IMock<T> {
                 private interceptorFactory: (callbacks: IInterceptorCallbacks)=> Interceptor<T>,
                 private setupFactory: (mock: IMock<T>)=> ISetupInvoke<T>,
                 private definedSetups: DefinedSetups<T>,
-                public tracker: Tracker) {
+                public tracker: Tracker,
+                private verifier: Verifier<T>) {
 
         const callbacks: IInterceptorCallbacks = {
             intercepted: (expression: MethodExpression | GetPropertyExpression | SetPropertyExpression): any => {
@@ -43,8 +45,9 @@ export class MockCore<T> implements IMock<T> {
         return setup;
     }
 
-    public verify(expression: IExpectedExpression<T>, times?: Times): boolean {
-        throw new Error('not implemented');
+    public verify(expression: IExpectedExpression<T>, times?: Times): void {
+        times = times === undefined ? Times.Once() : times;
+        this.verifier.test(expression, times, this.tracker.get());
     }
 
     public get object(): T {
@@ -59,6 +62,7 @@ export class Mock<T> extends MockCore<T> {
             (callback: IInterceptorCallbacks) => new Interceptor<T>(callback),
             (mock: IMock<T>) => new Setup<T>(mock),
             new DefinedSetups<T>(expressionMatcherFactory()),
-            new Tracker())
+            new Tracker(),
+            verifierFactory<T>())
     }
 }

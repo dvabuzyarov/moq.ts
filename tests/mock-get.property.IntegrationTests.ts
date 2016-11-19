@@ -1,6 +1,7 @@
 import {Mock} from '../lib/mock';
 import {It} from '../lib/expected-expressions/expression-predicates';
 import {ExpectedGetPropertyExpression} from '../lib/expected-expressions/expected-expressions';
+import {Times} from '../lib/times';
 
 interface ITestObject {
     property: string;
@@ -72,9 +73,8 @@ describe('Mock: Get property', () => {
 
         object.property;
 
-        const actual = mock.verify(instance => instance.property);
+        const action = ()=> mock.verify(instance => instance.property, Times.AtLeast(2));
 
-        expect(actual).toBe(true);
+        expect(action).not.toThrow();
     });
-
 });

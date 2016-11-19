@@ -16,5 +16,5 @@ export interface IMock<T> {
     object: T;
     setup(expression: IExpectedExpression<T>): ISetup<T>;
     tracker: Tracker;
-    verify(expression: IExpectedExpression<T>, times: Times): boolean;
+    verify(expression: IExpectedExpression<T>, times: Times): void;
 }
