@@ -1,37 +1,34 @@
 language: node_js
-
 node_js:
-  - 'stable'
-  - '4'
-
+- stable
+- '4'
 sudo: false
-
 matrix:
   fast_finish: true
-
 branches:
   only:
   - master
-
 cache:
   directories:
-    - node_modules
-
+  - node_modules
 git:
   depth: 1
-
 before_script:
-  #set up the virtual screen for Firefox
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3 # give xvfb some time to start
-
-  - npm i -g typescript typings
-  - typings install
-  - tsc
-
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- sleep 3
+- npm i -g typescript typings
+- typings install
+- tsc
 install:
-  - npm install
-
+- npm install
 addons:
-  firefox: "latest-dev"
+  firefox: latest-dev
+deploy:
+  provider: npm
+  email: dvabuzyarov@gmail.com
+  api_key:
+    secure: eCg8bNY3nWuLauyC41Dyun4ETAFQHniI9qcvJ5iH+3zfECsqflhZRDbMFlDAIkqIvM8jGcu3K3nv8wtJcdXuzjT3aONsHEu7mWvqixyoj3Izbu4raFx8qJYJvN5sz40YOGK3HWzcHeQTcMQWBTTDoUNRETJSbgHS9hOaivEByZSe+sOrnWzdmxggc5Ur5BT+hQZbnC9EBdMgavAO/YYA1fGyj/EBrUNbKv7ULCrbN9D7NWUaLjIEhGEpu10JCqfWzWPD7Fff6qln3FPEkinUvjAC30DmyNiMEd4HqVFVufzUca02bEcZxVdCV33QuvvNqBU/Ry7tj71hsJAhXwjrgGaPeyzKYqlnSM/R2DVLl2YTarIGU7cUuYiwyx+I4tEYsG6EesH9UX/Uhx3D+v2t/tiIso5FTON+S1wOcAX74rIfl6fBw+8S4HFFUkrDIIMVbdZQ+Fw2AP1j/HLFkcMegtujavZ9iq70MeMaytRB1oK5xk8MEySTA6JMdn6e5rnhbCRsZv3Rk9Z7TDvHwivVvxwyLMgfacjHg0zdVoYOxd0A3/22vwgOL/AGcFGFSZxd0ogJJcTE3gzBSzt0SwA4ToNoGaYHYHnJOY9Mt0MwQahF0DGAv/mgBUZboyyBO0rDeV9mGYN/JwTCJ6s7DHWx/CuvNotY/8rgsTomGdqzsQM=
+  on:
+    tags: true
+    repo: dvabuzyarov/moq.ts
