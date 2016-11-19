@@ -8,7 +8,7 @@ export class It<T> {
 
     }
 
-    public static Is<T>(predicate: IPredicate<T>): It<T> {
+    public static Is<T>(predicate: IPredicate<T>): It<T>|any {
         return new It(predicate);
     }
 
