@@ -1,0 +1,30 @@
+language: node_js
+
+node_js:
+  - 'stable'
+  - '4'
+
+sudo: false
+
+env:
+  - workerCount=3
+
+matrix:
+  fast_finish: true
+
+branches:
+  only:
+  - master
+
+install:
+  - npm uninstall moq.ts
+  - npm uninstall tslint
+  - npm install
+  - npm update
+
+cache:
+  directories:
+    - node_modules
+
+git:
+  depth: 1
