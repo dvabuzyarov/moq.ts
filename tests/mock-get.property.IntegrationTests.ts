@@ -66,4 +66,15 @@ describe('Mock: Get property', () => {
         expect(() => object.property).toThrow(error);
     });
 
+    it('Verifies get property', () => {
+        const mock = new Mock<ITestObject>();
+        const object = mock.object;
+
+        object.property;
+
+        const actual = mock.verify(instance => instance.property);
+
+        expect(actual).toBe(true);
+    });
+
 });

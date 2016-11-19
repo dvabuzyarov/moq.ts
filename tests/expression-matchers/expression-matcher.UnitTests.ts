@@ -68,8 +68,7 @@ describe('Expression matcher', () => {
 
     it('Returns value from GetPropertyExpressionMatcher when left is GetProperty and right is It', ()=> {
         const left = new GetPropertyExpression('name');
-        const right = It.Is(()=> {
-        });
+        const right = It.Is(()=> undefined);
 
         const expected = 'some unique value';
         const matched = jasmine.createSpy('matched').and.returnValue(expected);
@@ -97,8 +96,7 @@ describe('Expression matcher', () => {
 
     it('Returns value from SetPropertyExpressionMatcher when left is SetProperty and right is It', ()=> {
         const left = new SetPropertyExpression('name', 'value');
-        const right = It.Is(()=> {
-        });
+        const right = It.Is(()=> undefined);
 
         const expected = 'some unique value';
         const matched = jasmine.createSpy('matched').and.returnValue(expected);
@@ -126,8 +124,7 @@ describe('Expression matcher', () => {
 
     it('Returns value from MethodExpressionMatcher when left is Method expression and right is It', ()=> {
         const left = new MethodExpression([]);
-        const right = It.Is(()=> {
-        });
+        const right = It.Is(()=> undefined);
 
         const expected = 'some unique value';
         const matched = jasmine.createSpy('matched').and.returnValue(expected);
@@ -155,8 +152,7 @@ describe('Expression matcher', () => {
 
     it('Returns value from NamedMethodExpressionMatcher when left is NamedMethod expression and right is It', ()=> {
         const left = new NamedMethodExpression('name', []);
-        const right = It.Is(()=> {
-        });
+        const right = It.Is(()=> undefined);
 
         const expected = 'some unique value';
         const matched = jasmine.createSpy('matched').and.returnValue(expected);

@@ -11,7 +11,7 @@ export class SetPropertyExpressionMatcher{
 
     public matched(left: SetPropertyExpression, right: ExpectedSetPropertyExpression|It<any>): boolean{
         if (right instanceof It)
-            return (right as It<any>).invoke(left);
+            return (right as It<any>).test(left);
 
         const rightExpression = right as ExpectedSetPropertyExpression;
         if (left.name === rightExpression.name && this.constantMatcher.matched(left.value, rightExpression.value)) return true;

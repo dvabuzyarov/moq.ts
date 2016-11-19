@@ -43,7 +43,7 @@ export class MockCore<T> implements IMock<T> {
         return setup;
     }
 
-    public verify(expression: IExpectedExpression<T>, times: Times): boolean {
+    public verify(expression: IExpectedExpression<T>, times?: Times): boolean {
         throw new Error('not implemented');
     }
 

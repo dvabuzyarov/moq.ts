@@ -44,7 +44,7 @@ export class Times {
         return new Times(expected => expected === 1, `Should be called once`);
     }
 
-    public verify(callCount: number): boolean {
+    public test(callCount: number): boolean {
         return this.evaluator(callCount);
     }
 }

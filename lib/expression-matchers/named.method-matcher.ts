@@ -11,7 +11,7 @@ export class NamedMethodExpressionMatcher{
 
     public matched(left: NamedMethodExpression, right: ExpectedNamedMethodExpression|It<any>): boolean{
         if (right instanceof It)
-            return (right as It<any>).invoke(left);
+            return (right as It<any>).test(left);
 
         const rightExpression = right as ExpectedNamedMethodExpression;
         const argumentsAreMatched = this.argumentsMatcher.matched(left.arguments, rightExpression.arguments);

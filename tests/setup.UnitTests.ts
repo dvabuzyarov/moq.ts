@@ -1,5 +1,5 @@
 import {Setup} from '../lib/setup';
-import {IMock} from '../lib/mock';
+import {IMock} from '../lib/moq';
 
 describe('Setup', () => {
 

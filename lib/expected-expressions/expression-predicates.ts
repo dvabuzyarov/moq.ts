@@ -12,7 +12,7 @@ export class It<T> {
         return new It(predicate);
     }
 
-    public invoke(instance: T): boolean{
+    public test(instance: T): boolean{
         return this.predicate(instance);
     }
 }

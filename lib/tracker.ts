@@ -10,7 +10,7 @@ export class Tracker{
         this.log.push(action);
     }
 
-    public get(): (Expressions)[]{
+    public get(): Expressions[]{
         return this.log;
     }
 
