@@ -6,9 +6,6 @@ node_js:
 
 sudo: false
 
-env:
-  - workerCount=3
-
 matrix:
   fast_finish: true
 
