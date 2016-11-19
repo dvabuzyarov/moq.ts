@@ -22,5 +22,8 @@
     "karma-systemjs": "^0.14.0",
     "systemjs": "0.19.38",
     "typescript": "^2.1.1"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/karma start --single-run --browsers FirefoxDeveloper"
   }
 }

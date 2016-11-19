@@ -16,15 +16,21 @@ branches:
   only:
   - master
 
-install:
-  - npm uninstall moq.ts
-  - npm uninstall tslint
-  - npm install
-  - npm update
-
 cache:
   directories:
     - node_modules
 
 git:
   depth: 1
+
+before_script:
+  #set up the virtual screen for Firefox
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+  - npm i -g typescript typings
+  - typings install
+  - tsc
+
+install:
+  - npm install
