@@ -1,6 +1,65 @@
-describe('Verify', ()=>{
+import {Verifier, VerifyError} from '../lib/verifier';
+import {ExpectedExpressionReflector} from '../lib/expected-expressions/expected-expression-reflector';
+import {Times} from '../lib/times';
+import {CallCounter} from '../lib/call-counter';
+import {ExpectedGetPropertyExpression} from '../lib/expected-expressions/expected-expressions';
 
-    it('',()=>{
+describe('Verifier', ()=>{
 
+    function reflectorFactory(): ExpectedExpressionReflector {
+        const reflect = jasmine.createSpy('reflect');
+        return (<any>{
+            reflect: reflect
+        }) as ExpectedExpressionReflector;
+    }
+    function callCounterFactory(): CallCounter {
+        const count = jasmine.createSpy('count');
+        return (<any>{
+            count: count
+        }) as CallCounter;
+    }
+
+    it('Throws VerifyException when the expected expression has not been called expected times',()=>{
+        const message = 'message';
+
+        const expected = ()=> {};
+        const reflector = reflectorFactory();
+        const expectedExpression = new ExpectedGetPropertyExpression('property');
+        (<jasmine.Spy>reflector.reflect).and.returnValue(expectedExpression);
+
+        const callCounter = callCounterFactory();
+        (<jasmine.Spy>callCounter.count).and.returnValue(0);
+
+        const evaluator = value => value === 1;
+        const times = new Times(evaluator, message);
+
+        const verify = new Verifier(reflector, callCounter);
+        const action = () => verify.test(expected, times, []);
+
+        expect(action).toThrow(new VerifyError(message));
+        expect(reflector.reflect).toHaveBeenCalledWith(expected);
+        expect(callCounter.count).toHaveBeenCalledWith(expectedExpression, []);
+    });
+
+    it('Does not throws VerifyException when the expected expression has been called expected times',()=>{
+        const message = 'message';
+
+        const expected = ()=> {};
+        const reflector = reflectorFactory();
+        const expectedExpression = new ExpectedGetPropertyExpression('property');
+        (<jasmine.Spy>reflector.reflect).and.returnValue(expectedExpression);
+
+        const callCounter = callCounterFactory();
+        (<jasmine.Spy>callCounter.count).and.returnValue(1);
+
+        const evaluator = value => value === 1;
+        const times = new Times(evaluator, message);
+
+        const verify = new Verifier(reflector, callCounter);
+        const action = () => verify.test(expected, times, []);
+
+        expect(action).not.toThrow(new VerifyError(message));
+        expect(reflector.reflect).toHaveBeenCalledWith(expected);
+        expect(callCounter.count).toHaveBeenCalledWith(expectedExpression, []);
     });
 });
