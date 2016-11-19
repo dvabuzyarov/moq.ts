@@ -24,6 +24,6 @@
     "typescript": "^2.1.1"
   },
   "scripts": {
-    "test": "./node_modules/.bin/karma start --single-run --browsers FirefoxDeveloper"
+    "test": "./node_modules/.bin/karma start --single-run --browsers Chrome"
   }
 }
