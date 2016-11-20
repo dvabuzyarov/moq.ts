@@ -9,13 +9,16 @@
   "main": "index",
   "keywords": [
     "c#",
-    "noq",
+    "moq",
     "mock",
     "stub",
     "fake",
     "spy",
     "library",
     "typescript"
+  ],
+  "files": [
+    "index.js"
   ],
   "devDependencies": {
     "@types/glob": "^5.0.30",
