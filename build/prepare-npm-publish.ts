@@ -15,10 +15,18 @@ function writeIndex(files: string[]):void{
 
 function updateFiles(files: string[]): void{
     const path = './package.json';
+    const isDefinition = new RegExp('.d.ts$');
     const fileOptions = {encoding: "utf-8"};
     const content = JSON.parse(readFileSync(path, fileOptions));
-    content.files = files.map(file => normalize(file.replace(/(\.ts)$/, '.js')))
-        .concat(files.map(file=> normalize(file.replace(/(\.ts)$/, '.d.ts'))));
+    content.files = files
+        .filter(file=> !isDefinition.test(file))
+        .map(file => normalize(file.replace(/(\.ts)$/, '.js')))
+        .concat(files
+            .filter(file=> !isDefinition.test(file))
+            .map(file=> normalize(file.replace(/(\.ts)$/, '.d.ts'))))
+        .concat(files
+            .filter(file=> isDefinition.test(file))
+            .map(file=> normalize(file)));
     writeFileSync(path, JSON.stringify(content, null, 2), 'utf8');
 }
 

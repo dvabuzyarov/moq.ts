@@ -23,9 +23,7 @@ addons:
 before_deploy:
   - tsc ./build/prepare-npm-publish.ts
   - node ./build/prepare-npm-publish.js
-  - tsc ./lib/*.ts --declaration --target es6 --module commonjs
-  - tsc ./lib/**/*.ts --declaration --target es6 --module commonjs
-  - tsc ./index.ts --target es6 --module commonjs
+  - tsc index.ts --declaration --target es6 --module commonjs
 
 deploy:
   skip_cleanup: true
