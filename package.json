@@ -1,6 +1,6 @@
 {
   "name": "moq.ts",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Moq library for Typescript inspired by c# moq",
   "author": {
     "name": "Dmitry V. Abuzyarov",
