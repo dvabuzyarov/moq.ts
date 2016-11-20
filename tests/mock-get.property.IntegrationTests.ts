@@ -2,17 +2,13 @@ import {Mock} from '../lib/mock';
 import {It} from '../lib/expected-expressions/expression-predicates';
 import {ExpectedGetPropertyExpression} from '../lib/expected-expressions/expected-expressions';
 import {Times} from '../lib/times';
-import {moqToHaveBeenCalledMatcher} from '../lib/jasmine.moq.matchers';
 
 interface ITestObject {
     property: string;
 }
 
 describe('Mock: Get property', () => {
-
-    beforeAll(()=>{
-        jasmine.addMatchers(moqToHaveBeenCalledMatcher());
-    });
+    
 
     it('Returns value with a simple setup', () => {
         const value = 'value';
