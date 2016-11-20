@@ -26,7 +26,8 @@ function updateFiles(files: string[]): void{
             .map(file=> normalize(file.replace(/(\.ts)$/, '.d.ts'))))
         .concat(files
             .filter(file=> isDefinition.test(file))
-            .map(file=> normalize(file)));
+            .map(file=> normalize(file)))
+        .concat(['index.js']);
     writeFileSync(path, JSON.stringify(content, null, 2), 'utf8');
 }
 
