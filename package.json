@@ -6,9 +6,23 @@
     "name": "Dmitry V. Abuzyarov",
     "email": "dvabuzyarov@gmail.com"
   },
+  "main": "index",
+  "keywords": [
+    "c#",
+    "noq",
+    "mock",
+    "stub",
+    "fake",
+    "spy",
+    "library",
+    "typescript"
+  ],
   "devDependencies": {
+    "@types/glob": "^5.0.30",
+    "@types/jasmine": "^2.5.38",
     "es6-module-loader": "^0.17.11",
     "es6-shim": "^0.35.1",
+    "glob": "^7.1.1",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
     "karma": "^1.3.0",

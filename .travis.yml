@@ -1,29 +1,34 @@
 language: node_js
 node_js:
-- stable
+  - stable
 sudo: false
 matrix:
   fast_finish: true
-branches:
-  only:
-  - master
+
 cache:
   directories:
-  - node_modules
+    - node_modules
 git:
   depth: 1
 before_script:
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- sleep 3
-- npm i -g typescript typings
-- typings install
-- tsc
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
+  - npm i -g typescript
 install:
-- npm install
+  - npm install
 addons:
   firefox: latest-dev
+
+before_deploy:
+  - tsc ./build/prepare-npm-publish.ts
+  - node ./build/prepare-npm-publish.js
+  - tsc ./lib/*.ts --declaration --target es6 --module commonjs
+  - tsc ./lib/**/*.ts --declaration --target es6 --module commonjs
+  - tsc ./index.ts --target es6 --module commonjs
+
 deploy:
+  skip_cleanup: true
   provider: npm
   email: dvabuzyarov@gmail.com
   api_key:
