@@ -1,7 +1,6 @@
 language: node_js
 node_js:
 - stable
-- '4'
 sudo: false
 matrix:
   fast_finish: true
