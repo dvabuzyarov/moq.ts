@@ -8,7 +8,7 @@ interface ITestObject {
 }
 
 describe('Mock: Get property', () => {
-    
+
 
     it('Returns value with a simple setup', () => {
         const value = 'value';
