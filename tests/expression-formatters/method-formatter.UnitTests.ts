@@ -1,8 +1,8 @@
-import {SetPropertyExpression} from '../../lib/expressions';
-import {SetPropertyExpressionFormatter} from '../../lib/expression-formatters/set.property-formatter';
+import {MethodExpression} from '../../lib/expressions';
 import {ConstantFormatter} from '../../lib/expression-formatters/constant-formatter';
+import {MethodExpressionFormatter} from '../../lib/expression-formatters/method-formatter';
 
-describe('Set property expression formatter', () => {
+describe('Method expression formatter', () => {
     function constantFormatterFactory(): ConstantFormatter {
         const constantFormatter = jasmine.createSpy('constant formatter');
         return {
@@ -10,18 +10,17 @@ describe('Set property expression formatter', () => {
         }
     }
 
-    it('Returns formatted description for set property expression', ()=> {
-        const name = 'name';
-        const value = 'value';
+    it('Returns formatted description for method expression', ()=> {
+        const value = ['value'];
         const valueDescription = 'value description';
-        const expression = new SetPropertyExpression(name, value);
+        const expression = new MethodExpression(value);
 
         const constantFormatter = constantFormatterFactory();
         (<jasmine.Spy>constantFormatter.format).and.returnValue(valueDescription);
-        const formatter = new SetPropertyExpressionFormatter(constantFormatter);
+        const formatter = new MethodExpressionFormatter(constantFormatter);
         const actual = formatter.format(expression);
 
-        expect(actual).toBe(`Assignment of ${valueDescription} to property \'${name}\'`);
+        expect(actual).toBe(`(${valueDescription})`);
         expect(constantFormatter.format).toHaveBeenCalledWith(value);
     });
 
