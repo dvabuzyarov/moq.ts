@@ -2,7 +2,7 @@
 
 import {Glob} from 'glob';
 import {readFileSync, writeFileSync} from 'fs';
-import {normalize, resolve} from 'path';
+import {normalize} from 'path';
 
 function writeIndex(files: string[]):void{
     const exportExpression= (file: string): string =>{
