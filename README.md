@@ -79,7 +79,7 @@ const mock = new Mock<ITestObject>()
     //false - denies the write operation
     .returns(false)
     
-    .setup(instance => {instance.property = It.Is((value) => value === 3)})
+    .setup(instance => {instance.property = It.Is(value => value === 3)})
     // allows the write operation
     .callback(()=> true)
     
