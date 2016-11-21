@@ -120,7 +120,7 @@ const method = mock.object;
 const actual = method(1);
 
 mock.verify(instance => instance(1), Times.Once());
-mock.verify(instance => instance(It.Is(value=> true)), Times.Exactly(1));
+mock.verify(instance => instance(It.Is(value=> value === 1)), Times.Exactly(1));
 
 
 ```
