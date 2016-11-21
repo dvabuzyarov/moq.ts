@@ -4,7 +4,7 @@
 
 
 export class It<T> {
-    constructor(private predicate: IPredicate<T>){
+    constructor(public predicate: IPredicate<T>){
 
     }
 

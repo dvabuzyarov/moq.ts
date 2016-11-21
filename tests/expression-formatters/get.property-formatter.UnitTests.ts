@@ -12,5 +12,5 @@ describe('Get property expression formatter', () => {
 
         expect(actual).toBe(`The property \'${name}\'`);
     });
-    
+
 });
