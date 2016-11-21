@@ -57,6 +57,17 @@ describe('Expected Expression Reflector', () => {
         expect(actual).toEqual(expected);
     });
 
+    it('Resolves set property with it', ()=> {
+        const name = 'member_name';
+        const arg = 'argument';
+        const reflector = new ExpectedExpressionReflector();
+        const it = It.Is(value => value === arg);
+        const actual = reflector.reflect(instance => {instance[name] = it});
+
+        const expected = new ExpectedSetPropertyExpression(name, it);
+        expect(actual).toEqual(expected);
+    });
+
     it('Resolves named method call', ()=> {
         const name = 'member_name';
         const reflector = new ExpectedExpressionReflector();

@@ -191,4 +191,5 @@ describe('Mock interceptor', () => {
 
         expect(actual).toBe(expected);
     });
+
 });

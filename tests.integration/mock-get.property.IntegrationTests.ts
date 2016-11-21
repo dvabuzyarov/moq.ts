@@ -82,7 +82,7 @@ describe('Mock: Get property', () => {
 
     it('Calls callback', () => {
         const value = 'value';
-        const callback = jasmine.createSpy('property read callback').and.returnValue(value);
+        const callback = jasmine.createSpy('callback').and.returnValue(value);
         const object = new Mock<ITestObject>()
             .setup(instance => instance.property)
             .callback(callback)
@@ -95,7 +95,7 @@ describe('Mock: Get property', () => {
     });
 
     it('Throws an exception', () => {
-        const error = new Error('Read property exception');
+        const error = new Error('exception');
         const object = new Mock<ITestObject>()
             .setup(instance => instance.property)
             .throws(error)
@@ -104,7 +104,7 @@ describe('Mock: Get property', () => {
         expect(() => object.property).toThrow(error);
     });
 
-    it('Verifies get property', () => {
+    it('Verifies', () => {
         const mock = new Mock<ITestObject>();
         const object = mock.object;
 
