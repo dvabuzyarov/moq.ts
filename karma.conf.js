@@ -27,8 +27,10 @@ module.exports = function (config) {
         
         // list of files / patterns to load in the browser
         files: [
-            { pattern: './tests/*.ts', served: true, included: true },
-            { pattern: './tests/**/*.ts', served: true, included: true },
+            { pattern: './tests.unit/*.ts', served: true, included: true },
+            { pattern: './tests.unit/**/*.ts', served: true, included: true },
+            { pattern: './tests.integration/*.ts', served: true, included: true },
+            { pattern: './tests.integration/**/*.ts', served: true, included: true }
         ],
         
         // list of files to exclude
