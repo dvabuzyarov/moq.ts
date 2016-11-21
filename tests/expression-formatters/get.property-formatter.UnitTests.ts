@@ -3,7 +3,7 @@ import {GetPropertyExpressionFormatter} from '../../lib/expression-formatters/ge
 
 describe('Get property expression formatter', () => {
 
-    it('Returns formatted get property description', ()=> {
+    it('Returns formatted description for get property expression', ()=> {
         const name = 'name';
         const expression = new GetPropertyExpression(name);
 
