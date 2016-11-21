@@ -41,7 +41,7 @@ const mock = new Mock<ITestObject>()
     .returns(100)
     
     //let's deny any write operation on the property for all values
-    .setup(instance => {instance.property = It.Is(() => true)})
+    .setup(instance => {instance.property2 = It.Is(() => true)})
     .returns(false)
     
     .setup(instance => instance.property3)
