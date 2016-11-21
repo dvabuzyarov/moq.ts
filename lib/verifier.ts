@@ -2,6 +2,7 @@ import {Times} from './times';
 import {Expressions} from './expressions';
 import {IExpectedExpression, ExpectedExpressionReflector} from './expected-expressions/expected-expression-reflector';
 import {CallCounter, callCounterFactory} from './call-counter';
+import {VerifyFormatter, verifyFormatterFactory} from './formatters/verify-formatter';
 
 export class VerifyError extends Error{
     constructor(message: string){
@@ -10,14 +11,15 @@ export class VerifyError extends Error{
 }
 
 export function verifierFactory<T>(): Verifier<T> {
-    return new Verifier<T>(new ExpectedExpressionReflector(), callCounterFactory());
+    return new Verifier<T>(new ExpectedExpressionReflector(), callCounterFactory(), verifyFormatterFactory());
 }
 
 export class Verifier<T>{
 
     constructor(
         private reflector: ExpectedExpressionReflector,
-        private callCounter: CallCounter){
+        private callCounter: CallCounter,
+        private verifyFormatter: VerifyFormatter){
 
     }
 
@@ -25,7 +27,9 @@ export class Verifier<T>{
         const expression = this.reflector.reflect(expected);
         const callCount = this.callCounter.count(expression, expressions);
         const passed = times.test(callCount);
-        if (passed === false)
-            throw new VerifyError(times.message);
+        if (passed === false) {
+            const message = this.verifyFormatter.format(expression, times.message, callCount);
+            throw new VerifyError(message);
+        }
     }
 }

@@ -1,5 +1,5 @@
 import {GetPropertyExpression} from '../../lib/expressions';
-import {GetPropertyExpressionFormatter} from '../../lib/expression-formatters/get.property-formatter';
+import {GetPropertyExpressionFormatter} from '../../lib/formatters/get.property-formatter';
 
 describe('Get property expression formatter', () => {
 

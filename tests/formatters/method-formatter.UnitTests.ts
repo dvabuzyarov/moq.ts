@@ -1,6 +1,6 @@
 import {MethodExpression} from '../../lib/expressions';
-import {ConstantFormatter} from '../../lib/expression-formatters/constant-formatter';
-import {MethodExpressionFormatter} from '../../lib/expression-formatters/method-formatter';
+import {ConstantFormatter} from '../../lib/formatters/constant-formatter';
+import {MethodExpressionFormatter} from '../../lib/formatters/method-formatter';
 
 describe('Method expression formatter', () => {
     function constantFormatterFactory(): ConstantFormatter {

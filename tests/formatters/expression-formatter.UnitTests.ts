@@ -1,14 +1,14 @@
-﻿import {ExpressionFormatter} from '../../lib/expression-formatters/expression-formatter';
+﻿import {ExpressionFormatter} from '../../lib/formatters/expression-formatter';
 import {
     GetPropertyExpression, SetPropertyExpression, NamedMethodExpression,
     MethodExpression
 } from '../../lib/expressions';
-import {GetPropertyExpressionFormatter} from '../../lib/expression-formatters/get.property-formatter';
-import {SetPropertyExpressionFormatter} from '../../lib/expression-formatters/set.property-formatter';
-import {NamedMethodExpressionFormatter} from '../../lib/expression-formatters/named.method-formatter';
-import {MethodExpressionFormatter} from '../../lib/expression-formatters/method-formatter';
+import {GetPropertyExpressionFormatter} from '../../lib/formatters/get.property-formatter';
+import {SetPropertyExpressionFormatter} from '../../lib/formatters/set.property-formatter';
+import {NamedMethodExpressionFormatter} from '../../lib/formatters/named.method-formatter';
+import {MethodExpressionFormatter} from '../../lib/formatters/method-formatter';
 import {It} from '../../lib/expected-expressions/expression-predicates';
-import {ConstantFormatter} from '../../lib/expression-formatters/constant-formatter';
+import {ConstantFormatter} from '../../lib/formatters/constant-formatter';
 
 describe('Expression formatter', () => {
     function formatterFactory<T>(): T {

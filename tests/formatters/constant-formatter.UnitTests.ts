@@ -1,4 +1,4 @@
-import {ConstantFormatter} from '../../lib/expression-formatters/constant-formatter';
+import {ConstantFormatter} from '../../lib/formatters/constant-formatter';
 import {It} from '../../lib/expected-expressions/expression-predicates';
 
 describe('Constant formatter', () => {

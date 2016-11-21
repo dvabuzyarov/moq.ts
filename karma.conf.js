@@ -18,7 +18,7 @@ module.exports = function (config) {
                 '/lib/*.ts',
                 '/lib/expected-expressions/*.ts',
                 '/lib/expression-matchers/*.ts',
-                '/lib/expression-formatters/*.ts'
+                '/lib/formatters/*.ts'
             ],
             includeFiles: [
                 'node_modules/es6-shim/es6-shim.js'

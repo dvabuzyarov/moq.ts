@@ -1,6 +1,6 @@
 import {SetPropertyExpression} from '../../lib/expressions';
-import {SetPropertyExpressionFormatter} from '../../lib/expression-formatters/set.property-formatter';
-import {ConstantFormatter} from '../../lib/expression-formatters/constant-formatter';
+import {SetPropertyExpressionFormatter} from '../../lib/formatters/set.property-formatter';
+import {ConstantFormatter} from '../../lib/formatters/constant-formatter';
 
 describe('Set property expression formatter', () => {
     function constantFormatterFactory(): ConstantFormatter {
