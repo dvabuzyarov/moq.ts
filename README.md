@@ -21,8 +21,8 @@ moq.ts as the original [Moq library](https://github.com/moq/moq4) is intended to
 You can find a pretty full set of usages in the integration tests. Check out [tests.integration](https://github.com/dvabuzyarov/moq.ts/tree/master/tests.integration) folder.
 
 Mocking property of objects
-[mock-get.property.IntegrationTests.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts)
 -
+[mock-get.property.IntegrationTests.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts)
 ```typescript
 import {Mock, It, Times, ExpectedGetPropertyExpression} from 'moq.ts';
 interface ITestObject {
