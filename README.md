@@ -61,10 +61,8 @@ mock.verify(instance=> instance.property1, Times.Never());
 ```
 Mocking property setting
 -
-[Please, check out the documentation on returned value from set hook on Proxy object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set)
+[The documentation on returned value from 'set hook' on Proxy object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set)
 
-Expected expression may return only It.Is predicate, so if you are not using It predicate for the entire expression it is better to wrap the expression in {} or return explicitly a value.
-Any returned value except It.Is predicete will be ignored.
 
 [mock-set.property.IntegrationTests.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-set.property.IntegrationTests.ts)
 ```typescript
