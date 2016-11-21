@@ -27,7 +27,7 @@ function updateFiles(files: string[]): void{
         .concat(files
             .filter(file=> isDefinition.test(file))
             .map(file=> normalize(file)))
-        .concat(['index.js']);
+        .concat(['index.js', 'index.d.ts']);
     writeFileSync(path, JSON.stringify(content, null, 2), 'utf8');
 }
 
