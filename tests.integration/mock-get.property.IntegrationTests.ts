@@ -27,7 +27,7 @@ describe('Mock: Get property', () => {
         const value = 'value';
 
         const object = new Mock<ITestObject>()
-            .setup(instance => It.Is((expression: ExpectedGetPropertyExpression)=> expression.name === 'property'))
+            .setup(instance => It.Is((expression: ExpectedGetPropertyExpression) => expression.name === 'property'))
             .returns(value)
             .object;
 
@@ -42,6 +42,42 @@ describe('Mock: Get property', () => {
         const actual = object.property;
 
         expect(actual).toBeUndefined();
+    });
+
+    it('Returns last written value', () => {
+        const value = 'value';
+        const newValue = 'new value';
+
+        const object = new Mock<ITestObject>()
+            .setup(instance => instance.property)
+            .returns(value)
+            .object;
+
+        object.property = newValue;
+        const actual = object.property;
+
+        expect(actual).toBe(newValue);
+    });
+
+    it('Returns the initial value', () => {
+        const value = 'value';
+        const newValue = 'new value';
+
+        const object = new Mock<ITestObject>()
+            .setup(instance => instance.property)
+            .returns(value)
+            //let's deny any write operation on the property
+            .setup(instance => instance.property = It.Is(() => false))
+            .returns(true)
+            .object;
+
+        try {
+            object.property = newValue;
+        } catch (e) {
+        }
+        const actual = object.property;
+
+        expect(actual).toBe(newValue);
     });
 
     it('Calls callback', () => {
@@ -74,8 +110,7 @@ describe('Mock: Get property', () => {
 
         object.property;
 
-        //mock.verify(instance => instance.property, Times.AtLeast(2));
-        const action = ()=> mock.verify(instance => instance.property, Times.AtLeast(2));
+        const action = () => mock.verify(instance => instance.property, Times.AtLeast(2));
 
         expect(action).toThrow();
     });

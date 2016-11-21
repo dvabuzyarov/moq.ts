@@ -1,6 +1,6 @@
 import {MethodExpression, GetPropertyExpression, SetPropertyExpression, NamedMethodExpression} from './expressions';
 
-export interface IInterceptorCallbacks{
+export interface IInterceptorCallbacks {
     intercepted(expression: MethodExpression | GetPropertyExpression | SetPropertyExpression): any;
     interceptedNamedMethod (expression: NamedMethodExpression, getPropertyExpression: GetPropertyExpression): any;
     hasNamedMethod(methodName: string): boolean;
@@ -44,11 +44,11 @@ export class Interceptor<T> {
             set: (target, name, value) => {
                 const expression = new SetPropertyExpression(name, value);
                 const accepted = this.interceptorCallbacks.intercepted(expression);
-                if (accepted === true) {
+                if (accepted === true || accepted === undefined) {
                     this._values[name] = value;
                 }
 
-                return accepted;
+                return accepted === undefined ? true : accepted;
             },
 
             apply: (target, thisArg, args) => {
@@ -57,6 +57,7 @@ export class Interceptor<T> {
             }
         };
 
-        return new Proxy(function () { }, options);
+        return new Proxy(function () {
+        }, options);
     }
 }

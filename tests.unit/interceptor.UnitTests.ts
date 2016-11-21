@@ -108,6 +108,17 @@ describe('Mock interceptor', () => {
         object[name] = arg;
     });
 
+    it('Accepts set property interception by default', () => {
+        const arg = 'argument';
+        const name = 'some_property_name';
+        const callbacks = callbacksFactory();
+        (callbacks.intercepted as jasmine.Spy).and.returnValue(undefined);
+        const interceptor = new Interceptor<Function>(callbacks);
+        const object = interceptor.object;
+
+        object[name] = arg;
+    });
+
     it('Returns the last set value on a property', () => {
         const arg = 'argument';
         const name = 'some_property_name';
