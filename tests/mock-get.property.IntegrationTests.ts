@@ -74,10 +74,9 @@ describe('Mock: Get property', () => {
 
         object.property;
 
+        mock.verify(instance => instance.property, Times.AtLeast(2));
         const action = ()=> mock.verify(instance => instance.property, Times.AtLeast(2));
 
         expect(action).toThrow();
-
-        //expect(mock).moqToHaveBeenCalled(instance => instance.property, Times.AtLeast(2));
     });
 });
