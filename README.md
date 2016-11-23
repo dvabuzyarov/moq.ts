@@ -33,6 +33,7 @@ interface ITestObject {
     method(): void;
 }
 
+const property4Name = 'property4';
 const mock = new Mock<ITestObject>()
     .setup(instance => instance.property1)
     .returns(1)
@@ -47,7 +48,7 @@ const mock = new Mock<ITestObject>()
     .setup(instance => instance.property3)
     .callback(()=> 10 + 10)
     
-    .setup(instance => instance.property4)
+    .setup(instance => instance[property4Name])
     .throws(new Error('property4 access'))
     
     //since a method is a property that holds a pointer to a function
@@ -68,8 +69,11 @@ Mocking property setting
 ```typescript
 import {Mock, It, Times, ExpectedSetPropertyExpression} from 'moq.ts';
 interface ITestObject {
-    property: number;
+    property: number|any;
 }
+
+const value = {field: new Date()};
+
 const mock = new Mock<ITestObject>()
     .setup(instance => {instance.property = 1})
     //true - allows the write operation
@@ -83,8 +87,8 @@ const mock = new Mock<ITestObject>()
     // allows the write operation
     .callback(()=> true)
     
-    .setup(instance => {instance.property = 4})
-    .throws(new Error('4 has been written into property'));
+    .setup(instance => {instance.property = value})
+    .throws(new Error('an object has been written into property'));
 
 
 const object = mock.object;
@@ -99,9 +103,10 @@ Mocking functions
 ```typescript
 import {Mock, It, Times} from 'moq.ts';
 interface ITestFunction {
-    (arg: number): string;
+    (arg: number|any): string;
 }
 
+const value = {field: new Date()};
 
 const mock = new Mock<ITestFunction>()
     .setup(instance => instance(1))
@@ -110,8 +115,8 @@ const mock = new Mock<ITestFunction>()
     .setup(instance => instance(2))
     .callback((argument)=> argument === 2 ? 'called with 2' : `called with ${argument}`)
     
-    .setup(instance => instance(3))
-    .throws(new Error('Argument is 3'))
+    .setup(instance => instance(value))
+    .throws(new Error('Argument is object with date'))
     
     .setup(instance => instance(It.Is(value => value === 4)))
     .returns('called with 4');
@@ -135,14 +140,16 @@ interface ITestObject {
     method(arg1: number, arg2: string): Date;
 }
 
+const values = ['a', 'b', 'c'];
+
 const mock = new Mock<ITestObject>()
-    .setup(instance => instance.method(1, 'a'))
+    .setup(instance => instance.method(1, values[0]))
     .returns(new Date(2016))
     
-    .setup(instance => instance.method(It.Is(value => value === 2), 'b'))
+    .setup(instance => instance.method(It.Is(value => value === 2), values[1]))
     .callback((arg1, arg2)=> new Date(2017 + arg1))
     
-    .setup(instance => instance.method(3, It.Is(value => value === 'c')))
+    .setup(instance => instance.method(3, It.Is(value => value === values[2])))
     .throws(new Error('Invoking method with 3 and c'));
 
 const object = mock.object;
