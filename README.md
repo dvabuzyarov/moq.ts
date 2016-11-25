@@ -34,7 +34,8 @@ interface ITestObject {
 }
 
 const property4Name = 'property4';
-const mock = new Mock<ITestObject>()
+const mockName = 'mock name is optional';
+const mock = new Mock<ITestObject>(mockName)
     .setup(instance => instance.property1)
     .returns(1)
     

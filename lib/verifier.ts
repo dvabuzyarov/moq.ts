@@ -23,12 +23,12 @@ export class Verifier<T>{
 
     }
 
-    public test(expected: IExpectedExpression<T>, times: Times, expressions: Expressions[]): void {
+    public test(expected: IExpectedExpression<T>, times: Times, expressions: Expressions[], mockName?: string): void {
         const expression = this.reflector.reflect(expected);
         const callCount = this.callCounter.count(expression, expressions);
         const passed = times.test(callCount);
         if (passed === false) {
-            const message = this.verifyFormatter.format(expression, times.message, callCount);
+            const message = this.verifyFormatter.format(expression, times.message, callCount, mockName);
             throw new VerifyError(message);
         }
     }

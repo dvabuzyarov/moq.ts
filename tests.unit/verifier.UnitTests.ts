@@ -28,31 +28,32 @@ describe('Verifier', ()=>{
     }
 
     it('Throws VerifyException when the expected expression has not been called expected times',()=>{
+        const mockName = 'mock name';
         const message = 'message';
         const timesMessage = 'Should be called once';
         const haveBeenCalled = 0;
+
         const expectedExpression = new ExpectedGetPropertyExpression('property');
-
         const expected = ()=> {};
-        const reflector = reflectorFactory();
 
+        const reflector = reflectorFactory();
         (<jasmine.Spy>reflector.reflect).and.returnValue(expectedExpression);
         const callCounter = callCounterFactory();
+
         (<jasmine.Spy>callCounter.count).and.returnValue(haveBeenCalled);
-
         const verifyFormatter = verifyFormatterFactory();
+
         (<jasmine.Spy>verifyFormatter.format).and.returnValue(message);
-
         const evaluator = value => value === 1;
-        const times = new Times(evaluator, timesMessage);
 
+        const times = new Times(evaluator, timesMessage);
         const verify = new Verifier(reflector, callCounter, verifyFormatter);
-        const action = () => verify.test(expected, times, []);
+        const action = () => verify.test(expected, times, [], mockName);
 
         expect(action).toThrow(new VerifyError(message));
         expect(reflector.reflect).toHaveBeenCalledWith(expected);
         expect(callCounter.count).toHaveBeenCalledWith(expectedExpression, []);
-        expect(verifyFormatter.format).toHaveBeenCalledWith(expectedExpression, timesMessage, haveBeenCalled);
+        expect(verifyFormatter.format).toHaveBeenCalledWith(expectedExpression, timesMessage, haveBeenCalled, mockName);
     });
 
     it('Does not throws VerifyException when the expected expression has been called expected times',()=>{

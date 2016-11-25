@@ -13,6 +13,7 @@ export interface ISetupInvoke<T> extends ISetup<T> {
 }
 
 export interface IMock<T> {
+    name?:string;
     object: T;
     setup(expression: IExpectedExpression<T>): ISetup<T>;
     tracker: Tracker;

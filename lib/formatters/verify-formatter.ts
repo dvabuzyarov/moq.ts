@@ -12,8 +12,9 @@ export class VerifyFormatter {
 
     }
 
-    public format(expected: ExpectedExpressions<any>, timesMessage: string, haveBeenCalledTimes: number): string {
+    public format(expected: ExpectedExpressions<any>, timesMessage: string, haveBeenCalledTimes: number, mockName?: string): string {
         const expressionDescription = this.expressionFormatter.format(expected);
-        return `${expressionDescription} ${timesMessage.toLowerCase()}, but was called ${haveBeenCalledTimes} time(s)`;
+        const mockDescription = mockName !== undefined ? ` of ${mockName}` : '';
+        return `${expressionDescription}${mockDescription} ${timesMessage.toLowerCase()}, but was called ${haveBeenCalledTimes} time(s)`;
     }
 }

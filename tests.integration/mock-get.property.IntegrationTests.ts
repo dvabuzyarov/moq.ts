@@ -105,7 +105,9 @@ describe('Mock: Get property', () => {
     });
 
     it('Verifies', () => {
-        const mock = new Mock<ITestObject>();
+
+        const mockName = 'mock name';
+        const mock = new Mock<ITestObject>(mockName);
         const object = mock.object;
 
         object.property;
