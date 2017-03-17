@@ -8,6 +8,7 @@ export interface IExpectedExpression<T> {
     (instance: T): void | any | It<T>;
 }
 
+declare var Proxy:any;
 
 export class ExpectedExpressionReflector {
 

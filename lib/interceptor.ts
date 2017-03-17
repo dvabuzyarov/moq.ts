@@ -6,6 +6,8 @@ export interface IInterceptorCallbacks {
     hasNamedMethod(methodName: string): boolean;
 }
 
+declare var Proxy:any;
+
 export class Interceptor<T> {
 
     private _object: T;
@@ -57,7 +59,6 @@ export class Interceptor<T> {
             }
         };
 
-        return new Proxy(function () {
-        }, options);
+        return new Proxy(function () { }, options);
     }
 }
