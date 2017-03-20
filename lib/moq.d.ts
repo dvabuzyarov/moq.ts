@@ -14,7 +14,7 @@ export interface ISetupInvoke<T> extends ISetup<T> {
 
 export interface IMock<T> {
     name?:string;
-    readonly object: T;
+    object(): T;
     setup(expression: IExpectedExpression<T>): ISetup<T>;
     tracker: Tracker;
     verify(expression: IExpectedExpression<T>, times?: Times): void;

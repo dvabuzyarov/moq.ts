@@ -17,7 +17,7 @@ describe('Mock: Method', () => {
         const object = new Mock<ITestFunction>()
             .setup(instance => instance(1))
             .returns(value)
-            .object;
+            .object();
 
         const actual = object(1);
 
@@ -31,7 +31,7 @@ describe('Mock: Method', () => {
         const object = new Mock<ITestFunction>()
             .setup(instance => It.Is((expression: ExpectedMethodExpression) => expression.arguments[0] === 1))
             .returns(value)
-            .object;
+            .object();
 
         const actual = object(1);
 
@@ -41,7 +41,7 @@ describe('Mock: Method', () => {
     it('Returns undefined for unset call', () => {
         const value = 'value';
         const object = new Mock<ITestFunction>()
-            .object;
+            .object();
 
         const actual = object(1);
 
@@ -54,7 +54,7 @@ describe('Mock: Method', () => {
         const object = new Mock<ITestFunction>()
             .setup(instance => instance(1))
             .callback(callback)
-            .object;
+            .object();
 
         const actual = object(1);
 
@@ -67,14 +67,14 @@ describe('Mock: Method', () => {
         const object = new Mock<ITestFunction>()
             .setup(instance => instance(It.Is((value)=> value === 1)))
             .throws(error)
-            .object;
+            .object();
 
         expect(() => object(1)).toThrow(error);
     });
 
     it('Verifies ', () => {
         const mock = new Mock<ITestFunction>();
-        const object = mock.object;
+        const object = mock.object();
 
         object(1);
 

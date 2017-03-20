@@ -15,7 +15,7 @@ describe('Mock: Get property', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => instance.property)
             .returns(value)
-            .object;
+            .object();
 
         const actual = object.property;
 
@@ -29,7 +29,7 @@ describe('Mock: Get property', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => It.Is((expression: ExpectedGetPropertyExpression) => expression.name === 'property'))
             .returns(value)
-            .object;
+            .object();
 
         expect(object.property).toBe(value);
     });
@@ -37,7 +37,7 @@ describe('Mock: Get property', () => {
     it('Returns undefined for unset property', () => {
         const value = 'value';
         const object = new Mock<ITestObject>()
-            .object;
+            .object();
 
         const actual = object.property;
 
@@ -51,7 +51,7 @@ describe('Mock: Get property', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => instance.property)
             .returns(value)
-            .object;
+            .object();
 
         object.property = newValue;
         const actual = object.property;
@@ -69,7 +69,7 @@ describe('Mock: Get property', () => {
             //let's deny any write operation on the property
             .setup(instance => instance.property = It.Is(() => false))
             .returns(true)
-            .object;
+            .object();
 
         try {
             object.property = newValue;
@@ -86,7 +86,7 @@ describe('Mock: Get property', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => instance.property)
             .callback(callback)
-            .object;
+            .object();
 
         const actual = object.property;
 
@@ -99,7 +99,7 @@ describe('Mock: Get property', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => instance.property)
             .throws(error)
-            .object;
+            .object();
 
         expect(() => object.property).toThrow(error);
     });
@@ -108,7 +108,7 @@ describe('Mock: Get property', () => {
 
         const mockName = 'mock name';
         const mock = new Mock<ITestObject>(mockName);
-        const object = mock.object;
+        const object = mock.object();
 
         object.property;
 

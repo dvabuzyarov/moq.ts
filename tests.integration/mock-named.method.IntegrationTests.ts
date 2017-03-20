@@ -17,7 +17,7 @@ describe('Mock: Named method', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => instance.method(1))
             .returns(value)
-            .object;
+            .object();
 
         const actual = object.method(1);
 
@@ -32,7 +32,7 @@ describe('Mock: Named method', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => It.Is((expression: ExpectedNamedMethodExpression) => expression.name === 'method' && expression.arguments[0] === 1))
             .returns(value)
-            .object;
+            .object();
 
         const actual = object.method(1);
 
@@ -44,7 +44,7 @@ describe('Mock: Named method', () => {
     xit('Returns undefined for unset call', () => {
         const value = 'value';
         const object = new Mock<ITestObject>()
-            .object;
+            .object();
 
         const actual = object.method(1);
 
@@ -57,7 +57,7 @@ describe('Mock: Named method', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => instance.method(1))
             .callback(callback)
-            .object;
+            .object();
 
         const actual = object.method(1);
 
@@ -70,7 +70,7 @@ describe('Mock: Named method', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => instance.method(It.Is((value)=> value === 1)))
             .throws(error)
-            .object;
+            .object();
 
         expect(() => object.method(1)).toThrow(error);
     });
@@ -80,7 +80,7 @@ describe('Mock: Named method', () => {
             .setup(instance => instance.method(It.Is((value)=> value === 1)))
             .returns('value');
 
-        const object = mock.object;
+        const object = mock.object();
 
         object.method(1);
 

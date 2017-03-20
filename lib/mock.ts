@@ -52,7 +52,7 @@ export class MockCore<T> implements IMock<T> {
         this.verifier.test(expression, times, this.tracker.get(), this.name);
     }
 
-    public get object(): T {
+    public object(): T {
         return this.interceptor.object;
     }
 }

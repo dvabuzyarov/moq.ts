@@ -15,7 +15,7 @@ describe('Mock: Set property', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => {instance.property = 'a'})
             .returns(true)
-            .object;
+            .object();
 
         const action = () => object.property = 'a';
 
@@ -28,7 +28,7 @@ describe('Mock: Set property', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => {instance.property = 'a'})
             .returns(false)
-            .object;
+            .object();
 
         const action = () => object.property = 'a';
 
@@ -41,7 +41,7 @@ describe('Mock: Set property', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => {instance.property = It.Is(value => value === 'a')})
             .callback(callback)
-            .object;
+            .object();
 
         const action = () => object.property = 'a';
 
@@ -54,7 +54,7 @@ describe('Mock: Set property', () => {
         const object = new Mock<ITestObject>()
             .setup(instance => {instance.property = 'a'})
             .throws(error)
-            .object;
+            .object();
 
         expect(() => object.property = 'a').toThrow(error);
     });
@@ -64,7 +64,7 @@ describe('Mock: Set property', () => {
             .setup(instance => instance.property = 'a')
             .returns(false);
 
-        const object = mock.object;
+        const object = mock.object();
         const action = () => object.property = 'a';
 
         const verify = () => mock.verify(instance => {instance.property = 'a'}, Times.Once());
