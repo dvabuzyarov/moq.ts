@@ -55,7 +55,7 @@ const mock = new Mock<ITestObject>(mockName)
     .setup(instance => instance.method)
     .returns(()=>{console.log('The method was called')});
 
-const object = mock.object;
+const object = mock.object();
 object.method();
 
 mock.verify(instance=> instance.property1, Times.Never());
@@ -91,7 +91,7 @@ const mock = new Mock<ITestObject>()
     .throws(new Error('an object has been written into property'));
 
 
-const object = mock.object;
+const object = mock.object();
 object.property = 1;
 
 mock.verify(instance=> {instance.property = 1}, Times.Once());
@@ -121,7 +121,7 @@ const mock = new Mock<ITestFunction>()
     .setup(instance => instance(It.Is(value => value === 4)))
     .returns('called with 4');
 
-const method = mock.object;
+const method = mock.object();
 const actual = method(1);
 
 mock.verify(instance => instance(1), Times.Once());
@@ -152,7 +152,7 @@ const mock = new Mock<ITestObject>()
     .setup(instance => instance.method(3, It.Is(value => value === values[2])))
     .throws(new Error('Invoking method with 3 and c'));
 
-const object = mock.object;
+const object = mock.object();
 const actual = object.method(1, 'a');
 
 mock.verify(instance => instance.method(2, 'a'), Times.Never());

@@ -58,7 +58,7 @@ describe('Setup', () => {
         setup.throws(error);
 
 
-        expect(setup.invoke.bind(setup)).toThrow(error);
+        expect(()=>setup.invoke()).toThrow(error);
     });
 
     it('Returns value from callback', ()=> {

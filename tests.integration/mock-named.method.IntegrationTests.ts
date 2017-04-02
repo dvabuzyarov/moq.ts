@@ -39,16 +39,14 @@ describe('Mock: Named method', () => {
         expect(actual).toBe(value);
     });
 
-    //todo: doesn't work since named method is a property that has a pointer to a function
+    //doesn't work since named method is a property that has a pointer to a function
     //but an unset property returns undefined value
-    xit('Returns undefined for unset call', () => {
+    it('Throws TypeError exception when call an unset method', () => {
         const value = 'value';
         const object = new Mock<ITestObject>()
             .object();
 
-        const actual = object.method(1);
-
-        expect(actual).toBeUndefined();
+        expect(()=>object.method(1)).toThrow(jasmine.any(TypeError));
     });
 
     it('Calls callback', () => {
