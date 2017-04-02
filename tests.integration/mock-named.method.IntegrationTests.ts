@@ -62,7 +62,7 @@ describe('Mock: Named method', () => {
         const actual = object.method(1);
 
         expect(actual).toBe(value);
-        expect(callback).toHaveBeenCalled();
+        expect(callback).toHaveBeenCalledWith(1);
     });
 
     it('Throws an exception', () => {

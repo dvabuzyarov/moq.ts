@@ -69,11 +69,25 @@ describe('Setup', () => {
 
         const setup = new Setup(mock);
         setup.callback(callback);
-        const actual = setup.invoke.apply(setup, [arg]);
+        const actual = setup.invoke([arg]);
 
 
         expect(actual).toBe(value);
         expect(callback).toHaveBeenCalledWith(arg);
+    });
+
+    it('Returns value from callback without arguments', ()=> {
+        const value = [];
+        const callback = jasmine.createSpy('callback').and.returnValue(value);
+        const mock = MockFactory();
+
+        const setup = new Setup(mock);
+        setup.callback(callback);
+        const actual = setup.invoke();
+
+
+        expect(actual).toBe(value);
+        expect(callback).toHaveBeenCalledWith();
     });
 
 });

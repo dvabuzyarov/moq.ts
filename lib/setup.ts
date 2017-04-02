@@ -21,8 +21,8 @@ export class Setup<T> implements ISetupInvoke<T> {
         return this.mock;
     }
 
-    public callback<TValue>(callback: (...args: any[])=> TValue): IMock<T> {
-        this.action = (args?: any[])=> callback(args);
+    public callback<TValue>(callback: (args: any[])=> TValue): IMock<T> {
+        this.action = (args?: any[])=> callback.apply(undefined, args);
         return this.mock;
     }
 }
