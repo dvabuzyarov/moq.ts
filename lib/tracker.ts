@@ -13,9 +13,4 @@ export class Tracker{
     public get(): Expressions[]{
         return this.log;
     }
-
-    public addNamedMethod(namedMethodInfo: NamedMethodExpression, getPropertyInfo: GetPropertyExpression): void {
-        const index = this.log.indexOf(getPropertyInfo);
-        this.log[index] = namedMethodInfo;
-    }
 }

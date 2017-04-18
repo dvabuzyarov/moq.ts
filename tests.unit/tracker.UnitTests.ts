@@ -15,16 +15,4 @@ describe('Mock tracker', () => {
         expect(actual).toEqual([action1, action2]);
     });
 
-    it('Replaces GetPropertyInfo with NamedMethodCall', ()=> {
-        const tracker = new Tracker();
-        const getPropertyInfo = new GetPropertyExpression('property name');
-        const namedMethodInfo = new NamedMethodExpression('property name', []);
-
-        tracker.add(getPropertyInfo);
-        tracker.addNamedMethod(namedMethodInfo, getPropertyInfo);
-
-        const actual = tracker.get();
-        expect(actual).toEqual([namedMethodInfo]);
-    });
-
 });
