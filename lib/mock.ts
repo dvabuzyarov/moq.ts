@@ -53,7 +53,7 @@ export class MockCore<T> implements IMock<T> {
     }
 
     public object(): T {
-        return this.interceptor.object;
+        return this.interceptor.object();
     }
 }
 

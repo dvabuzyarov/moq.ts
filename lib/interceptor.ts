@@ -17,7 +17,7 @@ export class Interceptor<T> {
 
     }
 
-    public get object(): T {
+    public object(): T {
         if (this._object === undefined) {
             this._object = this.createObject();
         }

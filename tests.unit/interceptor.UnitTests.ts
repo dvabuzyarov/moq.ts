@@ -16,15 +16,15 @@ describe('Mock interceptor', () => {
 
     it('Returns proxy object', () => {
         const interceptor = new Interceptor(undefined);
-        const actual = interceptor.object;
+        const actual = interceptor.object();
 
         expect(actual).not.toBeUndefined();
     });
 
     it('Returns the same proxy object', () => {
         const interceptor = new Interceptor(undefined);
-        const first = interceptor.object;
-        const second = interceptor.object;
+        const first = interceptor.object();
+        const second = interceptor.object();
 
         expect(first === second).toBe(true);
     });
@@ -33,7 +33,7 @@ describe('Mock interceptor', () => {
         const arg = 'argument';
         const callbacks = callbacksFactory();
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         object(arg);
 
@@ -46,7 +46,7 @@ describe('Mock interceptor', () => {
         const callbacks = callbacksFactory();
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(false);
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         object[name];
 
@@ -60,7 +60,7 @@ describe('Mock interceptor', () => {
         const callbacks = callbacksFactory();
         (callbacks.intercepted as jasmine.Spy).and.returnValue(true);
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         object[name] = arg;
 
@@ -80,7 +80,7 @@ describe('Mock interceptor', () => {
         };
 
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         object[name](arg);
     });
@@ -90,7 +90,7 @@ describe('Mock interceptor', () => {
         const callbacks = callbacksFactory();
         (callbacks.intercepted as jasmine.Spy).and.returnValue(expected);
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         const actual = object();
 
@@ -103,7 +103,7 @@ describe('Mock interceptor', () => {
         const callbacks = callbacksFactory();
         (callbacks.intercepted as jasmine.Spy).and.returnValue(true);
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         object[name] = arg;
     });
@@ -114,7 +114,7 @@ describe('Mock interceptor', () => {
         const callbacks = callbacksFactory();
         (callbacks.intercepted as jasmine.Spy).and.returnValue(undefined);
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         object[name] = arg;
     });
@@ -125,7 +125,7 @@ describe('Mock interceptor', () => {
         const callbacks = callbacksFactory();
         (callbacks.intercepted as jasmine.Spy).and.returnValue(true);
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         object[name] = arg;
 
@@ -139,7 +139,7 @@ describe('Mock interceptor', () => {
         const callbacks = callbacksFactory();
         (callbacks.intercepted as jasmine.Spy).and.returnValues(true, false);
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         object[name] = arg1;
         try {
@@ -156,7 +156,7 @@ describe('Mock interceptor', () => {
         const callbacks = callbacksFactory();
         (callbacks.intercepted as jasmine.Spy).and.returnValue(false);
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         expect(() => {
             object[name] = arg
@@ -170,7 +170,7 @@ describe('Mock interceptor', () => {
         (callbacks.intercepted as jasmine.Spy).and.returnValue(expected);
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(false);
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         const actual = object[name];
 
@@ -185,7 +185,7 @@ describe('Mock interceptor', () => {
         (callbacks.interceptedNamedMethod as jasmine.Spy).and.returnValue(expected);
 
         const interceptor = new Interceptor<Function>(callbacks);
-        const object = interceptor.object;
+        const object = interceptor.object();
 
         const actual = object[name]();
 
