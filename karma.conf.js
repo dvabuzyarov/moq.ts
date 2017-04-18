@@ -18,7 +18,8 @@ module.exports = function (config) {
                 '/lib/*.ts',
                 '/lib/expected-expressions/*.ts',
                 '/lib/expression-matchers/*.ts',
-                '/lib/formatters/*.ts'
+                '/lib/formatters/*.ts',
+                '/lib/interceptor-callbacks/*.ts'
             ],
             includeFiles: [
                 'node_modules/es6-shim/es6-shim.js'
