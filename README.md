@@ -159,7 +159,7 @@ const actual = object.method(1, 'a');
 mock.verify(instance => instance.method(2, 'a'), Times.Never());
 ```
 
-## Mock behaviour
+## Mock behavior
 You can control mock behavior when accessing to a property without a corresponding setup. 
 ```typescript
     mock = new Mock<ITestObject>()
@@ -168,6 +168,7 @@ You can control mock behavior when accessing to a property without a correspondi
     .setBehaviorStrategy(MockBehavior.Strict);
 ```
 The default behavior is strict.
+
 #####MockBehavior.Strict
 Accessing to an unset property will return undefined value;
 Accessing to an unset method of an object will throw TypeError exception; It does not matter if a method is a part of mocked type.
@@ -180,6 +181,7 @@ const mock = new Mock<ITestObject>()
 #####MockBehavior.Loose
 Accessing to an unset property or a method will return a pointer to a spy function;
 You can call this function and it will be tracked.
+
 ######P.S.
 I am a team leader of a team of software developers. We are available for contract work.
 Ready to work with the best practices (TDD, eXtream programming, agile). From your side you need to provide an agile product manager.
