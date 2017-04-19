@@ -5,10 +5,11 @@ import {getName} from './getName';
 import {DefinedSetups} from '../lib/defined-setups';
 import {Verifier} from '../lib/verifier';
 import {Interceptor} from '../lib/interceptor';
-import {IMock} from '../lib/moq';
-import {IInterceptorCallbacks} from '../lib/interceptor-callbacks/interceptor-callbacks';
+import {IMock, ISetupInvoke} from '../lib/moq';
+import {IInterceptorCallbacks, MockBehavior} from '../lib/interceptor-callbacks/interceptor-callbacks';
+import {Times} from '../lib/times';
 
-describe('MockCore', ()=>{
+describe('MockCore', () => {
 
     let reflector: ExpectedExpressionReflector;
     let interceptor: Interceptor<any>;
@@ -16,6 +17,7 @@ describe('MockCore', ()=>{
     let tracker: Tracker;
     let verifier: Verifier<any>;
     let callbacks: IInterceptorCallbacks;
+    let setupFactory: (mock: IMock<any>) => ISetupInvoke<any>;
 
     function trackerFactory(): Tracker {
         return <Tracker>jasmine.createSpyObj('tracker', [
@@ -59,11 +61,8 @@ describe('MockCore', ()=>{
     }
 
     function MockCoreFactory(): MockCore<any> {
-        const setupFactory = (mock: IMock<any>) => undefined;
-        const interceptorFactory = (_callbacks: IInterceptorCallbacks)=> {
-            callbacks = _callbacks;
-            return interceptor;
-        };
+        const interceptorFactory = () => interceptor;
+
         return new MockCore(
             reflector,
             interceptorFactory,
@@ -74,15 +73,17 @@ describe('MockCore', ()=>{
             callbacks);
     }
 
-    beforeEach(()=>{
+    beforeEach(() => {
         reflector = reflectorFactory();
         interceptor = interceptorFactory();
         definedSetups = definedSetupsFactory();
         tracker = trackerFactory();
         verifier = verifierFactory();
+        callbacks = interceptorCallbacksFactory();
+        setupFactory = jasmine.createSpy('setup factory');
     });
 
-    it('Returns object',()=>{
+    it('Returns object', () => {
         const object = {};
         (<jasmine.Spy>interceptor.object).and.returnValue(object);
 
@@ -90,5 +91,54 @@ describe('MockCore', ()=>{
         const actual = mock.object();
 
         expect(actual).toBe(object);
+    });
+
+    it('Sets mock behavior strategy', () => {
+        const mock = MockCoreFactory();
+        const actual = mock.setBehaviorStrategy(MockBehavior.Loose);
+
+        expect(actual).toBe(mock);
+        expect(callbacks.setBehaviorStrategy).toHaveBeenCalledWith(MockBehavior.Loose);
+    });
+
+    it('Verifies an expression', () => {
+
+        const expressions = [];
+        (<jasmine.Spy>tracker.get).and.returnValue(expressions);
+
+        const mock = MockCoreFactory();
+        const expression = instance => instance['property'];
+        mock.verify(expression);
+
+        expect(verifier.test).toHaveBeenCalledWith(expression, Times.Once(), expressions, undefined);
+    });
+
+    it('Verifies an expression has been invoked provided times', () => {
+
+        const expressions = [];
+        (<jasmine.Spy>tracker.get).and.returnValue(expressions);
+
+        const mock = MockCoreFactory();
+        const expression = instance => instance['property'];
+        mock.verify(expression, Times.AtLeastOnce());
+
+        expect(verifier.test).toHaveBeenCalledWith(expression, Times.AtLeastOnce(), expressions, undefined);
+    });
+
+    it('Setups mock', () => {
+
+        const setup = {};
+        const expression = instance => instance['property'];
+        const expectedExpression = {};
+        (<jasmine.Spy>reflector.reflect).and.returnValue(expectedExpression);
+        (<jasmine.Spy>setupFactory).and.returnValue(setup);
+
+        const mock = MockCoreFactory();
+        const actual = mock.setup(expression);
+
+        expect(actual).toBe(setup);
+        expect(setupFactory).toHaveBeenCalledWith(mock);
+        expect(reflector.reflect).toHaveBeenCalledWith(expression);
+        expect(definedSetups.add).toHaveBeenCalledWith(expectedExpression, setup);
     });
 });

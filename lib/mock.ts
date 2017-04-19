@@ -7,11 +7,13 @@ import {Setup} from './setup';
 import {expressionMatcherFactory} from './expression-matchers/factories';
 import {Times} from './times';
 import {Verifier, verifierFactory} from './verifier';
-import {IInterceptorCallbacks, interceptorCallbacksFactory} from './interceptor-callbacks/interceptor-callbacks';
+import {
+    IInterceptorCallbacks, interceptorCallbacksFactory,
+    MockBehavior
+} from './interceptor-callbacks/interceptor-callbacks';
 
 
 export class MockCore<T> implements IMock<T> {
-
     private interceptor: Interceptor<T>;
 
     constructor(
@@ -41,6 +43,11 @@ export class MockCore<T> implements IMock<T> {
 
     public object(): T {
         return this.interceptor.object();
+    }
+
+    public setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T> {
+        this.interceptedCallbacks.setBehaviorStrategy(behaviorStrategy);
+        return this;
     }
 }
 

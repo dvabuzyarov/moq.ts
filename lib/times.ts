@@ -1,9 +1,14 @@
-﻿export enum Range{
+﻿export const enum Range{
     Exclusive,
     Inclusive
 }
 
 export class Times {
+    private static _once: Times =  new Times(expected => expected === 1, `Should be called once`);
+    private static _never: Times =  new Times(expected => expected === 0, `Should be called never`);
+    private static _atMostOnce: Times =  new Times(expected => expected <= 1, `Should be called at most once`);
+    private static _atLeastOnce: Times =  new Times(expected => expected >= 1, `Should be called at least once`);
+
     constructor(private evaluator: (callCount: number)=>boolean,
                 public message: string) {
 
@@ -14,7 +19,7 @@ export class Times {
     }
 
     public static AtLeastOnce(): Times {
-        return new Times(expected => expected >= 1, `Should be called at least once`);
+        return Times._atLeastOnce;
     }
 
     public static AtMost(callCount: number): Times {
@@ -22,7 +27,7 @@ export class Times {
     }
 
     public static AtMostOnce(): Times {
-        return new Times(expected => expected <= 1, `Should be called at most once`);
+        return Times._atMostOnce;
     }
 
     public static Between(callCountFrom: number, callCountTo: number, range: Range): Times {
@@ -37,11 +42,11 @@ export class Times {
     }
 
     public static Never(): Times {
-        return new Times(expected => expected === 0, `Should be called never`);
+        return Times._never;
     }
 
     public static Once(): Times {
-        return new Times(expected => expected === 1, `Should be called once`);
+        return Times._once;
     }
 
     public test(callCount: number): boolean {

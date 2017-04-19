@@ -1,6 +1,7 @@
 import {IExpectedExpression} from './expected-expressions/expected-expression-reflector';
 import {Tracker} from './tracker';
 import {Times} from './times';
+import {MockBehavior} from './interceptor-callbacks/interceptor-callbacks';
 
 export interface ISetup<T> {
     returns<TValue>(value: TValue): IMock<T>;
@@ -18,4 +19,5 @@ export interface IMock<T> {
     setup(expression: IExpectedExpression<T>): ISetup<T>;
     tracker: Tracker;
     verify(expression: IExpectedExpression<T>, times?: Times): void;
+    setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T>
 }
