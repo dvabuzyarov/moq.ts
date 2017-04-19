@@ -8,7 +8,13 @@ export class NamedMethodExpressionFormatter{
     }
 
     public format(expression: NamedMethodExpression): string{
-        const value = this.constantFormatter.format(expression.arguments);
+        const formatted: string[] = [];
+
+        expression.arguments.forEach(arg=>{
+            formatted.push(this.constantFormatter.format(arg));
+        });
+
+        const value = formatted.join(', ');
         return `${expression.name}(${value})`;
     }
 }

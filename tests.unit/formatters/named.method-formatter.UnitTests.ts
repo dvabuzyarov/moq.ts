@@ -22,7 +22,24 @@ describe('Named method expression formatter', () => {
         const actual = formatter.format(expression);
 
         expect(actual).toBe(`${name}(${valueDescription})`);
-        expect(constantFormatter.format).toHaveBeenCalledWith([value]);
+        expect(constantFormatter.format).toHaveBeenCalledWith(value);
+    });
+
+
+    it('Returns formatted description for named method expression with several arguments', ()=> {
+        const name = 'name';
+        const firstValue = 'first value';
+        const secondValue = 'first value';
+        const firstValueDescription = 'first value description';
+        const secondValueDescription = 'second value description';
+        const expression = new NamedMethodExpression(name, [firstValue, secondValue]);
+
+        const constantFormatter = constantFormatterFactory();
+        (<jasmine.Spy>constantFormatter.format).and.returnValues(firstValueDescription, secondValueDescription);
+        const formatter = new NamedMethodExpressionFormatter(constantFormatter);
+        const actual = formatter.format(expression);
+
+        expect(actual).toBe(`${name}(${firstValueDescription}, ${secondValueDescription})`);
     });
 
 });
