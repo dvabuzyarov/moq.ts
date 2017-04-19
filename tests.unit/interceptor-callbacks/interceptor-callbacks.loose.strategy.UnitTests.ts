@@ -2,14 +2,14 @@ import {Tracker} from '../../lib/tracker';
 import {getName} from '../getName';
 import {DefinedSetups} from '../../lib/defined-setups';
 import {IInterceptorCallbacks} from '../../lib/interceptor';
-import {InterceptorCallbacksStrictStrategy} from '../../lib/interceptor-callbacks/interceptor-callbacks.strict.strategy';
 import {
     GetPropertyExpression, MethodExpression, NamedMethodExpression,
     SetPropertyExpression
 } from '../../lib/expressions';
 import {ISetupInvoke} from '../../lib/moq';
+import {InterceptorCallbacksLooseStrategy} from '../../lib/interceptor-callbacks/interceptor-callbacks.loose.strategy';
 
-describe('Interceptor callbacks strict strategy', () => {
+describe('Interceptor callbacks loose strategy', () => {
     let definedSetups: DefinedSetups<any>;
     let tracker: Tracker;
 
@@ -29,7 +29,7 @@ describe('Interceptor callbacks strict strategy', () => {
     }
 
     function StrategyFactory(): IInterceptorCallbacks {
-        return new InterceptorCallbacksStrictStrategy(definedSetups, tracker);
+        return new InterceptorCallbacksLooseStrategy(definedSetups, tracker);
     }
 
     beforeEach(() => {
@@ -125,25 +125,28 @@ describe('Interceptor callbacks strict strategy', () => {
         expect(definedSetups.get).toHaveBeenCalledWith(expression);
     });
 
-    it('Returns true when there is a named method', () => {
+    it('Returns true when there is no setup for a get property', () => {
         const methodName = 'a method name';
+        (<jasmine.Spy>definedSetups.get).and.returnValue(undefined);
 
-        (<jasmine.Spy>definedSetups.hasNamedMethod).and.returnValue(true);
         const strategy = StrategyFactory();
         const actual = strategy.hasNamedMethod(methodName);
 
+        const expression = new GetPropertyExpression(methodName);
         expect(actual).toBe(true);
-        expect(definedSetups.hasNamedMethod).toHaveBeenCalledWith(methodName);
+        expect(definedSetups.get).toHaveBeenCalledWith(expression);
     });
 
-    it('Returns false when there is no named method', () => {
+    it('Returns false when there is setup for a get property', () => {
         const methodName = 'a method name';
+        const setup = jasmine.createSpyObj('setup', [getName<ISetupInvoke<any>>(instance => instance.invoke)]);
+        (<jasmine.Spy>definedSetups.get).and.returnValue(setup);
 
-        (<jasmine.Spy>definedSetups.hasNamedMethod).and.returnValue(false);
         const strategy = StrategyFactory();
         const actual = strategy.hasNamedMethod(methodName);
 
+        const expression = new GetPropertyExpression(methodName);
         expect(actual).toBe(false);
-        expect(definedSetups.hasNamedMethod).toHaveBeenCalledWith(methodName);
+        expect(definedSetups.get).toHaveBeenCalledWith(expression);
     });
 });
