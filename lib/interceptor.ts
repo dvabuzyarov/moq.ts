@@ -1,12 +1,14 @@
-import {MethodExpression, GetPropertyExpression, SetPropertyExpression, NamedMethodExpression} from './expressions';
+import {
+    Expressions, GetPropertyExpression, MethodExpression, NamedMethodExpression,
+    SetPropertyExpression
+} from './expressions';
 
 export interface IInterceptorCallbacks {
-    intercepted(expression: MethodExpression | GetPropertyExpression | SetPropertyExpression): any;
-    interceptedNamedMethod (expression: NamedMethodExpression, getPropertyExpression: GetPropertyExpression): any;
+    intercepted(expression: Expressions): any;
     hasNamedMethod(methodName: string): boolean;
 }
 
-declare var Proxy:any;
+declare var Proxy: any;
 
 export class Interceptor<T> {
 
@@ -39,7 +41,7 @@ export class Interceptor<T> {
 
                 return (...args) => {
                     const namedMethodExpression = new NamedMethodExpression(name, args);
-                    return this.interceptorCallbacks.interceptedNamedMethod(namedMethodExpression, getPropertyExpression);
+                    return this.interceptorCallbacks.intercepted(namedMethodExpression);
                 }
             },
 

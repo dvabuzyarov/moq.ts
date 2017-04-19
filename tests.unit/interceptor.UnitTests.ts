@@ -3,15 +3,14 @@ import {
     NamedMethodExpression
 } from '../lib/expressions';
 import {Interceptor, IInterceptorCallbacks} from '../lib/interceptor';
+import {getName} from './getName';
 
 describe('Mock interceptor', () => {
 
     function callbacksFactory(): IInterceptorCallbacks {
-        return {
-            intercepted: jasmine.createSpy('intercepted'),
-            interceptedNamedMethod: jasmine.createSpy('interceptedNamedMethod'),
-            hasNamedMethod: jasmine.createSpy('hasNamedMethod'),
-        }
+        return jasmine.createSpyObj('callbacks', [
+            getName<IInterceptorCallbacks>(instance => instance.intercepted),
+            getName<IInterceptorCallbacks>(instance => instance.hasNamedMethod)]);
     }
 
     it('Returns proxy object', () => {
@@ -73,16 +72,16 @@ describe('Mock interceptor', () => {
         const name = 'some_property_name';
         const callbacks = callbacksFactory();
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(true);
-        callbacks.interceptedNamedMethod = (namedMethodInfo: NamedMethodExpression, getPropertyInfo: GetPropertyExpression) => {
-            expect(namedMethodInfo.name).toEqual(name);
-            expect(namedMethodInfo.arguments).toEqual([arg]);
-            expect(getPropertyInfo.name).toEqual(name);
-        };
 
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
 
         object[name](arg);
+
+        const expectedGetPropertyExpression = new GetPropertyExpression(name);
+        const expectedNamedMethodExpression = new NamedMethodExpression(name, [arg]);
+        expect(callbacks.intercepted).toHaveBeenCalledWith(expectedGetPropertyExpression);
+        expect(callbacks.intercepted).toHaveBeenCalledWith(expectedNamedMethodExpression);
     });
 
     it('Returns value from method interception', () => {
@@ -182,7 +181,7 @@ describe('Mock interceptor', () => {
         const name = 'some_property_name';
         const callbacks = callbacksFactory();
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(true);
-        (callbacks.interceptedNamedMethod as jasmine.Spy).and.returnValue(expected);
+        (callbacks.intercepted as jasmine.Spy).and.returnValue(expected);
 
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();

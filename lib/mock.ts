@@ -29,11 +29,6 @@ export class MockCore<T> implements IMock<T> {
                 const setup = this.definedSetups.get(expression);
                 return setup !== undefined ? setup.invoke() : undefined;
             },
-            interceptedNamedMethod: (expression: NamedMethodExpression, getPropertyExpression: GetPropertyExpression): any => {
-                this.tracker.addNamedMethod(expression, getPropertyExpression);
-                const setup = this.definedSetups.get(expression);
-                return setup !== undefined ? setup.invoke(expression.arguments) : undefined;
-            },
             hasNamedMethod: (methodName: string): boolean => definedSetups.hasNamedMethod(methodName)
         };
 

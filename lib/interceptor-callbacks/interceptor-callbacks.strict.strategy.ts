@@ -1,5 +1,5 @@
 import {IInterceptorCallbacks} from '../interceptor';
-import {GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression} from '../expressions';
+import {Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression} from '../expressions';
 import {DefinedSetups} from '../defined-setups';
 import {Tracker} from '../tracker';
 
@@ -10,20 +10,23 @@ export class InterceptorCallbacksStrictStrategy<T> implements IInterceptorCallba
 
     }
 
-    public intercepted(expression: MethodExpression | GetPropertyExpression | SetPropertyExpression): any {
+    public intercepted(expression: Expressions): any {
         this.tracker.add(expression);
         const setup = this.definedSetups.get(expression);
-        return setup !== undefined ? setup.invoke() : undefined;
-    }
+        if (setup !== undefined) {
+            if (expression instanceof MethodExpression)
+                return setup.invoke((<MethodExpression>expression).arguments);
+            if (expression instanceof NamedMethodExpression)
+                return setup.invoke((<NamedMethodExpression>expression).arguments);
+            if (expression instanceof SetPropertyExpression)
+                return setup.invoke((<SetPropertyExpression>expression).value);
 
-    public interceptedNamedMethod(expression: NamedMethodExpression, getPropertyExpression: GetPropertyExpression): any {
-        this.tracker.addNamedMethod(expression, getPropertyExpression);
-        const setup = this.definedSetups.get(expression);
-        return setup !== undefined ? setup.invoke(expression.arguments) : undefined;
+            return setup.invoke();
+        }
+        return undefined;
     }
 
     public hasNamedMethod(methodName: string): boolean {
         return this.definedSetups.hasNamedMethod(methodName);
     }
-
 }
