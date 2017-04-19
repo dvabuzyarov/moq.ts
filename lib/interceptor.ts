@@ -1,12 +1,7 @@
-import {
-    Expressions, GetPropertyExpression, MethodExpression, NamedMethodExpression,
+import {GetPropertyExpression, MethodExpression, NamedMethodExpression,
     SetPropertyExpression
 } from './expressions';
-
-export interface IInterceptorCallbacks {
-    intercepted(expression: Expressions): any;
-    hasNamedMethod(methodName: string): boolean;
-}
+import {IInterceptorCallbacksStrategy} from './interceptor-callbacks/interceptor-callbacks';
 
 declare var Proxy: any;
 
@@ -15,7 +10,7 @@ export class Interceptor<T> {
     private _object: T;
     private _values = {};
 
-    constructor(private interceptorCallbacks: IInterceptorCallbacks) {
+    constructor(private interceptorCallbacks: IInterceptorCallbacksStrategy) {
 
     }
 

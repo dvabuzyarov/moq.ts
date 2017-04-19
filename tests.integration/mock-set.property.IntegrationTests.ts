@@ -37,16 +37,18 @@ describe('Mock: Set property', () => {
 
 
     it('Calls callback', () => {
+        const value = 'a';
         const callback = jasmine.createSpy('callback').and.returnValue(true);
         const object = new Mock<ITestObject>()
-            .setup(instance => {instance.property = It.Is(value => value === 'a')})
+            .setup(instance => {
+                instance.property = It.Is(value => value === value)})
             .callback(callback)
             .object();
 
-        const action = () => object.property = 'a';
+        const action = () => object.property = value;
 
         expect(action).not.toThrow();
-        expect(callback).toHaveBeenCalled();
+        expect(callback).toHaveBeenCalledWith(value);
     });
 
     it('Throws an exception', () => {

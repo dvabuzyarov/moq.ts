@@ -2,15 +2,16 @@ import {
     MethodExpression, GetPropertyExpression, SetPropertyExpression,
     NamedMethodExpression
 } from '../lib/expressions';
-import {Interceptor, IInterceptorCallbacks} from '../lib/interceptor';
+import {Interceptor} from '../lib/interceptor';
 import {getName} from './getName';
+import {IInterceptorCallbacksStrategy} from '../lib/interceptor-callbacks/interceptor-callbacks';
 
 describe('Mock interceptor', () => {
 
-    function callbacksFactory(): IInterceptorCallbacks {
+    function callbacksFactory(): IInterceptorCallbacksStrategy {
         return jasmine.createSpyObj('callbacks', [
-            getName<IInterceptorCallbacks>(instance => instance.intercepted),
-            getName<IInterceptorCallbacks>(instance => instance.hasNamedMethod)]);
+            getName<IInterceptorCallbacksStrategy>(instance => instance.intercepted),
+            getName<IInterceptorCallbacksStrategy>(instance => instance.hasNamedMethod)]);
     }
 
     it('Returns proxy object', () => {

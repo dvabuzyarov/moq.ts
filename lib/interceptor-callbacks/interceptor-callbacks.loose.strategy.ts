@@ -1,12 +1,12 @@
-import {IInterceptorCallbacks} from '../interceptor';
 import {
     Expressions, GetPropertyExpression, MethodExpression, NamedMethodExpression,
     SetPropertyExpression
 } from '../expressions';
 import {DefinedSetups} from '../defined-setups';
 import {Tracker} from '../tracker';
+import {IInterceptorCallbacksStrategy} from './interceptor-callbacks';
 
-export class InterceptorCallbacksLooseStrategy<T> implements IInterceptorCallbacks {
+export class InterceptorCallbacksLooseStrategy<T> implements IInterceptorCallbacksStrategy {
 
     constructor(private definedSetups: DefinedSetups<T>,
                 private tracker: Tracker) {
@@ -22,7 +22,7 @@ export class InterceptorCallbacksLooseStrategy<T> implements IInterceptorCallbac
             if (expression instanceof NamedMethodExpression)
                 return setup.invoke((<NamedMethodExpression>expression).arguments);
             if (expression instanceof SetPropertyExpression)
-                return setup.invoke((<SetPropertyExpression>expression).value);
+                return setup.invoke([(<SetPropertyExpression>expression).value]);
 
             return setup.invoke();
         }

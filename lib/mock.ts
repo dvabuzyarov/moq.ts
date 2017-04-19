@@ -1,13 +1,13 @@
 import {IMock, ISetupInvoke, ISetup} from './moq';
-import {Interceptor, IInterceptorCallbacks} from './interceptor';
+import {Interceptor} from './interceptor';
 import {ExpectedExpressionReflector, IExpectedExpression} from './expected-expressions/expected-expression-reflector';
 import {Tracker} from './tracker';
 import {DefinedSetups} from './defined-setups';
-import {MethodExpression, GetPropertyExpression, SetPropertyExpression, NamedMethodExpression} from './expressions';
 import {Setup} from './setup';
 import {expressionMatcherFactory} from './expression-matchers/factories';
 import {Times} from './times';
 import {Verifier, verifierFactory} from './verifier';
+import {IInterceptorCallbacks, interceptorCallbacksFactory} from './interceptor-callbacks/interceptor-callbacks';
 
 
 export class MockCore<T> implements IMock<T> {
@@ -21,18 +21,10 @@ export class MockCore<T> implements IMock<T> {
                 private definedSetups: DefinedSetups<T>,
                 public tracker: Tracker,
                 private verifier: Verifier<T>,
+                private interceptedCallbacks: IInterceptorCallbacks,
                 public name?: string) {
 
-        const callbacks: IInterceptorCallbacks = {
-            intercepted: (expression: MethodExpression | GetPropertyExpression | SetPropertyExpression): any => {
-                this.tracker.add(expression);
-                const setup = this.definedSetups.get(expression);
-                return setup !== undefined ? setup.invoke() : undefined;
-            },
-            hasNamedMethod: (methodName: string): boolean => definedSetups.hasNamedMethod(methodName)
-        };
-
-        this.interceptor = interceptorFactory(callbacks);
+        this.interceptor = interceptorFactory(interceptedCallbacks);
     }
 
     public setup(expression: IExpectedExpression<T>): ISetup<T> {
@@ -54,13 +46,18 @@ export class MockCore<T> implements IMock<T> {
 
 export class Mock<T> extends MockCore<T> {
     constructor(name?: string) {
+        const definedSetups = new DefinedSetups<T>(expressionMatcherFactory());
+        const tracker = new Tracker();
+        const callbacks = interceptorCallbacksFactory<T>(definedSetups, tracker);
+
         super(
             new ExpectedExpressionReflector(),
             (callback: IInterceptorCallbacks) => new Interceptor<T>(callback),
             (mock: IMock<T>) => new Setup<T>(mock),
-            new DefinedSetups<T>(expressionMatcherFactory()),
-            new Tracker(),
+            definedSetups,
+            tracker,
             verifierFactory<T>(),
+            callbacks,
             name)
     }
 }

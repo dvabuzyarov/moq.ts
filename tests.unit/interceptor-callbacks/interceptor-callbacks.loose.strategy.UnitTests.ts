@@ -1,13 +1,13 @@
 import {Tracker} from '../../lib/tracker';
 import {getName} from '../getName';
 import {DefinedSetups} from '../../lib/defined-setups';
-import {IInterceptorCallbacks} from '../../lib/interceptor';
 import {
     GetPropertyExpression, MethodExpression, NamedMethodExpression,
     SetPropertyExpression
 } from '../../lib/expressions';
 import {ISetupInvoke} from '../../lib/moq';
 import {InterceptorCallbacksLooseStrategy} from '../../lib/interceptor-callbacks/interceptor-callbacks.loose.strategy';
+import {IInterceptorCallbacksStrategy} from '../../lib/interceptor-callbacks/interceptor-callbacks';
 
 describe('Interceptor callbacks loose strategy', () => {
     let definedSetups: DefinedSetups<any>;
@@ -28,7 +28,7 @@ describe('Interceptor callbacks loose strategy', () => {
         ]);
     }
 
-    function StrategyFactory(): IInterceptorCallbacks {
+    function StrategyFactory(): IInterceptorCallbacksStrategy {
         return new InterceptorCallbacksLooseStrategy(definedSetups, tracker);
     }
 
@@ -76,7 +76,7 @@ describe('Interceptor callbacks loose strategy', () => {
 
         expect(actual).toBe(expected);
         expect(definedSetups.get).toHaveBeenCalledWith(expression);
-        expect(setup.invoke).toHaveBeenCalledWith(newValue);
+        expect(setup.invoke).toHaveBeenCalledWith([newValue]);
     });
 
     it('Returns a set value of an intercepted call of named method call', () => {
