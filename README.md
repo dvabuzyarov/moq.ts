@@ -7,8 +7,9 @@
 Moq for Typescript. Inspired by c# [Moq library](https://github.com/moq/moq4).
 
 #### Important
-This implementation is heavely depends on [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object.
-So if your production code is not compatable with this I would recommend you separate you production code and testing code into dedicated projects.
+This implementation depends on [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object.
+So if your production code is not compatible with this I would recommend you separate you production code and testing code into dedicated projects.
+If you need help whit this then ask me.
 
 #### Install
 npm install moq.ts --save-dev
@@ -158,6 +159,27 @@ const actual = object.method(1, 'a');
 mock.verify(instance => instance.method(2, 'a'), Times.Never());
 ```
 
+## Mock behaviour
+You can control mock behavior when accessing to a property without a corresponding setup. 
+```typescript
+    mock = new Mock<ITestObject>()
+    .setBehaviorStrategy(MockBehavior.Loose)
+    //or
+    .setBehaviorStrategy(MockBehavior.Strict);
+```
+The default behavior is strict.
+#####MockBehavior.Strict
+Accessing to an unset property will return undefined value;
+Accessing to an unset method of an object will throw TypeError exception; It does not matter if a method is a part of mocked type.
+If you want to track a method you can define a default setup:
+```typescript
+const mock = new Mock<ITestObject>()
+    .setup(instance => instance.method(It.Is(()=>true), It.Is(()=>true)))
+    .returns(undefined);
+```
+#####MockBehavior.Loose
+Accessing to an unset property or a method will return a pointer to a spy function;
+You can call this function and it will be tracked.
 ######P.S.
 I am a team leader of a team of software developers. We are available for contract work.
 Ready to work with the best practices (TDD, eXtream programming, agile). From your side you need to provide an agile product manager.
