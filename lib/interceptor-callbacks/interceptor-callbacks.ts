@@ -4,7 +4,7 @@ import {DefinedSetups} from '../defined-setups';
 import {Tracker} from '../tracker';
 import {InterceptorCallbacksLooseStrategy} from './interceptor-callbacks.loose.strategy';
 
-export const enum MockBehavior{
+export enum MockBehavior{
     Strict,
     Loose
 }

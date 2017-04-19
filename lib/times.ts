@@ -1,4 +1,4 @@
-﻿export const enum Range{
+﻿export enum Range{
     Exclusive,
     Inclusive
 }
