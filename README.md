@@ -169,7 +169,7 @@ You can control mock behavior when accessing to a property without a correspondi
 ```
 The default behavior is strict.
 
-#####MockBehavior.Strict
+##### MockBehavior.Strict
 Accessing to an unset property will return undefined value;
 Accessing to an unset method of an object will throw TypeError exception; It does not matter if a method is a part of mocked type.
 If you want to track a method you can define a default setup:
@@ -178,7 +178,7 @@ const mock = new Mock<ITestObject>()
     .setup(instance => instance.method(It.Is(()=>true), It.Is(()=>true)))
     .returns(undefined);
 ```
-#####MockBehavior.Loose
+##### MockBehavior.Loose
 Accessing to an unset property or a method will return a pointer to a spy function;
 You can call this function and it will be tracked.
 
@@ -199,7 +199,7 @@ const mock = new Mock<ITestObject>()
 mock.object() instanceof TestObject;// true
 ```
 
-######P.S.
+###### P.S.
 I am a team leader of a team of software developers. We are available for contract work.
 Ready to work with the best practices (TDD, eXtream programming, agile). From your side you need to provide an agile product manager.
 Angular2, Angular1, Nativescript, ASP.NET webAPI, WPF. **Love testing.**
