@@ -15,7 +15,6 @@ import {
 
 export class MockCore<T> implements IMock<T> {
     private interceptor: Interceptor<T>;
-
     constructor(
                 private expressionReflector: ExpectedExpressionReflector,
                 private interceptorFactory: (callbacks: IInterceptorCallbacks)=> Interceptor<T>,
@@ -43,6 +42,10 @@ export class MockCore<T> implements IMock<T> {
 
     public object(): T {
         return this.interceptor.object();
+    }
+
+    public prototypeof(prototype?: any): any {
+        return this.interceptor.prototypeof(prototype);
     }
 
     public setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T> {

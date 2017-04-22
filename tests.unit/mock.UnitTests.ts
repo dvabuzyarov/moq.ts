@@ -56,7 +56,8 @@ describe('MockCore', () => {
 
     function interceptorFactory(): Interceptor<any> {
         return <Interceptor<any>>(<any>jasmine.createSpyObj('interceptor', [
-            getName<Interceptor<any>>(instance => instance.object)
+            getName<Interceptor<any>>(instance => instance.object),
+            getName<Interceptor<any>>(instance => instance.prototypeof),
         ]));
     }
 
@@ -140,5 +141,25 @@ describe('MockCore', () => {
         expect(setupFactory).toHaveBeenCalledWith(mock);
         expect(reflector.reflect).toHaveBeenCalledWith(expression);
         expect(definedSetups.add).toHaveBeenCalledWith(expectedExpression, setup);
+    });
+
+    it('Sets instance of object', () => {
+        const prototype = {};
+
+        const mock = MockCoreFactory();
+        mock.prototypeof(prototype);
+
+        expect(interceptor.prototypeof).toHaveBeenCalledWith(prototype);
+    });
+
+    it('Returns the current instance of object', () => {
+        const prototype = {};
+        (<jasmine.Spy>interceptor.prototypeof).and.returnValue(prototype);
+
+        const mock = MockCoreFactory();
+        const actual = mock.prototypeof();
+
+        expect(actual).toBe(prototype);
+        expect(interceptor.prototypeof).toHaveBeenCalledWith(undefined);
     });
 });
