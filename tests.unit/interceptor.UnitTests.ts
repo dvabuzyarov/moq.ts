@@ -206,7 +206,7 @@ describe('Mock interceptor', () => {
         const callbacks = callbacksFactory();
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
-        const actual = interceptor.instanceof(PrototypeClass);
+        const actual = interceptor.prototypeof(PrototypeClass);
 
         expect(object instanceof PrototypeClass).toBe(true);
         expect(object instanceof Function).toBe(false);
@@ -221,9 +221,9 @@ describe('Mock interceptor', () => {
 
         const callbacks = callbacksFactory();
         const interceptor = new Interceptor<Function>(callbacks);
-        interceptor.instanceof(PrototypeClass);
+        interceptor.prototypeof(PrototypeClass);
 
-        const actual = interceptor.instanceof();
+        const actual = interceptor.prototypeof();
 
         expect(actual).toEqual(PrototypeClass);
     });
@@ -231,12 +231,29 @@ describe('Mock interceptor', () => {
     it('Sets null as instanceof value', ()=>{
         const callbacks = callbacksFactory();
         const interceptor = new Interceptor<Function>(callbacks);
-        interceptor.instanceof(null);
+        interceptor.prototypeof(null);
         const object = interceptor.object();
 
-        const actual = interceptor.instanceof();
+        const actual = interceptor.prototypeof();
 
         expect(actual).toBeNull();
         expect(Object.getPrototypeOf(object)).toBeNull();
+    });
+
+    it('Returns prototype of object set through setPrototypeOf', ()=>{
+        class PrototypeClass {}
+
+        const callbacks = callbacksFactory();
+        const interceptor = new Interceptor<Function>(callbacks);
+        const object = interceptor.object();
+
+        Object.setPrototypeOf(object, PrototypeClass);
+        const actual = interceptor.prototypeof();
+
+        expect(object instanceof PrototypeClass).toBe(true);
+        expect(object instanceof Function).toBe(false);
+        expect(object instanceof Array).toBe(false);
+
+        expect(actual).toBe(PrototypeClass);
     });
 });

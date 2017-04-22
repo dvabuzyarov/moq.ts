@@ -25,7 +25,7 @@ export class Interceptor<T> {
         return this._proxy;
     }
 
-    public instanceof(prototype?: any): any {
+    public prototypeof(prototype?: any): any {
         if (prototype !== undefined)
             this._prototype = prototype;
 
@@ -69,6 +69,11 @@ export class Interceptor<T> {
                 if (this._prototype === null)
                     return null;
                 return this._prototype.prototype;
+            },
+            setPrototypeOf: (target, prototype) => {
+                if (prototype !== undefined)
+                    this._prototype = prototype;
+                return true;
             }
         };
 
