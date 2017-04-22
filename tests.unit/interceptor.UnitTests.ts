@@ -201,13 +201,42 @@ describe('Mock interceptor', () => {
     });
 
     it('Returns object that instanceof is of provided type', ()=>{
-        class PrototypeClass {};
-        
+        class PrototypeClass {}
+
         const callbacks = callbacksFactory();
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
-        interceptor.setPrototypeOf(PrototypeClass);
+        const actual = interceptor.instanceof(PrototypeClass);
 
         expect(object instanceof PrototypeClass).toBe(true);
+        expect(object instanceof Function).toBe(false);
+        expect(object instanceof Array).toBe(false);
+
+        expect(actual).toBe(PrototypeClass);
+    });
+
+
+    it('Returns the current prototype', ()=>{
+        class PrototypeClass {}
+
+        const callbacks = callbacksFactory();
+        const interceptor = new Interceptor<Function>(callbacks);
+        interceptor.instanceof(PrototypeClass);
+
+        const actual = interceptor.instanceof();
+
+        expect(actual).toEqual(PrototypeClass);
+    });
+
+    it('Sets null as instanceof value', ()=>{
+        const callbacks = callbacksFactory();
+        const interceptor = new Interceptor<Function>(callbacks);
+        interceptor.instanceof(null);
+        const object = interceptor.object();
+
+        const actual = interceptor.instanceof();
+
+        expect(actual).toBeNull();
+        expect(Object.getPrototypeOf(object)).toBeNull();
     });
 });

@@ -25,8 +25,11 @@ export class Interceptor<T> {
         return this._proxy;
     }
 
-    public setPrototypeOf(prototype: any): any {
-        this._prototype = prototype.prototype;
+    public instanceof(prototype?: any): any {
+        if (prototype !== undefined)
+            this._prototype = prototype;
+
+        return this._prototype;
     }
 
     private createObject(): T {
@@ -63,10 +66,13 @@ export class Interceptor<T> {
             },
 
             getPrototypeOf: (target) => {
-                return this._prototype;
+                if (this._prototype === null)
+                    return null;
+                return this._prototype.prototype;
             }
         };
 
-        return new Proxy(function () { }, options);
+        return new Proxy(function () {
+        }, options);
     }
 }
