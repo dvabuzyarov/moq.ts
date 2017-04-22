@@ -192,4 +192,22 @@ describe('Mock interceptor', () => {
         expect(actual).toBe(expected);
     });
 
+    it('Returns object that instanceof is a function by default', ()=>{
+        const callbacks = callbacksFactory();
+        const interceptor = new Interceptor<Function>(callbacks);
+        const object = interceptor.object();
+
+        expect(object instanceof Function).toBe(true);
+    });
+
+    it('Returns object that instanceof is of provided type', ()=>{
+        class PrototypeClass {};
+        
+        const callbacks = callbacksFactory();
+        const interceptor = new Interceptor<Function>(callbacks);
+        const object = interceptor.object();
+        interceptor.setPrototypeOf(PrototypeClass);
+
+        expect(object instanceof PrototypeClass).toBe(true);
+    });
 });

@@ -1,4 +1,5 @@
-import {GetPropertyExpression, MethodExpression, NamedMethodExpression,
+import {
+    GetPropertyExpression, MethodExpression, NamedMethodExpression,
     SetPropertyExpression
 } from './expressions';
 import {IInterceptorCallbacksStrategy} from './interceptor-callbacks/interceptor-callbacks';
@@ -7,19 +8,25 @@ declare var Proxy: any;
 
 export class Interceptor<T> {
 
-    private _object: T;
+
+    private _proxy: T;
+    private _prototype: any;
     private _values = {};
 
     constructor(private interceptorCallbacks: IInterceptorCallbacksStrategy) {
-
+        this._prototype = Function;
     }
 
     public object(): T {
-        if (this._object === undefined) {
-            this._object = this.createObject();
+        if (this._proxy === undefined) {
+            this._proxy = this.createObject();
         }
 
-        return this._object;
+        return this._proxy;
+    }
+
+    public setPrototypeOf(prototype: any): any {
+        this._prototype = prototype.prototype;
     }
 
     private createObject(): T {
@@ -53,6 +60,10 @@ export class Interceptor<T> {
             apply: (target, thisArg, args) => {
                 const expression = new MethodExpression(args);
                 return this.interceptorCallbacks.intercepted(expression);
+            },
+
+            getPrototypeOf: (target) => {
+                return this._prototype;
             }
         };
 
