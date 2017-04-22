@@ -182,6 +182,23 @@ const mock = new Mock<ITestObject>()
 Accessing to an unset property or a method will return a pointer to a spy function;
 You can call this function and it will be tracked.
 
+## Mock prototype
+If you need to make work instanceof operator or you need to deal with prototype of the mock object you can 
+use prototypeof function of Mock class. Or you can use [Object.getPrototypeOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf) or [Object.setPrototypeOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf) functions
+on mock object.
+
+```typescript
+class TestObject implements ITestObject {
+    
+}
+
+const mock = new Mock<ITestObject>()
+                .prototypeof(TestObject)
+                .object();
+
+mock.object() instanceof TestObject;// true
+```
+
 ######P.S.
 I am a team leader of a team of software developers. We are available for contract work.
 Ready to work with the best practices (TDD, eXtream programming, agile). From your side you need to provide an agile product manager.
