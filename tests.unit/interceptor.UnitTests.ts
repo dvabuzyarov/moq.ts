@@ -6,6 +6,8 @@ import {Interceptor} from '../lib/interceptor';
 import {getName} from './getName';
 import {IInterceptorCallbacksStrategy} from '../lib/interceptor-callbacks/interceptor-callbacks';
 
+declare var Object: any;
+
 describe('Mock interceptor', () => {
 
     function callbacksFactory(): IInterceptorCallbacksStrategy {

@@ -1,3 +1,5 @@
+declare var Proxy: any;
+
 export interface INameSelector<T> {
     (instance: T): any;
 }
