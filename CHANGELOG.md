@@ -19,3 +19,8 @@ v2.3.1
 ===================
 
   * It.IsAny predicate has been introduced.
+    
+   v2.5.0
+===================
+
+  * In case of false assertion the dump of the tracked expressions is printed.
