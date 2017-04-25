@@ -1,48 +1,38 @@
 import {GetPropertyExpression} from '../../lib/expressions';
 import {VerifyFormatter} from '../../lib/formatters/verify-formatter';
-import {ExpressionFormatter} from '../../lib/formatters/expression-formatter';
+import {getName} from '../getName';
+import {ExpectedExpressionFormatter} from '../../lib/formatters/expected-expression-formatter';
+import {TrackedExpressionsFormatter} from '../../lib/formatters/tracked-expressions-formatter';
 
 describe('Verify message formatter', () => {
-    function expressionFormatterFactory(): ExpressionFormatter {
-        const formatter = jasmine.createSpy('constant formatter');
-        return (<any>{
-            format: formatter
-        } as ExpressionFormatter)
+    function expectedExpressionFormatterFactory(): ExpectedExpressionFormatter {
+        return jasmine.createSpyObj('expected expression formatter', [getName<ExpectedExpressionFormatter>(instance => instance.format)]);
+    }
+    function trackedExpressionsFormatterFactory(): TrackedExpressionsFormatter {
+        return jasmine.createSpyObj('tracked expressions formatter', [getName<TrackedExpressionsFormatter>(instance => instance.format)]);
     }
 
-    it('Returns formatted description for verify message with mock name', ()=> {
+    it('Returns formatted description for a verify assertion', ()=> {
         const mockName = 'mockName';
         const timesMessage = 'Should be called once';
         const haveBeenCalledTimes = 2;
         const expressionDescription = 'expression description';
+        const trackedExpressionsDescription = 'tracked expressions description';
+        const trackedExpressions = [];
 
         const expression = new GetPropertyExpression('name');
-        const expressionFormatter = expressionFormatterFactory();
+        const expectedExpressionFormatter = expectedExpressionFormatterFactory();
 
-        (<jasmine.Spy>expressionFormatter.format).and.returnValue(expressionDescription);
+        (<jasmine.Spy>expectedExpressionFormatter.format).and.returnValue(expressionDescription);
+        const trackedExpressionsFormatter = trackedExpressionsFormatterFactory();
 
-        const formatter = new VerifyFormatter(expressionFormatter);
-        const actual = formatter.format(expression, timesMessage, haveBeenCalledTimes, mockName);
+        (<jasmine.Spy>trackedExpressionsFormatter.format).and.returnValue(trackedExpressionsDescription);
+        const formatter = new VerifyFormatter(expectedExpressionFormatter, trackedExpressionsFormatter);
+        const actual = formatter.format(expression, timesMessage, haveBeenCalledTimes, trackedExpressions, mockName);
 
-        expect(actual).toBe(`${expressionDescription} of ${mockName} ${timesMessage.toLowerCase()}, but was called ${haveBeenCalledTimes} time(s)`);
-        expect(expressionFormatter.format).toHaveBeenCalledWith(expression);
-    });
-
-    it('Returns formatted description for verify message without mock name', ()=> {
-        const timesMessage = 'Should be called once';
-        const haveBeenCalledTimes = 2;
-        const expressionDescription = 'expression description';
-
-        const expression = new GetPropertyExpression('name');
-        const expressionFormatter = expressionFormatterFactory();
-
-        (<jasmine.Spy>expressionFormatter.format).and.returnValue(expressionDescription);
-
-        const formatter = new VerifyFormatter(expressionFormatter);
-        const actual = formatter.format(expression, timesMessage, haveBeenCalledTimes);
-
-        expect(actual).toBe(`${expressionDescription} ${timesMessage.toLowerCase()}, but was called ${haveBeenCalledTimes} time(s)`);
-        expect(expressionFormatter.format).toHaveBeenCalledWith(expression);
+        expect(actual).toBe(`${expressionDescription}\n-------------------------------------\nTracked calls:\n${trackedExpressionsDescription}`);
+        expect(expectedExpressionFormatter.format).toHaveBeenCalledWith(expression, timesMessage, haveBeenCalledTimes, mockName);
+        expect(trackedExpressionsFormatter.format).toHaveBeenCalledWith(trackedExpressions);
     });
 
 });

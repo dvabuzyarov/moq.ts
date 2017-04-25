@@ -28,7 +28,7 @@ export class Verifier<T>{
         const callCount = this.callCounter.count(expression, expressions);
         const passed = times.test(callCount);
         if (passed === false) {
-            const message = this.verifyFormatter.format(expression, times.message, callCount, mockName);
+            const message = this.verifyFormatter.format(expression, times.message, callCount, expressions, mockName);
             throw new VerifyError(message);
         }
     }

@@ -1,20 +1,23 @@
 import {ExpectedExpressions} from '../expected-expressions/expected-expressions';
-import {ExpressionFormatter} from './expression-formatter';
-import {expressionFormatterFactory} from './factories';
+import {Expressions} from '../expressions';
+import {ExpectedExpressionFormatter, expectedExpressionFormatterFactory} from './expected-expression-formatter';
+import {TrackedExpressionsFormatter, trackedExpressionsFormatterFactory} from './tracked-expressions-formatter';
 
-export function verifyFormatterFactory (): VerifyFormatter {
-    return new VerifyFormatter(expressionFormatterFactory());
+export function verifyFormatterFactory(): VerifyFormatter {
+    return new VerifyFormatter(expectedExpressionFormatterFactory(), trackedExpressionsFormatterFactory());
 }
 
 export class VerifyFormatter {
 
-    constructor(private expressionFormatter: ExpressionFormatter) {
+    constructor(
+        private expectedExpressionFormatter: ExpectedExpressionFormatter,
+        private trackedExpressionsFormatter: TrackedExpressionsFormatter) {
 
     }
 
-    public format(expected: ExpectedExpressions<any>, timesMessage: string, haveBeenCalledTimes: number, mockName?: string): string {
-        const expressionDescription = this.expressionFormatter.format(expected);
-        const mockDescription = mockName !== undefined ? ` of ${mockName}` : '';
-        return `${expressionDescription}${mockDescription} ${timesMessage.toLowerCase()}, but was called ${haveBeenCalledTimes} time(s)`;
+    public format(expected: ExpectedExpressions<any>, timesMessage: string, haveBeenCalledTimes: number, trackedExpressions: Expressions[], mockName?: string): string {
+        const expectedExpressionMessage = this.expectedExpressionFormatter.format(expected, timesMessage, haveBeenCalledTimes, mockName);
+        const trackedExpressionsMessage = this.trackedExpressionsFormatter.format(trackedExpressions);
+        return `${expectedExpressionMessage}\n-------------------------------------\nTracked calls:\n${trackedExpressionsMessage}`
     }
 }
