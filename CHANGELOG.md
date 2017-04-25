@@ -14,3 +14,8 @@ v2.3.1
 ===================
 
   * The NPM package is compiled as es5 code.
+  
+  v2.4.0
+===================
+
+  * It.IsAny predicate has been introduced.
