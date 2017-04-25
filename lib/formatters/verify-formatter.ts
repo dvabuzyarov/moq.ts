@@ -18,6 +18,7 @@ export class VerifyFormatter {
     public format(expected: ExpectedExpressions<any>, timesMessage: string, haveBeenCalledTimes: number, trackedExpressions: Expressions[], mockName?: string): string {
         const expectedExpressionMessage = this.expectedExpressionFormatter.format(expected, timesMessage, haveBeenCalledTimes, mockName);
         const trackedExpressionsMessage = this.trackedExpressionsFormatter.format(trackedExpressions);
-        return `${expectedExpressionMessage}\n-------------------------------------\nTracked calls:\n${trackedExpressionsMessage}`
+        const delimiter = '-------------------------------------';
+        return `${expectedExpressionMessage}\n${delimiter}\nTracked calls:\n${trackedExpressionsMessage}\n${delimiter}\n`
     }
 }

@@ -10,7 +10,7 @@ describe('Get property expression formatter', () => {
         const formatter = new GetPropertyExpressionFormatter();
         const actual = formatter.format(expression);
 
-        expect(actual).toBe(`The property \'${name}\'`);
+        expect(actual).toBe(`Getter of \'${name}\'`);
     });
 
 });

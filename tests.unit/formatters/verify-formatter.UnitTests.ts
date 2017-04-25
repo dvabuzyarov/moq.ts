@@ -30,7 +30,7 @@ describe('Verify message formatter', () => {
         const formatter = new VerifyFormatter(expectedExpressionFormatter, trackedExpressionsFormatter);
         const actual = formatter.format(expression, timesMessage, haveBeenCalledTimes, trackedExpressions, mockName);
 
-        expect(actual).toBe(`${expressionDescription}\n-------------------------------------\nTracked calls:\n${trackedExpressionsDescription}`);
+        expect(actual).toBe(`${expressionDescription}\n-------------------------------------\nTracked calls:\n${trackedExpressionsDescription}\n-------------------------------------\n`);
         expect(expectedExpressionFormatter.format).toHaveBeenCalledWith(expression, timesMessage, haveBeenCalledTimes, mockName);
         expect(trackedExpressionsFormatter.format).toHaveBeenCalledWith(trackedExpressions);
     });
