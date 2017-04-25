@@ -1,6 +1,6 @@
 {
   "name": "moq.ts",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "description": "Moq library for Typescript inspired by c# moq",
   "license": "Apache-2.0",
   "author": {
