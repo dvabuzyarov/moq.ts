@@ -13,6 +13,11 @@ export class TrackedExpressionsFormatter {
     }
 
     public format(trackedExpressions: Expressions[]): string {
-        throw new Error('not implemented');
+        let result: string = '';
+        for (const expression of trackedExpressions) {
+            result += `${this.expressionFormatter.format(expression)}\n`;
+        }
+
+        return result.substr(0, result.length - 1);
     }
 }
