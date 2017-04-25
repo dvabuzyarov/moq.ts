@@ -12,6 +12,10 @@ export class It<T> {
         return new It(predicate);
     }
 
+    public static IsAny<T>(): It<T>|any {
+        return new It(()=>true);
+    }
+
     public test(instance: T): boolean{
         return this.predicate(instance);
     }
