@@ -11,7 +11,7 @@ export class DefinedSetups<T> {
     }
 
     public add(key: ExpectedExpressions<T>, setup: ISetupInvoke<T>): void {
-        this.setups.push([key, setup]);
+        this.setups.unshift([key, setup]);
     }
 
     public get (expression: Expressions): ISetupInvoke<T>{

@@ -7,6 +7,7 @@ import {
 } from '../lib/expected-expressions/expected-expressions';
 import {DefinedSetups} from '../lib/defined-setups';
 import {ExpressionMatcher} from '../lib/expression-matchers/expression-matcher';
+import {getName} from './getName';
 
 describe('List of defined setup', () => {
 
@@ -34,6 +35,28 @@ describe('List of defined setup', () => {
         const actual = listSetup.get(getPropertyExpression);
 
         expect(actual).toBe(setup);
+    });
+
+    it('Returns the latest setup', ()=> {
+        const name = 'name';
+        const setup1 = new Setup<any>(undefined);
+        const setup2 = new Setup<any>(undefined);
+        const expectedGetPropertyExpression = new ExpectedGetPropertyExpression(name);
+        const getPropertyExpression = new GetPropertyExpression(name);
+
+        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean =>{
+            expect(left).toBe(getPropertyExpression);
+            expect(right).toBe(expectedGetPropertyExpression);
+            return true;
+        };
+
+        const listSetup = new DefinedSetups<any>(expressionMatcherFactory(matcher));
+        listSetup.add(expectedGetPropertyExpression, setup1);
+        listSetup.add(expectedGetPropertyExpression, setup2);
+
+        const actual = listSetup.get(getPropertyExpression);
+
+        expect(actual).toBe(setup2);
     });
 
     it('Skips setup that expected expression does not match to an expression', ()=> {

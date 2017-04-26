@@ -24,3 +24,8 @@ v2.3.1
 ===================
 
   * In case of false assertion the dump of the tracked expressions is printed.
+  
+  v2.5.1
+===================
+
+  * The latest setup has precedence
