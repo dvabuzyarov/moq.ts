@@ -5,7 +5,7 @@ import {getName} from './getName';
 import {DefinedSetups} from '../lib/defined-setups';
 import {Verifier} from '../lib/verifier';
 import {Interceptor} from '../lib/interceptor';
-import {IMock, ISetupInvoke} from '../lib/moq';
+import {IMock, ISetup, ISetupInvoke} from '../lib/moq';
 import {IInterceptorCallbacks, MockBehavior} from '../lib/interceptor-callbacks/interceptor-callbacks';
 import {Times} from '../lib/times';
 
@@ -128,7 +128,7 @@ describe('MockCore', () => {
 
     it('Setups mock', () => {
 
-        const setup = {};
+        const setup = <ISetup<any>>{};
         const expression = instance => instance['property'];
         const expectedExpression = {};
         (<jasmine.Spy>reflector.reflect).and.returnValue(expectedExpression);

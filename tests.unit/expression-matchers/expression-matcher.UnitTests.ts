@@ -56,7 +56,7 @@ describe('Expression matcher', () => {
         const left = new GetPropertyExpression('left name');
         const right = new ExpectedGetPropertyExpression('right name');
 
-        const expected = 'some unique value';
+        const expected = true;
         const matched = jasmine.createSpy('matched').and.returnValue(expected);
         const getPropertyExpressionMatcher = argumentsMatcherFactory<GetPropertyExpressionMatcher>(matched);
         const matcher = new ExpressionMatcher(getPropertyExpressionMatcher, undefined, undefined, undefined);
@@ -70,7 +70,7 @@ describe('Expression matcher', () => {
         const left = new GetPropertyExpression('name');
         const right = It.Is(()=> undefined);
 
-        const expected = 'some unique value';
+        const expected = true;
         const matched = jasmine.createSpy('matched').and.returnValue(expected);
         const getPropertyExpressionMatcher = argumentsMatcherFactory<GetPropertyExpressionMatcher>(matched);
         const matcher = new ExpressionMatcher(getPropertyExpressionMatcher, undefined, undefined, undefined);
@@ -84,7 +84,7 @@ describe('Expression matcher', () => {
         const left = new SetPropertyExpression('left name', 'left value');
         const right = new ExpectedSetPropertyExpression('right name', 'right value');
 
-        const expected = 'some unique value';
+        const expected = true;
         const matched = jasmine.createSpy('matched').and.returnValue(expected);
         const setPropertyExpressionMatcher = argumentsMatcherFactory<SetPropertyExpressionMatcher>(matched);
         const matcher = new ExpressionMatcher(undefined, setPropertyExpressionMatcher, undefined, undefined);
@@ -98,7 +98,7 @@ describe('Expression matcher', () => {
         const left = new SetPropertyExpression('name', 'value');
         const right = It.Is(()=> undefined);
 
-        const expected = 'some unique value';
+        const expected = true;
         const matched = jasmine.createSpy('matched').and.returnValue(expected);
         const setPropertyExpressionMatcher = argumentsMatcherFactory<SetPropertyExpressionMatcher>(matched);
         const matcher = new ExpressionMatcher(undefined, setPropertyExpressionMatcher, undefined, undefined);
@@ -112,7 +112,7 @@ describe('Expression matcher', () => {
         const left = new MethodExpression([]);
         const right = new ExpectedMethodExpression([]);
 
-        const expected = 'some unique value';
+        const expected = true;
         const matched = jasmine.createSpy('matched').and.returnValue(expected);
         const methodExpressionMatcher = argumentsMatcherFactory<MethodExpressionMatcher>(matched);
         const matcher = new ExpressionMatcher(undefined, undefined, methodExpressionMatcher, undefined);
@@ -126,7 +126,7 @@ describe('Expression matcher', () => {
         const left = new MethodExpression([]);
         const right = It.Is(()=> undefined);
 
-        const expected = 'some unique value';
+        const expected = true;
         const matched = jasmine.createSpy('matched').and.returnValue(expected);
         const methodExpressionMatcher = argumentsMatcherFactory<MethodExpressionMatcher>(matched);
         const matcher = new ExpressionMatcher(undefined, undefined, methodExpressionMatcher, undefined);
@@ -140,7 +140,7 @@ describe('Expression matcher', () => {
         const left = new NamedMethodExpression('name', []);
         const right = new ExpectedNamedMethodExpression('name', []);
 
-        const expected = 'some unique value';
+        const expected = true;
         const matched = jasmine.createSpy('matched').and.returnValue(expected);
         const namedMethodExpressionMatcher = argumentsMatcherFactory<NamedMethodExpressionMatcher>(matched);
         const matcher = new ExpressionMatcher(undefined, undefined, undefined, namedMethodExpressionMatcher);
@@ -154,7 +154,7 @@ describe('Expression matcher', () => {
         const left = new NamedMethodExpression('name', []);
         const right = It.Is(()=> undefined);
 
-        const expected = 'some unique value';
+        const expected = true;
         const matched = jasmine.createSpy('matched').and.returnValue(expected);
         const namedMethodExpressionMatcher = argumentsMatcherFactory<NamedMethodExpressionMatcher>(matched);
         const matcher = new ExpressionMatcher(undefined, undefined, undefined, namedMethodExpressionMatcher);
