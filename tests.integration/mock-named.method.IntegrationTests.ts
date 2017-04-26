@@ -24,11 +24,12 @@ describe('Mock: Named method', () => {
     });
 
 
-    //todo: doesn't work since there is no way to make out a property access and function call
-    xit('Returns value with a predicated setup', () => {
+    //todo: it will work only in Loose mode
+    it('Returns value with a predicated setup', () => {
         const value = 'value';
 
         const object = new Mock<ITestObject>()
+            .setBehaviorStrategy(MockBehavior.Loose)
             .setup(instance => It.Is((expression: ExpectedNamedMethodExpression) => expression.name === 'method' && expression.arguments[0] === 1))
             .returns(value)
             .object();
