@@ -19,6 +19,6 @@ export interface IMock<T> {
     setup(expression: IExpectedExpression<T>): ISetup<T>;
     tracker: Tracker;
     verify(expression: IExpectedExpression<T>, times?: Times): void;
-    prototypeof(prototype?:any): any;
+    prototypeof(prototype?:any): IMock<T>;
     setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T>
 }
