@@ -39,6 +39,24 @@ describe('Mock: Named method', () => {
         expect(actual).toBe(value);
     });
 
+    //todo: it will work strict mode only if prototype has the method
+    it('Returns value with a predicated setup', () => {
+        const methodName = 'method';
+        const value = 'value';
+        const prototype = {};
+        prototype[methodName] = ()=>{};
+
+        const object = new Mock<ITestObject>()
+            .prototypeof(prototype)
+            .setup(instance => It.Is((expression: ExpectedNamedMethodExpression) => expression.name === methodName && expression.arguments[0] === 1))
+            .returns(value)
+            .object();
+
+        const actual = object.method(1);
+
+        expect(actual).toBe(value);
+    });
+
     it('Throws TypeError exception when call an unset method in strict mode', () => {
         const value = 'value';
         const object = new Mock<ITestObject>()

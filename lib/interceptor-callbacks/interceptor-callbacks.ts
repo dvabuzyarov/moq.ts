@@ -11,7 +11,7 @@ export enum MockBehavior{
 
 export interface IInterceptorCallbacksStrategy {
     intercepted(expression: Expressions): any;
-    hasNamedMethod(methodName: string): boolean;
+    hasNamedMethod(methodName: string, prototype: any): boolean;
 }
 
 export interface IInterceptorCallbacks extends IInterceptorCallbacksStrategy {
@@ -38,8 +38,8 @@ export class InterceptorCallbacks<T> implements IInterceptorCallbacks {
         return this.activeStrategy.intercepted(expression);
     }
 
-    public hasNamedMethod(methodName: string): boolean {
-        return this.activeStrategy.hasNamedMethod(methodName);
+    public hasNamedMethod(methodName: string, prototype: any): boolean {
+        return this.activeStrategy.hasNamedMethod(methodName, prototype);
     }
 
     public setBehaviorStrategy(behavior: MockBehavior): void {

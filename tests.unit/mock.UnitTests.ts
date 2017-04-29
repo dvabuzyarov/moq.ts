@@ -152,14 +152,14 @@ describe('MockCore', () => {
         expect(interceptor.prototypeof).toHaveBeenCalledWith(prototype);
     });
 
-    it('Returns the current instance of object', () => {
+    it('Returns the current instance of mock', () => {
         const prototype = {};
         (<jasmine.Spy>interceptor.prototypeof).and.returnValue(prototype);
 
         const mock = MockCoreFactory();
         const actual = mock.prototypeof();
 
-        expect(actual).toBe(prototype);
+        expect(actual).toBe(mock);
         expect(interceptor.prototypeof).toHaveBeenCalledWith(undefined);
     });
 });

@@ -130,18 +130,55 @@ describe('Interceptor callbacks strict strategy', () => {
 
         (<jasmine.Spy>definedSetups.hasNamedMethod).and.returnValue(true);
         const strategy = StrategyFactory();
-        const actual = strategy.hasNamedMethod(methodName);
+        const actual = strategy.hasNamedMethod(methodName, {});
 
         expect(actual).toBe(true);
         expect(definedSetups.hasNamedMethod).toHaveBeenCalledWith(methodName);
     });
 
-    it('Returns false when there is no named method', () => {
+    it('Returns true when there is no a named method but prototype has it', () => {
+        const methodName = 'a method name';
+        const prototype = {};
+        prototype[methodName] = ()=>{};
+
+        (<jasmine.Spy>definedSetups.hasNamedMethod).and.returnValue(false);
+        const strategy = StrategyFactory();
+        const actual = strategy.hasNamedMethod(methodName, prototype);
+
+        expect(actual).toBe(true);
+        expect(definedSetups.hasNamedMethod).toHaveBeenCalledWith(methodName);
+    });
+
+    it('Returns false when there is no named method and prototype does not have it', () => {
         const methodName = 'a method name';
 
         (<jasmine.Spy>definedSetups.hasNamedMethod).and.returnValue(false);
         const strategy = StrategyFactory();
-        const actual = strategy.hasNamedMethod(methodName);
+        const actual = strategy.hasNamedMethod(methodName, {});
+
+        expect(actual).toBe(false);
+        expect(definedSetups.hasNamedMethod).toHaveBeenCalledWith(methodName);
+    });
+
+    it('Returns false when there is no named method and prototype has a property that holds anything else but not a function', () => {
+        const methodName = 'a method name';
+        const prototype = {};
+        prototype[methodName] = 'non function value';
+
+        (<jasmine.Spy>definedSetups.hasNamedMethod).and.returnValue(false);
+        const strategy = StrategyFactory();
+        const actual = strategy.hasNamedMethod(methodName, prototype);
+
+        expect(actual).toBe(false);
+        expect(definedSetups.hasNamedMethod).toHaveBeenCalledWith(methodName);
+    });
+
+    it('Returns false when there is no named method and prototype is null', () => {
+        const methodName = 'a method name';
+
+        (<jasmine.Spy>definedSetups.hasNamedMethod).and.returnValue(false);
+        const strategy = StrategyFactory();
+        const actual = strategy.hasNamedMethod(methodName, null);
 
         expect(actual).toBe(false);
         expect(definedSetups.hasNamedMethod).toHaveBeenCalledWith(methodName);

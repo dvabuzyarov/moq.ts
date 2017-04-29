@@ -29,7 +29,7 @@ export class InterceptorCallbacksLooseStrategy<T> implements IInterceptorCallbac
         return undefined;
     }
 
-    public hasNamedMethod(methodName: string): boolean {
+    public hasNamedMethod(methodName: string, prototype: any): boolean {
         const getPropertyExpression = new GetPropertyExpression(methodName);
         const setup = this.definedSetups.get(getPropertyExpression);
         return setup !== undefined ? false : true;

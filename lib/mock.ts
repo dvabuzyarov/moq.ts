@@ -44,8 +44,9 @@ export class MockCore<T> implements IMock<T> {
         return this.interceptor.object();
     }
 
-    public prototypeof(prototype?: any): any {
-        return this.interceptor.prototypeof(prototype);
+    public prototypeof(prototype?: any): IMock<T> {
+        this.interceptor.prototypeof(prototype);
+        return this;
     }
 
     public setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T> {

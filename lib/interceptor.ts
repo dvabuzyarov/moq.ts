@@ -41,7 +41,7 @@ export class Interceptor<T> {
                 if (this._values.hasOwnProperty(name) === true)
                     return this._values[name];
 
-                if (this.interceptorCallbacks.hasNamedMethod(name) === false)
+                if (this.interceptorCallbacks.hasNamedMethod(name, this._prototype) === false)
                     return getPropertyResult;
 
                 return (...args) => {

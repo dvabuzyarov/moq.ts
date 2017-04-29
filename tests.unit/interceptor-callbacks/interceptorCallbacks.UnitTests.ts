@@ -37,14 +37,15 @@ describe('Interceptor callbacks', () => {
         const expected = {};
         const propertyName = 'property';
         const expression = new GetPropertyExpression(propertyName);
+        const prototype = {};
         (<jasmine.Spy>strictStrategy.intercepted).and.returnValue(expected);
 
         const callbacks = InterceptorCallbacksFactory();
         const actual = callbacks.intercepted(expression);
-        callbacks.hasNamedMethod(propertyName);
+        callbacks.hasNamedMethod(propertyName, prototype);
 
         expect(strictStrategy.intercepted).toHaveBeenCalledWith(expression);
-        expect(strictStrategy.hasNamedMethod).toHaveBeenCalledWith(propertyName);
+        expect(strictStrategy.hasNamedMethod).toHaveBeenCalledWith(propertyName, prototype);
         expect(actual).toBe(expected);
     });
 
@@ -53,15 +54,16 @@ describe('Interceptor callbacks', () => {
         const expected = {};
         const propertyName = 'property';
         const expression = new GetPropertyExpression(propertyName);
+        const prototype = {};
         (<jasmine.Spy>looseStrategy.intercepted).and.returnValue(expected);
 
         const callbacks = InterceptorCallbacksFactory();
         callbacks.setBehaviorStrategy(MockBehavior.Loose);
         const actual = callbacks.intercepted(expression);
-        callbacks.hasNamedMethod(propertyName);
+        callbacks.hasNamedMethod(propertyName, prototype);
 
         expect(looseStrategy.intercepted).toHaveBeenCalledWith(expression);
-        expect(looseStrategy.hasNamedMethod).toHaveBeenCalledWith(propertyName);
+        expect(looseStrategy.hasNamedMethod).toHaveBeenCalledWith(propertyName, prototype);
         expect(actual).toBe(expected);
     });
 
@@ -70,16 +72,17 @@ describe('Interceptor callbacks', () => {
         const expected = {};
         const propertyName = 'property';
         const expression = new GetPropertyExpression(propertyName);
-        (<jasmine.Spy>strictStrategy.intercepted).and.returnValue(expected);
+        const prototype = {};
 
+        (<jasmine.Spy>strictStrategy.intercepted).and.returnValue(expected);
         const callbacks = InterceptorCallbacksFactory();
         callbacks.setBehaviorStrategy(MockBehavior.Loose);
         callbacks.setBehaviorStrategy(MockBehavior.Strict);
         const actual = callbacks.intercepted(expression);
-        callbacks.hasNamedMethod(propertyName);
+        callbacks.hasNamedMethod(propertyName, prototype);
 
         expect(strictStrategy.intercepted).toHaveBeenCalledWith(expression);
-        expect(strictStrategy.hasNamedMethod).toHaveBeenCalledWith(propertyName);
+        expect(strictStrategy.hasNamedMethod).toHaveBeenCalledWith(propertyName, prototype);
         expect(actual).toBe(expected);
     });
 });

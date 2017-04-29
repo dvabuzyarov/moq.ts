@@ -26,7 +26,13 @@ export class InterceptorCallbacksStrictStrategy<T> implements IInterceptorCallba
         return undefined;
     }
 
-    public hasNamedMethod(methodName: string): boolean {
-        return this.definedSetups.hasNamedMethod(methodName);
+    public hasNamedMethod(methodName: string, prototype: any): boolean {
+        const hasNamedMethod = this.definedSetups.hasNamedMethod(methodName);
+        if (hasNamedMethod === true) return true;
+
+        if (prototype !== null && prototype[methodName] instanceof Function)
+            return true;
+
+        return false;
     }
 }

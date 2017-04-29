@@ -130,7 +130,7 @@ describe('Interceptor callbacks loose strategy', () => {
         (<jasmine.Spy>definedSetups.get).and.returnValue(undefined);
 
         const strategy = StrategyFactory();
-        const actual = strategy.hasNamedMethod(methodName);
+        const actual = strategy.hasNamedMethod(methodName, {});
 
         const expression = new GetPropertyExpression(methodName);
         expect(actual).toBe(true);
@@ -143,7 +143,7 @@ describe('Interceptor callbacks loose strategy', () => {
         (<jasmine.Spy>definedSetups.get).and.returnValue(setup);
 
         const strategy = StrategyFactory();
-        const actual = strategy.hasNamedMethod(methodName);
+        const actual = strategy.hasNamedMethod(methodName, {});
 
         const expression = new GetPropertyExpression(methodName);
         expect(actual).toBe(false);

@@ -71,12 +71,14 @@ describe('Mock interceptor', () => {
     });
 
     it('Notifies about named method interception', () => {
+        const prototype = {};
         const arg = 'argument';
         const name = 'some_property_name';
         const callbacks = callbacksFactory();
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(true);
 
         const interceptor = new Interceptor<Function>(callbacks);
+        interceptor.prototypeof(prototype);
         const object = interceptor.object();
 
         object[name](arg);
@@ -85,6 +87,7 @@ describe('Mock interceptor', () => {
         const expectedNamedMethodExpression = new NamedMethodExpression(name, [arg]);
         expect(callbacks.intercepted).toHaveBeenCalledWith(expectedGetPropertyExpression);
         expect(callbacks.intercepted).toHaveBeenCalledWith(expectedNamedMethodExpression);
+        expect(callbacks.hasNamedMethod).toHaveBeenCalledWith(name, prototype);
     });
 
     it('Returns value from method interception', () => {
