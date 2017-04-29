@@ -200,10 +200,4 @@ const mock = new Mock<ITestObject>()
 mock.object() instanceof TestObject;// true
 ```
 
-###### P.S.
-I am a team leader of a team of software developers. We are available for contract work.
-Ready to work with the best practices (TDD, eXtream programming, agile). From your side you need to provide an agile product manager.
-Angular2, Angular1, Nativescript, ASP.NET webAPI, WPF. **Love testing.**
-Just drop me a note at dvabuzyarov(at)gmail.com
-
 Sponsored by [2BIT](https://www.2bit.ch)
