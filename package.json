@@ -34,6 +34,8 @@
     "typescript": "^2.1.1"
   },
   "scripts": {
-    "test": "./node_modules/.bin/karma start --single-run"
+    "test": "./node_modules/.bin/karma start --single-run",
+    "docs": "node_modules/.bin/compodoc ./lib -p tsconfig.json -d docs",
+    "serve-docs": "node_modules/.bin/compodoc -s -d docs"
   }
 }
