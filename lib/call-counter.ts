@@ -3,10 +3,6 @@ import {Expressions} from './expressions';
 import {ExpressionMatcher} from './expression-matchers/expression-matcher';
 import {expressionMatcherFactory} from './expression-matchers/factories';
 
-export function callCounterFactory(): CallCounter {
-    return new CallCounter(expressionMatcherFactory());
-}
-
 export class CallCounter {
 
     constructor(private expressionMatcher: ExpressionMatcher) {
@@ -22,4 +18,8 @@ export class CallCounter {
 
         return count;
     }
+}
+
+export function callCounterFactory(): CallCounter {
+    return new CallCounter(expressionMatcherFactory());
 }

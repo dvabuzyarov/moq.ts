@@ -35,7 +35,8 @@
     "typescript": "2.4.1"
   },
   "scripts": {
-    "test": "./node_modules/.bin/karma start --single-run",
-    "doc": "typedoc --hideGenerator --excludeExternals --includeDeclarations --excludePrivate --target es5 --module commonjs --mode modules --out /docs /lib"
+    "test": "./node_modules/.bin/karma start --single-run"
+    "docs": "node_modules/.bin/compodoc ./lib -p tsconfig.json -d docs",
+    "serve-docs": "node_modules/.bin/compodoc -s -d docs"
   }
 }
