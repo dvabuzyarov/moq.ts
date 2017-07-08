@@ -15,14 +15,14 @@ module.exports = function (config) {
             // Path to your SystemJS configuration file
             configFile: './system.conf.js',
             serveFiles: [
-                '/lib/*.ts',
-                '/lib/expected-expressions/*.ts',
-                '/lib/expression-matchers/*.ts',
-                '/lib/formatters/*.ts',
-                '/lib/interceptor-callbacks/*.ts'
+                './lib/*.ts',
+                './lib/expected-expressions/*.ts',
+                './lib/expression-matchers/*.ts',
+                './lib/formatters/*.ts',
+                './lib/interceptor-callbacks/*.ts',
             ],
             includeFiles: [
-                'node_modules/es6-shim/es6-shim.js'
+                'node_modules/es6-shim/es6-shim.js',
             ]
         },
         
@@ -31,7 +31,8 @@ module.exports = function (config) {
             { pattern: './tests.unit/*.ts', served: true, included: true },
             { pattern: './tests.unit/**/*.ts', served: true, included: true },
             { pattern: './tests.integration/*.ts', served: true, included: true },
-            { pattern: './tests.integration/**/*.ts', served: true, included: true }
+            { pattern: './tests.integration/**/*.ts', served: true, included: true },
+            { pattern: './node_modules/typescript/lib/typescript.js', served: true, included: false }
         ],
         
         // list of files to exclude
@@ -79,6 +80,5 @@ module.exports = function (config) {
 
         browserNoActivityTimeout: 100000
     };
-    //configuration.systemjs.serveFiles = configuration.systemjs.serveFiles.concat(sourceFiles.sourceFiles());
     config.set(configuration);
 }

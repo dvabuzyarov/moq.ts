@@ -1,25 +1,31 @@
 System.config({
     baseURL: '.',
-    transpiler: 'typescript',
+    transpiler: 'ts',
     typescriptOptions: {
         'experimentalDecorators': true,
         'emitDecoratorMetadata': true
     },
-    map: {
+    meta: {
+        typescript: {
+            exports: "ts"
+        }
     },
+    map: {},
     paths: {
         'typescript': 'node_modules/typescript/lib/typescript.js',
         'systemjs': 'node_modules/systemjs/dist/system.src.js',
-        'system-polyfills': 'node_modules/systemjs/dist/system-polyfills.src.js',
-        'es6-module-loader': 'node_modules/es6-module-loader/dist/es6-module-loader.js'
+        'ts': 'node_modules/plugin-typescript/lib/plugin.js'
     },
     packages: {
-        'typescript': {
+        typescript: {
+            defaultExtension: 'js'
+        },
+        ts: {
             defaultExtension: 'js'
         },
         lib: {
             defaultExtension: 'ts'
-        },        
+        },
         './': {
             defaultExtension: 'ts'
         }
