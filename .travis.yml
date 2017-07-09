@@ -9,7 +9,7 @@ cache:
   - node_modules
 branches:
   except:
-    - gh-pages
+  - gh-pages
 git:
   depth: 1
 before_script:
@@ -22,6 +22,11 @@ install:
 addons:
   firefox: latest
 after_success:
+- openssl aes-256-cbc -K $encrypted_5e96d350c582_key -iv $encrypted_5e96d350c582_iv
+  -in docs_rsa.enc -out build/docs/docs_rsa -d
+- chmod 0600 build/config/docs_rsa
+- eval "$(ssh-agent -s)"
+- ssh-add build/config/docs_rsa
 - npm i -g @compodoc/compodoc
 - bash ./build/config/publish-docs.sh
 before_deploy:
@@ -38,9 +43,3 @@ deploy:
     tags: true
     all_branches: true
     repo: dvabuzyarov/moq.ts
-before_install:
-- openssl aes-256-cbc -K $encrypted_5e96d350c582_key -iv $encrypted_5e96d350c582_iv
-  -in build/config/travisci_rsa.enc -out build/config/travisci_rsa -d
-- chmod 0600 build/config/travisci_rsa
-- eval `ssh-agent -s`
-- ssh-add build/config/travisci_rsa
