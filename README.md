@@ -4,7 +4,7 @@
 [![Dependency Status](http://img.shields.io/david/dvabuzyarov/moq.ts.svg?style=flat-square)](https://david-dm.org/dvabuzyarov/moq.ts)
 [![License](https://img.shields.io/hexpm/l/plug.svg)](https://www.npmjs.com/package/moq.ts)
 
-# moq.ts
+# moq.ts [Documentation](https://)
 Moq for Typescript. Inspired by c# [Moq library](https://github.com/moq/moq4).
 
 #### Important
