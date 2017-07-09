@@ -18,7 +18,7 @@ before_script:
 install:
   - npm install
 addons:
-  firefox: latest-dev
+  firefox: latest
 
 before_deploy:
   - tsc ./build/prepare-npm-publish.ts
