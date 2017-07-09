@@ -2,3 +2,5 @@ node_modules
 typings
 npm-debug.log
 .idea/
+travisci_rsa
+travisci_rsa.pub
