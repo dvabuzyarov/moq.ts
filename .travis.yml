@@ -17,12 +17,12 @@ before_script:
 - sh -e /etc/init.d/xvfb start
 - sleep 3
 - npm i -g typescript
-- npm i -g @compodoc/compodoc
 install:
 - npm install
 addons:
   firefox: latest
 after_success:
+- npm i -g @compodoc/compodoc
 - bash ./build/config/publish-docs.sh
 before_deploy:
 - tsc ./build/prepare-npm-publish.ts
@@ -42,4 +42,5 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_5e96d350c582_key -iv $encrypted_5e96d350c582_iv
   -in build/config/travisci_rsa.enc -out build/config/travisci_rsa -d
 - chmod 0600 build/config/travisci_rsa
-- cp build/config/travisci_rsa ~/.ssh/id_rsa
+- eval `ssh-agent -s`
+- ssh-add build/config/travisci_rsa
