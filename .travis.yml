@@ -24,9 +24,9 @@ addons:
 after_success:
 - openssl aes-256-cbc -K $encrypted_5e96d350c582_key -iv $encrypted_5e96d350c582_iv
   -in docs_rsa.enc -out build/docs/docs_rsa -d
-- chmod 0600 build/config/docs_rsa
+- chmod 0600 build/docs/docs_rsa
 - eval "$(ssh-agent -s)"
-- ssh-add build/config/docs_rsa
+- ssh-add build/docs/docs_rsa
 - npm i -g @compodoc/compodoc
 - bash ./build/config/publish-docs.sh
 before_deploy:
