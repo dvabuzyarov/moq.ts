@@ -5,6 +5,7 @@ COMMIT_USER="Documentation Builder"
 COMMIT_EMAIL="documentation@moq.ts"
 CHANGESET=$(git rev-parse --verify HEAD)
 
+set -e
 
 rm -rf ${DOCS_PATH}
 mkdir -p ${DOCS_PATH}

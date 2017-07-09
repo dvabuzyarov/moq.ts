@@ -23,7 +23,7 @@ install:
 addons:
   firefox: latest
 after_success:
-- ./build/config/publish-docs.sh
+- bash ./build/config/publish-docs.sh
 before_deploy:
 - tsc ./build/prepare-npm-publish.ts
 - node ./build/prepare-npm-publish.js
