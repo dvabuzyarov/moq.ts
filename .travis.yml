@@ -7,6 +7,9 @@ matrix:
 cache:
   directories:
   - node_modules
+branches:
+  except:
+    - gh-pages
 git:
   depth: 1
 before_script:
@@ -14,7 +17,7 @@ before_script:
 - sh -e /etc/init.d/xvfb start
 - sleep 3
 - npm i -g typescript
-- npm i -g compodoc
+- npm i -g @compodoc/compodoc
 install:
 - npm install
 addons:

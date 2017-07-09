@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 REPO_PATH=git@github.com:dvabuzyarov/moq.ts.git
 DOCS_PATH=docs
 COMMIT_USER="Documentation Builder"
