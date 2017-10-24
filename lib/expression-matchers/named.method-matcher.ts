@@ -14,7 +14,9 @@ export class NamedMethodExpressionMatcher{
             return (right as It<any>).test(left);
 
         const rightExpression = right as ExpectedNamedMethodExpression;
-        const argumentsAreMatched = this.argumentsMatcher.matched(left.arguments, rightExpression.arguments);
-        return left.name === rightExpression.name && argumentsAreMatched;
+        if (left.name === rightExpression.name)
+            return this.argumentsMatcher.matched(left.arguments, rightExpression.arguments);
+
+        return false;
     }
 }

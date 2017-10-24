@@ -97,4 +97,21 @@ describe('Named method expression matcher', () => {
         expect(actual).toBe(false);
     });
 
+    it('Does not call arguments matcher when names are not equal', ()=> {
+        const args = [];
+
+        const left = new NamedMethodExpression('left name', args);
+        const right = new ExpectedNamedMethodExpression('right name', args);
+
+        const matched = (lvalue, rvalue): boolean =>{
+            fail("Should not be called");
+            return false;
+        };
+
+        const matcher = new NamedMethodExpressionMatcher(argumentsMatcherFactory(matched));
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(false);
+    });
+
 });
