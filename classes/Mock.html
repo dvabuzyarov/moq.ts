@@ -48,8 +48,8 @@
                                   <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                 </li>
                                 <li class="link">
-                                    <a href="./changelog.html"
-                                        >
+                                        <a href="../changelog.html"
+                                    >
                                         <span class="fa fa-file-text-o"></span>CHANGELOG
                                     </a>
                                 </li>
@@ -192,6 +192,7 @@
                     </li>
             
             
+            
                     <li class="chapter">
                         <div class="simple menu-toggler" data-toggle="collapse"
                                 data-target="#xs-interfaces-links"
@@ -295,8 +296,8 @@
                                          <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                        </li>
                                        <li class="link">
-                                           <a href="./changelog.html"
-                                               >
+                                               <a href="../changelog.html"
+                                           >
                                                <span class="fa fa-file-text-o"></span>CHANGELOG
                                            </a>
                                        </li>
@@ -439,6 +440,7 @@
                            </li>
                    
                    
+                   
                            <li class="chapter">
                                <div class="simple menu-toggler" data-toggle="collapse"
                                        data-target="#interfaces-links"
@@ -518,6 +520,7 @@
 
 
 
+
 <ol class="breadcrumb">
   <li>Classes</li>
   <li>Mock</li>
@@ -535,7 +538,7 @@
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="info">
+    <div class="tab-pane fade active in" id="c-info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -565,7 +568,7 @@
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">lib/mock.ts:58</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">lib/mock.ts:62</a></div>
                                         </td>
                                     </tr>
             
@@ -604,10 +607,11 @@
 
 
 
+
     </div>
 
 
-    <div class="tab-pane fade tab-source-code" id="source">
+    <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers"><code class="language-typescript">import {IMock, ISetupInvoke, ISetup} from &#x27;./moq&#x27;;
 import {Interceptor} from &#x27;./interceptor&#x27;;
 import {ExpectedExpressionReflector, IExpectedExpression} from &#x27;./expected-expressions/expected-expression-reflector&#x27;;
@@ -622,7 +626,11 @@ import {
     MockBehavior
 } from &#x27;./interceptor-callbacks/interceptor-callbacks&#x27;;
 
-
+/**
+ * @internal
+ * @hidden
+ * @private
+ */
 export class MockCore&lt;T&gt; implements IMock&lt;T&gt; {
     private interceptor: Interceptor&lt;T&gt;;
     constructor(
