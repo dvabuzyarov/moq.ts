@@ -7,10 +7,18 @@ export interface ISetup<T> {
     returns<TValue>(value: TValue): IMock<T>;
     throws<TException>(exception: TException): IMock<T>;
     callback<TValue>(callback: (...args: any[])=> TValue): IMock<T>;
+    play(times: number): ISetup<T>;
 }
 
+/**
+ * @internal
+ */
 export interface ISetupInvoke<T> extends ISetup<T> {
     invoke<TResult>(args?: any[]): TResult;
+}
+
+export interface IPlayTimesProvider {
+    getPlayTimes(): number;
 }
 
 export interface IMock<T> {

@@ -91,6 +91,20 @@ describe('Mock: Named method', () => {
         expect(callback).toHaveBeenCalledWith(1);
     });
 
+    it('Calls callback', () => {
+        const value = 'value';
+        const callback = jasmine.createSpy('callback').and.returnValue(value);
+        const object = new Mock<ITestObject>()
+            .setup(instance => instance.method(1))
+            .callback(callback)
+            .object();
+
+        const actual = object.method(1);
+
+        expect(actual).toBe(value);
+        expect(callback).toHaveBeenCalledWith(1);
+    });
+
     it('Throws an exception', () => {
         const error = new Error('exception');
         const object = new Mock<ITestObject>()

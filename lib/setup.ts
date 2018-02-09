@@ -1,7 +1,10 @@
-import {ISetupInvoke, IMock} from './moq';
+///<reference path="moq.d.ts"/>
+import { IMock, IPlayTimesProvider, ISetup, ISetupInvoke } from "./moq";
 
-export class Setup<T> implements ISetupInvoke<T> {
+export class Setup<T> implements ISetupInvoke<T>, IPlayTimesProvider {
+
     private action: Function;
+    private playTimes: number;
 
     constructor(private mock: IMock<T>) {
 
@@ -12,17 +15,28 @@ export class Setup<T> implements ISetupInvoke<T> {
     }
 
     public returns<TValue>(value: TValue): IMock<T> {
-        this.action = ()=> value;
+        this.action = () => value;
         return this.mock;
     }
 
     public throws<TException>(exception: TException): IMock<T> {
-        this.action = ()=> { throw exception; };
+        this.action = () => {
+            throw exception;
+        };
         return this.mock;
     }
 
-    public callback<TValue>(callback: (args: any[])=> TValue): IMock<T> {
-        this.action = (args?: any[])=> callback.apply(undefined, args);
+    public callback<TValue>(callback: (args: any[]) => TValue): IMock<T> {
+        this.action = (args?: any[]) => callback.apply(undefined, args);
         return this.mock;
+    }
+
+    public play(times: number): ISetup<T> {
+        this.playTimes = times;
+        return this;
+    }
+
+    public getPlayTimes(): number {
+        return this.playTimes;
     }
 }

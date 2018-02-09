@@ -12,7 +12,7 @@ Moq for Typescript. Inspired by c# [Moq library](https://github.com/moq/moq4).
 #### Important
 This implementation depends on [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object.
 So if your production code is not compatible with this I would recommend you separate you production code and testing code into dedicated projects.
-If you need help whit this then ask me.
+If you need help with this then ask me.
 
 #### Install
 npm install moq.ts --save-dev

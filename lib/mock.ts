@@ -12,7 +12,11 @@ import {
     MockBehavior
 } from './interceptor-callbacks/interceptor-callbacks';
 
-
+/**
+ * @internal
+ * @hidden
+ * @private
+ */
 export class MockCore<T> implements IMock<T> {
     private interceptor: Interceptor<T>;
     constructor(

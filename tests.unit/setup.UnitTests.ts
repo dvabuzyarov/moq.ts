@@ -38,6 +38,34 @@ describe('Setup', () => {
         expect(actual).toBe(mock);
     });
 
+    it('Returns the current setup object from play function', ()=> {
+        const mock = MockFactory();
+
+        const setup = new Setup(mock);
+        const actual = setup.play(1);
+
+
+        expect(actual).toBe(setup);
+    });
+
+    it('Returns undefined as the default value of play times', ()=> {
+        const mock = MockFactory();
+
+        const setup = new Setup(mock);
+
+        expect(setup.getPlayTimes()).toBeUndefined();
+    });
+
+    it('Returns provided value as play times value', ()=> {
+        const times = 1;
+
+        const mock = MockFactory();
+        const setup = new Setup(mock);
+        setup.play(times);
+
+        expect(setup.getPlayTimes()).toBe(times);
+    });
+
     it('Returns value', ()=> {
         const value = [];
 
