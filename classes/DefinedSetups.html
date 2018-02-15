@@ -589,6 +589,14 @@
                                             <span class="modifier">Public</span>
                                         <a href="#hasNamedMethod">hasNamedMethod</a>
                                     </li>
+                                    <li>
+                                            <span class="modifier">Public</span>
+                                        <a href="#remove">remove</a>
+                                    </li>
+                                    <li>
+                                            <span class="modifier">Private</span>
+                                        <a href="#single">single</a>
+                                    </li>
                                 </ul>
                             </td>
                         </tr>
@@ -876,6 +884,141 @@
                             </tr>
                         </tbody>
                     </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="remove"></a>
+                                    <span class="name">
+                                        <b>
+                                            <span class="modifier">Public</span>
+                                        remove
+                                        </b>
+                                        <a href="#remove"><span class="fa fa-link"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>remove(expression: <a href="../undefineds/Expressions.html">Expressions</a>)</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">lib/defined-setups.ts:35</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <table class="params">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                                <td>Type</td>
+                                                            <td>Optional</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                                <td>expression</td>
+                                                                
+                                                                    <td>
+                                                                                <code><a href="../miscellaneous/typealiases.html#Expressions" target="_self" >Expressions</a></code>
+                                                                    </td>
+                                                                
+                                                                <td>
+                                                                        no
+                                                                </td>
+                                                                
+            
+                                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="single"></a>
+                                    <span class="name">
+                                        <b>
+                                            <span class="modifier">Private</span>
+                                        single
+                                        </b>
+                                        <a href="#single"><span class="fa fa-link"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>single(predicate: (undefined) => void)</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">lib/defined-setups.ts:41</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <table class="params">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                                <td>Type</td>
+                                                            <td>Optional</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                                <td>predicate</td>
+                                                                
+                                                                    <td>
+                                                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                                                    </td>
+                                                                
+                                                                <td>
+                                                                        no
+                                                                </td>
+                                                                
+            
+                                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                        <div>
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
             </section>
 
 
@@ -930,15 +1073,15 @@
 
 
     <div class="tab-pane fade tab-source-code" id="c-source">
-        <pre class="line-numbers"><code class="language-typescript">import {ExpectedExpressions, ExpectedNamedMethodExpression} from &#x27;./expected-expressions/expected-expressions&#x27;;
-import {ISetupInvoke} from &#x27;./moq&#x27;;
-import {Expressions} from &#x27;./expressions&#x27;;
-import {ExpressionMatcher} from &#x27;./expression-matchers/expression-matcher&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { ExpectedExpressions, ExpectedNamedMethodExpression } from &quot;./expected-expressions/expected-expressions&quot;;
+import { ExpressionMatcher } from &quot;./expression-matchers/expression-matcher&quot;;
+import { Expressions } from &quot;./expressions&quot;;
+import { ISetupInvoke } from &quot;./moq&quot;;
 
 export class DefinedSetups&lt;T&gt; {
     private setups: [ExpectedExpressions&lt;T&gt;, ISetupInvoke&lt;T&gt;][] &#x3D; [];
 
-    constructor(private expressionMatcher: ExpressionMatcher){
+    constructor(private expressionMatcher: ExpressionMatcher) {
 
     }
 
@@ -946,8 +1089,8 @@ export class DefinedSetups&lt;T&gt; {
         this.setups.unshift([key, setup]);
     }
 
-    public get (expression: Expressions): ISetupInvoke&lt;T&gt;{
-        for (const [key, value] of this.setups){
+    public get(expression: Expressions): ISetupInvoke&lt;T&gt; {
+        for (const [key, value] of this.setups) {
             if (this.expressionMatcher.matched(expression, key) &#x3D;&#x3D;&#x3D; true)
                 return value;
         }
@@ -955,15 +1098,31 @@ export class DefinedSetups&lt;T&gt; {
         return undefined;
     }
 
-    public hasNamedMethod(name: string): boolean{
-        for (const [key] of this.setups){
+    public hasNamedMethod(name: string): boolean {
+        for (const [key] of this.setups) {
             if (key instanceof ExpectedNamedMethodExpression &amp;&amp; (key as ExpectedNamedMethodExpression).name &#x3D;&#x3D;&#x3D; name)
                 return true;
         }
 
         return false;
     }
-}</code></pre>
+
+    public remove(expression: Expressions): void {
+        const record &#x3D; this.single(([key]) &#x3D;&gt; this.expressionMatcher.matched(expression, key));
+        const indexOf &#x3D; this.setups.indexOf(record);
+        this.setups.splice(indexOf, 1);
+    }
+
+    private single(predicate: (item: [ExpectedExpressions&lt;T&gt;, ISetupInvoke&lt;T&gt;]) &#x3D;&gt; boolean): [ExpectedExpressions&lt;T&gt;, ISetupInvoke&lt;T&gt;] {
+        for (const setupDefinition of this.setups) {
+            if (predicate(setupDefinition) &#x3D;&#x3D;&#x3D; true)
+                return setupDefinition;
+        }
+
+        return undefined;
+    }
+}
+</code></pre>
     </div>
 </div>
 
