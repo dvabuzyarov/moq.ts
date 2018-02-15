@@ -1,14 +1,14 @@
-import {Setup} from '../lib/setup';
-import {IMock} from '../lib/moq';
+import { IMock } from "../lib/moq";
+import { Setup } from "../lib/setup";
 
-describe('Setup', () => {
+describe("Setup", () => {
 
 
     function MockFactory(): IMock<any> {
         return <IMock<any>>(<any>{})
     }
 
-    it('Returns mock object from returns', ()=> {
+    it("Returns mock object from returns", () => {
         const mock = MockFactory();
 
         const setup = new Setup(mock);
@@ -18,7 +18,7 @@ describe('Setup', () => {
         expect(actual).toBe(mock);
     });
 
-    it('Returns mock object from throws', ()=> {
+    it("Returns mock object from throws", () => {
         const mock = MockFactory();
 
         const setup = new Setup(mock);
@@ -28,45 +28,62 @@ describe('Setup', () => {
         expect(actual).toBe(mock);
     });
 
-    it('Returns mock object from callback', ()=> {
+    it("Returns mock object from callback", () => {
         const mock = MockFactory();
 
         const setup = new Setup(mock);
-        const actual = setup.callback(()=>{});
+        const actual = setup.callback(() => {
+        });
 
 
         expect(actual).toBe(mock);
     });
 
-    it('Returns the current setup object from play function', ()=> {
+    it("Returns the current setup object from play function", () => {
         const mock = MockFactory();
 
         const setup = new Setup(mock);
-        const actual = setup.play(1);
+        const actual = setup.playUntil(() => undefined);
 
 
         expect(actual).toBe(setup);
     });
 
-    it('Returns undefined as the default value of play times', ()=> {
+    it("Returns true as playable result when playUntil has not been setup", () => {
         const mock = MockFactory();
 
         const setup = new Setup(mock);
+        const actual = setup.playable();
 
-        expect(setup.getPlayTimes()).toBeUndefined();
+        expect(actual).toBe(true);
     });
 
-    it('Returns provided value as play times value', ()=> {
-        const times = 1;
-
+    it("Returns true as playable result when playUntil returns true", () => {
+        const arg = "argument 1";
+        const callback = jasmine.createSpy("callback").and.returnValue(true);
         const mock = MockFactory();
         const setup = new Setup(mock);
-        setup.play(times);
+        setup.playUntil(callback);
 
-        expect(setup.getPlayTimes()).toBe(times);
+        const actual = setup.playable([arg]);
+
+        expect(actual).toBe(true);
+        expect(callback).toHaveBeenCalledWith(arg);
     });
 
-    it('Returns value', ()=> {
+    it("Returns true as playable result when playUntil returns false", () => {
+        const callback = jasmine.createSpy("callback").and.returnValue(false);
+        const mock = MockFactory();
+        const setup = new Setup(mock);
+        setup.playUntil(callback);
+
+        const actual = setup.playable();
+
+        expect(actual).toBe(false);
+        expect(callback).toHaveBeenCalledWith();
+    });
+
+    it("Returns value", () => {
         const value = [];
 
         const mock = MockFactory();
@@ -78,21 +95,21 @@ describe('Setup', () => {
         expect(actual).toBe(value);
     });
 
-    it('Throws error', ()=> {
-        const error = new Error('test message');
+    it("Throws error", () => {
+        const error = new Error("test message");
         const mock = MockFactory();
 
         const setup = new Setup(mock);
         setup.throws(error);
 
 
-        expect(()=>setup.invoke()).toThrow(error);
+        expect(() => setup.invoke()).toThrow(error);
     });
 
-    it('Returns value from callback', ()=> {
+    it("Returns value from callback", () => {
         const value = [];
-        const arg = 'argument 1';
-        const callback = jasmine.createSpy('callback').and.returnValue(value);
+        const arg = "argument 1";
+        const callback = jasmine.createSpy("callback").and.returnValue(value);
         const mock = MockFactory();
 
         const setup = new Setup(mock);
@@ -104,9 +121,9 @@ describe('Setup', () => {
         expect(callback).toHaveBeenCalledWith(arg);
     });
 
-    it('Returns value from callback without arguments', ()=> {
+    it("Returns value from callback without arguments", () => {
         const value = [];
-        const callback = jasmine.createSpy('callback').and.returnValue(value);
+        const callback = jasmine.createSpy("callback").and.returnValue(value);
         const mock = MockFactory();
 
         const setup = new Setup(mock);

@@ -1,10 +1,9 @@
-///<reference path="moq.d.ts"/>
-import { IMock, IPlayTimesProvider, ISetup, ISetupInvoke } from "./moq";
+import { IMock, ISetup, ISetupInvoke } from "./moq";
 
-export class Setup<T> implements ISetupInvoke<T>, IPlayTimesProvider {
+export class Setup<T> implements ISetupInvoke<T> {
 
     private action: Function;
-    private playTimes: number;
+    private until: (...args: any[]) => boolean;
 
     constructor(private mock: IMock<T>) {
 
@@ -31,12 +30,13 @@ export class Setup<T> implements ISetupInvoke<T>, IPlayTimesProvider {
         return this.mock;
     }
 
-    public play(times: number): ISetup<T> {
-        this.playTimes = times;
+    public playUntil(until: (...args: any[]) => boolean): ISetup<T> {
+        this.until = until;
         return this;
     }
 
-    public getPlayTimes(): number {
-        return this.playTimes;
+    public playable(args?: any[]): boolean {
+        if (this.until === undefined) return true;
+        return this.until.apply(undefined, args);
     }
 }
