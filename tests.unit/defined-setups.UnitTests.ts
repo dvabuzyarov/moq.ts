@@ -91,4 +91,29 @@ describe('List of defined setup', () => {
         expect(actual).toBe(true);
     });
 
+
+    it('Removes the latest setup', ()=> {
+        const name = 'name';
+        const setup1 = new Setup<any>(undefined);
+        const setup2 = new Setup<any>(undefined);
+        setup1['a'] = 1;
+        setup2['b'] = 2;
+        const expectedGetPropertyExpression = new ExpectedGetPropertyExpression(name);
+        const getPropertyExpression = new GetPropertyExpression(name);
+
+        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean =>{
+            expect(left).toBe(getPropertyExpression);
+            expect(right).toBe(expectedGetPropertyExpression);
+            return true;
+        };
+
+        const listSetup = new DefinedSetups<any>(expressionMatcherFactory(matcher));
+        listSetup.add(expectedGetPropertyExpression, setup1);
+        listSetup.add(expectedGetPropertyExpression, setup2);
+
+        listSetup.remove(getPropertyExpression);
+        const actual = listSetup.get(getPropertyExpression);
+
+        expect(actual).toBe(setup1);
+    });
 });
