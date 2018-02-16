@@ -16,7 +16,7 @@ export class DefinedSetups<T> {
 
     public get(expression: Expressions): ISetupInvoke<T> {
         for (const [key, value] of this.setups) {
-            if (this.expressionMatcher.matched(expression, key) === true)
+            if (this.expressionMatcher.matched(expression, key) === true && value.playable())
                 return value;
         }
 
@@ -30,20 +30,5 @@ export class DefinedSetups<T> {
         }
 
         return false;
-    }
-
-    public remove(expression: Expressions): void {
-        const record = this.single(([key]) => this.expressionMatcher.matched(expression, key));
-        const indexOf = this.setups.indexOf(record);
-        this.setups.splice(indexOf, 1);
-    }
-
-    private single(predicate: (item: [ExpectedExpressions<T>, ISetupInvoke<T>]) => boolean): [ExpectedExpressions<T>, ISetupInvoke<T>] {
-        for (const setupDefinition of this.setups) {
-            if (predicate(setupDefinition) === true)
-                return setupDefinition;
-        }
-
-        return undefined;
     }
 }

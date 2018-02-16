@@ -7,14 +7,14 @@ export interface ISetup<T> {
     returns<TValue>(value: TValue): IMock<T>;
     throws<TException>(exception: TException): IMock<T>;
     callback<TValue>(callback: (...args: any[])=> TValue): IMock<T>;
-    playUntil(until:(...args: any[])=> boolean): ISetup<T>;
+    play(predicate:()=> boolean): ISetup<T>;
 }
 
 /**
  * @internal
  */
 export interface ISetupInvoke<T> extends ISetup<T> {
-    playable(args?: any[]): boolean;
+    playable(): boolean;
     invoke<TResult>(args?: any[]): TResult;
 }
 

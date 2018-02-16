@@ -3,7 +3,7 @@ import { IMock, ISetup, ISetupInvoke } from "./moq";
 export class Setup<T> implements ISetupInvoke<T> {
 
     private action: Function;
-    private until: (...args: any[]) => boolean;
+    private playPredicate: () => boolean;
 
     constructor(private mock: IMock<T>) {
 
@@ -30,13 +30,13 @@ export class Setup<T> implements ISetupInvoke<T> {
         return this.mock;
     }
 
-    public playUntil(until: (...args: any[]) => boolean): ISetup<T> {
-        this.until = until;
+    public play(predicate: () => boolean): ISetup<T> {
+        this.playPredicate = predicate;
         return this;
     }
 
-    public playable(args?: any[]): boolean {
-        if (this.until === undefined) return true;
-        return this.until.apply(undefined, args);
+    public playable(): boolean {
+        if (this.playPredicate === undefined) return true;
+        return this.playPredicate();
     }
 }

@@ -1,29 +1,30 @@
-
-import {Setup} from '../lib/setup';
-import {GetPropertyExpression, Expressions} from '../lib/expressions';
+import { DefinedSetups } from "../lib/defined-setups";
 import {
-    ExpectedGetPropertyExpression, ExpectedExpressions,
+    ExpectedExpressions,
+    ExpectedGetPropertyExpression,
     ExpectedNamedMethodExpression
-} from '../lib/expected-expressions/expected-expressions';
-import {DefinedSetups} from '../lib/defined-setups';
-import {ExpressionMatcher} from '../lib/expression-matchers/expression-matcher';
-import {getName} from './getName';
+} from "../lib/expected-expressions/expected-expressions";
+import { ExpressionMatcher } from "../lib/expression-matchers/expression-matcher";
+import { Expressions, GetPropertyExpression } from "../lib/expressions";
+import { Setup } from "../lib/setup";
 
-describe('List of defined setup', () => {
+describe("List of defined setup", () => {
 
-    function expressionMatcherFactory(matched?: (left: Expressions, right: ExpectedExpressions<any>)=> boolean): ExpressionMatcher {
+    function expressionMatcherFactory(matched?: (left: Expressions, right: ExpectedExpressions<any>) => boolean): ExpressionMatcher {
         return (<any>{
             matched: matched
         } as ExpressionMatcher)
     }
 
-    it('Returns setup by expression', ()=> {
-        const name = 'name';
+    it("Returns playable setup by expression", () => {
+        const name = "name";
         const setup = new Setup<any>(undefined);
+        setup.play(() => true);
+
         const expectedGetPropertyExpression = new ExpectedGetPropertyExpression(name);
         const getPropertyExpression = new GetPropertyExpression(name);
 
-        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean =>{
+        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean => {
             expect(left).toBe(getPropertyExpression);
             expect(right).toBe(expectedGetPropertyExpression);
             return true;
@@ -37,14 +38,16 @@ describe('List of defined setup', () => {
         expect(actual).toBe(setup);
     });
 
-    it('Returns the latest setup', ()=> {
-        const name = 'name';
+    it("Returns the latest setup", () => {
+        const name = "name";
         const setup1 = new Setup<any>(undefined);
+        setup1.play(() => true);
         const setup2 = new Setup<any>(undefined);
+        setup2.play(() => true);
         const expectedGetPropertyExpression = new ExpectedGetPropertyExpression(name);
         const getPropertyExpression = new GetPropertyExpression(name);
 
-        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean =>{
+        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean => {
             expect(left).toBe(getPropertyExpression);
             expect(right).toBe(expectedGetPropertyExpression);
             return true;
@@ -59,13 +62,36 @@ describe('List of defined setup', () => {
         expect(actual).toBe(setup2);
     });
 
-    it('Skips setup that expected expression does not match to an expression', ()=> {
-        const name = 'name';
+    it("Skips unplayable setup by expression", () => {
+        const name = "name";
         const setup = new Setup<any>(undefined);
+        setup.play(() => false);
+
         const expectedGetPropertyExpression = new ExpectedGetPropertyExpression(name);
         const getPropertyExpression = new GetPropertyExpression(name);
 
-        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean =>{
+        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean => {
+            expect(left).toBe(getPropertyExpression);
+            expect(right).toBe(expectedGetPropertyExpression);
+            return true;
+        };
+
+        const listSetup = new DefinedSetups<any>(expressionMatcherFactory(matcher));
+        listSetup.add(expectedGetPropertyExpression, setup);
+
+        const actual = listSetup.get(getPropertyExpression);
+
+        expect(actual).toBeUndefined();
+    });
+
+    it("Skips setup that expected expression does not match to an expression", () => {
+        const name = "name";
+        const setup = new Setup<any>(undefined);
+        setup.play(() => true);
+        const expectedGetPropertyExpression = new ExpectedGetPropertyExpression(name);
+        const getPropertyExpression = new GetPropertyExpression(name);
+
+        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean => {
             expect(left).toBe(getPropertyExpression);
             expect(right).toBe(expectedGetPropertyExpression);
             return false;
@@ -79,8 +105,8 @@ describe('List of defined setup', () => {
         expect(actual).toBeUndefined();
     });
 
-    it('Returns true if it has named method', ()=> {
-        const name = 'name';
+    it("Returns true if it has named method", () => {
+        const name = "name";
         const expectedNamedMethodExpression = new ExpectedNamedMethodExpression(name, []);
 
         const listSetup = new DefinedSetups<any>(undefined);
@@ -89,31 +115,5 @@ describe('List of defined setup', () => {
         const actual = listSetup.hasNamedMethod(name);
 
         expect(actual).toBe(true);
-    });
-
-
-    it('Removes the latest setup', ()=> {
-        const name = 'name';
-        const setup1 = new Setup<any>(undefined);
-        const setup2 = new Setup<any>(undefined);
-        setup1['a'] = 1;
-        setup2['b'] = 2;
-        const expectedGetPropertyExpression = new ExpectedGetPropertyExpression(name);
-        const getPropertyExpression = new GetPropertyExpression(name);
-
-        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean =>{
-            expect(left).toBe(getPropertyExpression);
-            expect(right).toBe(expectedGetPropertyExpression);
-            return true;
-        };
-
-        const listSetup = new DefinedSetups<any>(expressionMatcherFactory(matcher));
-        listSetup.add(expectedGetPropertyExpression, setup1);
-        listSetup.add(expectedGetPropertyExpression, setup2);
-
-        listSetup.remove(getPropertyExpression);
-        const actual = listSetup.get(getPropertyExpression);
-
-        expect(actual).toBe(setup1);
     });
 });

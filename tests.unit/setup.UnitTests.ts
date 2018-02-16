@@ -43,7 +43,7 @@ describe("Setup", () => {
         const mock = MockFactory();
 
         const setup = new Setup(mock);
-        const actual = setup.playUntil(() => undefined);
+        const actual = setup.play(() => undefined);
 
 
         expect(actual).toBe(setup);
@@ -59,28 +59,25 @@ describe("Setup", () => {
     });
 
     it("Returns true as playable result when playUntil returns true", () => {
-        const arg = "argument 1";
         const callback = jasmine.createSpy("callback").and.returnValue(true);
         const mock = MockFactory();
         const setup = new Setup(mock);
-        setup.playUntil(callback);
+        setup.play(callback);
 
-        const actual = setup.playable([arg]);
+        const actual = setup.playable();
 
         expect(actual).toBe(true);
-        expect(callback).toHaveBeenCalledWith(arg);
     });
 
-    it("Returns true as playable result when playUntil returns false", () => {
+    it("Returns false as playable result when playUntil returns false", () => {
         const callback = jasmine.createSpy("callback").and.returnValue(false);
         const mock = MockFactory();
         const setup = new Setup(mock);
-        setup.playUntil(callback);
+        setup.play(callback);
 
         const actual = setup.playable();
 
         expect(actual).toBe(false);
-        expect(callback).toHaveBeenCalledWith();
     });
 
     it("Returns value", () => {
