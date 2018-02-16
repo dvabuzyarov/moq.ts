@@ -1,5 +1,5 @@
-import { It } from "../lib/expected-expressions/expression-predicates";
 import { Mock } from "../lib/mock";
+import { PlayTimes } from "../lib/play-times";
 
 interface ITestFunction {
     (value: number): number;
@@ -7,22 +7,35 @@ interface ITestFunction {
 
 describe("Play setup", () => {
     it("Plays once", () => {
-        let played = false;
-
         const mock = new Mock<ITestFunction>();
-        mock
+        const mockedFunction = mock
             .setup(instance => instance(2))
-            .play(() => {
-                if (played) return false;
-                played = true;
-                return true;
-            })
-            .returns(1);
+            .play(PlayTimes.Once())
+            .returns(1)
+            .object();
 
-        const actual = mock.object()(2);
+        const actual = mockedFunction(2);
         expect(actual).toBe(1);
 
-        const actual2 = mock.object()(2);
+        const actual2 = mockedFunction(2);
         expect(actual2).toBeUndefined();
+    });
+
+    it("Plays a sequence", () => {
+        const mock = new Mock<ITestFunction>();
+        const mockedFunction = mock
+            .setup(instance => instance(2))
+            .play(PlayTimes.Sequence([false, true, false]))
+            .returns(1)
+            .object();
+
+        const actual = mockedFunction(2);
+        expect(actual).toBeUndefined();
+
+        const actual2 = mockedFunction(2);
+        expect(actual2).toBe(1);
+
+        const actual3 = mockedFunction(2);
+        expect(actual3).toBeUndefined();
     });
 });

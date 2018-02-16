@@ -30,6 +30,12 @@ export class Setup<T> implements ISetupInvoke<T> {
         return this.mock;
     }
 
+    /**
+     * Plays the setup when predicate returns true otherwise the setup will be ignored.
+     * As predicate it could be used {@link PlayTimes}
+     * @param {() => boolean} predicate
+     * @returns {ISetup<T>}
+     */
     public play(predicate: () => boolean): ISetup<T> {
         this.playPredicate = predicate;
         return this;
