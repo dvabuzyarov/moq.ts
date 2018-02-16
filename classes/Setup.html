@@ -574,7 +574,7 @@
                                     </li>
                                     <li>
                                             <span class="modifier">Private</span>
-                                        <a href="#until">until</a>
+                                        <a href="#playPredicate">playPredicate</a>
                                     </li>
                                 </ul>
                             </td>
@@ -597,11 +597,11 @@
                                     </li>
                                     <li>
                                             <span class="modifier">Public</span>
-                                        <a href="#playable">playable</a>
+                                        <a href="#play">play</a>
                                     </li>
                                     <li>
                                             <span class="modifier">Public</span>
-                                        <a href="#playUntil">playUntil</a>
+                                        <a href="#playable">playable</a>
                                     </li>
                                     <li>
                                             <span class="modifier">Public</span>
@@ -818,91 +818,20 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <a name="playable"></a>
+                                    <a name="play"></a>
                                     <span class="name">
                                         <b>
                                             <span class="modifier">Public</span>
-                                        playable
+                                        play
                                         </b>
-                                        <a href="#playable"><span class="fa fa-link"></span></a>
+                                        <a href="#play"><span class="fa fa-link"></span></a>
                                     </span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
                                         <span class="modifier-icon fa fa-reset"></span>
-                                    <code>playable(args?: any[])</code>
-                                </td>
-                            </tr>
-            
-            
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">lib/setup.ts:38</a></div>
-                                        </td>
-                                    </tr>
-            
-                            <tr>
-                                <td class="col-md-4">
-            
-                                        <div class="io-description">
-                                                <b>Parameters :</b>
-                                                <table class="params">
-                                                    <thead>
-                                                        <tr>
-                                                            <td>Name</td>
-                                                                <td>Type</td>
-                                                            <td>Optional</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                            <tr>
-                                                                <td>args</td>
-                                                                
-                                                                    <td>
-                                                                                <code>any[]</code>
-                                                                    </td>
-                                                                
-                                                                <td>
-                                                                        yes
-                                                                </td>
-                                                                
-            
-                                                            </tr>
-                                                    </tbody>
-                                                </table>
-                                        </div>
-                                        <div>
-                                        </div>
-                                        <div class="io-description">
-                                            <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-            
-                                        </div>
-                                            <div class="io-description">
-                                                
-                                            </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                            <tr>
-                                <td class="col-md-4">
-                                    <a name="playUntil"></a>
-                                    <span class="name">
-                                        <b>
-                                            <span class="modifier">Public</span>
-                                        playUntil
-                                        </b>
-                                        <a href="#playUntil"><span class="fa fa-link"></span></a>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                        <span class="modifier-icon fa fa-reset"></span>
-                                    <code>playUntil(until: (args: any[]) => void)</code>
+                                    <code>play(predicate: () => void)</code>
                                 </td>
                             </tr>
             
@@ -928,7 +857,7 @@
                                                     </thead>
                                                     <tbody>
                                                             <tr>
-                                                                <td>until</td>
+                                                                <td>predicate</td>
                                                                 
                                                                     <td>
                                                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
@@ -952,6 +881,45 @@
                                             <div class="io-description">
                                                 
                                             </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="playable"></a>
+                                    <span class="name">
+                                        <b>
+                                            <span class="modifier">Public</span>
+                                        playable
+                                        </b>
+                                        <a href="#playable"><span class="fa fa-link"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>playable()</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">lib/setup.ts:38</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+            
+                                        </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -1145,19 +1113,19 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <a name="until"></a>
+                                    <a name="playPredicate"></a>
                                     <span class="name">
                                         <b>
                                             <span class="modifier">Private</span>
-                                        until
+                                        playPredicate
                                         </b>
-                                        <a href="#until"><span class="fa fa-link"></span></a>
+                                        <a href="#playPredicate"><span class="fa fa-link"></span></a>
                                     </span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-reset"></span><code>until:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                    <span class="modifier-icon fa fa-reset"></span><code>playPredicate:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
             </code>
                                 </td>
                             </tr>
@@ -1187,7 +1155,7 @@
 export class Setup&lt;T&gt; implements ISetupInvoke&lt;T&gt; {
 
     private action: Function;
-    private until: (...args: any[]) &#x3D;&gt; boolean;
+    private playPredicate: () &#x3D;&gt; boolean;
 
     constructor(private mock: IMock&lt;T&gt;) {
 
@@ -1214,14 +1182,14 @@ export class Setup&lt;T&gt; implements ISetupInvoke&lt;T&gt; {
         return this.mock;
     }
 
-    public playUntil(until: (...args: any[]) &#x3D;&gt; boolean): ISetup&lt;T&gt; {
-        this.until &#x3D; until;
+    public play(predicate: () &#x3D;&gt; boolean): ISetup&lt;T&gt; {
+        this.playPredicate &#x3D; predicate;
         return this;
     }
 
-    public playable(args?: any[]): boolean {
-        if (this.until &#x3D;&#x3D;&#x3D; undefined) return true;
-        return this.until.apply(undefined, args);
+    public playable(): boolean {
+        if (this.playPredicate &#x3D;&#x3D;&#x3D; undefined) return true;
+        return this.playPredicate();
     }
 }
 </code></pre>
