@@ -39,9 +39,10 @@ export class MockCore<T> implements IMock<T> {
         return setup;
     }
 
-    public verify(expression: IExpectedExpression<T>, times?: Times): void {
+    public verify(expression: IExpectedExpression<T>, times?: Times): IMock<T> {
         times = times === undefined ? Times.Once() : times;
         this.verifier.test(expression, times, this.tracker.get(), this.name);
+        return this;
     }
 
     public object(): T {

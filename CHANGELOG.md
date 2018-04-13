@@ -29,3 +29,13 @@ v2.3.1
 ===================
 
   * The latest setup has precedence
+
+  v2.6.0
+===================
+
+    * The play setup has been introduced
+
+  v2.6.1
+===================
+
+    * The verify methods can be used in fluent call

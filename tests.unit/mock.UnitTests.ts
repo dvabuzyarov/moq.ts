@@ -109,8 +109,9 @@ describe('MockCore', () => {
 
         const mock = MockCoreFactory();
         const expression = instance => instance['property'];
-        mock.verify(expression);
+        const actual = mock.verify(expression);
 
+        expect(actual).toBe(mock);
         expect(verifier.test).toHaveBeenCalledWith(expression, Times.Once(), expressions, undefined);
     });
 
@@ -121,8 +122,9 @@ describe('MockCore', () => {
 
         const mock = MockCoreFactory();
         const expression = instance => instance['property'];
-        mock.verify(expression, Times.AtLeastOnce());
+        const actual = mock.verify(expression, Times.AtLeastOnce());
 
+        expect(actual).toBe(mock);
         expect(verifier.test).toHaveBeenCalledWith(expression, Times.AtLeastOnce(), expressions, undefined);
     });
 

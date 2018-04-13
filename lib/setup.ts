@@ -32,7 +32,7 @@ export class Setup<T> implements ISetupInvoke<T> {
 
     /**
      * Plays the setup when predicate returns true otherwise the setup will be ignored.
-     * As predicate it could be used {@link PlayTimes}
+     * As predicate {@link PlayTimes} could be used.
      * @param {() => boolean} predicate
      * @returns {ISetup<T>}
      */

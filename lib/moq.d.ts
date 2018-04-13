@@ -10,7 +10,7 @@ export interface ISetup<T> {
 
     /**
      * Plays the setup when predicate returns true otherwise the setup will be ignored.
-     * As predicate it could be used {@link PlayTimes}
+     * As predicate {@link PlayTimes} could be used.
      * @param {() => boolean} predicate
      * @returns {ISetup<T>}
      */
@@ -30,7 +30,7 @@ export interface IMock<T> {
     object(): T;
     setup(expression: IExpectedExpression<T>): ISetup<T>;
     tracker: Tracker;
-    verify(expression: IExpectedExpression<T>, times?: Times): void;
+    verify(expression: IExpectedExpression<T>, times?: Times): IMock<T>;
     prototypeof(prototype?:any): IMock<T>;
     setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T>
 }
