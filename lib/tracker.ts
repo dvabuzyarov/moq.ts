@@ -1,16 +1,25 @@
-import {
-    Expressions, SetPropertyExpression, GetPropertyExpression, MethodExpression,
-    NamedMethodExpression
-} from './expressions';
+import { GetPropertyExpression, MethodExpression, SetPropertyExpression } from "./expressions";
+import { SequenceId, sequenceIdFactory } from "./sequence-id";
 
-export class Tracker{
-    private log: Expressions[] = [];
+export type TrackedAction = { id: number, expression: MethodExpression | GetPropertyExpression | SetPropertyExpression };
 
-    public add(action: MethodExpression | GetPropertyExpression | SetPropertyExpression): void{
-        this.log.push(action);
+export class Tracker {
+    private log: TrackedAction[] = [];
+
+    constructor(private sequenceId: SequenceId) {
+
     }
 
-    public get(): Expressions[]{
+    public add(action: MethodExpression | GetPropertyExpression | SetPropertyExpression): void {
+        const record = {id: this.sequenceId.next(), expression: action};
+        this.log.push(record);
+    }
+
+    public get(): TrackedAction[] {
         return this.log;
     }
+}
+
+export function trackerFactory(): Tracker {
+    return new Tracker(sequenceIdFactory());
 }
