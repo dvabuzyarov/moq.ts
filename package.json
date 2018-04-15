@@ -16,7 +16,8 @@
     "fake",
     "spy",
     "library",
-    "typescript"
+    "typescript",
+    "javascript"
   ],
   "devDependencies": {
     "@types/glob": "5.0.30",
