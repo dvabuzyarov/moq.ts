@@ -5,7 +5,7 @@ import {getName} from './getName';
 import {DefinedSetups} from '../lib/defined-setups';
 import {Verifier} from '../lib/verifier';
 import {Interceptor} from '../lib/interceptor';
-import {IMock, ISetup, ISetupInvoke} from '../lib/moq';
+import { IMock, ISequenceVerifier, ISetup, ISetupInvoke } from "../lib/moq";
 import {IInterceptorCallbacks, MockBehavior} from '../lib/interceptor-callbacks/interceptor-callbacks';
 import {Times} from '../lib/times';
 
@@ -154,7 +154,7 @@ describe('MockCore', () => {
         expect(interceptor.prototypeof).toHaveBeenCalledWith(prototype);
     });
 
-    it('Returns the current instance of mock', () => {
+    it('Returns the current instance of mock from prototypeof', () => {
         const prototype = {};
         (<jasmine.Spy>interceptor.prototypeof).and.returnValue(prototype);
 
@@ -163,5 +163,18 @@ describe('MockCore', () => {
 
         expect(actual).toBe(mock);
         expect(interceptor.prototypeof).toHaveBeenCalledWith(undefined);
+    });
+
+    it('Adds verified expression into sequence verifier', () => {
+        const sequenceVerifier = <ISequenceVerifier>jasmine.createSpyObj('sequence verifier', [
+            getName<ISequenceVerifier>(instance => instance.add)
+        ]);
+        const expression = instance => instance['property'];
+
+        const mock = MockCoreFactory();
+        const actual = mock.insequence(sequenceVerifier, expression);
+
+        expect(actual).toBe(mock);
+        expect(sequenceVerifier.add).toHaveBeenCalledWith(mock, expression);
     });
 });

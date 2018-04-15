@@ -32,5 +32,11 @@ export interface IMock<T> {
     tracker: Tracker;
     verify(expression: IExpectedExpression<T>, times?: Times): IMock<T>;
     prototypeof(prototype?:any): IMock<T>;
-    setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T>
+    setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T>;
+    insequence(sequence: ISequenceVerifier, expression: IExpectedExpression<T>): IMock<T>;
+}
+
+export interface ISequenceVerifier {
+    add<T>(mock: IMock<T>, expression: IExpectedExpression<T>): ISequenceVerifier;
+    verify(times?: Times): void;
 }

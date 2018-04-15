@@ -7,7 +7,7 @@ import {
     interceptorCallbacksFactory,
     MockBehavior
 } from "./interceptor-callbacks/interceptor-callbacks";
-import { IMock, ISetup, ISetupInvoke } from "./moq";
+import { IMock, ISequenceVerifier, ISetup, ISetupInvoke } from "./moq";
 import { Setup } from "./setup";
 import { Times } from "./times";
 import { Tracker, trackerFactory } from "./tracker";
@@ -59,6 +59,11 @@ export class MockCore<T> implements IMock<T> {
 
     public setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T> {
         this.interceptedCallbacks.setBehaviorStrategy(behaviorStrategy);
+        return this;
+    }
+
+    public insequence(sequence: ISequenceVerifier, expression: IExpectedExpression<T>): IMock<T>{
+        sequence.add(this, expression);
         return this;
     }
 }
