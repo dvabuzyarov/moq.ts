@@ -39,3 +39,10 @@ v2.3.1
 ===================
 
     * The verify methods can be used in fluent call
+
+  v2.6.2
+===================
+
+    * Dump function that dumps into console.log all interactions with the mocked object has been added
+
+
