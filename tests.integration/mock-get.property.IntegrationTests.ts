@@ -55,7 +55,6 @@ describe('Mock: Get property', () => {
 
         expect(actual).toEqual(jasmine.any(Function));
         mock.verify(instance => instance.property);
-
     });
 
     it('Returns last written value', () => {

@@ -1,7 +1,7 @@
 import { trackedExpressionsFormatterFactory } from "./formatters/tracked-expressions-formatter";
 import { IMock } from "./moq";
 
-/***
+/**
  * This function dumps into console.log all interactions with the mocked object
  * @param {IMock<T>} mock
  */

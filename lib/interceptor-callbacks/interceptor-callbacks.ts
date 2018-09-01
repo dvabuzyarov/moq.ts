@@ -1,17 +1,20 @@
-import {Expressions} from '../expressions';
-import {InterceptorCallbacksStrictStrategy} from './interceptor-callbacks.strict.strategy';
-import {DefinedSetups} from '../defined-setups';
-import {Tracker} from '../tracker';
-import {InterceptorCallbacksLooseStrategy} from './interceptor-callbacks.loose.strategy';
+import { DefinedSetups } from "../defined-setups";
+import { Expressions } from "../expressions";
+import { Tracker } from "../tracker";
+import { InterceptorCallbacksLooseStrategy } from "./interceptor-callbacks.loose.strategy";
+import { InterceptorCallbacksStrictStrategy } from "./interceptor-callbacks.strict.strategy";
 
-export enum MockBehavior{
+export enum MockBehavior {
     Strict,
     Loose
 }
 
 export interface IInterceptorCallbacksStrategy {
-    intercepted(expression: Expressions): any;
+    intercepted(expression: Expressions): void;
+
     hasNamedMethod(methodName: string, prototype: any): boolean;
+
+    invoke(expression: Expressions): any;
 }
 
 export interface IInterceptorCallbacks extends IInterceptorCallbacksStrategy {
@@ -34,7 +37,11 @@ export class InterceptorCallbacks<T> implements IInterceptorCallbacks {
         this.activeStrategy = strictStrategy;
     }
 
-    public intercepted(expression: Expressions): any {
+    public invoke(expression: Expressions): any {
+        return this.activeStrategy.invoke(expression);
+    }
+
+    public intercepted(expression: Expressions): void {
         return this.activeStrategy.intercepted(expression);
     }
 

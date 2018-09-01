@@ -55,7 +55,7 @@ describe('Interceptor callbacks strict strategy', () => {
         (<jasmine.Spy>definedSetups.get).and.returnValue(setup);
 
         const strategy = StrategyFactory();
-        const actual = strategy.intercepted(expression);
+        const actual = strategy.invoke(expression);
 
         expect(actual).toBe(expected);
         expect(definedSetups.get).toHaveBeenCalledWith(expression);
@@ -72,7 +72,7 @@ describe('Interceptor callbacks strict strategy', () => {
         (<jasmine.Spy>definedSetups.get).and.returnValue(setup);
 
         const strategy = StrategyFactory();
-        const actual = strategy.intercepted(expression);
+        const actual = strategy.invoke(expression);
 
         expect(actual).toBe(expected);
         expect(definedSetups.get).toHaveBeenCalledWith(expression);
@@ -89,7 +89,7 @@ describe('Interceptor callbacks strict strategy', () => {
         (<jasmine.Spy>definedSetups.get).and.returnValue(setup);
 
         const strategy = StrategyFactory();
-        const actual = strategy.intercepted(expression);
+        const actual = strategy.invoke(expression);
 
         expect(actual).toBe(expected);
         expect(definedSetups.get).toHaveBeenCalledWith(expression);
@@ -106,7 +106,7 @@ describe('Interceptor callbacks strict strategy', () => {
         (<jasmine.Spy>definedSetups.get).and.returnValue(setup);
 
         const strategy = StrategyFactory();
-        const actual = strategy.intercepted(expression);
+        const actual = strategy.invoke(expression);
 
         expect(actual).toBe(expected);
         expect(definedSetups.get).toHaveBeenCalledWith(expression);
@@ -119,7 +119,7 @@ describe('Interceptor callbacks strict strategy', () => {
         (<jasmine.Spy>definedSetups.get).and.returnValue(undefined);
 
         const strategy = StrategyFactory();
-        const actual = strategy.intercepted(expression);
+        const actual = strategy.invoke(expression);
 
         expect(actual).toBeUndefined();
         expect(definedSetups.get).toHaveBeenCalledWith(expression);

@@ -1,7 +1,7 @@
-import {Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression} from '../expressions';
-import {DefinedSetups} from '../defined-setups';
-import {Tracker} from '../tracker';
-import {IInterceptorCallbacksStrategy} from './interceptor-callbacks';
+import { DefinedSetups } from "../defined-setups";
+import { Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
+import { Tracker } from "../tracker";
+import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
 
 export class InterceptorCallbacksStrictStrategy<T> implements IInterceptorCallbacksStrategy {
 
@@ -10,8 +10,11 @@ export class InterceptorCallbacksStrictStrategy<T> implements IInterceptorCallba
 
     }
 
-    public intercepted(expression: Expressions): any {
+    public intercepted(expression: Expressions): void {
         this.tracker.add(expression);
+    }
+
+    public invoke(expression: Expressions): any {
         const setup = this.definedSetups.get(expression);
         if (setup !== undefined) {
             if (expression instanceof MethodExpression)

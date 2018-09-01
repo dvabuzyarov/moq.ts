@@ -13,6 +13,7 @@ describe('Mock interceptor', () => {
     function callbacksFactory(): IInterceptorCallbacksStrategy {
         return jasmine.createSpyObj('callbacks', [
             getName<IInterceptorCallbacksStrategy>(instance => instance.intercepted),
+            getName<IInterceptorCallbacksStrategy>(instance => instance.invoke),
             getName<IInterceptorCallbacksStrategy>(instance => instance.hasNamedMethod)]);
     }
 
@@ -60,7 +61,7 @@ describe('Mock interceptor', () => {
         const arg = 'argument';
         const name = 'some_property_name';
         const callbacks = callbacksFactory();
-        (callbacks.intercepted as jasmine.Spy).and.returnValue(true);
+        (callbacks.invoke as jasmine.Spy).and.returnValue(true);
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
 
@@ -93,7 +94,7 @@ describe('Mock interceptor', () => {
     it('Returns value from method interception', () => {
         const expected = 'returned value';
         const callbacks = callbacksFactory();
-        (callbacks.intercepted as jasmine.Spy).and.returnValue(expected);
+        (callbacks.invoke as jasmine.Spy).and.returnValue(expected);
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
 
@@ -106,7 +107,7 @@ describe('Mock interceptor', () => {
         const arg = 'argument';
         const name = 'some_property_name';
         const callbacks = callbacksFactory();
-        (callbacks.intercepted as jasmine.Spy).and.returnValue(true);
+        (callbacks.invoke as jasmine.Spy).and.returnValue(true);
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
 
@@ -128,7 +129,8 @@ describe('Mock interceptor', () => {
         const arg = 'argument';
         const name = 'some_property_name';
         const callbacks = callbacksFactory();
-        (callbacks.intercepted as jasmine.Spy).and.returnValue(true);
+        (callbacks.invoke as jasmine.Spy).and.returnValue(true);
+        (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(false);
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
 
@@ -142,7 +144,8 @@ describe('Mock interceptor', () => {
         const arg2 = 'argument 2';
         const name = 'some_property_name';
         const callbacks = callbacksFactory();
-        (callbacks.intercepted as jasmine.Spy).and.returnValues(true, false);
+        (callbacks.invoke as jasmine.Spy).and.returnValues(true, false);
+        (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(false);
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
 
@@ -159,7 +162,7 @@ describe('Mock interceptor', () => {
         const arg = 'argument';
         const name = 'some_property_name';
         const callbacks = callbacksFactory();
-        (callbacks.intercepted as jasmine.Spy).and.returnValue(false);
+        (callbacks.invoke as jasmine.Spy).and.returnValue(false);
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
 
@@ -172,7 +175,7 @@ describe('Mock interceptor', () => {
         const expected = 'returned value';
         const name = 'some_property_name';
         const callbacks = callbacksFactory();
-        (callbacks.intercepted as jasmine.Spy).and.returnValue(expected);
+        (callbacks.invoke as jasmine.Spy).and.returnValue(expected);
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(false);
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
@@ -187,7 +190,7 @@ describe('Mock interceptor', () => {
         const name = 'some_property_name';
         const callbacks = callbacksFactory();
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(true);
-        (callbacks.intercepted as jasmine.Spy).and.returnValue(expected);
+        (callbacks.invoke as jasmine.Spy).and.returnValue(expected);
 
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();

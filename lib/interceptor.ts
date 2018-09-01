@@ -1,11 +1,11 @@
-import {
-    GetPropertyExpression, MethodExpression, NamedMethodExpression,
-    SetPropertyExpression
-} from './expressions';
-import {IInterceptorCallbacksStrategy} from './interceptor-callbacks/interceptor-callbacks';
+import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "./expressions";
+import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks/interceptor-callbacks";
 
 declare var Proxy: any;
 
+/**
+ * @private
+ */
 export class Interceptor<T> {
 
 
@@ -36,23 +36,27 @@ export class Interceptor<T> {
         const options = {
             get: (target, name) => {
                 const getPropertyExpression = new GetPropertyExpression(name);
-                const getPropertyResult = this.interceptorCallbacks.intercepted(getPropertyExpression);
+                this.interceptorCallbacks.intercepted(getPropertyExpression);
 
-                if (this._values.hasOwnProperty(name) === true)
-                    return this._values[name];
+                if (this.interceptorCallbacks.hasNamedMethod(name, this._prototype) === false) {
 
-                if (this.interceptorCallbacks.hasNamedMethod(name, this._prototype) === false)
-                    return getPropertyResult;
+                    if (this._values.hasOwnProperty(name) === true)
+                        return this._values[name];
+
+                    return this.interceptorCallbacks.invoke(getPropertyExpression);
+                }
 
                 return (...args) => {
                     const namedMethodExpression = new NamedMethodExpression(name, args);
-                    return this.interceptorCallbacks.intercepted(namedMethodExpression);
+                    this.interceptorCallbacks.intercepted(namedMethodExpression);
+                    return this.interceptorCallbacks.invoke(namedMethodExpression);
                 }
             },
 
             set: (target, name, value) => {
                 const expression = new SetPropertyExpression(name, value);
-                const accepted = this.interceptorCallbacks.intercepted(expression);
+                this.interceptorCallbacks.intercepted(expression);
+                const accepted = this.interceptorCallbacks.invoke(expression);
                 if (accepted === true || accepted === undefined) {
                     this._values[name] = value;
                 }
@@ -62,7 +66,8 @@ export class Interceptor<T> {
 
             apply: (target, thisArg, args) => {
                 const expression = new MethodExpression(args);
-                return this.interceptorCallbacks.intercepted(expression);
+                this.interceptorCallbacks.intercepted(expression);
+                return this.interceptorCallbacks.invoke(expression);
             },
 
             getPrototypeOf: (target) => {
