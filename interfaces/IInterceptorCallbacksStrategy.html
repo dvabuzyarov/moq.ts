@@ -87,6 +87,9 @@
                                 <li>
                                     <a href="#intercepted">intercepted</a>
                                 </li>
+                                <li>
+                                    <a href="#invoke">invoke</a>
+                                </li>
                             </ul>
                         </td>
                     </tr>
@@ -121,7 +124,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">lib/interceptor-callbacks/interceptor-callbacks.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">lib/interceptor-callbacks/interceptor-callbacks.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -239,6 +242,75 @@
                             <div>
                             </div>
                             <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="invoke"></a>
+                        <span class="name">
+                            <b>
+                            invoke
+                            </b>
+                            <a href="#invoke"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>invoke(expression: <a href="../undefineds/Expressions.html">Expressions</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">lib/interceptor-callbacks/interceptor-callbacks.ts:17</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>expression</td>
+                                                        <td>
+                                                                    <code><a href="../miscellaneous/typealiases.html#Expressions" target="_self" >Expressions</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                             </div>
@@ -256,20 +328,23 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Expressions} from &#x27;../expressions&#x27;;
-import {InterceptorCallbacksStrictStrategy} from &#x27;./interceptor-callbacks.strict.strategy&#x27;;
-import {DefinedSetups} from &#x27;../defined-setups&#x27;;
-import {Tracker} from &#x27;../tracker&#x27;;
-import {InterceptorCallbacksLooseStrategy} from &#x27;./interceptor-callbacks.loose.strategy&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DefinedSetups } from &quot;../defined-setups&quot;;
+import { Expressions } from &quot;../expressions&quot;;
+import { Tracker } from &quot;../tracker&quot;;
+import { InterceptorCallbacksLooseStrategy } from &quot;./interceptor-callbacks.loose.strategy&quot;;
+import { InterceptorCallbacksStrictStrategy } from &quot;./interceptor-callbacks.strict.strategy&quot;;
 
-export enum MockBehavior{
+export enum MockBehavior {
     Strict,
     Loose
 }
 
 export interface IInterceptorCallbacksStrategy {
-    intercepted(expression: Expressions): any;
+    intercepted(expression: Expressions): void;
+
     hasNamedMethod(methodName: string, prototype: any): boolean;
+
+    invoke(expression: Expressions): any;
 }
 
 export interface IInterceptorCallbacks extends IInterceptorCallbacksStrategy {
@@ -292,7 +367,11 @@ export class InterceptorCallbacks&lt;T&gt; implements IInterceptorCallbacks {
         this.activeStrategy &#x3D; strictStrategy;
     }
 
-    public intercepted(expression: Expressions): any {
+    public invoke(expression: Expressions): any {
+        return this.activeStrategy.invoke(expression);
+    }
+
+    public intercepted(expression: Expressions): void {
         return this.activeStrategy.intercepted(expression);
     }
 
@@ -307,7 +386,8 @@ export class InterceptorCallbacks&lt;T&gt; implements IInterceptorCallbacks {
         if (behavior &#x3D;&#x3D;&#x3D; MockBehavior.Loose)
             this.activeStrategy &#x3D; this.looseStrategy;
     }
-}</code></pre>
+}
+</code></pre>
     </div>
 </div>
 

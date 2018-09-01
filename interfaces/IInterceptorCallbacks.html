@@ -124,7 +124,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">lib/interceptor-callbacks/interceptor-callbacks.ts:18</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">lib/interceptor-callbacks/interceptor-callbacks.ts:21</a></div>
                             </td>
                         </tr>
 
@@ -178,20 +178,23 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Expressions} from &#x27;../expressions&#x27;;
-import {InterceptorCallbacksStrictStrategy} from &#x27;./interceptor-callbacks.strict.strategy&#x27;;
-import {DefinedSetups} from &#x27;../defined-setups&#x27;;
-import {Tracker} from &#x27;../tracker&#x27;;
-import {InterceptorCallbacksLooseStrategy} from &#x27;./interceptor-callbacks.loose.strategy&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DefinedSetups } from &quot;../defined-setups&quot;;
+import { Expressions } from &quot;../expressions&quot;;
+import { Tracker } from &quot;../tracker&quot;;
+import { InterceptorCallbacksLooseStrategy } from &quot;./interceptor-callbacks.loose.strategy&quot;;
+import { InterceptorCallbacksStrictStrategy } from &quot;./interceptor-callbacks.strict.strategy&quot;;
 
-export enum MockBehavior{
+export enum MockBehavior {
     Strict,
     Loose
 }
 
 export interface IInterceptorCallbacksStrategy {
-    intercepted(expression: Expressions): any;
+    intercepted(expression: Expressions): void;
+
     hasNamedMethod(methodName: string, prototype: any): boolean;
+
+    invoke(expression: Expressions): any;
 }
 
 export interface IInterceptorCallbacks extends IInterceptorCallbacksStrategy {
@@ -214,7 +217,11 @@ export class InterceptorCallbacks&lt;T&gt; implements IInterceptorCallbacks {
         this.activeStrategy &#x3D; strictStrategy;
     }
 
-    public intercepted(expression: Expressions): any {
+    public invoke(expression: Expressions): any {
+        return this.activeStrategy.invoke(expression);
+    }
+
+    public intercepted(expression: Expressions): void {
         return this.activeStrategy.intercepted(expression);
     }
 
@@ -229,7 +236,8 @@ export class InterceptorCallbacks&lt;T&gt; implements IInterceptorCallbacks {
         if (behavior &#x3D;&#x3D;&#x3D; MockBehavior.Loose)
             this.activeStrategy &#x3D; this.looseStrategy;
     }
-}</code></pre>
+}
+</code></pre>
     </div>
 </div>
 

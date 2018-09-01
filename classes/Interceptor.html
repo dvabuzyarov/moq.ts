@@ -69,6 +69,11 @@
 
 
 
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
 
             <section>
     <h3 id="index">Index</h3>
@@ -463,14 +468,14 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-    GetPropertyExpression, MethodExpression, NamedMethodExpression,
-    SetPropertyExpression
-} from &#x27;./expressions&#x27;;
-import {IInterceptorCallbacksStrategy} from &#x27;./interceptor-callbacks/interceptor-callbacks&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from &quot;./expressions&quot;;
+import { IInterceptorCallbacksStrategy } from &quot;./interceptor-callbacks/interceptor-callbacks&quot;;
 
 declare var Proxy: any;
 
+/**
+ * @private
+ */
 export class Interceptor&lt;T&gt; {
 
 
@@ -501,23 +506,27 @@ export class Interceptor&lt;T&gt; {
         const options &#x3D; {
             get: (target, name) &#x3D;&gt; {
                 const getPropertyExpression &#x3D; new GetPropertyExpression(name);
-                const getPropertyResult &#x3D; this.interceptorCallbacks.intercepted(getPropertyExpression);
+                this.interceptorCallbacks.intercepted(getPropertyExpression);
 
-                if (this._values.hasOwnProperty(name) &#x3D;&#x3D;&#x3D; true)
-                    return this._values[name];
+                if (this.interceptorCallbacks.hasNamedMethod(name, this._prototype) &#x3D;&#x3D;&#x3D; false) {
 
-                if (this.interceptorCallbacks.hasNamedMethod(name, this._prototype) &#x3D;&#x3D;&#x3D; false)
-                    return getPropertyResult;
+                    if (this._values.hasOwnProperty(name) &#x3D;&#x3D;&#x3D; true)
+                        return this._values[name];
+
+                    return this.interceptorCallbacks.invoke(getPropertyExpression);
+                }
 
                 return (...args) &#x3D;&gt; {
                     const namedMethodExpression &#x3D; new NamedMethodExpression(name, args);
-                    return this.interceptorCallbacks.intercepted(namedMethodExpression);
+                    this.interceptorCallbacks.intercepted(namedMethodExpression);
+                    return this.interceptorCallbacks.invoke(namedMethodExpression);
                 }
             },
 
             set: (target, name, value) &#x3D;&gt; {
                 const expression &#x3D; new SetPropertyExpression(name, value);
-                const accepted &#x3D; this.interceptorCallbacks.intercepted(expression);
+                this.interceptorCallbacks.intercepted(expression);
+                const accepted &#x3D; this.interceptorCallbacks.invoke(expression);
                 if (accepted &#x3D;&#x3D;&#x3D; true || accepted &#x3D;&#x3D;&#x3D; undefined) {
                     this._values[name] &#x3D; value;
                 }
@@ -527,7 +536,8 @@ export class Interceptor&lt;T&gt; {
 
             apply: (target, thisArg, args) &#x3D;&gt; {
                 const expression &#x3D; new MethodExpression(args);
-                return this.interceptorCallbacks.intercepted(expression);
+                this.interceptorCallbacks.intercepted(expression);
+                return this.interceptorCallbacks.invoke(expression);
             },
 
             getPrototypeOf: (target) &#x3D;&gt; {
@@ -545,7 +555,8 @@ export class Interceptor&lt;T&gt; {
         return new Proxy(function () {
         }, options);
     }
-}</code></pre>
+}
+</code></pre>
     </div>
 </div>
 

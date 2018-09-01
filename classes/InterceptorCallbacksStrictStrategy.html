@@ -97,6 +97,10 @@
                                     <span class="modifier">Public</span>
                                 <a href="#intercepted">intercepted</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#invoke">invoke</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -200,7 +204,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">lib/interceptor-callbacks/interceptor-callbacks.strict.strategy.ts:29</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">lib/interceptor-callbacks/interceptor-callbacks.strict.strategy.ts:32</a></div>
                             </td>
                         </tr>
 
@@ -320,6 +324,77 @@
                             <div>
                             </div>
                             <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="invoke"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            invoke
+                            </b>
+                            <a href="#invoke"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>invoke(expression: <a href="../undefineds/Expressions.html">Expressions</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">lib/interceptor-callbacks/interceptor-callbacks.strict.strategy.ts:17</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>expression</td>
+                                                        <td>
+                                                                    <code><a href="../miscellaneous/typealiases.html#Expressions" target="_self" >Expressions</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                             </div>
@@ -341,10 +416,10 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression} from &#x27;../expressions&#x27;;
-import {DefinedSetups} from &#x27;../defined-setups&#x27;;
-import {Tracker} from &#x27;../tracker&#x27;;
-import {IInterceptorCallbacksStrategy} from &#x27;./interceptor-callbacks&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DefinedSetups } from &quot;../defined-setups&quot;;
+import { Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression } from &quot;../expressions&quot;;
+import { Tracker } from &quot;../tracker&quot;;
+import { IInterceptorCallbacksStrategy } from &quot;./interceptor-callbacks&quot;;
 
 export class InterceptorCallbacksStrictStrategy&lt;T&gt; implements IInterceptorCallbacksStrategy {
 
@@ -353,8 +428,11 @@ export class InterceptorCallbacksStrictStrategy&lt;T&gt; implements IInterceptor
 
     }
 
-    public intercepted(expression: Expressions): any {
+    public intercepted(expression: Expressions): void {
         this.tracker.add(expression);
+    }
+
+    public invoke(expression: Expressions): any {
         const setup &#x3D; this.definedSetups.get(expression);
         if (setup !&#x3D;&#x3D; undefined) {
             if (expression instanceof MethodExpression)
@@ -378,7 +456,8 @@ export class InterceptorCallbacksStrictStrategy&lt;T&gt; implements IInterceptor
 
         return false;
     }
-}</code></pre>
+}
+</code></pre>
     </div>
 </div>
 
