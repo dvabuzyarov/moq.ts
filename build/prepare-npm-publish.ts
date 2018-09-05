@@ -15,7 +15,7 @@ function writeIndex(files: string[]):void{
 
 function updateFiles(files: string[]): void{
     const path = './package.json';
-    const isDefinition = new RegExp('\.d.ts$');
+    const isDefinition = new RegExp(/\.d\.ts$/);
     const fileOptions = {encoding: "utf-8"};
     const content = JSON.parse(readFileSync(path, fileOptions));
     content.files = files
