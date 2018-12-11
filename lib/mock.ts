@@ -57,11 +57,21 @@ export class MockCore<T> implements IMock<T> {
         return this;
     }
 
+    /**
+     * @deprecated use custom setup as described ["How to throw an exception on missed setup?"](https://github.com/dvabuzyarov/moq.ts/wiki/How-to-throw-an-exception-on-missed-setup%3F).
+     * @obsolete
+     * @param behaviorStrategy
+     */
     public setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T> {
         this.interceptedCallbacks.setBehaviorStrategy(behaviorStrategy);
         return this;
     }
 
+    /**
+     * @experimental
+     * @param sequence
+     * @param expression
+     */
     public insequence(sequence: ISequenceVerifier, expression: IExpectedExpression<T>): IMock<T>{
         sequence.add(this, expression);
         return this;
