@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -38,9 +35,8 @@
 <a href="https://www.npmjs.com/package/moq.ts"><img src="https://img.shields.io/npm/dt/moq.ts.svg?style=flat-square" alt="npm downloads" class="img-responsive"></a>
 <a href="https://david-dm.org/dvabuzyarov/moq.ts"><img src="http://img.shields.io/david/dvabuzyarov/moq.ts.svg?style=flat-square" alt="Dependency Status" class="img-responsive"></a>
 <a href="https://www.npmjs.com/package/moq.ts"><img src="https://img.shields.io/hexpm/l/plug.svg" alt="License" class="img-responsive"></a></p>
-<h1 id="moq-ts">moq.ts</h1>
+<h1 id="moq-ts-documentation">moq.ts | <a href="https://dvabuzyarov.github.io/moq.ts/">Documentation</a></h1>
 <p>Moq for Typescript. Inspired by c# <a href="https://github.com/moq/moq4">Moq library</a>.</p>
-<h4 id="documentation-https-dvabuzyarov-github-io-moq-ts-"><a href="https://dvabuzyarov.github.io/moq.ts/">Documentation https://dvabuzyarov.github.io/moq.ts/</a></h4>
 <h4 id="important">Important</h4>
 <p>This implementation depends on <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy">Proxy</a> object.
 So if your production code is not compatible with this I would recommend you separate you production code and testing code into dedicated projects.
@@ -50,6 +46,17 @@ If you need help with this then ask me.</p>
 <h4 id="quick-start">Quick start</h4>
 <p>moq.ts as the original <a href="https://github.com/moq/moq4">Moq library</a> is intended to be simple to use, strongly typed (no magic strings!, and therefore full compiler-verified and refactoring-friendly) and minimalistic (while still fully functional!).</p>
 <p>You can find a pretty full set of usages in the integration tests. Check out <a href="https://github.com/dvabuzyarov/moq.ts/tree/master/tests.integration">tests.integration</a> folder.</p>
+<hr>
+<ul>
+<li><a href="#mocking-property-of-objects">Mocking property of objects</a></li>
+<li><a href="#mocking-property-setting">Mocking property setting</a></li>
+<li><a href="#mocking-functions">Mocking functions</a></li>
+<li><a href="#mocking-functions-of-objects">Mocking functions of objects</a></li>
+<li><a href="#mock-behavior">Mock behavior</a></li>
+<li><a href="#mock-prototype">Mock prototype</a></li>
+</ul>
+<hr>
+<!-- toc -->
 <p>Mocking property of objects
 -
 <a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts">mock-get.property.IntegrationTests.ts</a></p>
@@ -173,18 +180,9 @@ const actual = object.method(1, &#39;a&#39;);
 
 mock.verify(instance =&gt; instance.method(2, &#39;a&#39;), Times.Never());</code></pre></div><h2 id="mock-behavior">Mock behavior</h2>
 <p>You can control mock behavior when accessing to a property without a corresponding setup. </p>
-<div><pre class="line-numbers"><code class="language-typescript">    mock = new Mock&lt;ITestObject&gt;()
-    .setBehaviorStrategy(MockBehavior.Loose)
-    //or
-    .setBehaviorStrategy(MockBehavior.Strict);</code></pre></div><p>The default behavior is strict.</p>
-<h5 id="mockbehavior-strict">MockBehavior.Strict</h5>
-<p>Accessing to an unset property will return undefined value;
-Accessing to an unset method of an object will throw TypeError exception; It does not matter if a method is a part of mocked type.
-If you want to track a method you can define a default setup:</p>
-<div><pre class="line-numbers"><code class="language-typescript">const mock = new Mock&lt;ITestObject&gt;()
-    .setup(instance =&gt; instance.method(It.Is(()=&gt;true), It.Is(()=&gt;true)))
-    .returns(undefined);</code></pre></div><h5 id="mockbehavior-loose">MockBehavior.Loose</h5>
-<p>Accessing to an unset property or a method will return a pointer to a spy function;
+<div><pre class="line-numbers"><code class="language-typescript">    mock = new Mock&lt;ITestObject&gt;();
+    mock.setup(instance =&gt; It.Is(expression =&gt; true))
+      .throws(new Error(&quot;setup is missed&quot;));</code></pre></div><p>Accessing to an unset property or a method will return a pointer to a spy function;
 You can call this function and it will be tracked.</p>
 <h2 id="mock-prototype">Mock prototype</h2>
 <p>If you need to make work instanceof operator or you need to deal with prototype of the mock object you can 
@@ -195,7 +193,7 @@ on mock object.</p>
 }
 
 const mock = new Mock&lt;ITestObject&gt;()
-                .prototypeof(TestObject)
+                .prototypeof(TestObject.prototype)
                 .object();
 
 mock.object() instanceof TestObject;// true</code></pre></div><p>Sponsored by <a href="https://www.2bit.ch">2BIT</a></p>
@@ -239,7 +237,9 @@ mock.object() instanceof TestObject;// true</code></pre></div><p>Sponsored by <a
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <script src="./js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="./js/menu-wc.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
 

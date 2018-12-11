@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -66,6 +63,13 @@
             <code>lib/interceptor.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>This class is not intended to be used directly</p>
+
+            </p>
 
 
 
@@ -146,7 +150,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">lib/interceptor.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">lib/interceptor.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -215,9 +219,14 @@
 
                         </td>
                     </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>null</code>
+                        </td>
+                    </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">lib/interceptor.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">lib/interceptor.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -252,7 +261,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">lib/interceptor.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">lib/interceptor.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -292,7 +301,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">lib/interceptor.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">lib/interceptor.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -330,7 +339,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">lib/interceptor.ts:35</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">lib/interceptor.ts:36</a></div>
                             </td>
                         </tr>
 
@@ -370,7 +379,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">lib/interceptor.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">lib/interceptor.ts:21</a></div>
                             </td>
                         </tr>
 
@@ -410,7 +419,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">lib/interceptor.ts:28</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">lib/interceptor.ts:29</a></div>
                             </td>
                         </tr>
 
@@ -474,13 +483,14 @@ import { IInterceptorCallbacksStrategy } from &quot;./interceptor-callbacks/inte
 declare var Proxy: any;
 
 /**
+ * This class is not intended to be used directly
  * @private
+ * @internal
  */
 export class Interceptor&lt;T&gt; {
 
-
     private _proxy: T;
-    private _prototype: any;
+    private _prototype: any &#x3D; null;
     private _values &#x3D; {};
 
     constructor(private interceptorCallbacks: IInterceptorCallbacksStrategy) {
@@ -540,15 +550,13 @@ export class Interceptor&lt;T&gt; {
                 return this.interceptorCallbacks.invoke(expression);
             },
 
-            getPrototypeOf: (target) &#x3D;&gt; {
-                if (this._prototype &#x3D;&#x3D;&#x3D; null)
-                    return null;
-                return this._prototype.prototype;
-            },
+            getPrototypeOf: (target) &#x3D;&gt; this._prototype,
             setPrototypeOf: (target, prototype) &#x3D;&gt; {
-                if (prototype !&#x3D;&#x3D; undefined)
+                if (prototype !&#x3D;&#x3D; undefined) {
                     this._prototype &#x3D; prototype;
-                return true;
+                    return true;
+                }
+                return false;
             }
         };
 
@@ -588,7 +596,9 @@ export class Interceptor&lt;T&gt; {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <script src="../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 
