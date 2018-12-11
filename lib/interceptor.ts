@@ -4,13 +4,14 @@ import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks/intercept
 declare var Proxy: any;
 
 /**
+ * This class is not intended to be used directly
  * @private
+ * @internal
  */
 export class Interceptor<T> {
 
-
     private _proxy: T;
-    private _prototype: any;
+    private _prototype: any = null;
     private _values = {};
 
     constructor(private interceptorCallbacks: IInterceptorCallbacksStrategy) {
@@ -70,15 +71,13 @@ export class Interceptor<T> {
                 return this.interceptorCallbacks.invoke(expression);
             },
 
-            getPrototypeOf: (target) => {
-                if (this._prototype === null)
-                    return null;
-                return this._prototype.prototype;
-            },
+            getPrototypeOf: (target) => this._prototype,
             setPrototypeOf: (target, prototype) => {
-                if (prototype !== undefined)
+                if (prototype !== undefined) {
                     this._prototype = prototype;
-                return true;
+                    return true;
+                }
+                return false;
             }
         };
 

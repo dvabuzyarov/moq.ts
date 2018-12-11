@@ -4,10 +4,8 @@
 [![Dependency Status](http://img.shields.io/david/dvabuzyarov/moq.ts.svg?style=flat-square)](https://david-dm.org/dvabuzyarov/moq.ts)
 [![License](https://img.shields.io/hexpm/l/plug.svg)](https://www.npmjs.com/package/moq.ts)
 
-# moq.ts
+# moq.ts | [Documentation](https://dvabuzyarov.github.io/moq.ts/)
 Moq for Typescript. Inspired by c# [Moq library](https://github.com/moq/moq4).
-
-#### [Documentation https://dvabuzyarov.github.io/moq.ts/](https://dvabuzyarov.github.io/moq.ts/)
 
 #### Important
 This implementation depends on [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object.
@@ -22,7 +20,17 @@ npm install moq.ts --save-dev
 moq.ts as the original [Moq library](https://github.com/moq/moq4) is intended to be simple to use, strongly typed (no magic strings!, and therefore full compiler-verified and refactoring-friendly) and minimalistic (while still fully functional!).
 
 You can find a pretty full set of usages in the integration tests. Check out [tests.integration](https://github.com/dvabuzyarov/moq.ts/tree/master/tests.integration) folder.
+* * *
 
+- [Mocking property of objects](#mocking-property-of-objects)
+- [Mocking property setting](#mocking-property-setting)
+- [Mocking functions](#mocking-functions)
+- [Mocking functions of objects](#mocking-functions-of-objects)
+- [Mock behavior](#mock-behavior)
+- [Mock prototype](#mock-prototype)
+* * *
+
+<!-- toc -->
 Mocking property of objects
 -
 [mock-get.property.IntegrationTests.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts)
@@ -165,23 +173,10 @@ mock.verify(instance => instance.method(2, 'a'), Times.Never());
 ## Mock behavior
 You can control mock behavior when accessing to a property without a corresponding setup. 
 ```typescript
-    mock = new Mock<ITestObject>()
-    .setBehaviorStrategy(MockBehavior.Loose)
-    //or
-    .setBehaviorStrategy(MockBehavior.Strict);
+    mock = new Mock<ITestObject>();
+    mock.setup(instance => It.Is(expression => true))
+      .throws(new Error("setup is missed"));
 ```
-The default behavior is strict.
-
-##### MockBehavior.Strict
-Accessing to an unset property will return undefined value;
-Accessing to an unset method of an object will throw TypeError exception; It does not matter if a method is a part of mocked type.
-If you want to track a method you can define a default setup:
-```typescript
-const mock = new Mock<ITestObject>()
-    .setup(instance => instance.method(It.Is(()=>true), It.Is(()=>true)))
-    .returns(undefined);
-```
-##### MockBehavior.Loose
 Accessing to an unset property or a method will return a pointer to a spy function;
 You can call this function and it will be tracked.
 
@@ -196,7 +191,7 @@ class TestObject implements ITestObject {
 }
 
 const mock = new Mock<ITestObject>()
-                .prototypeof(TestObject)
+                .prototypeof(TestObject.prototype)
                 .object();
 
 mock.object() instanceof TestObject;// true

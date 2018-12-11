@@ -10,7 +10,7 @@ module.exports = function (config) {
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ['systemjs', 'jasmine'],
-        plugins: ['karma-systemjs', 'karma-jasmine', 'karma-firefox-launcher'],
+        plugins: ['karma-systemjs', 'karma-jasmine', 'karma-chrome-launcher'],
         systemjs: {
             // Path to your SystemJS configuration file
             configFile: './system.conf.js',
@@ -70,8 +70,7 @@ module.exports = function (config) {
         
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['FirefoxDeveloper'],
-        // browsers: ['Chrome'],
+        browsers: ['Chrome'],
         
         
         // Continuous Integration mode

@@ -5,6 +5,7 @@ import {
 import {Interceptor} from '../lib/interceptor';
 import {getName} from './getName';
 import {IInterceptorCallbacksStrategy} from '../lib/interceptor-callbacks/interceptor-callbacks';
+import ObjectContaining = jasmine.ObjectContaining;
 
 declare var Object: any;
 
@@ -214,13 +215,13 @@ describe('Mock interceptor', () => {
         const callbacks = callbacksFactory();
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
-        const actual = interceptor.prototypeof(PrototypeClass);
+        const actual = interceptor.prototypeof(PrototypeClass.prototype);
 
         expect(object instanceof PrototypeClass).toBe(true);
         expect(object instanceof Function).toBe(false);
         expect(object instanceof Array).toBe(false);
 
-        expect(actual).toBe(PrototypeClass);
+        expect(actual).toBe(PrototypeClass.prototype);
     });
 
 
@@ -255,13 +256,13 @@ describe('Mock interceptor', () => {
         const interceptor = new Interceptor<Function>(callbacks);
         const object = interceptor.object();
 
-        Object.setPrototypeOf(object, PrototypeClass);
+        Object.setPrototypeOf(object, PrototypeClass.prototype);
         const actual = interceptor.prototypeof();
 
         expect(object instanceof PrototypeClass).toBe(true);
         expect(object instanceof Function).toBe(false);
         expect(object instanceof Array).toBe(false);
 
-        expect(actual).toBe(PrototypeClass);
+        expect(actual).toBe(PrototypeClass.prototype);
     });
 });

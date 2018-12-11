@@ -28,7 +28,7 @@
     "jasmine": "2.4.1",
     "jasmine-core": "2.6.4",
     "karma": "1.7.0",
-    "karma-firefox-launcher": "1.0.0",
+    "karma-chrome-launcher": "2.2.0",
     "karma-jasmine": "1.0.2",
     "karma-systemjs": "git://github.com/AdamWillden/karma-systemjs.git#f9a6969d571e0e8083ca36834a98ca2efb89e49b",
     "plugin-typescript": "7.0.6",
