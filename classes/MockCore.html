@@ -426,7 +426,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">lib/mock.ts:65</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">lib/mock.ts:75</a></div>
                             </td>
                         </tr>
 
@@ -620,7 +620,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">lib/mock.ts:60</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">lib/mock.ts:65</a></div>
                             </td>
                         </tr>
 
@@ -891,11 +891,21 @@ export class MockCore&lt;T&gt; implements IMock&lt;T&gt; {
         return this;
     }
 
+    /**
+     * @deprecated use custom setup as described [&quot;How to throw an exception on missed setup?&quot;](https://github.com/dvabuzyarov/moq.ts/wiki/How-to-throw-an-exception-on-missed-setup%3F).
+     * @obsolete
+     * @param behaviorStrategy
+     */
     public setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock&lt;T&gt; {
         this.interceptedCallbacks.setBehaviorStrategy(behaviorStrategy);
         return this;
     }
 
+    /**
+     * @experimental
+     * @param sequence
+     * @param expression
+     */
     public insequence(sequence: ISequenceVerifier, expression: IExpectedExpression&lt;T&gt;): IMock&lt;T&gt;{
         sequence.add(this, expression);
         return this;
