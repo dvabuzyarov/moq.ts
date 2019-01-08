@@ -12,7 +12,7 @@ const application = new Application({
     excludeNotExported: true,
     // excludeExternals: true,
     preserveConstEnums: true,
-    stripInternal: true, 
+    stripInternal: true,
     disableOutputCheck: true,
     version: true,
     plugins: ["./build/typedoc.plugin"]

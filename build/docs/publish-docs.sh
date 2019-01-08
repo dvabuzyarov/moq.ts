@@ -12,7 +12,7 @@ mkdir -p ${DOCS_PATH}
 git clone -b gh-pages "${REPO_PATH}" --single-branch ${DOCS_PATH}
 
 cd ${DOCS_PATH}
-git rm -rf .
+git rm -rf --ignore-unmatch .
 cd -
 
 npm run docs
