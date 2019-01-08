@@ -38,7 +38,7 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/karma start --single-run",
-    "docs": "rimraf docs && tsc --experimentalDecorators ./build/build-doc && node ./build/build-doc.js",
-    "serve-docs": "npm run docs && serve"
+    "docs": "tsc --experimentalDecorators ./build/build-doc && node ./build/build-doc.js",
+    "serve-docs": "rimraf docs/* && npm run docs && serve"
   }
 }
