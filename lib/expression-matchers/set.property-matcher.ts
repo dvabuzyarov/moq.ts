@@ -3,6 +3,9 @@ import {SetPropertyExpression} from '../expressions';
 import {It} from '../expected-expressions/expression-predicates';
 import {ConstantMatcher} from './constant-matcher';
 
+/**
+ * @hidden
+ */
 export class SetPropertyExpressionMatcher{
 
     constructor(private constantMatcher: ConstantMatcher){

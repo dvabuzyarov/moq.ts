@@ -27,7 +27,6 @@ after_success:
 - chmod 0600 build/docs/docs_rsa
 - eval "$(ssh-agent -s)"
 - ssh-add build/docs/docs_rsa
-- npm i -g @compodoc/compodoc
 - bash ./build/docs/publish-docs.sh
 before_deploy:
 - tsc ./build/prepare-npm-publish.ts

@@ -8,5 +8,10 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noEmit": true
-  }
+  },
+  "files": [
+    "./lib/**/*.ts",
+    "./tests.integration/**/*.ts",
+    "./tests.unit/**/*.ts"
+  ]
 }

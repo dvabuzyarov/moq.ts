@@ -4,11 +4,18 @@ import { Tracker } from "../tracker";
 import { InterceptorCallbacksLooseStrategy } from "./interceptor-callbacks.loose.strategy";
 import { InterceptorCallbacksStrictStrategy } from "./interceptor-callbacks.strict.strategy";
 
+/**
+ * @obsolete
+ * @deprecated
+ */
 export enum MockBehavior {
     Strict,
     Loose
 }
 
+/**
+ * @hidden
+ */
 export interface IInterceptorCallbacksStrategy {
     intercepted(expression: Expressions): void;
 
@@ -17,17 +24,24 @@ export interface IInterceptorCallbacksStrategy {
     invoke(expression: Expressions): any;
 }
 
+/**
+ * @hidden
+ */
 export interface IInterceptorCallbacks extends IInterceptorCallbacksStrategy {
     setBehaviorStrategy(behavior: MockBehavior): void;
 }
-
-
+/**
+ * @hidden
+ */
 export function interceptorCallbacksFactory<T>(definedSetups: DefinedSetups<T>, tracker: Tracker): InterceptorCallbacks<T> {
     const strictStrategy = new InterceptorCallbacksStrictStrategy<T>(definedSetups, tracker);
     const looseStrategy = new InterceptorCallbacksLooseStrategy<T>(definedSetups, tracker);
     return new InterceptorCallbacks<T>(strictStrategy, looseStrategy);
 }
 
+/**
+ * @hidden
+ */
 export class InterceptorCallbacks<T> implements IInterceptorCallbacks {
     private activeStrategy: IInterceptorCallbacksStrategy;
 

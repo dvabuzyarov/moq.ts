@@ -9,6 +9,9 @@ import {MethodExpressionFormatter} from './method-formatter';
 import {NamedMethodExpressionFormatter} from './named.method-formatter';
 import {ConstantFormatter} from './constant-formatter';
 
+/**
+ * @hidden
+ */
 export class ExpressionFormatter {
 
     constructor(private getPropertyFormatter: GetPropertyExpressionFormatter,

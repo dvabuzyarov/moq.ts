@@ -3,10 +3,16 @@ import {Expressions} from '../expressions';
 import {ExpectedExpressionFormatter, expectedExpressionFormatterFactory} from './expected-expression-formatter';
 import {TrackedExpressionsFormatter, trackedExpressionsFormatterFactory} from './tracked-expressions-formatter';
 
+/**
+ * @hidden
+ */
 export function verifyFormatterFactory(): VerifyFormatter {
     return new VerifyFormatter(expectedExpressionFormatterFactory(), trackedExpressionsFormatterFactory());
 }
 
+/**
+ * @hidden
+ */
 export class VerifyFormatter {
 
     constructor(

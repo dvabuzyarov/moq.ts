@@ -1,6 +1,9 @@
 import {SetPropertyExpression} from '../expressions';
 import {ConstantFormatter} from './constant-formatter';
 
+/**
+ * @hidden
+ */
 export class SetPropertyExpressionFormatter{
 
     constructor(private constantFormatter: ConstantFormatter){

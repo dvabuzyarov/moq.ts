@@ -10,10 +10,16 @@ export class VerifyError extends Error{
     }
 }
 
+/**
+ * @hidden
+ */
 export function verifierFactory<T>(): Verifier<T> {
     return new Verifier<T>(new ExpectedExpressionReflector(), callCounterFactory(), verifyFormatterFactory());
 }
 
+/**
+ * @hidden
+ */
 export class Verifier<T>{
 
     constructor(

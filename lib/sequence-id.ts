@@ -1,3 +1,6 @@
+/**
+ * @hidden
+ */
 export class SequenceId {
     private value: number = 0;
 
@@ -8,6 +11,9 @@ export class SequenceId {
 
 const instance = new SequenceId();
 
+/**
+ * @hidden
+ */
 export function sequenceIdFactory(): SequenceId {
     return instance;
 }

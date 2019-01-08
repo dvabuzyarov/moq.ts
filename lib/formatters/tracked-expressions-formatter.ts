@@ -1,11 +1,15 @@
 import {ExpressionFormatter} from './expression-formatter';
 import {expressionFormatterFactory} from './factories';
 import {Expressions} from '../expressions';
-
+/**
+ * @hidden
+ */
 export function trackedExpressionsFormatterFactory (): TrackedExpressionsFormatter {
     return new TrackedExpressionsFormatter(expressionFormatterFactory());
 }
-
+/**
+ * @hidden
+ */
 export class TrackedExpressionsFormatter {
 
     constructor(private expressionFormatter: ExpressionFormatter) {

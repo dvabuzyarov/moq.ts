@@ -1,8 +1,8 @@
-import {Mock} from '../lib/mock';
-import {It} from '../lib/expected-expressions/expression-predicates';
-import {ExpectedGetPropertyExpression} from '../lib/expected-expressions/expected-expressions';
-import {Times} from '../lib/times';
-import {MockBehavior} from '../lib/interceptor-callbacks/interceptor-callbacks';
+import { Mock } from '../lib/mock';
+import { It } from '../lib/expected-expressions/expression-predicates';
+import { ExpectedGetPropertyExpression } from '../lib/expected-expressions/expected-expressions';
+import { Times } from '../lib/times';
+import { MockBehavior } from '../lib/interceptor-callbacks/interceptor-callbacks';
 
 interface ITestObject {
     property: string;
@@ -45,8 +45,7 @@ describe('Mock: Get property', () => {
         expect(actual).toBeUndefined();
     });
 
-    it('Returns unset function for unset property in loose mode', () => {
-        const value = 'value';
+    it('Returns unset function for unset property', () => {
         const mock = new Mock<ITestObject>()
             .setBehaviorStrategy(MockBehavior.Loose);
         const object = mock.object();
@@ -80,8 +79,10 @@ describe('Mock: Get property', () => {
             .setup(instance => instance.property)
             .returns(value)
             //let's deny any write operation on the property
-            .setup(instance => instance.property = It.Is(() => false))
-            .returns(true)
+            .setup(instance => {
+                instance.property = It.IsAny()
+            })
+            .returns(false)
             .object();
 
         try {
@@ -90,7 +91,7 @@ describe('Mock: Get property', () => {
         }
         const actual = object.property;
 
-        expect(actual).toBe(newValue);
+        expect(actual).toBe(value);
     });
 
     it('Calls callback', () => {

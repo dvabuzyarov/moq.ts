@@ -3,6 +3,9 @@ import { ExpressionMatcher } from "./expression-matchers/expression-matcher";
 import { Expressions } from "./expressions";
 import { ISetupInvoke } from "./moq";
 
+/**
+ * @hidden
+ */
 export class DefinedSetups<T> {
     private setups: [ExpectedExpressions<T>, ISetupInvoke<T>][] = [];
 

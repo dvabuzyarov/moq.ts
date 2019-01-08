@@ -14,9 +14,7 @@ import { Tracker, trackerFactory } from "./tracker";
 import { Verifier, verifierFactory } from "./verifier";
 
 /**
- * @internal
  * @hidden
- * @private
  */
 export class MockCore<T> implements IMock<T> {
     private interceptor: Interceptor<T>;
@@ -57,27 +55,20 @@ export class MockCore<T> implements IMock<T> {
         return this;
     }
 
-    /**
-     * @deprecated use custom setup as described ["How to throw an exception on missed setup?"](https://github.com/dvabuzyarov/moq.ts/wiki/How-to-throw-an-exception-on-missed-setup%3F).
-     * @obsolete
-     * @param behaviorStrategy
-     */
     public setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T> {
         this.interceptedCallbacks.setBehaviorStrategy(behaviorStrategy);
         return this;
     }
 
-    /**
-     * @experimental
-     * @param sequence
-     * @param expression
-     */
     public insequence(sequence: ISequenceVerifier, expression: IExpectedExpression<T>): IMock<T>{
         sequence.add(this, expression);
         return this;
     }
 }
 
+/**
+ * The default implementation of {@link IMock} interface.
+ */
 export class Mock<T> extends MockCore<T> {
     constructor(name?: string) {
         const definedSetups = new DefinedSetups<T>(expressionMatcherFactory());

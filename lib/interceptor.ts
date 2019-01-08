@@ -4,9 +4,7 @@ import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks/intercept
 declare var Proxy: any;
 
 /**
- * This class is not intended to be used directly
- * @private
- * @internal
+ * @hidden
  */
 export class Interceptor<T> {
 

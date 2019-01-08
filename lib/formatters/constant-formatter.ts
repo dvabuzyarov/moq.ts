@@ -1,5 +1,8 @@
 import {It} from '../expected-expressions/expression-predicates';
 
+/**
+ * @hidden
+ */
 export class ConstantFormatter {
 
     public format(object: any|It<any>): string {

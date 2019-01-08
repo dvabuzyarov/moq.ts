@@ -2,6 +2,9 @@
 import {It} from '../expected-expressions/expression-predicates';
 import {ExpectedGetPropertyExpression} from '../expected-expressions/expected-expressions';
 
+/**
+ * @hidden
+ */
 export class GetPropertyExpressionMatcher{
 
     public matched(left: GetPropertyExpression, right: ExpectedGetPropertyExpression|It<any>): boolean{

@@ -3,6 +3,9 @@ import {MethodExpression} from '../expressions';
 import {ExpectedMethodExpression} from '../expected-expressions/expected-expressions';
 import {It} from '../expected-expressions/expression-predicates';
 
+/**
+ * @hidden
+ */
 export class MethodExpressionMatcher{
 
     constructor(private argumentsMatcher: ArgumentsMatcher){

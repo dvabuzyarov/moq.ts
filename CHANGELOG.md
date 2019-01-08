@@ -1,3 +1,8 @@
+v2.7.5
+===================
+* The IMock.setBehaviorStrategy is marked as **obsolete**.
+* Documentation improvements
+
 v2.7.0
 ===================
 

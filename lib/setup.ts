@@ -1,5 +1,10 @@
 import { IMock, ISetup, ISetupInvoke } from "./moq";
 
+/**
+ * The default implementation of {@link ISetup} interface.
+ * Is it not intended to be used outside of the moq library.
+ * @hidden
+ */
 export class Setup<T> implements ISetupInvoke<T> {
 
     private action: Function;
@@ -30,12 +35,6 @@ export class Setup<T> implements ISetupInvoke<T> {
         return this.mock;
     }
 
-    /**
-     * Plays the setup when predicate returns true otherwise the setup will be ignored.
-     * As predicate {@link PlayTimes} could be used.
-     * @param {() => boolean} predicate
-     * @returns {ISetup<T>}
-     */
     public play(predicate: () => boolean): ISetup<T> {
         this.playPredicate = predicate;
         return this;

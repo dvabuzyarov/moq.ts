@@ -33,11 +33,12 @@
     "karma-systemjs": "git://github.com/AdamWillden/karma-systemjs.git#f9a6969d571e0e8083ca36834a98ca2efb89e49b",
     "plugin-typescript": "7.0.6",
     "systemjs": "0.20.14",
+    "typedoc": "^0.13.0",
     "typescript": "2.4.1"
   },
   "scripts": {
     "test": "./node_modules/.bin/karma start --single-run",
-    "docs": "node_modules/.bin/compodoc ./lib -p tsconfig.json -d docs --disablePrivateOrInternalSupport",
-    "serve-docs": "node_modules/.bin/compodoc -s -d docs"
+    "docs": "rimraf docs && tsc --experimentalDecorators ./build/build-doc && node ./build/build-doc.js",
+    "serve-docs": "npm run docs && serve"
   }
 }

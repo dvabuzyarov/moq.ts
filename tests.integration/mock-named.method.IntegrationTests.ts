@@ -66,7 +66,6 @@ describe('Mock: Named method', () => {
     });
 
     it('Returns undefined when call an unset method in loose mode', () => {
-        const value = 'value';
         const mock = new Mock<ITestObject>()
             .setBehaviorStrategy(MockBehavior.Loose);
 

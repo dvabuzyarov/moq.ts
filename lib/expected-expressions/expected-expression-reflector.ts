@@ -4,12 +4,33 @@ import {
     ExpectedSetPropertyExpression, ExpectedMethodExpression, ExpectedExpressions
 } from './expected-expressions';
 
+/**
+ * A function that accepts a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+ * and either plays expected interaction or returns a predicate function.
+ * See {@link IMock.setup} function and {@link It} class for more details.
+ */
 export interface IExpectedExpression<T> {
     (instance: T): void | any | It<T>;
 }
 
 declare var Proxy:any;
 
+/**
+ * This class reflects an expression to an expression tree representation.
+ *
+ * @example
+ * ```typescript
+ *
+ * const arg = 'argument';
+ * const reflector = new ExpectedExpressionReflector();
+ * const actual = reflector.reflect<any>(instance => instance(arg));
+ *
+ * const expected = new ExpectedMethodExpression([arg]);
+ * expect(actual).toEqual(expected);
+ * ```
+ *
+ * For more examples check [unit tests for this class](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.unit/expected-expressions/expected-expression-reflector.UnitTests.ts)
+ */
 export class ExpectedExpressionReflector {
 
     private reflectedInfo;
@@ -38,6 +59,10 @@ export class ExpectedExpressionReflector {
         }, options);
     }
 
+    /**
+     * Reflects the provided code as an expression tree.
+     * @param expression
+     */
     public reflect<T>(expression: IExpectedExpression<T>): ExpectedExpressions<T> {
         this.reflectedInfo = undefined;
 

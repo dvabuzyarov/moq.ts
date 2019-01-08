@@ -1,5 +1,7 @@
 import {It} from '../expected-expressions/expression-predicates';
-
+/**
+ * @hidden
+ */
 export class ConstantMatcher {
 
     public matched(left: any, right: any|It<any>): boolean {

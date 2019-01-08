@@ -24,7 +24,6 @@ describe('Mock: Set property', () => {
 
 
     it('Denies write', () => {
-        const value = 'value';
         const object = new Mock<ITestObject>()
             .setup(instance => {instance.property = 'a'})
             .returns(false)

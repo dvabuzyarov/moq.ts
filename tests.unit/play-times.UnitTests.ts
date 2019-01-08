@@ -34,9 +34,11 @@ describe("Play times", () => {
         const actual1 = predicate();
         const actual2 = predicate();
         const actual3 = predicate();
+        const actual4 = predicate();
 
         expect(actual1).toBe(true);
         expect(actual2).toBe(false);
         expect(actual3).toBe(true);
+        expect(actual4).toBe(false);
     });
 });

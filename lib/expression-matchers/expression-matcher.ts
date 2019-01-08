@@ -12,6 +12,9 @@ import {
 } from '../expected-expressions/expected-expressions';
 import {It} from '../expected-expressions/expression-predicates';
 
+/**
+ * @hidden
+ */
 export class ExpressionMatcher {
 
     constructor(private getPropertyExpressionMatcher: GetPropertyExpressionMatcher,

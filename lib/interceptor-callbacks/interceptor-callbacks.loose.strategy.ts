@@ -8,7 +8,9 @@ import {
 } from "../expressions";
 import { Tracker } from "../tracker";
 import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
-
+/**
+ * @hidden
+ */
 export class InterceptorCallbacksLooseStrategy<T> implements IInterceptorCallbacksStrategy {
 
     constructor(private definedSetups: DefinedSetups<T>,

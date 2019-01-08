@@ -3,6 +3,9 @@ import {NamedMethodExpression} from '../expressions';
 import {ExpectedNamedMethodExpression} from '../expected-expressions/expected-expressions';
 import {It} from '../expected-expressions/expression-predicates';
 
+/**
+ * @hidden
+ */
 export class NamedMethodExpressionMatcher{
 
     constructor(private argumentsMatcher: ArgumentsMatcher){
