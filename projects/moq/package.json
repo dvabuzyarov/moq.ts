@@ -1,0 +1,35 @@
+{
+  "name": "moq.ts",
+  "version": "0.0.0-semantically-released",
+  "description": "Moq library for Typescript inspired by c# moq",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Dmitry V. Abuzyarov",
+    "email": "dvabuzyarov@gmail.com"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dvabuzyarov/moq.ts"
+  },
+  "bugs": {
+    "url": "https://github.com/dvabuzyarov/moq.ts/issues"
+  },
+  "keywords": [
+    "c#",
+    "moq",
+    "mock",
+    "stub",
+    "fake",
+    "spy",
+    "library",
+    "typescript",
+    "javascript"
+  ],
+  "devDependencies": {
+    "jasmine": "3.3.1"
+  }
+}

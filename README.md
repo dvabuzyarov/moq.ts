@@ -33,7 +33,7 @@ You can find a pretty full set of usages in the integration tests. Check out [te
 <!-- toc -->
 Mocking property of objects
 -
-[mock-get.property.IntegrationTests.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts)
+[mock-get.property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts)
 ```typescript
 import {Mock, It, Times, ExpectedGetPropertyExpression} from 'moq.ts';
 interface ITestObject {
@@ -77,7 +77,7 @@ Mocking property setting
 [The documentation on returned value from 'set hook' on Proxy object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set)
 
 
-[mock-set.property.IntegrationTests.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-set.property.IntegrationTests.ts)
+[mock-set.property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-set.property.IntegrationTests.ts)
 ```typescript
 import {Mock, It, Times, ExpectedSetPropertyExpression} from 'moq.ts';
 interface ITestObject {
@@ -145,7 +145,7 @@ mock.verify(instance => instance(It.Is(value=> value === 1)), Times.Exactly(1));
  
  Mocking functions of objects
  -
-[mock-named.method.IntegrationTests.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-named.method.IntegrationTests.ts)
+[mock-named.method.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-named.method.IntegrationTests.ts)
  ```typescript
 import {Mock, It, Times} from 'moq.ts';
 interface ITestObject {

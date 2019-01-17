@@ -1,17 +1,30 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "noImplicitAny": false,
-    "sourceMap": false,
-    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
-    "noEmit": true
-  },
-  "files": [
-    "./lib/**/*.ts",
-    "./tests.integration/**/*.ts",
-    "./tests.unit/**/*.ts"
-  ]
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "moq": [
+        "dist/moq"
+      ],
+      "moq/*": [
+        "dist/moq/*"
+      ]
+    }
+  }
 }
