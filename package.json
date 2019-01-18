@@ -20,7 +20,7 @@
     "@angular/compiler": "7.1.4",
     "@angular/compiler-cli": "7.1.4",
     "@angular/language-service": "7.1.4",
-    "@types/node": "8.9.5",
+    "@types/node": "8.10.39",
     "@angular/core": "7.2.1",
     "ng-packagr": "4.6.0",
     "ts-node": "7.0.1",
