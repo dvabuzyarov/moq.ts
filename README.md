@@ -187,6 +187,8 @@ Accessing to an unset property or a method will return a pointer to a spy functi
 You can call this function and it will be tracked.
 
 **The behaviour API is obsolete.**
+**In future versions it will behave as its prototype which is Object by default and desired behaviours should be set 
+thought custom setups.**
 ```typescript
     mock = new Mock<ITestObject>()
     .setBehaviorStrategy(MockBehavior.Loose) //obsolete
@@ -195,13 +197,10 @@ You can call this function and it will be tracked.
 ```
 The default behavior is strict. 
 
-**In future versions it will be switch to loose and desired behaviours should be set 
-thought custom setups.**
-
 ## Mock prototype
 If you need to make work instanceof operator or you need to deal with prototype of the mock object you can 
 use prototypeof function of Mock class. Or you can use [Object.getPrototypeOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf) or [Object.setPrototypeOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf) functions
-on mock object.
+on mocked object.
 
 ```typescript
 class TestObject implements ITestObject {
