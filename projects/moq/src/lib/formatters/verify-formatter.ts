@@ -1,7 +1,7 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { Expressions } from "../expressions";
-import { ExpectedExpressionFormatter, expectedExpressionFormatterFactory } from "./expected-expression-formatter";
-import { TrackedExpressionsFormatter, trackedExpressionsFormatterFactory } from "./tracked-expressions-formatter";
+import { ExpectedExpressionFormatter } from "./expected-expression-formatter";
+import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
 
 /**
  * @hidden
@@ -9,8 +9,8 @@ import { TrackedExpressionsFormatter, trackedExpressionsFormatterFactory } from 
 export class VerifyFormatter {
 
     constructor(
-        private expectedExpressionFormatter: ExpectedExpressionFormatter,
-        private trackedExpressionsFormatter: TrackedExpressionsFormatter) {
+        private expectedExpressionFormatter: ExpectedExpressionFormatter = new ExpectedExpressionFormatter(),
+        private trackedExpressionsFormatter: TrackedExpressionsFormatter = new TrackedExpressionsFormatter()) {
 
     }
 
@@ -25,11 +25,4 @@ export class VerifyFormatter {
         const delimiter = "-------------------------------------";
         return `${expectedExpressionMessage}\n${delimiter}\nTracked calls:\n${trackedExpressionsMessage}\n${delimiter}\n`;
     }
-}
-
-/**
- * @hidden
- */
-export function verifyFormatterFactory(): VerifyFormatter {
-    return new VerifyFormatter(expectedExpressionFormatterFactory(), trackedExpressionsFormatterFactory());
 }

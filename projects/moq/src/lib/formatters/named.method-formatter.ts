@@ -1,11 +1,12 @@
-import {NamedMethodExpression} from "../expressions";
-import {ConstantFormatter} from "./constant-formatter";
+import { NamedMethodExpression } from "../expressions";
+import { ConstantFormatter } from "./constant-formatter";
+
 /**
  * @hidden
  */
 export class NamedMethodExpressionFormatter {
 
-    constructor(private constantFormatter: ConstantFormatter) {
+    constructor(private constantFormatter: ConstantFormatter = new ConstantFormatter()) {
 
     }
 

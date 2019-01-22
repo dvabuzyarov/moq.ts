@@ -1,11 +1,11 @@
-import { trackedExpressionsFormatterFactory } from "./formatters/tracked-expressions-formatter";
+import { TrackedExpressionsFormatter } from "./formatters/tracked-expressions-formatter";
 import { IMock } from "./moq";
 
 /**
  * This function dumps into console.log all interactions with the mocked object
  */
 export function dump<T>(mock: IMock<T>, writer: Console = console): void {
-    const formatter = trackedExpressionsFormatterFactory();
+    const formatter = new TrackedExpressionsFormatter();
     const expressions = mock.tracker.get().map(record => record.expression);
     const output = formatter.format(expressions);
     const delimiter = "-------------------------------";

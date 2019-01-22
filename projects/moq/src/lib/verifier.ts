@@ -1,8 +1,8 @@
 import { Times } from "./times";
 import { Expressions } from "./expressions";
 import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
-import { CallCounter, callCounterFactory } from "./call-counter";
-import { VerifyFormatter, verifyFormatterFactory } from "./formatters/verify-formatter";
+import { CallCounter } from "./call-counter";
+import { VerifyFormatter } from "./formatters/verify-formatter";
 
 export class VerifyError extends Error {
     constructor(message: string) {
@@ -16,9 +16,9 @@ export class VerifyError extends Error {
 export class Verifier<T> {
 
     constructor(
-        private reflector: ExpectedExpressionReflector,
-        private callCounter: CallCounter,
-        private verifyFormatter: VerifyFormatter) {
+        private reflector: ExpectedExpressionReflector = new ExpectedExpressionReflector(),
+        private callCounter: CallCounter = new CallCounter(),
+        private verifyFormatter: VerifyFormatter = new VerifyFormatter()) {
 
     }
 
@@ -31,11 +31,4 @@ export class Verifier<T> {
             throw new VerifyError(message);
         }
     }
-}
-
-/**
- * @hidden
- */
-export function verifierFactory<T>(): Verifier<T> {
-    return new Verifier<T>(new ExpectedExpressionReflector(), callCounterFactory(), verifyFormatterFactory());
 }

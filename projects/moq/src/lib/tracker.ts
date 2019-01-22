@@ -4,7 +4,10 @@ import { SequenceId, sequenceIdFactory } from "./sequence-id";
 /**
  * This class represents a recorded interaction with the a mocked object.
  */
-export interface TrackedAction { id: number; expression: MethodExpression | GetPropertyExpression | SetPropertyExpression; }
+export interface TrackedAction {
+    id: number;
+    expression: MethodExpression | GetPropertyExpression | SetPropertyExpression;
+}
 
 /**
  * This class records all interactions with a mocked object.
@@ -12,7 +15,7 @@ export interface TrackedAction { id: number; expression: MethodExpression | GetP
 export class Tracker {
     private log: TrackedAction[] = [];
 
-    constructor(private sequenceId: SequenceId) {
+    constructor(private sequenceId: SequenceId = sequenceIdFactory()) {
 
     }
 
@@ -30,11 +33,4 @@ export class Tracker {
     public get(): TrackedAction[] {
         return [...this.log];
     }
-}
-
-/**
- * @hidden
- */
-export function trackerFactory(): Tracker {
-    return new Tracker(sequenceIdFactory());
 }

@@ -8,7 +8,7 @@ import {It} from "../expected-expressions/expression-predicates";
  */
 export class MethodExpressionMatcher {
 
-    constructor(private argumentsMatcher: ArgumentsMatcher) {
+    constructor(private argumentsMatcher: ArgumentsMatcher = new ArgumentsMatcher()) {
 
     }
 

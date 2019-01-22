@@ -1,14 +1,13 @@
-import {ExpectedExpressions} from "./expected-expressions/expected-expressions";
-import {Expressions} from "./expressions";
-import {ExpressionMatcher} from "./expression-matchers/expression-matcher";
-import {expressionMatcherFactory} from "./expression-matchers/factories";
+import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
+import { Expressions } from "./expressions";
+import { ExpressionMatcher } from "./expression-matchers/expression-matcher";
 
 /**
  * @hidden
  */
 export class CallCounter {
 
-    constructor(private expressionMatcher: ExpressionMatcher) {
+    constructor(private expressionMatcher: ExpressionMatcher = new ExpressionMatcher()) {
 
     }
 
@@ -22,11 +21,4 @@ export class CallCounter {
 
         return count;
     }
-}
-
-/**
- * @hidden
- */
-export function callCounterFactory(): CallCounter {
-    return new CallCounter(expressionMatcherFactory());
 }

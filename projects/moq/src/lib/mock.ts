@@ -1,6 +1,5 @@
 import { DefinedSetups } from "./defined-setups";
 import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
-import { expressionMatcherFactory } from "./expression-matchers/factories";
 import { Interceptor } from "./interceptor";
 import {
     IInterceptorCallbacks,
@@ -10,8 +9,9 @@ import {
 import { IMock, ISequenceVerifier, ISetup, ISetupInvoke } from "./moq";
 import { Setup } from "./setup";
 import { Times } from "./times";
-import { Tracker, trackerFactory } from "./tracker";
-import { Verifier, verifierFactory } from "./verifier";
+import { Tracker } from "./tracker";
+import { Verifier } from "./verifier";
+import { ExpressionMatcher } from "./expression-matchers/expression-matcher";
 
 /**
  * @hidden
@@ -71,8 +71,8 @@ export class MockCore<T> implements IMock<T> {
  */
 export class Mock<T> extends MockCore<T> {
     constructor(name?: string) {
-        const definedSetups = new DefinedSetups<T>(expressionMatcherFactory());
-        const tracker = trackerFactory();
+        const definedSetups = new DefinedSetups<T>(new ExpressionMatcher());
+        const tracker = new Tracker();
         const callbacks = interceptorCallbacksFactory<T>(definedSetups, tracker);
 
         super(
@@ -81,7 +81,7 @@ export class Mock<T> extends MockCore<T> {
             (mock: IMock<T>) => new Setup<T>(mock),
             definedSetups,
             tracker,
-            verifierFactory<T>(),
+            new Verifier<T>(),
             callbacks,
             name);
     }

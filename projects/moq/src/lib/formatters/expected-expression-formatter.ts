@@ -1,13 +1,12 @@
-import {ExpectedExpressions} from "../expected-expressions/expected-expressions";
-import {ExpressionFormatter} from "./expression-formatter";
-import {expressionFormatterFactory} from "./factories";
+import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
+import { ExpressionFormatter } from "./expression-formatter";
 
 /**
  * @hidden
  */
 export class ExpectedExpressionFormatter {
 
-    constructor(private expressionFormatter: ExpressionFormatter) {
+    constructor(private expressionFormatter: ExpressionFormatter = new ExpressionFormatter()) {
 
     }
 
@@ -16,11 +15,4 @@ export class ExpectedExpressionFormatter {
         const mockDescription = mockName !== undefined ? ` of ${mockName}` : "";
         return `${expressionDescription}${mockDescription} ${timesMessage.toLowerCase()}, but was called ${haveBeenCalledTimes} time(s)`;
     }
-}
-
-/**
- * @hidden
- */
-export function expectedExpressionFormatterFactory (): ExpectedExpressionFormatter {
-    return new ExpectedExpressionFormatter(expressionFormatterFactory());
 }

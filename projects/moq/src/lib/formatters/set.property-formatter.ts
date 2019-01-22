@@ -1,12 +1,12 @@
-import {SetPropertyExpression} from "../expressions";
-import {ConstantFormatter} from "./constant-formatter";
+import { SetPropertyExpression } from "../expressions";
+import { ConstantFormatter } from "./constant-formatter";
 
 /**
  * @hidden
  */
 export class SetPropertyExpressionFormatter {
 
-    constructor(private constantFormatter: ConstantFormatter) {
+    constructor(private constantFormatter: ConstantFormatter = new ConstantFormatter()) {
 
     }
 
