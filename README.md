@@ -177,14 +177,22 @@ mock.verify(instance => instance.method(2, 'a'), Times.Never());
 ```
 
 ## Mock behavior
+A mocked object is a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy), 
+that configured to track any read and write operations on properties. If you write a value to an arbitrary property the mocked object
+will keep it and you can read it later on. By default the prototype of mocked object is Function.
+
+Accessing to an unset property or a method will return undefined or a pointer to a spy function if it exists on prototype;
+You can call this function and it will be tracked.
+
+The default behaviour has the lowest precedence.
+The latest setup has the highest precedence. 
+
 You can control mock behavior when accessing to a property without a corresponding setup. 
 ```typescript
     mock = new Mock<ITestObject>();
     mock.setup(instance => It.Is(expression => true))
       .throws(new Error("setup is missed"));
 ```
-Accessing to an unset property or a method will return a pointer to a spy function;
-You can call this function and it will be tracked.
 
 **The behaviour API is obsolete.**
 **In future versions it will behave as its prototype which is Object by default and desired behaviours should be set 
