@@ -24,6 +24,12 @@
       ],
       "moq/*": [
         "dist/moq/*"
+      ],
+      "docs": [
+        "dist/docs"
+      ],
+      "docs/*": [
+        "dist/docs/*"
       ]
     }
   }
