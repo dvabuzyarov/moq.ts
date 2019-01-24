@@ -89,7 +89,7 @@
  <span class="hljs-keyword">const</span> actual = object(<span class="hljs-number">1</span>);
 
  expect(actual).toBe(value);</code></pre>
-							<p>This class could be used not only for arguments matching, but also for function names, property names and so on.</p>
+							<p>This class could be used not only for args matching, but also for function names, property names and so on.</p>
 						</dd>
 						<dt>example</dt>
 						<dd><pre><code class="language-typescript">
@@ -107,7 +107,7 @@
 .object();
 
 <span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
-.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function">(<span class="hljs-params">expression: ExpectedNamedMethodExpression</span>) =&gt;</span> expression.name === <span class="hljs-string">'methodName'</span> &amp;&amp; expression.arguments[<span class="hljs-number">0</span>] === <span class="hljs-number">1</span>))
+.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function">(<span class="hljs-params">expression: ExpectedNamedMethodExpression</span>) =&gt;</span> expression.name === <span class="hljs-string">'methodName'</span> &amp;&amp; expression.args[<span class="hljs-number">0</span>] === <span class="hljs-number">1</span>))
 .returns(value)
 .object();
 
@@ -165,19 +165,19 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>It<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.ipredicate.html" class="tsd-signature-type">IPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.it.html" class="tsd-signature-type">It</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>It<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#ipredicate" class="tsd-signature-type">IPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.it.html" class="tsd-signature-type">It</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/f970a4c/lib/expected-expressions/expression-predicates.ts#L53">expected-expressions/expression-predicates.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a101b5f/projects/moq/src/lib/expected-expressions/expression-predicates.ts#L51">expected-expressions/expression-predicates.ts:51</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>predicate: <a href="../interfaces/moq_ts.ipredicate.html" class="tsd-signature-type">IPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>predicate: <a href="../modules/moq_ts.html#ipredicate" class="tsd-signature-type">IPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="moq_ts.it.html" class="tsd-signature-type">It</a></h4>
@@ -190,10 +190,10 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="predicate" class="tsd-anchor"></a>
 					<h3>predicate</h3>
-					<div class="tsd-signature tsd-kind-icon">predicate<span class="tsd-signature-symbol">:</span> <a href="../interfaces/moq_ts.ipredicate.html" class="tsd-signature-type">IPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">predicate<span class="tsd-signature-symbol">:</span> <a href="../modules/moq_ts.html#ipredicate" class="tsd-signature-type">IPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/f970a4c/lib/expected-expressions/expression-predicates.ts#L54">expected-expressions/expression-predicates.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a101b5f/projects/moq/src/lib/expected-expressions/expression-predicates.ts#L52">expected-expressions/expression-predicates.ts:52</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -204,13 +204,13 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 					<a name="is" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> Is</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">Is&lt;T&gt;<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.ipredicate.html" class="tsd-signature-type">IPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.it.html" class="tsd-signature-type">It</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">Is&lt;T&gt;<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#ipredicate" class="tsd-signature-type">IPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.it.html" class="tsd-signature-type">It</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/f970a4c/lib/expected-expressions/expression-predicates.ts#L76">expected-expressions/expression-predicates.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a101b5f/projects/moq/src/lib/expected-expressions/expression-predicates.ts#L73">expected-expressions/expression-predicates.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -241,9 +241,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>predicate: <a href="../interfaces/moq_ts.ipredicate.html" class="tsd-signature-type">IPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
+									<h5>predicate: <a href="../modules/moq_ts.html#ipredicate" class="tsd-signature-type">IPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="moq_ts.it.html" class="tsd-signature-type">It</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
@@ -263,7 +261,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/f970a4c/lib/expected-expressions/expression-predicates.ts#L96">expected-expressions/expression-predicates.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a101b5f/projects/moq/src/lib/expected-expressions/expression-predicates.ts#L93">expected-expressions/expression-predicates.ts:93</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -383,16 +381,13 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 						<a href="moq_ts.verifyerror.html" class="tsd-kind-icon">Verify<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../interfaces/moq_ts.iexpectedexpression.html" class="tsd-kind-icon">IExpected<wbr>Expression</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../interfaces/moq_ts.imock.html" class="tsd-kind-icon">IMock</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../interfaces/moq_ts.ipredicate.html" class="tsd-kind-icon">IPredicate</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../interfaces/moq_ts.isetup.html" class="tsd-kind-icon">ISetup</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/moq_ts.trackedaction.html" class="tsd-kind-icon">Tracked<wbr>Action</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../modules/moq_ts.html#expectedexpressions" class="tsd-kind-icon">Expected<wbr>Expressions</a>
@@ -400,14 +395,14 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="../modules/moq_ts.html#expressions" class="tsd-kind-icon">Expressions</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="../modules/moq_ts.html#trackedaction" class="tsd-kind-icon">Tracked<wbr>Action</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/moq_ts.html#iexpectedexpression" class="tsd-kind-icon">IExpected<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/moq_ts.html#ipredicate" class="tsd-kind-icon">IPredicate</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../modules/moq_ts.html#dump" class="tsd-kind-icon">dump</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="../modules/moq_ts.html#format" class="tsd-kind-icon">format</a>
 					</li>
 				</ul>
 			</nav>

@@ -63,10 +63,15 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<p><a href="https://travis-ci.org/dvabuzyarov/moq.ts"><img src="https://travis-ci.org/dvabuzyarov/moq.ts.svg?branch=master" alt="Build Status"></a>
-					<a href="https://www.npmjs.com/package/moq.ts"><img src="http://img.shields.io/npm/v/moq.ts.svg?style=flat-square" alt="NPM version"></a>
+					<a href="https://www.npmjs.com/package/moq.ts"><img src="https://img.shields.io/npm/v/moq.ts/latest.svg?style=flat-square" alt="NPM version:latest"></a>
+					<a href="https://www.npmjs.com/package/moq.ts"><img src="https://img.shields.io/npm/v/moq.ts/next.svg?style=flat-square" alt="NPM version:next"></a>
 					<a href="https://www.npmjs.com/package/moq.ts"><img src="https://img.shields.io/npm/dt/moq.ts.svg?style=flat-square" alt="npm downloads"></a>
 					<a href="https://david-dm.org/dvabuzyarov/moq.ts"><img src="http://img.shields.io/david/dvabuzyarov/moq.ts.svg?style=flat-square" alt="Dependency Status"></a>
-				<a href="https://www.npmjs.com/package/moq.ts"><img src="https://img.shields.io/hexpm/l/plug.svg" alt="License"></a></p>
+					<a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" alt="Commitizen friendly"></a>
+					<a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release"></a>
+					<a href="https://renovatebot.com/"><img src="https://img.shields.io/badge/renovate-enabled-brightgreen.svg" alt="Renovate enabled"></a>
+				<a href="https://www.npmjs.com/package/moq.ts"><img src="https://img.shields.io/bundlephobia/minzip/moq.ts.svg" alt="npm bundle size (minified + gzip)"></a></p>
+				<p><a href="https://www.npmjs.com/package/moq.ts"><img src="https://img.shields.io/hexpm/l/plug.svg" alt="License"></a></p>
 				<h1 id="moq-ts-documentation">moq.ts | <a href="https://dvabuzyarov.github.io/moq.ts/">Documentation</a></h1>
 				<p>Moq for Typescript. Inspired by c# <a href="https://github.com/moq/moq4">Moq library</a>.</p>
 				<h4 id="important">Important</h4>
@@ -91,7 +96,7 @@
 				<!-- toc -->
 				<p>Mocking property of objects
 					-
-				<a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts">mock-get.property.IntegrationTests.ts</a></p>
+				<a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts">mock-get.property.spec.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {Mock, It, Times, ExpectedGetPropertyExpression} <span class="hljs-keyword">from</span> <span class="hljs-string">'moq.ts'</span>;
 <span class="hljs-keyword">interface</span> ITestObject {
     property1: <span class="hljs-built_in">number</span>;
@@ -131,7 +136,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 				<p>Mocking property setting
 					-
 				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set">The documentation on returned value from &#39;set hook&#39; on Proxy object</a></p>
-				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-set.property.IntegrationTests.ts">mock-set.property.IntegrationTests.ts</a></p>
+				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-set.property.IntegrationTests.ts">mock-set.property.spec.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {Mock, It, Times, ExpectedSetPropertyExpression} <span class="hljs-keyword">from</span> <span class="hljs-string">'moq.ts'</span>;
 <span class="hljs-keyword">interface</span> ITestObject {
     property: <span class="hljs-built_in">number</span>|<span class="hljs-built_in">any</span>;
@@ -192,7 +197,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 </code></pre>
 				<p> Mocking functions of objects
 					-
-				<a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-named.method.IntegrationTests.ts">mock-named.method.IntegrationTests.ts</a></p>
+				<a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-named.method.IntegrationTests.ts">mock-named.method.spec.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {Mock, It, Times} <span class="hljs-keyword">from</span> <span class="hljs-string">'moq.ts'</span>;
 <span class="hljs-keyword">interface</span> ITestObject {
     method(arg1: <span class="hljs-built_in">number</span>, arg2: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">Date</span>;
@@ -215,24 +220,29 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 
 mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(<span class="hljs-number">2</span>, <span class="hljs-string">'a'</span>), Times.Never());</code></pre>
 				<h2 id="mock-behavior">Mock behavior</h2>
+				<p>A mocked object is a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy">Proxy</a>,
+					that configured to track any read and write operations on properties. If you write a value to an arbitrary property the mocked object
+				will keep it and you can read it later on. By default the prototype of mocked object is Function.</p>
+				<p>Accessing to an unset property or a method will return undefined or a pointer to a spy function if it exists on prototype;
+				You can call this function and it will be tracked.</p>
+				<p>The default behaviour has the lowest precedence.
+				The latest setup has the highest precedence. </p>
 				<p>You can control mock behavior when accessing to a property without a corresponding setup. </p>
 				<pre><code class="language-typescript">    mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;();
     mock.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function"><span class="hljs-params">expression</span> =&gt;</span> <span class="hljs-literal">true</span>))
       .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"setup is missed"</span>));</code></pre>
-				<p>Accessing to an unset property or a method will return a pointer to a spy function;
-				You can call this function and it will be tracked.</p>
-				<p><strong>The behaviour API is obsolete.</strong></p>
+				<p><strong>The behaviour API is obsolete.</strong>
+					<strong>In future versions it will behave as its prototype which is Object by default and desired behaviours should be set
+				thought custom setups.</strong></p>
 				<pre><code class="language-typescript">    mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
     .setBehaviorStrategy(MockBehavior.Loose) <span class="hljs-comment">//obsolete</span>
     <span class="hljs-comment">//or</span>
     .setBehaviorStrategy(MockBehavior.Strict); <span class="hljs-comment">//obsolete</span></code></pre>
 				<p>The default behavior is strict. </p>
-				<p><strong>In future versions it will be switch to loose and desired behaviours should be set
-				thought custom setups.</strong></p>
 				<h2 id="mock-prototype">Mock prototype</h2>
 				<p>If you need to make work instanceof operator or you need to deal with prototype of the mock object you can
 					use prototypeof function of Mock class. Or you can use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf">Object.setPrototypeOf</a> functions
-				on mock object.</p>
+				on mocked object.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> TestObject <span class="hljs-keyword">implements</span> ITestObject {
 
 }
