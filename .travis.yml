@@ -15,7 +15,7 @@ script:
   - npm run build-docs
   - npm run build
   - npm run typedoc
-  []
+
 after_success:
   - npm run semantic-release
 
