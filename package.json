@@ -15,7 +15,7 @@
   "private": true,
   "devDependencies": {
     "@angular-devkit/build-angular": "0.12.2",
-    "@angular-devkit/build-ng-packagr": "0.12.2",
+    "@angular-devkit/build-ng-packagr": "0.12.3",
     "@angular/cli": "7.2.3",
     "@angular/compiler": "7.2.1",
     "@angular/compiler-cli": "7.2.1",
