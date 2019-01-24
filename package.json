@@ -4,7 +4,7 @@
   "scripts": {
     "start": "ng serve",
     "build": "ng build moq",
-    "build-docs": "ng build docs && export $SEMANTICALY_RELEASED=true",
+    "build-docs": "ng build docs && export SEMANTICALY_RELEASED=true",
     "build-tests": "tsc -p ./projects/moq/tsconfig.spec.json ",
     "test": "npm run build-tests && node ./out-tsc/**/index.specs.js",
     "lint": "ng lint",
@@ -14,7 +14,7 @@
     "semantic-release": "semantic-release",
     "typedoc": "node ./dist/docs/esm2015/docs.js",
     "serve-docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve",
-    "postpublish": "npm run typedoc && export $SEMANTICALY_RELEASED=true"
+    "postpublish": "npm run typedoc && export SEMANTICALY_RELEASED=true"
   },
   "private": true,
   "devDependencies": {
