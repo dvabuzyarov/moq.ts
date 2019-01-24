@@ -14,6 +14,8 @@ script:
   - npm run test
   - npm run build-docs
   - npm run build
+  - npm run typedoc
+[]
 after_success:
   - npm run semantic-release
 
@@ -26,7 +28,7 @@ deploy:
   verbose: true
   on:
     branch: dev
-    condition: $SEMANTICALY_RELEASED = true
+    condition: [ -e .released ]; echo $? = 0
 
 env:
   global:
