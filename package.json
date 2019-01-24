@@ -4,7 +4,7 @@
   "scripts": {
     "start": "ng serve",
     "build": "ng build moq",
-    "build-docs": "ng build docs",
+    "build-docs": "ng build docs && export $SEMANTICALY_RELEASED=true",
     "build-tests": "tsc -p ./projects/moq/tsconfig.spec.json ",
     "test": "npm run build-tests && node ./out-tsc/**/index.specs.js",
     "lint": "ng lint",

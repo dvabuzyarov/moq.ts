@@ -25,7 +25,7 @@ deploy:
   local-dir: docs
   verbose: true
   on:
-    branch: master
+    branch: dev
     condition: $SEMANTICALY_RELEASED = true
 
 env:
