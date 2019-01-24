@@ -1,14 +1,14 @@
-import {Reflection, ReflectionKind} from 'typedoc/dist/lib/models/reflections/abstract';
-import {Component, ConverterComponent} from 'typedoc/dist/lib/converter/components';
-import {Converter} from 'typedoc/dist/lib/converter/converter';
-import {Context} from 'typedoc/dist/lib/converter/context';
-import {ContainerReflection} from 'typedoc/dist/lib/models/reflections/container';
-import {CommentPlugin} from "typedoc/dist/lib/converter/plugins";
+import { Reflection, ReflectionFlag, ReflectionKind } from "typedoc/dist/lib/models/reflections/abstract";
+import { Component, ConverterComponent } from "typedoc/dist/lib/converter/components";
+import { Converter } from "typedoc/dist/lib/converter/converter";
+import { Context } from "typedoc/dist/lib/converter/context";
+import { ContainerReflection } from "typedoc/dist/lib/models/reflections/container";
+import { CommentPlugin } from "typedoc/dist/lib/converter/plugins";
 
 const moduleName = "moq.ts";
 
-@Component({name: 'moq-ts'})
-export class MoqTsPlugin extends ConverterComponent {
+@Component({name: "moq-ts"})
+export class MoqPlugin extends ConverterComponent {
     private moduleRenames: ContainerReflection[];
 
     initialize() {
@@ -25,26 +25,26 @@ export class MoqTsPlugin extends ConverterComponent {
 
     private onDeclaration(context: Context, reflection: Reflection, node?) {
         if (reflection.kindOf(ReflectionKind.ExternalModule)) {
-            this.moduleRenames.push( <ContainerReflection>reflection);
+            this.moduleRenames.push(<ContainerReflection>reflection);
         }
     }
 
     private onBeginResolve(context: Context) {
-        let projRefs = context.project.reflections;
-        let refsArray: Reflection[] = Object.keys(projRefs).reduce((m, k) => {
+        const projRefs = context.project.reflections;
+        const refsArray: Reflection[] = Object.keys(projRefs).reduce((m, k) => {
             m.push(projRefs[k]);
             return m;
         }, []);
 
-        for(const reflection of refsArray){
-            reflection.flags.isExternal = false;
+        for (const reflection of refsArray) {
+            reflection.flags.setFlag(ReflectionFlag.External, false);
         }
 
         // Process each rename
         this.moduleRenames.forEach(item => {
-            let renaming = <ContainerReflection>item;
+            const renaming = <ContainerReflection>item;
             // Find an existing module that already has the "rename to" name.  Use it as the merge target.
-            let mergeTarget = <ContainerReflection>refsArray.filter(
+            const mergeTarget = <ContainerReflection>refsArray.filter(
                 ref => ref.name === moduleName,
             )[0];
 
@@ -60,7 +60,7 @@ export class MoqTsPlugin extends ConverterComponent {
             }
 
             // Since there is a merge target, relocate all the renaming module's children to the mergeTarget.
-            let childrenOfRenamed = refsArray.filter(ref => ref.parent === renaming);
+            const childrenOfRenamed = refsArray.filter(ref => ref.parent === renaming);
             childrenOfRenamed.forEach((ref: Reflection) => {
                 // update links in both directions
                 ref.parent = mergeTarget;
