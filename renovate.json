@@ -1,5 +1,15 @@
 {
   "extends": [
     "config:base"
-  ]
+  ],
+  "baseBranches": [
+    "dev"
+  ],
+  "automerge": true,
+  "major": {
+    "automerge": false
+  },
+  "devDependencies": {
+    "automerge": true
+  }
 }

@@ -13,7 +13,8 @@
     "commit-retry": "git cz --retry",
     "semantic-release": "semantic-release",
     "typedoc": "node ./dist/docs/esm2015/docs.js",
-    "serve-docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve"
+    "serve-docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve",
+    "postpublish": "npm run typedoc && export $SEMANTICALY_RELEASED=true"
   },
   "private": true,
   "devDependencies": {
