@@ -4,6 +4,7 @@ import { Mock } from "../lib/mock";
 
 export interface IDummy {
     property: string;
+
     method(value: number): string;
 }
 

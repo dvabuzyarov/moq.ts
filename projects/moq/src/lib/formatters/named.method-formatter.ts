@@ -1,12 +1,14 @@
 import { NamedMethodExpression } from "../expressions";
 import { ConstantFormatter } from "./constant-formatter";
+import { PropertyKeyFormatter } from "./property-key.formatter";
 
 /**
  * @hidden
  */
 export class NamedMethodExpressionFormatter {
 
-    constructor(private constantFormatter: ConstantFormatter = new ConstantFormatter()) {
+    constructor(private constantFormatter: ConstantFormatter = new ConstantFormatter(),
+                private propertyKeyFormatter: PropertyKeyFormatter = new PropertyKeyFormatter()) {
 
     }
 
@@ -18,6 +20,7 @@ export class NamedMethodExpressionFormatter {
         });
 
         const value = formatted.join(", ");
-        return `${expression.name}(${value})`;
+        const propertyKey = this.propertyKeyFormatter.format(expression.name);
+        return `${propertyKey}(${value})`;
     }
 }
