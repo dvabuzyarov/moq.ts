@@ -14,7 +14,7 @@
  * ```
  */
 export class NamedMethodExpression {
-    constructor(public name: string,
+    constructor(public name: PropertyKey,
                 public args: any[]) {
     }
 }
@@ -53,7 +53,7 @@ export class MethodExpression {
  * ```
  */
 export class GetPropertyExpression {
-    constructor(public name: string) {
+    constructor(public name: PropertyKey) {
 
     }
 }
@@ -74,7 +74,7 @@ export class GetPropertyExpression {
  * ```
  */
 export class SetPropertyExpression {
-    constructor(public name: string,
+    constructor(public name: PropertyKey,
                 public value: any) {
 
     }
