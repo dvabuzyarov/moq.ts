@@ -1,5 +1,6 @@
 import { IMock, ISetup, ISetupInvocation } from "../moq";
-import { Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
+import { Expressions } from "../expressions";
+import { callbackInvocationAdapter } from "./callback-invocation.adapter";
 
 /**
  * The default implementation of {@link ISetup} interface.
@@ -11,7 +12,8 @@ export class Setup<T> implements ISetupInvocation<T> {
     private action: Function;
     private playPredicate: () => boolean;
 
-    constructor(private mock: IMock<T>) {
+    constructor(private mock: IMock<T>,
+                private _callbackInvocationAdapter: typeof callbackInvocationAdapter = callbackInvocationAdapter) {
 
     }
 
@@ -37,18 +39,7 @@ export class Setup<T> implements ISetupInvocation<T> {
     }
 
     public callback<TValue>(callback: (args: any[]) => TValue): IMock<T> {
-        this.action = (expression: Expressions) => {
-            if (expression instanceof SetPropertyExpression) {
-                return callback.apply(undefined, [(<SetPropertyExpression>expression).value]);
-            }
-            if (expression instanceof MethodExpression) {
-                return callback.apply(undefined, (<MethodExpression>expression).args);
-            }
-            if (expression instanceof NamedMethodExpression) {
-                return callback.apply(undefined, (<NamedMethodExpression>expression).args);
-            }
-            return callback.apply(undefined, []);
-        };
+        this.action = (expression: Expressions) => this._callbackInvocationAdapter(expression, callback);
         return this.mock;
     }
 

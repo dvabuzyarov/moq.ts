@@ -1,6 +1,6 @@
 import { IMock } from "../moq";
 import { Setup } from "./setup";
-import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
+import { GetPropertyExpression } from "../expressions";
 
 describe("Setup", () => {
 
@@ -121,55 +121,45 @@ describe("Setup", () => {
         expect(callback).toHaveBeenCalledWith(expression);
     });
 
-    it("Returns value from callback for GetPropertyExpression", () => {
-        const value = [];
-        const callback = jasmine.createSpy("callback").withArgs().and.returnValue(value);
-        const mock = MockFactory();
+    it("Throws an exception from execute", () => {
+        const expression = new GetPropertyExpression("propertyName");
+        const error = new Error("test message");
 
+        const callback = jasmine.createSpy("callback").withArgs(expression).and.callFake(() => {
+            throw error;
+        });
+        const mock = MockFactory();
         const setup = new Setup(mock);
+
+        setup.execute(callback);
+        expect(() => setup.invoke(expression)).toThrow(error);
+    });
+
+    it("Returns value from callback", () => {
+        const value = [];
+        const expression = new GetPropertyExpression("propertyName");
+        const callback = jasmine.createSpy("callback");
+        const adapter = jasmine.createSpy("adapter").withArgs(expression, callback).and.returnValue(value);
+
+        const mock = MockFactory();
+        const setup = new Setup(mock, adapter);
         setup.callback(callback);
-        const actual = setup.invoke(new GetPropertyExpression("propertyName"));
+        const actual = setup.invoke(expression);
 
         expect(actual).toBe(value);
     });
 
-    it("Returns value from callback for SetPropertyExpression", () => {
-        const value = [];
-        const arg = "argument 1";
-        const callback = jasmine.createSpy("callback").withArgs(arg).and.returnValue(value);
+    it("Throws an exception from callback", () => {
+        const expression = new GetPropertyExpression("propertyName");
+        const error = new Error("test message");
+        const callback = jasmine.createSpy("callback");
+        const adapter = jasmine.createSpy("adapter").withArgs(expression, callback).and.callFake(() => {
+            throw error;
+        });
         const mock = MockFactory();
+        const setup = new Setup(mock, adapter);
 
-        const setup = new Setup(mock);
         setup.callback(callback);
-        const actual = setup.invoke(new SetPropertyExpression("propertyName", arg));
-
-        expect(actual).toBe(value);
-    });
-
-    it("Returns value from callback for MethodExpression", () => {
-        const value = [];
-        const arg1 = "argument 1";
-        const arg2 = "argument 2";
-        const callback = jasmine.createSpy("callback").withArgs(arg1, arg2).and.returnValue(value);
-        const mock = MockFactory();
-
-        const setup = new Setup(mock);
-        setup.callback(callback);
-        const actual = setup.invoke(new MethodExpression([arg1, arg2]));
-
-        expect(actual).toBe(value);
-    });
-
-    it("Returns value from callback for NamedMethodExpression", () => {
-        const value = [];
-        const arg = "argument 1";
-        const callback = jasmine.createSpy("callback").withArgs(arg).and.returnValue(value);
-        const mock = MockFactory();
-
-        const setup = new Setup(mock);
-        setup.callback(callback);
-        const actual = setup.invoke(new NamedMethodExpression("propertyName", [arg]));
-
-        expect(actual).toBe(value);
+        expect(() => setup.invoke(expression)).toThrow(error);
     });
 });
