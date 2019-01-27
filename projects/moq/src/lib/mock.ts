@@ -1,4 +1,4 @@
-import { Preset } from "./preset";
+import { Preset } from "./preset/preset";
 import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
 import { Interceptor } from "./interceptor";
 import {
@@ -7,7 +7,7 @@ import {
     MockBehavior
 } from "./interceptor-callbacks/interceptor-callbacks";
 import { IMock, ISequenceVerifier, ISetup, ISetupInvocation } from "./moq";
-import { Setup } from "./setup";
+import { Setup } from "./preset/setup";
 import { Times } from "./times";
 import { Tracker } from "./tracker";
 import { Verifier } from "./verifier";

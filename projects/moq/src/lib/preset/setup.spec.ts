@@ -1,6 +1,6 @@
-import { IMock } from "./moq";
+import { IMock } from "../moq";
 import { Setup } from "./setup";
-import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "./expressions";
+import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
 
 describe("Setup", () => {
 

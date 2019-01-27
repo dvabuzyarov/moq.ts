@@ -1,5 +1,5 @@
 import { Tracker } from "../tracker";
-import { Preset } from "../preset";
+import { Preset } from "../preset/preset";
 import { InterceptorCallbacksStrictStrategy } from "./interceptor-callbacks.strict.strategy";
 import { GetPropertyExpression } from "../expressions";
 import { ISetupInvocation } from "../moq";

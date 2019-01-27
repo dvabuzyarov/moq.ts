@@ -1,5 +1,5 @@
-import { IMock, ISetup, ISetupInvocation } from "./moq";
-import { Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "./expressions";
+import { IMock, ISetup, ISetupInvocation } from "../moq";
+import { Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
 
 /**
  * The default implementation of {@link ISetup} interface.

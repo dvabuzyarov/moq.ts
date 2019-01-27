@@ -1,4 +1,4 @@
-import { Preset } from "../preset";
+import { Preset } from "../preset/preset";
 import { Expressions } from "../expressions";
 import { Tracker } from "../tracker";
 import { InterceptorCallbacksLooseStrategy } from "./interceptor-callbacks.loose.strategy";

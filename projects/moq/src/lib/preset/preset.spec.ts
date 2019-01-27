@@ -1,12 +1,12 @@
-import { Preset } from "./preset";
 import {
     ExpectedExpressions,
     ExpectedGetPropertyExpression,
     ExpectedNamedMethodExpression
-} from "./expected-expressions/expected-expressions";
-import { ExpressionMatcher } from "./expression-matchers/expression-matcher";
-import { Expressions, GetPropertyExpression } from "./expressions";
+} from "../expected-expressions/expected-expressions";
+import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
+import { Expressions, GetPropertyExpression } from "../expressions";
 import { Setup } from "./setup";
+import { Preset } from "./preset";
 
 describe("List of defined setup", () => {
 

@@ -1,7 +1,7 @@
 import { ExpectedExpressionReflector } from "./expected-expressions/expected-expression-reflector";
 import { MockCore } from "./mock";
 import { Tracker } from "./tracker";
-import { Preset } from "./preset";
+import { Preset } from "./preset/preset";
 import { Verifier } from "./verifier";
 import { Interceptor } from "./interceptor";
 import { IMock, ISequenceVerifier, ISetup, ISetupInvocation } from "./moq";
