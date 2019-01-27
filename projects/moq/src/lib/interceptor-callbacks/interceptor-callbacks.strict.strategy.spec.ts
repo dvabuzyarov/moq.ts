@@ -1,8 +1,8 @@
 import { Tracker } from "../tracker";
 import { Preset } from "../preset";
 import { InterceptorCallbacksStrictStrategy } from "./interceptor-callbacks.strict.strategy";
-import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
-import { ISetupInvoke } from "../moq";
+import { GetPropertyExpression } from "../expressions";
+import { ISetupInvocation } from "../moq";
 import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
 import { nameof } from "../nameof";
 
@@ -43,71 +43,18 @@ describe("Interceptor callbacks strict strategy", () => {
         expect(tracker.add).toHaveBeenCalledWith(expression);
     });
 
-    it("Returns a set value of an intercepted call of get property", () => {
+    it("Returns setup invocation result", () => {
         const expected = "some value";
         const expression = new GetPropertyExpression("property name");
-        const setup = jasmine.createSpyObj("setup", [nameof<ISetupInvoke<any>>("invoke")]);
-        (<jasmine.Spy>setup.invoke).and.returnValue(expected);
+        const setup = jasmine.createSpyObj("setup", [nameof<ISetupInvocation<any>>("invoke")]);
+        (<jasmine.Spy>setup.invoke).withArgs(expression).and.returnValue(expected);
 
-        (<jasmine.Spy>definedSetups.get).and.returnValue(setup);
-
-        const strategy = StrategyFactory();
-        const actual = strategy.invoke(expression);
-
-        expect(actual).toBe(expected);
-        expect(definedSetups.get).toHaveBeenCalledWith(expression);
-        expect(setup.invoke).toHaveBeenCalledWith();
-    });
-
-    it("Returns a set value of an intercepted call of set property", () => {
-        const expected = true;
-        const newValue = {};
-        const expression = new SetPropertyExpression("property name", newValue);
-        const setup = jasmine.createSpyObj("setup", [nameof<ISetupInvoke<any>>("invoke")]);
-        (<jasmine.Spy>setup.invoke).and.returnValue(expected);
-
-        (<jasmine.Spy>definedSetups.get).and.returnValue(setup);
+        (<jasmine.Spy>definedSetups.get).withArgs(expression).and.returnValue(setup);
 
         const strategy = StrategyFactory();
         const actual = strategy.invoke(expression);
 
         expect(actual).toBe(expected);
-        expect(definedSetups.get).toHaveBeenCalledWith(expression);
-        expect(setup.invoke).toHaveBeenCalledWith([newValue]);
-    });
-
-    it("Returns a set value of an intercepted call of named method call", () => {
-        const expected = {};
-        const arg = {};
-        const expression = new NamedMethodExpression("method name", [arg]);
-        const setup = jasmine.createSpyObj("setup", [nameof<ISetupInvoke<any>>("invoke")]);
-        (<jasmine.Spy>setup.invoke).and.returnValue(expected);
-
-        (<jasmine.Spy>definedSetups.get).and.returnValue(setup);
-
-        const strategy = StrategyFactory();
-        const actual = strategy.invoke(expression);
-
-        expect(actual).toBe(expected);
-        expect(definedSetups.get).toHaveBeenCalledWith(expression);
-        expect(setup.invoke).toHaveBeenCalledWith([arg]);
-    });
-
-    it("Returns a set value of an intercepted call of method call", () => {
-        const expected = {};
-        const arg = {};
-        const expression = new MethodExpression([arg]);
-        const setup = jasmine.createSpyObj("setup", [nameof<ISetupInvoke<any>>("invoke")]);
-        (<jasmine.Spy>setup.invoke).and.returnValue(expected);
-
-        (<jasmine.Spy>definedSetups.get).and.returnValue(setup);
-
-        const strategy = StrategyFactory();
-        const actual = strategy.invoke(expression);
-
-        expect(actual).toBe(expected);
-        expect(definedSetups.get).toHaveBeenCalledWith(expression);
-        expect(setup.invoke).toHaveBeenCalledWith([arg]);
     });
 
     it("Returns undefined for an intercepted call of anything that does not have a corresponding setup", () => {

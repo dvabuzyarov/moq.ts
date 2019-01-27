@@ -4,7 +4,7 @@ import { Tracker } from "./tracker";
 import { Preset } from "./preset";
 import { Verifier } from "./verifier";
 import { Interceptor } from "./interceptor";
-import { IMock, ISequenceVerifier, ISetup, ISetupInvoke } from "./moq";
+import { IMock, ISequenceVerifier, ISetup, ISetupInvocation } from "./moq";
 import { IInterceptorCallbacks, MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 import { Times } from "./times";
 import { nameof } from "./nameof";
@@ -17,7 +17,7 @@ describe("MockCore", () => {
     let tracker: Tracker;
     let verifier: Verifier<any>;
     let callbacks: IInterceptorCallbacks;
-    let setupFactory: (mock: IMock<any>) => ISetupInvoke<any>;
+    let setupFactory: (mock: IMock<any>) => ISetupInvocation<any>;
 
     function trackerFactory(): Tracker {
         return <Tracker>jasmine.createSpyObj("tracker", [

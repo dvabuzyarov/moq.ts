@@ -2,6 +2,7 @@ import {IExpectedExpression} from "./expected-expressions/expected-expression-re
 import {Tracker} from "./tracker";
 import {Times} from "./times";
 import {MockBehavior} from "./interceptor-callbacks/interceptor-callbacks";
+import { Expressions } from "./expressions";
 
 /**
  * Sets a behaviour rule for a particular use case
@@ -42,13 +43,21 @@ export interface ISetup<T> {
      * As predicate {@link PlayTimes} could be used.
      */
     play(predicate: () => boolean): ISetup<T>;
+
+    /**
+     * This callback is executed when setup is invoked with most full context information.
+     * If you need access to the current expression or in other advance techniques than you maybe interested to use this method.
+     * You may use this method to dispatch interactions to an object and reflects back its reaction (mimic technique).
+     * Or you may use this method to implement LooseStrategy or any other else.
+     */
+    execute<TResult>(callback: (this: void, expression: Expressions) => TResult): IMock<T>;
 }
 
 /** @hidden */
-export interface ISetupInvoke<T> extends ISetup<T> {
+export interface ISetupInvocation<T> extends ISetup<T> {
     playable(): boolean;
 
-    invoke<TResult>(args?: any[]): TResult;
+    invoke<TResult>(expression: Expressions): TResult;
 }
 
 /**

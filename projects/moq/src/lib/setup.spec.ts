@@ -1,8 +1,8 @@
 import { IMock } from "./moq";
 import { Setup } from "./setup";
+import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "./expressions";
 
 describe("Setup", () => {
-
 
     function MockFactory(): IMock<any> {
         return <IMock<any>>(<any>{});
@@ -14,7 +14,6 @@ describe("Setup", () => {
         const setup = new Setup(mock);
         const actual = setup.returns([]);
 
-
         expect(actual).toBe(mock);
     });
 
@@ -23,7 +22,6 @@ describe("Setup", () => {
 
         const setup = new Setup(mock);
         const actual = setup.throws([]);
-
 
         expect(actual).toBe(mock);
     });
@@ -34,6 +32,14 @@ describe("Setup", () => {
         const setup = new Setup(mock);
         const actual = setup.callback(() => undefined);
 
+        expect(actual).toBe(mock);
+    });
+
+    it("Returns mock object from execute", () => {
+        const mock = MockFactory();
+
+        const setup = new Setup(mock);
+        const actual = setup.execute(() => undefined);
 
         expect(actual).toBe(mock);
     });
@@ -86,7 +92,7 @@ describe("Setup", () => {
         const setup = new Setup(mock);
         setup.returns(value);
 
-        const actual = setup.invoke();
+        const actual = setup.invoke(new GetPropertyExpression("propertyName"));
 
         expect(actual).toBe(value);
     });
@@ -98,37 +104,72 @@ describe("Setup", () => {
         const setup = new Setup(mock);
         setup.throws(error);
 
-
-        expect(() => setup.invoke()).toThrow(error);
+        expect(() => setup.invoke(new GetPropertyExpression("propertyName"))).toThrow(error);
     });
 
-    it("Returns value from callback", () => {
+    it("Returns value from execute", () => {
+        const value = [];
+        const expression = new GetPropertyExpression("propertyName");
+        const callback = jasmine.createSpy("callback").and.returnValue(value);
+
+        const mock = MockFactory();
+        const setup = new Setup(mock);
+        setup.execute(callback);
+        const actual = setup.invoke(expression);
+
+        expect(actual).toBe(value);
+        expect(callback).toHaveBeenCalledWith(expression);
+    });
+
+    it("Returns value from callback for GetPropertyExpression", () => {
+        const value = [];
+        const callback = jasmine.createSpy("callback").withArgs().and.returnValue(value);
+        const mock = MockFactory();
+
+        const setup = new Setup(mock);
+        setup.callback(callback);
+        const actual = setup.invoke(new GetPropertyExpression("propertyName"));
+
+        expect(actual).toBe(value);
+    });
+
+    it("Returns value from callback for SetPropertyExpression", () => {
         const value = [];
         const arg = "argument 1";
-        const callback = jasmine.createSpy("callback").and.returnValue(value);
+        const callback = jasmine.createSpy("callback").withArgs(arg).and.returnValue(value);
         const mock = MockFactory();
 
         const setup = new Setup(mock);
         setup.callback(callback);
-        const actual = setup.invoke([arg]);
-
+        const actual = setup.invoke(new SetPropertyExpression("propertyName", arg));
 
         expect(actual).toBe(value);
-        expect(callback).toHaveBeenCalledWith(arg);
     });
 
-    it("Returns value from callback without arguments", () => {
+    it("Returns value from callback for MethodExpression", () => {
         const value = [];
-        const callback = jasmine.createSpy("callback").and.returnValue(value);
+        const arg1 = "argument 1";
+        const arg2 = "argument 2";
+        const callback = jasmine.createSpy("callback").withArgs(arg1, arg2).and.returnValue(value);
         const mock = MockFactory();
 
         const setup = new Setup(mock);
         setup.callback(callback);
-        const actual = setup.invoke();
-
+        const actual = setup.invoke(new MethodExpression([arg1, arg2]));
 
         expect(actual).toBe(value);
-        expect(callback).toHaveBeenCalledWith();
     });
 
+    it("Returns value from callback for NamedMethodExpression", () => {
+        const value = [];
+        const arg = "argument 1";
+        const callback = jasmine.createSpy("callback").withArgs(arg).and.returnValue(value);
+        const mock = MockFactory();
+
+        const setup = new Setup(mock);
+        setup.callback(callback);
+        const actual = setup.invoke(new NamedMethodExpression("propertyName", [arg]));
+
+        expect(actual).toBe(value);
+    });
 });

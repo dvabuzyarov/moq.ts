@@ -6,7 +6,7 @@ import {
     interceptorCallbacksFactory,
     MockBehavior
 } from "./interceptor-callbacks/interceptor-callbacks";
-import { IMock, ISequenceVerifier, ISetup, ISetupInvoke } from "./moq";
+import { IMock, ISequenceVerifier, ISetup, ISetupInvocation } from "./moq";
 import { Setup } from "./setup";
 import { Times } from "./times";
 import { Tracker } from "./tracker";
@@ -22,7 +22,7 @@ export class MockCore<T> implements IMock<T> {
     constructor(
         private expressionReflector: ExpectedExpressionReflector,
         private interceptorFactory: (callbacks: IInterceptorCallbacks) => Interceptor<T>,
-        private setupFactory: (mock: IMock<T>) => ISetupInvoke<T>,
+        private setupFactory: (mock: IMock<T>) => ISetupInvocation<T>,
         private definedSetups: Preset<T>,
         public tracker: Tracker,
         private verifier: Verifier<T>,

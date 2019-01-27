@@ -1,11 +1,12 @@
-import { IMock, ISetup, ISetupInvoke } from "./moq";
+import { IMock, ISetup, ISetupInvocation } from "./moq";
+import { Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "./expressions";
 
 /**
  * The default implementation of {@link ISetup} interface.
  * Is it not intended to be used outside of the moq library.
  * @hidden
  */
-export class Setup<T> implements ISetupInvoke<T> {
+export class Setup<T> implements ISetupInvocation<T> {
 
     private action: Function;
     private playPredicate: () => boolean;
@@ -14,8 +15,13 @@ export class Setup<T> implements ISetupInvoke<T> {
 
     }
 
-    public invoke<TResult>(args?: any[]): TResult {
-        return this.action(args);
+    public invoke<TResult>(expression: Expressions): TResult {
+        return this.action(expression);
+    }
+
+    execute<TResult>(callback: (this: void, expression: Expressions) => TResult): IMock<T> {
+        this.action = (expression: Expressions) => callback.apply(undefined, [expression]);
+        return this.mock;
     }
 
     public returns<TValue>(value: TValue): IMock<T> {
@@ -31,7 +37,18 @@ export class Setup<T> implements ISetupInvoke<T> {
     }
 
     public callback<TValue>(callback: (args: any[]) => TValue): IMock<T> {
-        this.action = (args?: any[]) => callback.apply(undefined, args);
+        this.action = (expression: Expressions) => {
+            if (expression instanceof SetPropertyExpression) {
+                return callback.apply(undefined, [(<SetPropertyExpression>expression).value]);
+            }
+            if (expression instanceof MethodExpression) {
+                return callback.apply(undefined, (<MethodExpression>expression).args);
+            }
+            if (expression instanceof NamedMethodExpression) {
+                return callback.apply(undefined, (<NamedMethodExpression>expression).args);
+            }
+            return callback.apply(undefined, []);
+        };
         return this.mock;
     }
 

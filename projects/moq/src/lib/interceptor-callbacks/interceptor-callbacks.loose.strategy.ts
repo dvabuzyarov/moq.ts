@@ -1,13 +1,8 @@
 import { Preset } from "../preset";
-import {
-    Expressions,
-    GetPropertyExpression,
-    MethodExpression,
-    NamedMethodExpression,
-    SetPropertyExpression
-} from "../expressions";
+import { Expressions, GetPropertyExpression } from "../expressions";
 import { Tracker } from "../tracker";
 import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
+
 /**
  * @hidden
  */
@@ -25,17 +20,7 @@ export class InterceptorCallbacksLooseStrategy<T> implements IInterceptorCallbac
     public invoke(expression: Expressions): any {
         const setup = this.definedSetups.get(expression);
         if (setup !== undefined) {
-            if (expression instanceof MethodExpression) {
-                return setup.invoke((<MethodExpression>expression).args);
-            }
-            if (expression instanceof NamedMethodExpression) {
-                return setup.invoke((<NamedMethodExpression>expression).args);
-            }
-            if (expression instanceof SetPropertyExpression) {
-                return setup.invoke([(<SetPropertyExpression>expression).value]);
-            }
-
-            return setup.invoke();
+            return setup.invoke(expression);
         }
         return undefined;
     }
