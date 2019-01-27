@@ -1,4 +1,4 @@
-import { DefinedSetups } from "../defined-setups";
+import { Preset } from "../preset";
 import { Expressions } from "../expressions";
 import { Tracker } from "../tracker";
 import { InterceptorCallbacksLooseStrategy } from "./interceptor-callbacks.loose.strategy";
@@ -69,7 +69,7 @@ export class InterceptorCallbacks<T> implements IInterceptorCallbacks {
 /**
  * @hidden
  */
-export function interceptorCallbacksFactory<T>(definedSetups: DefinedSetups<T>, tracker: Tracker): InterceptorCallbacks<T> {
+export function interceptorCallbacksFactory<T>(definedSetups: Preset<T>, tracker: Tracker): InterceptorCallbacks<T> {
     const strictStrategy = new InterceptorCallbacksStrictStrategy<T>(definedSetups, tracker);
     const looseStrategy = new InterceptorCallbacksLooseStrategy<T>(definedSetups, tracker);
     return new InterceptorCallbacks<T>(strictStrategy, looseStrategy);

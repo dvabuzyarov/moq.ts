@@ -1,5 +1,5 @@
 import { Tracker } from "../tracker";
-import { DefinedSetups } from "../defined-setups";
+import { Preset } from "../preset";
 import { InterceptorCallbacksStrictStrategy } from "./interceptor-callbacks.strict.strategy";
 import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
 import { ISetupInvoke } from "../moq";
@@ -7,7 +7,7 @@ import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
 import { nameof } from "../nameof";
 
 describe("Interceptor callbacks strict strategy", () => {
-    let definedSetups: DefinedSetups<any>;
+    let definedSetups: Preset<any>;
     let tracker: Tracker;
 
     function trackerFactory(): Tracker {
@@ -17,11 +17,11 @@ describe("Interceptor callbacks strict strategy", () => {
         ]);
     }
 
-    function definedSetupsFactory(): DefinedSetups<any> {
-        return <DefinedSetups<any>>jasmine.createSpyObj("definedSetups", [
-            nameof<DefinedSetups<any>>("add"),
-            nameof<DefinedSetups<any>>("get"),
-            nameof<DefinedSetups<any>>("hasNamedMethod")
+    function definedSetupsFactory(): Preset<any> {
+        return <Preset<any>>jasmine.createSpyObj("definedSetups", [
+            nameof<Preset<any>>("add"),
+            nameof<Preset<any>>("get"),
+            nameof<Preset<any>>("hasNamedMethod")
         ]);
     }
 

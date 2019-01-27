@@ -1,4 +1,4 @@
-import { DefinedSetups } from "./defined-setups";
+import { Preset } from "./preset";
 import {
     ExpectedExpressions,
     ExpectedGetPropertyExpression,
@@ -30,7 +30,7 @@ describe("List of defined setup", () => {
             return true;
         };
 
-        const listSetup = new DefinedSetups<any>(expressionMatcherFactory(matcher));
+        const listSetup = new Preset<any>(expressionMatcherFactory(matcher));
         listSetup.add(expectedGetPropertyExpression, setup);
 
         const actual = listSetup.get(getPropertyExpression);
@@ -53,7 +53,7 @@ describe("List of defined setup", () => {
             return true;
         };
 
-        const listSetup = new DefinedSetups<any>(expressionMatcherFactory(matcher));
+        const listSetup = new Preset<any>(expressionMatcherFactory(matcher));
         listSetup.add(expectedGetPropertyExpression, setup1);
         listSetup.add(expectedGetPropertyExpression, setup2);
 
@@ -76,7 +76,7 @@ describe("List of defined setup", () => {
             return true;
         };
 
-        const listSetup = new DefinedSetups<any>(expressionMatcherFactory(matcher));
+        const listSetup = new Preset<any>(expressionMatcherFactory(matcher));
         listSetup.add(expectedGetPropertyExpression, setup);
 
         const actual = listSetup.get(getPropertyExpression);
@@ -97,7 +97,7 @@ describe("List of defined setup", () => {
             return false;
         };
 
-        const listSetup = new DefinedSetups<any>(expressionMatcherFactory(matcher));
+        const listSetup = new Preset<any>(expressionMatcherFactory(matcher));
         listSetup.add(expectedGetPropertyExpression, setup);
 
         const actual = listSetup.get(getPropertyExpression);
@@ -109,7 +109,7 @@ describe("List of defined setup", () => {
         const name = "name";
         const expectedNamedMethodExpression = new ExpectedNamedMethodExpression(name, []);
 
-        const listSetup = new DefinedSetups<any>(undefined);
+        const listSetup = new Preset<any>(undefined);
         listSetup.add(expectedNamedMethodExpression, undefined);
 
         const actual = listSetup.hasNamedMethod(name);

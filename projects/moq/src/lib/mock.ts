@@ -1,4 +1,4 @@
-import { DefinedSetups } from "./defined-setups";
+import { Preset } from "./preset";
 import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
 import { Interceptor } from "./interceptor";
 import {
@@ -23,7 +23,7 @@ export class MockCore<T> implements IMock<T> {
         private expressionReflector: ExpectedExpressionReflector,
         private interceptorFactory: (callbacks: IInterceptorCallbacks) => Interceptor<T>,
         private setupFactory: (mock: IMock<T>) => ISetupInvoke<T>,
-        private definedSetups: DefinedSetups<T>,
+        private definedSetups: Preset<T>,
         public tracker: Tracker,
         private verifier: Verifier<T>,
         private interceptedCallbacks: IInterceptorCallbacks,
@@ -60,6 +60,9 @@ export class MockCore<T> implements IMock<T> {
         return this;
     }
 
+    /**
+     * @experimental
+     */
     public insequence(sequence: ISequenceVerifier, expression: IExpectedExpression<T>): IMock<T> {
         sequence.add(this, expression);
         return this;
@@ -71,7 +74,7 @@ export class MockCore<T> implements IMock<T> {
  */
 export class Mock<T> extends MockCore<T> {
     constructor(name?: string) {
-        const definedSetups = new DefinedSetups<T>(new ExpressionMatcher());
+        const definedSetups = new Preset<T>();
         const tracker = new Tracker();
         const callbacks = interceptorCallbacksFactory<T>(definedSetups, tracker);
 

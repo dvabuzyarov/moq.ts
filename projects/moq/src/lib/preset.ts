@@ -6,10 +6,10 @@ import { ISetupInvoke } from "./moq";
 /**
  * @hidden
  */
-export class DefinedSetups<T> {
+export class Preset<T> {
     private setups: [ExpectedExpressions<T>, ISetupInvoke<T>][] = [];
 
-    constructor(private expressionMatcher: ExpressionMatcher) {
+    constructor(private expressionMatcher: ExpressionMatcher = new ExpressionMatcher()) {
 
     }
 

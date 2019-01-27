@@ -1,7 +1,7 @@
 import { ExpectedExpressionReflector } from "./expected-expressions/expected-expression-reflector";
 import { MockCore } from "./mock";
 import { Tracker } from "./tracker";
-import { DefinedSetups } from "./defined-setups";
+import { Preset } from "./preset";
 import { Verifier } from "./verifier";
 import { Interceptor } from "./interceptor";
 import { IMock, ISequenceVerifier, ISetup, ISetupInvoke } from "./moq";
@@ -13,7 +13,7 @@ describe("MockCore", () => {
 
     let reflector: ExpectedExpressionReflector;
     let interceptor: Interceptor<any>;
-    let definedSetups: DefinedSetups<any>;
+    let definedSetups: Preset<any>;
     let tracker: Tracker;
     let verifier: Verifier<any>;
     let callbacks: IInterceptorCallbacks;
@@ -26,11 +26,11 @@ describe("MockCore", () => {
         ]);
     }
 
-    function definedSetupsFactory(): DefinedSetups<any> {
-        return <DefinedSetups<any>>jasmine.createSpyObj("definedSetups", [
-            nameof<DefinedSetups<any>>("add"),
-            nameof<DefinedSetups<any>>("get"),
-            nameof<DefinedSetups<any>>("hasNamedMethod")
+    function definedSetupsFactory(): Preset<any> {
+        return <Preset<any>>jasmine.createSpyObj("definedSetups", [
+            nameof<Preset<any>>("add"),
+            nameof<Preset<any>>("get"),
+            nameof<Preset<any>>("hasNamedMethod")
         ]);
     }
 
