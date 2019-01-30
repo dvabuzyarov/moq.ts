@@ -1,4 +1,4 @@
-import { DefinedSetups } from "../defined-setups";
+import { Preset } from "../preset";
 import { Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
 import { Tracker } from "../tracker";
 import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
@@ -7,7 +7,7 @@ import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
  */
 export class InterceptorCallbacksStrictStrategy<T> implements IInterceptorCallbacksStrategy {
 
-    constructor(private definedSetups: DefinedSetups<T>,
+    constructor(private definedSetups: Preset<T>,
                 private tracker: Tracker) {
 
     }

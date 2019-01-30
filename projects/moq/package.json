@@ -3,6 +3,7 @@
   "version": "0.0.0-semantically-released",
   "description": "Moq library for Typescript inspired by c# moq",
   "license": "Apache-2.0",
+  "readme": "README.md",
   "author": {
     "name": "Dmitry V. Abuzyarov",
     "email": "dvabuzyarov@gmail.com"

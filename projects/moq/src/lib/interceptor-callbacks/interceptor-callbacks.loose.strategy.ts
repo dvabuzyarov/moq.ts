@@ -1,4 +1,4 @@
-import { DefinedSetups } from "../defined-setups";
+import { Preset } from "../preset";
 import {
     Expressions,
     GetPropertyExpression,
@@ -13,7 +13,7 @@ import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
  */
 export class InterceptorCallbacksLooseStrategy<T> implements IInterceptorCallbacksStrategy {
 
-    constructor(private definedSetups: DefinedSetups<T>,
+    constructor(private definedSetups: Preset<T>,
                 private tracker: Tracker) {
 
     }
