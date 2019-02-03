@@ -12,5 +12,5 @@ export class InvocableFactory {
 
     private predicate = function () {
         return true;
-    }
+    };
 }
