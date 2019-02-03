@@ -1,6 +1,5 @@
 import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
 import { InteractionPlayer } from "./interaction-player";
-import { MethodInvoker } from "./method-invoker";
 
 describe("Interaction player", () => {
 
@@ -39,10 +38,10 @@ describe("Interaction player", () => {
         const method = jasmine.createSpy();
         target[propertyName] = method;
 
-        const methodInvoker = jasmine.createSpyObj<MethodInvoker>("", ["apply"]);
-        methodInvoker.apply.withArgs(method, target, [arg]).and.returnValue(result);
+        const reflectApply = jasmine.createSpy();
+        reflectApply.withArgs(method, target, [arg]).and.returnValue(result);
 
-        const player = new InteractionPlayer(methodInvoker);
+        const player = new InteractionPlayer(reflectApply);
         const actual = player.play(new NamedMethodExpression(propertyName, [arg]), target);
 
         expect(actual).toBe(result);
@@ -54,10 +53,10 @@ describe("Interaction player", () => {
 
         const target = jasmine.createSpy();
 
-        const methodInvoker = jasmine.createSpyObj<MethodInvoker>("", ["apply"]);
-        methodInvoker.apply.withArgs(target, undefined, [arg]).and.returnValue(result);
+        const reflectApply = jasmine.createSpy();
+        reflectApply.withArgs(target, undefined, [arg]).and.returnValue(result);
 
-        const player = new InteractionPlayer(methodInvoker);
+        const player = new InteractionPlayer(reflectApply);
         const actual = player.play(new MethodExpression([arg]), target);
 
         expect(actual).toBe(result);

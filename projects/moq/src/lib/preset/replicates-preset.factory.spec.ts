@@ -1,10 +1,10 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { Expressions } from "../expressions";
-import { ITypeExplorer } from "./preset";
-import { ExpressionExplorerFactory } from "./expression-explorer.factory";
+import { ITypeExplorer } from "../type-explorers/type-explorer";
+import { ExpressionExplorerFactory } from "../type-explorers/expression-explorer.factory";
 import { ReplicatesPresetFactory } from "./replicates-preset.factory";
 import { InteractionPlayer } from "./interaction-player";
-import { ObjectExplorerFactory } from "./object-explorer.factory";
+import { ObjectExplorerFactory } from "../type-explorers/object-explorer.factory";
 
 describe("Replicates preset factory", () => {
 

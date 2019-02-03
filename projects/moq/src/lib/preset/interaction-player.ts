@@ -5,13 +5,11 @@ import {
     NamedMethodExpression,
     SetPropertyExpression
 } from "../expressions";
-import { MethodInvoker } from "./method-invoker";
 
 export class InteractionPlayer {
-    constructor(private methodInvoker: MethodInvoker = new MethodInvoker()) {
+    constructor(private apply: typeof Reflect.apply = Reflect.apply) {
 
     }
-
 
     public play(expression: Expressions, target: any): any {
         if (expression instanceof GetPropertyExpression) {
@@ -22,10 +20,10 @@ export class InteractionPlayer {
         }
         if (expression instanceof NamedMethodExpression) {
             const method = target[expression.name];
-            return this.methodInvoker.apply(method, target, expression.args);
+            return this.apply(method, target, expression.args);
         }
         if (expression instanceof MethodExpression) {
-            return this.methodInvoker.apply(target, undefined, expression.args);
+            return this.apply(target, undefined, expression.args);
         }
     }
 }

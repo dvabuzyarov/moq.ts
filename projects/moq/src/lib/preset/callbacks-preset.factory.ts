@@ -1,6 +1,6 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { Preset } from "./preset";
-import { ExpressionExplorerFactory } from "./expression-explorer.factory";
+import { ExpressionExplorerFactory } from "../type-explorers/expression-explorer.factory";
 import { Expressions } from "../expressions";
 import { callbackInvocationAdapter } from "./callback-invocation.adapter";
 

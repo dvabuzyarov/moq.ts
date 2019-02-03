@@ -1,8 +1,9 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
-import { ITypeExplorer } from "./preset";
+import { ITypeExplorer } from "./type-explorer";
+import { ExpressionExplorer } from "./expression-explorer";
 
 export class ExpressionExplorerFactory {
     public get(expression: ExpectedExpressions<unknown>): ITypeExplorer {
-        throw new Error("Not Implemented");
+        return new ExpressionExplorer(expression);
     }
 }

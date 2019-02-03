@@ -1,9 +1,6 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { Expressions } from "../expressions";
-
-export interface ITypeExplorer {
-    hasInstanceMethod(): boolean;
-}
+import { ITypeExplorer } from "../type-explorers/type-explorer";
 
 export class Preset<T> {
     constructor(

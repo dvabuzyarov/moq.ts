@@ -1,8 +1,8 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { Preset } from "./preset";
-import { ExpressionExplorerFactory } from "./expression-explorer.factory";
+import { ExpressionExplorerFactory } from "../type-explorers/expression-explorer.factory";
 import { InteractionPlayer } from "./interaction-player";
-import { ObjectExplorerFactory } from "./object-explorer.factory";
+import { ObjectExplorerFactory } from "../type-explorers/object-explorer.factory";
 import { Expressions } from "../expressions";
 
 export class ReplicatesPresetFactory {
