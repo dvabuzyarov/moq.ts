@@ -1,4 +1,4 @@
-import { ExpectedExpressions, ExpectedNamedMethodExpression } from "../expected-expressions/expected-expressions";
+import { ExpectedExpressions, ExpectedNamedMethodExpression } from "../../expected-expressions/expected-expressions";
 
 /**
  * @hidden

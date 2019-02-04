@@ -4,8 +4,8 @@ import {
     ExpectedMethodExpression,
     ExpectedNamedMethodExpression,
     ExpectedSetPropertyExpression
-} from "../expected-expressions/expected-expressions";
-import { It } from "../expected-expressions/expression-predicates";
+} from "../../expected-expressions/expected-expressions";
+import { It } from "../../expected-expressions/expression-predicates";
 
 describe("Expression has property explorer", () => {
 

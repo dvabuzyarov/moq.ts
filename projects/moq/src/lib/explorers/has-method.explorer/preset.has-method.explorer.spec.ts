@@ -1,9 +1,9 @@
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
-import { IPreset } from "../presets/preset";
-import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
+import { IPreset } from "../../presets/preset";
+import { ExpectedExpressions } from "../../expected-expressions/expected-expressions";
 import { ExpressionHasMethodExplorer } from "./expression.has-method.explorer";
 import { ObjectHasMethodExplorer } from "./object.has-method.explorer";
-import { ReplicatesPreset } from "../presets/replicates.preset";
+import { ReplicatesPreset } from "../../presets/replicates.preset";
 
 describe("Preset has instance method explorer", () => {
 

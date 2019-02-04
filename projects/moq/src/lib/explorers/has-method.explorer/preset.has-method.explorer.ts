@@ -1,7 +1,7 @@
-import { IPreset } from "../presets/preset";
+import { IPreset } from "../../presets/preset";
 import { ExpressionHasMethodExplorer } from "./expression.has-method.explorer";
 import { ObjectHasMethodExplorer } from "./object.has-method.explorer";
-import { ReplicatesPreset } from "../presets/replicates.preset";
+import { ReplicatesPreset } from "../../presets/replicates.preset";
 
 /**
  * @hidden

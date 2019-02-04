@@ -1,4 +1,4 @@
-import { IPreset } from "../presets/preset";
+import { IPreset } from "../../presets/preset";
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
 
 /**

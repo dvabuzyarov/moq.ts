@@ -1,6 +1,6 @@
 import { HasPropertyExplorer } from "./has-property.explorer";
 import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
-import { IPreset } from "../presets/preset";
+import { IPreset } from "../../presets/preset";
 
 describe("Has property explorer", () => {
 

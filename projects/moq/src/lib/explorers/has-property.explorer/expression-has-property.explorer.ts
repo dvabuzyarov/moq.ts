@@ -1,5 +1,5 @@
-import { ExpectedExpressions, ExpectedMethodExpression } from "../expected-expressions/expected-expressions";
-import { It } from "../expected-expressions/expression-predicates";
+import { ExpectedExpressions, ExpectedMethodExpression } from "../../expected-expressions/expected-expressions";
+import { It } from "../../expected-expressions/expression-predicates";
 
 /**
  * @hidden

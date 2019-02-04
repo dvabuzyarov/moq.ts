@@ -1,5 +1,5 @@
 import { ExpressionHasMethodExplorer } from "./expression.has-method.explorer";
-import { ExpectedExpressions, ExpectedNamedMethodExpression } from "../expected-expressions/expected-expressions";
+import { ExpectedExpressions, ExpectedNamedMethodExpression } from "../../expected-expressions/expected-expressions";
 
 describe("Expression has instance method explorer", () => {
 

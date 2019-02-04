@@ -1,7 +1,7 @@
-import { IPreset } from "../presets/preset";
+import { IPreset } from "../../presets/preset";
 import { ExpressionHasPropertyExplorer } from "./expression-has-property.explorer";
 import { ObjectHasPropertyExplorer } from "./object-has-property.explorer";
-import { ReplicatesPreset } from "../presets/replicates.preset";
+import { ReplicatesPreset } from "../../presets/replicates.preset";
 
 /**
  * @hidden

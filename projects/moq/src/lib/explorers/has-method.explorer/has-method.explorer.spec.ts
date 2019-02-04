@@ -1,6 +1,6 @@
 import { HasMethodExplorer } from "./has-method.explorer";
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
-import { IPreset } from "../presets/preset";
+import { IPreset } from "../../presets/preset";
 
 describe("Has instance method explorer", () => {
 
