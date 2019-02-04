@@ -1,0 +1,59 @@
+import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
+import { IPreset } from "../presets/preset";
+import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
+import { ExpressionHasPropertyExplorer } from "./expression-has-property.explorer";
+import { ObjectHasPropertyExplorer } from "./object-has-property.explorer";
+import { ReplicatesPreset } from "../presets/replicates.preset";
+
+describe("Preset has property explorer", () => {
+
+    it("Returns true when preset expression has property", () => {
+        const name = "name";
+        const target = <ExpectedExpressions<unknown>>{};
+        const preset = <IPreset<unknown>>{target};
+
+        const expressionExplorer = jasmine.createSpyObj<ExpressionHasPropertyExplorer>("", ["has"]);
+        expressionExplorer.has.withArgs(name, target).and.returnValue(true);
+
+        const objectExplorer = jasmine.createSpyObj<ObjectHasPropertyExplorer>("", ["has"]);
+        objectExplorer.has.and.returnValue(false);
+
+        const explorer = new PresetHasPropertyExplorer(expressionExplorer, objectExplorer);
+        const actual = explorer.has(name, preset);
+
+        expect(actual).toBe(true);
+    });
+
+    it("Returns true when replicate preset origin has property", () => {
+        const name = "name";
+        const target = {};
+        const preset = new ReplicatesPreset(undefined, undefined, target);
+
+        const expressionExplorer = jasmine.createSpyObj<ExpressionHasPropertyExplorer>("", ["has"]);
+        expressionExplorer.has.and.returnValue(false);
+
+        const objectExplorer = jasmine.createSpyObj<ObjectHasPropertyExplorer>("", ["has"]);
+        objectExplorer.has.withArgs(name, target).and.returnValue(true);
+
+        const explorer = new PresetHasPropertyExplorer(expressionExplorer, objectExplorer);
+        const actual = explorer.has(name, preset);
+
+        expect(actual).toBe(true);
+    });
+
+    it("Returns false when preset does not have property", () => {
+        const name = "name";
+        const preset = new ReplicatesPreset(undefined, undefined, undefined);
+
+        const expressionExplorer = jasmine.createSpyObj<ExpressionHasPropertyExplorer>("", ["has"]);
+        expressionExplorer.has.and.returnValue(false);
+
+        const objectExplorer = jasmine.createSpyObj<ObjectHasPropertyExplorer>("", ["has"]);
+        objectExplorer.has.and.returnValue(false);
+
+        const explorer = new PresetHasPropertyExplorer(expressionExplorer, objectExplorer);
+        const actual = explorer.has(name, preset);
+
+        expect(actual).toBe(false);
+    });
+});

@@ -1,8 +1,11 @@
 import { IPreset } from "../presets/preset";
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
 
+/**
+ * @hidden
+ */
 export class HasMethodExplorer {
-    constructor(private explorer: PresetHasMethodExplorer) {
+    constructor(private explorer: PresetHasMethodExplorer = new PresetHasMethodExplorer()) {
 
     }
 
