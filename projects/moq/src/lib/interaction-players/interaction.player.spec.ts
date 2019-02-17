@@ -11,7 +11,7 @@ describe("Interaction player", () => {
         const preset = <IPreset<unknown>>{};
         const result = {};
 
-        const interactionPresetProvider = jasmine.createSpyObj<InteractionPresetProvider<unknown>>("", ["get"]);
+        const interactionPresetProvider = jasmine.createSpyObj<InteractionPresetProvider>("", ["get"]);
         interactionPresetProvider.get.withArgs(expression).and.returnValue(preset);
 
         const presetPlayer = jasmine.createSpyObj<PresetPlayer>("", ["play"]);
@@ -26,7 +26,7 @@ describe("Interaction player", () => {
     it("Does not play interaction when there is no appropriate preset and returns undefined", () => {
         const expression = new GetPropertyExpression("");
 
-        const interactionPresetProvider = jasmine.createSpyObj<InteractionPresetProvider<unknown>>("", ["get"]);
+        const interactionPresetProvider = jasmine.createSpyObj<InteractionPresetProvider>("", ["get"]);
         interactionPresetProvider.get.and.returnValue(undefined);
 
         const presetPlayer = jasmine.createSpyObj<PresetPlayer>("", ["play"]);

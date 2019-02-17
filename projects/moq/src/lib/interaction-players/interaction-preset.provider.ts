@@ -6,15 +6,15 @@ import { Presets2 } from "../preset/presets2";
 /**
  * @hidden
  */
-export class InteractionPresetProvider<T> {
+export class InteractionPresetProvider {
 
     constructor(
-        private presets: Presets2<T>,
+        private presets: Presets2<unknown>,
         private matcher = new ExpressionMatcher()) {
 
     }
 
-    public get(interaction: Expressions): IPreset<T> | undefined {
+    public get(interaction: Expressions): IPreset<unknown> | undefined {
         for (const preset of this.presets.get()) {
             if (this.matcher.matched(interaction, preset.target) && preset.invocable() === true) {
                 return preset;

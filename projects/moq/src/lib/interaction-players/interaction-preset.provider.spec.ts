@@ -21,7 +21,7 @@ describe("Interaction preset provider", () => {
         const presets = jasmine.createSpyObj<Presets2<unknown>>(["get"]);
         presets.get.and.returnValue([preset]);
 
-        const provider = new InteractionPresetProvider<unknown>(presets, matcher);
+        const provider = new InteractionPresetProvider(presets, matcher);
         const actual = provider.get(expression);
 
         expect(actual).toBe(preset);
@@ -45,7 +45,7 @@ describe("Interaction preset provider", () => {
         const presets = jasmine.createSpyObj<Presets2<unknown>>(["get"]);
         presets.get.and.returnValue([preset1, preset2]);
 
-        const provider = new InteractionPresetProvider<unknown>(presets, matcher);
+        const provider = new InteractionPresetProvider(presets, matcher);
         const actual = provider.get(expression);
 
         expect(actual).toBe(preset1);
@@ -65,7 +65,7 @@ describe("Interaction preset provider", () => {
         const presets = jasmine.createSpyObj<Presets2<unknown>>(["get"]);
         presets.get.and.returnValue([preset]);
 
-        const provider = new InteractionPresetProvider<unknown>(presets, matcher);
+        const provider = new InteractionPresetProvider(presets, matcher);
         const actual = provider.get(expression);
 
         expect(actual).toBeUndefined();
@@ -85,7 +85,7 @@ describe("Interaction preset provider", () => {
         const presets = jasmine.createSpyObj<Presets2<unknown>>(["get"]);
         presets.get.and.returnValue([preset]);
 
-        const provider = new InteractionPresetProvider<unknown>(presets, matcher);
+        const provider = new InteractionPresetProvider(presets, matcher);
         const actual = provider.get(expression);
 
         expect(actual).toBeUndefined();
@@ -104,7 +104,7 @@ describe("Interaction preset provider", () => {
         const presets = jasmine.createSpyObj<Presets2<unknown>>(["get"]);
         presets.get.and.returnValue([preset]);
 
-        const provider = new InteractionPresetProvider<unknown>(presets, matcher);
+        const provider = new InteractionPresetProvider(presets, matcher);
         provider.get(expression);
 
         expect(preset.invocable).not.toHaveBeenCalled();

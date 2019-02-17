@@ -5,10 +5,10 @@ import { PresetPlayer } from "./preset.player";
 /**
  * @hidden
  */
-export class InteractionPlayer<T> {
+export class InteractionPlayer {
     constructor(
-        private interactionPresetProvider: InteractionPresetProvider<T>,
-        private presetPlayer: PresetPlayer) {
+        private interactionPresetProvider: InteractionPresetProvider,
+        private presetPlayer: PresetPlayer = new PresetPlayer()) {
 
     }
 
