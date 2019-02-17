@@ -1,15 +1,19 @@
-import { IPreset } from "../../presets/preset";
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
+import { Presets2 } from "../../preset/presets2";
 
 /**
  * @hidden
  */
 export class HasMethodExplorer {
-    constructor(private explorer: PresetHasMethodExplorer = new PresetHasMethodExplorer()) {
+    constructor(
+        private presets: Presets2<unknown>,
+        private explorer: PresetHasMethodExplorer = new PresetHasMethodExplorer()) {
 
     }
 
-    public has(name: PropertyKey, presets: IPreset<unknown>[]): boolean {
-        return presets.find(preset => this.explorer.has(name, preset)) !== undefined;
+    public has(name: PropertyKey): boolean {
+        return this.presets
+            .get()
+            .find(preset => this.explorer.has(name, preset)) !== undefined;
     }
 }

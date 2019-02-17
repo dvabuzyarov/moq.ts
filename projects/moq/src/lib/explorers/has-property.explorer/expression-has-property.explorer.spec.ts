@@ -49,14 +49,14 @@ describe("Expression has property explorer", () => {
         expect(actual).toBe(false);
     });
 
-    it("Returns true when expression is instance method interaction", () => {
+    it("Returns false when expression is instance method interaction", () => {
         const name = "name";
         const expression = new ExpectedNamedMethodExpression(name, undefined);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);
 
-        expect(actual).toBe(true);
+        expect(actual).toBe(false);
     });
 
     it("Returns false when expression is instance method interaction with different name", () => {

@@ -1,4 +1,8 @@
-import { ExpectedExpressions, ExpectedMethodExpression } from "../../expected-expressions/expected-expressions";
+import {
+    ExpectedExpressions,
+    ExpectedMethodExpression,
+    ExpectedNamedMethodExpression
+} from "../../expected-expressions/expected-expressions";
 import { It } from "../../expected-expressions/expression-predicates";
 
 /**
@@ -6,7 +10,9 @@ import { It } from "../../expected-expressions/expression-predicates";
  */
 export class ExpressionHasPropertyExplorer {
     public has(name: PropertyKey, expression: ExpectedExpressions<unknown>): boolean {
-        if (expression instanceof It || expression instanceof ExpectedMethodExpression) {
+        if (expression instanceof It
+            || expression instanceof ExpectedMethodExpression
+            || expression instanceof ExpectedNamedMethodExpression) {
             return false;
         }
 

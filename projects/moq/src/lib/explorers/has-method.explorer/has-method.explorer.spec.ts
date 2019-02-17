@@ -1,6 +1,7 @@
 import { HasMethodExplorer } from "./has-method.explorer";
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
 import { IPreset } from "../../presets/preset";
+import { Presets2 } from "../../preset/presets2";
 
 describe("Has instance method explorer", () => {
 
@@ -8,11 +9,14 @@ describe("Has instance method explorer", () => {
         const name = "name";
         const preset = <IPreset<unknown>>{};
 
+        const presets = jasmine.createSpyObj<Presets2<unknown>>(["get"]);
+        presets.get.and.returnValue([preset]);
+
         const presetExplorer = jasmine.createSpyObj<PresetHasMethodExplorer>("", ["has"]);
         presetExplorer.has.withArgs(name, preset).and.returnValue(true);
 
-        const explorer = new HasMethodExplorer(presetExplorer);
-        const actual = explorer.has(name, [preset]);
+        const explorer = new HasMethodExplorer(presets, presetExplorer);
+        const actual = explorer.has(name);
 
         expect(actual).toBe(true);
     });
@@ -21,11 +25,14 @@ describe("Has instance method explorer", () => {
         const name = "name";
         const preset = <IPreset<unknown>>{};
 
+        const presets = jasmine.createSpyObj<Presets2<unknown>>(["get"]);
+        presets.get.and.returnValue([preset]);
+
         const presetExplorer = jasmine.createSpyObj<PresetHasMethodExplorer>("", ["has"]);
         presetExplorer.has.withArgs(name, preset).and.returnValue(false);
 
-        const explorer = new HasMethodExplorer(presetExplorer);
-        const actual = explorer.has(name, [preset]);
+        const explorer = new HasMethodExplorer(presets, presetExplorer);
+        const actual = explorer.has(name);
 
         expect(actual).toBe(false);
     });
