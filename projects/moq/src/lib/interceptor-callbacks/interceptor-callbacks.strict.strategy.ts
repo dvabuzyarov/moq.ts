@@ -1,15 +1,18 @@
-import { Preset } from "../preset/preset";
+import { Presets } from "../preset/presets";
 import { Expressions } from "../expressions";
 import { Tracker } from "../tracker";
 import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
+import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
+import { InteractionPlayer } from "../interaction-players/interaction.player";
 
 /**
  * @hidden
  */
 export class InterceptorCallbacksStrictStrategy<T> implements IInterceptorCallbacksStrategy {
 
-    constructor(private definedSetups: Preset<T>,
-                private tracker: Tracker) {
+    constructor(private tracker: Tracker,
+                private hasMethodExplorer: HasMethodExplorer,
+                private interactionPlayer: InteractionPlayer) {
 
     }
 
@@ -18,15 +21,11 @@ export class InterceptorCallbacksStrictStrategy<T> implements IInterceptorCallba
     }
 
     public invoke(expression: Expressions): any {
-        const setup = this.definedSetups.get(expression);
-        if (setup !== undefined) {
-            return setup.invoke(expression);
-        }
-        return undefined;
+        return this.interactionPlayer.play(expression);
     }
 
-    public hasNamedMethod(methodName: string, prototype: any): boolean {
-        const hasNamedMethod = this.definedSetups.hasNamedMethod(methodName);
+    public hasNamedMethod(methodName: PropertyKey, prototype: any): boolean {
+        const hasNamedMethod = this.hasMethodExplorer.has(methodName);
         if (hasNamedMethod === true) return true;
 
         if (prototype !== null && prototype[methodName] instanceof Function) {

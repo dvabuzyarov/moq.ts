@@ -1,15 +1,17 @@
-import { Preset } from "../preset/preset";
-import { Expressions, GetPropertyExpression } from "../expressions";
+import { Expressions } from "../expressions";
 import { Tracker } from "../tracker";
 import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
+import { InteractionPlayer } from "../interaction-players/interaction.player";
+import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
 
 /**
  * @hidden
  */
 export class InterceptorCallbacksLooseStrategy<T> implements IInterceptorCallbacksStrategy {
 
-    constructor(private definedSetups: Preset<T>,
-                private tracker: Tracker) {
+    constructor(private tracker: Tracker,
+                private hasPropertyExplorer: HasPropertyExplorer,
+                private interactionPlayer: InteractionPlayer) {
 
     }
 
@@ -18,16 +20,10 @@ export class InterceptorCallbacksLooseStrategy<T> implements IInterceptorCallbac
     }
 
     public invoke(expression: Expressions): any {
-        const setup = this.definedSetups.get(expression);
-        if (setup !== undefined) {
-            return setup.invoke(expression);
-        }
-        return undefined;
+        return this.interactionPlayer.play(expression);
     }
 
-    public hasNamedMethod(methodName: string, prototype: any): boolean {
-        const getPropertyExpression = new GetPropertyExpression(methodName);
-        const setup = this.definedSetups.get(getPropertyExpression);
-        return setup !== undefined ? false : true;
+    public hasNamedMethod(methodName: PropertyKey, prototype: any): boolean {
+        return this.hasPropertyExplorer.has(methodName) === false;
     }
 }
