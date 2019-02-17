@@ -30,10 +30,11 @@ describe("Preset player", () => {
         const expression = <Expressions>{};
 
         const value = "value";
-        const preset = new CallbacksPreset<unknown>(undefined, undefined, undefined);
+        const callback = jasmine.createSpy();
+        const preset = new CallbacksPreset<unknown>(undefined, undefined, callback);
 
         const presetPlayer = jasmine.createSpyObj<CallbackPresetPlayer>(["play"]);
-        presetPlayer.play.withArgs(preset, expression).and.returnValue(value);
+        presetPlayer.play.withArgs(callback, expression).and.returnValue(value);
 
         const player = new PresetPlayer(null, presetPlayer, null, null);
         const actual = player.play(preset, expression);

@@ -1,11 +1,19 @@
-import { CallbacksPreset } from "../presets/callbacks.preset";
-import { Expressions } from "../expressions";
+import { Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
 
 /**
  * @hidden
  */
 export class CallbackPresetPlayer {
-    public play<T>(preset: CallbacksPreset<T>, interaction: Expressions): any {
-        throw new Error("Not Implemented");
+    public play<TValue>(callback: (args: any[]) => TValue, interaction: Expressions): any {
+        if (interaction instanceof SetPropertyExpression) {
+            return callback.apply(undefined, [interaction.value]);
+        }
+        if (interaction instanceof MethodExpression) {
+            return callback.apply(undefined, interaction.args);
+        }
+        if (interaction instanceof NamedMethodExpression) {
+            return callback.apply(undefined, interaction.args);
+        }
+        return callback.apply(undefined, []);
     }
 }
