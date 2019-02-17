@@ -27,7 +27,7 @@ deploy:
   local-dir: docs
   verbose: true
   on:
-    branch: dev
+    branch: master
     condition: -e .released
 
 env:
