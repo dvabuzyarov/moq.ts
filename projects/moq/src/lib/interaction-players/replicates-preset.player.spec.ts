@@ -25,7 +25,7 @@ describe("Replicates preset player", () => {
         const player = new ReplicatesPresetPlayer();
         const actual = player.play(target, new SetPropertyExpression(propertyName, value));
 
-        expect(actual).toBe(value);
+        expect(actual).toBe(true);
         expect(target[propertyName]).toBe(value);
     });
 

@@ -1,8 +1,7 @@
-import {IExpectedExpression} from "./expected-expressions/expected-expression-reflector";
-import {Tracker} from "./tracker";
-import {Times} from "./times";
-import {MockBehavior} from "./interceptor-callbacks/interceptor-callbacks";
-import { Expressions } from "./expressions";
+import { IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
+import { Tracker } from "./tracker";
+import { Times } from "./times";
+import { MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 
 /**
  * Sets a behaviour rule for a particular use case
@@ -44,6 +43,28 @@ export interface IPresetBuilder<T> {
      */
     play(predicate: () => boolean): IPresetBuilder<T>;
 
+    /**
+     * Replicates interactions with original object.
+     * The mock object keeps tracking all interactions and reflects them on the original object.
+     *
+     *  * @example
+     * ```typescript
+     *
+     * const value = 2;
+     *
+     * class Origin {
+     *   public property = value;
+     *}
+     *
+     * const origin = new Origin();
+     * const mock = new Mock<Origin>()
+     * .setup(() => It.IsAny())
+     * .replicates(origin);
+     *
+     * const actual = mock.object().property;
+     * expect(actual).toBe(2);
+     * ```
+     */
     replicates(origin: T): IMock<T>;
 }
 

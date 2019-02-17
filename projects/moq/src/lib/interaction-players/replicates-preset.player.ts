@@ -19,7 +19,8 @@ export class ReplicatesPresetPlayer {
             return origin[interaction.name];
         }
         if (interaction instanceof SetPropertyExpression) {
-            return origin[interaction.name] = interaction.value;
+            origin[interaction.name] = interaction.value;
+            return true;
         }
         if (interaction instanceof NamedMethodExpression) {
             const method = origin[interaction.name];
