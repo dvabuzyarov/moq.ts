@@ -9,7 +9,7 @@ import { callbackInvocationAdapter } from "./callback-invocation.adapter";
  */
 export class Setup<T> implements ISetupInvocation<T> {
 
-    private action: Function;
+    private action: (expression: Expressions) => any;
     private playPredicate: () => boolean;
 
     constructor(private mock: IMock<T>,
@@ -21,8 +21,8 @@ export class Setup<T> implements ISetupInvocation<T> {
         return this.action(expression);
     }
 
-    execute<TResult>(callback: (this: void, expression: Expressions) => TResult): IMock<T> {
-        this.action = (expression: Expressions) => callback.apply(undefined, [expression]);
+    replicates(origin: T): IMock<T> {
+        this.action = (ex) => (<any>origin)(ex);
         return this.mock;
     }
 

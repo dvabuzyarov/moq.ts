@@ -39,7 +39,7 @@ describe("Setup", () => {
         const mock = MockFactory();
 
         const setup = new Setup(mock);
-        const actual = setup.execute(() => undefined);
+        const actual = setup.replicates(() => undefined);
 
         expect(actual).toBe(mock);
     });
@@ -114,7 +114,7 @@ describe("Setup", () => {
 
         const mock = MockFactory();
         const setup = new Setup(mock);
-        setup.execute(callback);
+        setup.replicates(callback);
         const actual = setup.invoke(expression);
 
         expect(actual).toBe(value);
@@ -131,7 +131,7 @@ describe("Setup", () => {
         const mock = MockFactory();
         const setup = new Setup(mock);
 
-        setup.execute(callback);
+        setup.replicates(callback);
         expect(() => setup.invoke(expression)).toThrow(error);
     });
 

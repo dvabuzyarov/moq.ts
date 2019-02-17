@@ -44,13 +44,7 @@ export interface ISetup<T> {
      */
     play(predicate: () => boolean): ISetup<T>;
 
-    /**
-     * This callback is executed when setup is invoked with most full context information.
-     * If you need access to the current expression or in other advance techniques than you maybe interested to use this method.
-     * You may use this method to dispatch interactions to an object and reflects back its reaction (mimic technique).
-     * Or you may use this method to implement LooseStrategy or any other else.
-     */
-    execute<TResult>(callback: (this: void, expression: Expressions) => TResult): IMock<T>;
+    replicates(origin: T): IMock<T>;
 }
 
 /** @hidden */
