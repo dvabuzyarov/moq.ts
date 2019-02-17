@@ -41,5 +41,12 @@ describe("dumps all interactions into console.log", () => {
         const writer = (<any>{log} as Console);
 
         dump(myServiceMock, writer);
+
+        const delimiter = "-------------------------------";
+        expect(log).toHaveBeenCalledWith(`Dump of noname mock`);
+        expect(log).toHaveBeenCalledWith(delimiter);
+        const interactions = `\nGetter of 'findSomething'\nfindSomething(4)\nGetter of 'doSomething'\ndoSomething([object Object])`;
+        expect(log).toHaveBeenCalledWith(interactions);
+        expect(log).toHaveBeenCalledWith(delimiter);
     });
 });

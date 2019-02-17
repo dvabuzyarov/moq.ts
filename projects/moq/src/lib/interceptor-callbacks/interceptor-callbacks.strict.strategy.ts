@@ -1,14 +1,17 @@
-import { Preset } from "../preset";
-import { Expressions, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
+import { Expressions } from "../expressions";
 import { Tracker } from "../tracker";
 import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
+import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
+import { InteractionPlayer } from "../interaction-players/interaction.player";
+
 /**
  * @hidden
  */
 export class InterceptorCallbacksStrictStrategy<T> implements IInterceptorCallbacksStrategy {
 
-    constructor(private definedSetups: Preset<T>,
-                private tracker: Tracker) {
+    constructor(private tracker: Tracker,
+                private hasMethodExplorer: HasMethodExplorer,
+                private interactionPlayer: InteractionPlayer) {
 
     }
 
@@ -17,25 +20,11 @@ export class InterceptorCallbacksStrictStrategy<T> implements IInterceptorCallba
     }
 
     public invoke(expression: Expressions): any {
-        const setup = this.definedSetups.get(expression);
-        if (setup !== undefined) {
-            if (expression instanceof MethodExpression) {
-                return setup.invoke((<MethodExpression>expression).args);
-            }
-            if (expression instanceof NamedMethodExpression) {
-                return setup.invoke((<NamedMethodExpression>expression).args);
-            }
-            if (expression instanceof SetPropertyExpression) {
-                return setup.invoke([(<SetPropertyExpression>expression).value]);
-            }
-
-            return setup.invoke();
-        }
-        return undefined;
+        return this.interactionPlayer.play(expression);
     }
 
-    public hasNamedMethod(methodName: string, prototype: any): boolean {
-        const hasNamedMethod = this.definedSetups.hasNamedMethod(methodName);
+    public hasNamedMethod(methodName: PropertyKey, prototype: any): boolean {
+        const hasNamedMethod = this.hasMethodExplorer.has(methodName);
         if (hasNamedMethod === true) return true;
 
         if (prototype !== null && prototype[methodName] instanceof Function) {

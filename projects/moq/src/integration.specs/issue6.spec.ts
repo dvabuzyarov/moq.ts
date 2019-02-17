@@ -12,7 +12,7 @@ describe("the latest more specific setup does not override the previous one", ()
     it("the bug", () => {
         const mock = new Mock<IDummy>();
         mock
-            .setup(instance => It.Is((expression: ExpectedGetPropertyExpression) => true))
+            .setup(() => It.Is((expression: ExpectedGetPropertyExpression) => true))
             .throws(new Error("The generic setup has been invoked"))
             .setup(instance => instance.method(It.IsAny()))
             .returns(undefined);

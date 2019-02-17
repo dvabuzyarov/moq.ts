@@ -34,6 +34,7 @@ You can find a pretty full set of usages in the integration tests. Check out [te
 - [Mocking functions of objects](#mocking-functions-of-objects)
 - [Mock behavior](#mock-behavior)
 - [Mock prototype](#mock-prototype)
+- [Replicates](#replicates)
 * * *
 
 <!-- toc -->
@@ -220,6 +221,32 @@ const mock = new Mock<ITestObject>()
                 .object();
 
 mock.object() instanceof TestObject;// true
+```
+
+## Replicates
+If you need to replicate behaviour of an existing object you can reflect mock's interactions on the object.  
+
+```typescript
+class Origin {
+    public property = 0;
+
+    public method(input: number): number {
+        return input * this.property;
+    }
+}
+
+const origin = new Origin();
+
+const mock = new Mock<Origin>()
+    .setup(() => It.IsAny())
+    .replicates(origin);
+
+const mocked = mock.object();
+mocked.property = 3;
+const actual = mocked.method(2);
+
+expect(actual).toBe(6);
+mock.verify(instance => instance.method(2));
 ```
 
 Sponsored by [2BIT](https://www.2bit.ch)

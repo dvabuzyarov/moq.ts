@@ -15,9 +15,7 @@ class MyClass {
 
     public method(value: number): void {
         const field1 = this.myService.findSomething(value);
-        this.myService.doSomething({
-            field1: field1
-        });
+        this.myService.doSomething({field1});
     }
 }
 
@@ -25,8 +23,8 @@ interface IData {
     field1: number;
 }
 
-describe("linkedAccountUpdateProtoToDomainEpic", () => {
-    it("my test should be failed", () => {
+describe("#1 Verify context of a named function expression is incorrect", () => {
+    it("the bug", () => {
         const value = 4;
         const field1 = 2;
         const myServiceMock = new Mock<IMyService>();
