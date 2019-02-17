@@ -47,13 +47,6 @@ export interface ISetup<T> {
     replicates(origin: T): IMock<T>;
 }
 
-/** @hidden */
-export interface ISetupInvocation<T> extends ISetup<T> {
-    playable(): boolean;
-
-    invoke<TResult>(expression: Expressions): TResult;
-}
-
 /**
  * The main API of the framework.
  *

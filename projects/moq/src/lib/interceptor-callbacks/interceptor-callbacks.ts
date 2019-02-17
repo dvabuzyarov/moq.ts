@@ -2,7 +2,7 @@ import { Expressions } from "../expressions";
 import { Tracker } from "../tracker";
 import { InterceptorCallbacksLooseStrategy } from "./interceptor-callbacks.loose.strategy";
 import { InterceptorCallbacksStrictStrategy } from "./interceptor-callbacks.strict.strategy";
-import { Presets2 } from "../preset/presets2";
+import { Presets } from "../preset/presets";
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { InteractionPresetProvider } from "../interaction-players/interaction-preset.provider";
@@ -73,7 +73,7 @@ export class InterceptorCallbacks<T> implements IInterceptorCallbacks {
 /**
  * @hidden
  */
-export function interceptorCallbacksFactory<T>(tracker: Tracker, presets: Presets2<unknown>): InterceptorCallbacks<T> {
+export function interceptorCallbacksFactory<T>(tracker: Tracker, presets: Presets<unknown>): InterceptorCallbacks<T> {
     const interactionPlayer = new InteractionPlayer(new InteractionPresetProvider(presets));
     const strictStrategy = new InterceptorCallbacksStrictStrategy<T>(tracker, new HasMethodExplorer(presets), interactionPlayer);
     const looseStrategy = new InterceptorCallbacksLooseStrategy<T>(tracker, new HasPropertyExplorer(presets), interactionPlayer);

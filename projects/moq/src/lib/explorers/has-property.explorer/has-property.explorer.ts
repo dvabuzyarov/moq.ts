@@ -1,12 +1,12 @@
 import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
-import { Presets2 } from "../../preset/presets2";
+import { Presets } from "../../preset/presets";
 
 /**
  * @hidden
  */
 export class HasPropertyExplorer {
     constructor(
-        private presets: Presets2<unknown>,
+        private presets: Presets<unknown>,
         private explorer: PresetHasPropertyExplorer = new PresetHasPropertyExplorer()) {
 
     }

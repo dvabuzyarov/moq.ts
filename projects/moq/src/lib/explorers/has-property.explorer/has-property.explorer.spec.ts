@@ -1,7 +1,7 @@
 import { HasPropertyExplorer } from "./has-property.explorer";
 import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
 import { IPreset } from "../../presets/preset";
-import { Presets2 } from "../../preset/presets2";
+import { Presets } from "../../preset/presets";
 
 describe("Has property explorer", () => {
 
@@ -9,7 +9,7 @@ describe("Has property explorer", () => {
         const name = "name";
         const preset = <IPreset<unknown>>{};
 
-        const presets = jasmine.createSpyObj<Presets2<unknown>>(["get"]);
+        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
         presets.get.and.returnValue([preset]);
 
         const presetExplorer = jasmine.createSpyObj<PresetHasPropertyExplorer>("", ["has"]);
@@ -25,7 +25,7 @@ describe("Has property explorer", () => {
         const name = "name";
         const preset = <IPreset<unknown>>{};
 
-        const presets = jasmine.createSpyObj<Presets2<unknown>>(["get"]);
+        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
         presets.get.and.returnValue([preset]);
 
         const presetExplorer = jasmine.createSpyObj<PresetHasPropertyExplorer>("", ["has"]);

@@ -1,119 +1,30 @@
-import {
-    ExpectedExpressions,
-    ExpectedGetPropertyExpression,
-    ExpectedNamedMethodExpression
-} from "../expected-expressions/expected-expressions";
-import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
-import { Expressions, GetPropertyExpression } from "../expressions";
-import { Setup } from "./setup";
 import { Presets } from "./presets";
+import { IPreset } from "../presets/preset";
+import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 
-describe("List of defined setup", () => {
+describe("List of defined presets", () => {
+    it("Returns a copy of presets list", () => {
+        const presets = new Presets<any>();
+        const actual1 = presets.get();
+        const actual2 = presets.get();
 
-    function expressionMatcherFactory(matched?: (left: Expressions, right: ExpectedExpressions<any>) => boolean): ExpressionMatcher {
-        return (<any>{
-            matched: matched
-        } as ExpressionMatcher);
-    }
-
-    it("Returns playable setup by expression", () => {
-        const name = "name";
-        const setup = new Setup<any>(undefined);
-        setup.play(() => true);
-
-        const expectedGetPropertyExpression = new ExpectedGetPropertyExpression(name);
-        const getPropertyExpression = new GetPropertyExpression(name);
-
-        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean => {
-            expect(left).toBe(getPropertyExpression);
-            expect(right).toBe(expectedGetPropertyExpression);
-            return true;
-        };
-
-        const listSetup = new Presets<any>(expressionMatcherFactory(matcher));
-        listSetup.add(expectedGetPropertyExpression, setup);
-
-        const actual = listSetup.get(getPropertyExpression);
-
-        expect(actual).toBe(setup);
+        expect(actual1).not.toBe(actual2);
     });
 
-    it("Returns the latest setup", () => {
-        const name = "name";
-        const setup1 = new Setup<any>(undefined);
-        setup1.play(() => true);
-        const setup2 = new Setup<any>(undefined);
-        setup2.play(() => true);
-        const expectedGetPropertyExpression = new ExpectedGetPropertyExpression(name);
-        const getPropertyExpression = new GetPropertyExpression(name);
+    it("Returns defined presets in LIFO order", () => {
+        class Preset implements IPreset<unknown> {
+            readonly invocable: () => boolean;
+            readonly target: ExpectedExpressions<unknown>;
+        }
 
-        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean => {
-            expect(left).toBe(getPropertyExpression);
-            expect(right).toBe(expectedGetPropertyExpression);
-            return true;
-        };
+        const preset1 = new Preset();
+        const preset2 = new Preset();
 
-        const listSetup = new Presets<any>(expressionMatcherFactory(matcher));
-        listSetup.add(expectedGetPropertyExpression, setup1);
-        listSetup.add(expectedGetPropertyExpression, setup2);
+        const presets = new Presets<any>();
+        presets.add(preset2);
+        presets.add(preset1);
+        const actual = presets.get();
 
-        const actual = listSetup.get(getPropertyExpression);
-
-        expect(actual).toBe(setup2);
-    });
-
-    it("Skips unplayable setup by expression", () => {
-        const name = "name";
-        const setup = new Setup<any>(undefined);
-        setup.play(() => false);
-
-        const expectedGetPropertyExpression = new ExpectedGetPropertyExpression(name);
-        const getPropertyExpression = new GetPropertyExpression(name);
-
-        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean => {
-            expect(left).toBe(getPropertyExpression);
-            expect(right).toBe(expectedGetPropertyExpression);
-            return true;
-        };
-
-        const listSetup = new Presets<any>(expressionMatcherFactory(matcher));
-        listSetup.add(expectedGetPropertyExpression, setup);
-
-        const actual = listSetup.get(getPropertyExpression);
-
-        expect(actual).toBeUndefined();
-    });
-
-    it("Skips setup that expected expression does not match to an expression", () => {
-        const name = "name";
-        const setup = new Setup<any>(undefined);
-        setup.play(() => true);
-        const expectedGetPropertyExpression = new ExpectedGetPropertyExpression(name);
-        const getPropertyExpression = new GetPropertyExpression(name);
-
-        const matcher = (left: Expressions, right: ExpectedExpressions<any>): boolean => {
-            expect(left).toBe(getPropertyExpression);
-            expect(right).toBe(expectedGetPropertyExpression);
-            return false;
-        };
-
-        const listSetup = new Presets<any>(expressionMatcherFactory(matcher));
-        listSetup.add(expectedGetPropertyExpression, setup);
-
-        const actual = listSetup.get(getPropertyExpression);
-
-        expect(actual).toBeUndefined();
-    });
-
-    it("Returns true if it has named method", () => {
-        const name = "name";
-        const expectedNamedMethodExpression = new ExpectedNamedMethodExpression(name, []);
-
-        const listSetup = new Presets<any>(undefined);
-        listSetup.add(expectedNamedMethodExpression, undefined);
-
-        const actual = listSetup.hasNamedMethod(name);
-
-        expect(actual).toBe(true);
+        expect(actual).toEqual([preset1, preset2]);
     });
 });

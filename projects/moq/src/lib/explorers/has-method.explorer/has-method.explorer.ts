@@ -1,12 +1,12 @@
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
-import { Presets2 } from "../../preset/presets2";
+import { Presets } from "../../preset/presets";
 
 /**
  * @hidden
  */
 export class HasMethodExplorer {
     constructor(
-        private presets: Presets2<unknown>,
+        private presets: Presets<unknown>,
         private explorer: PresetHasMethodExplorer = new PresetHasMethodExplorer()) {
 
     }

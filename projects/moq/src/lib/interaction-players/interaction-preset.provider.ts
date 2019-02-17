@@ -1,7 +1,7 @@
 import { IPreset } from "../presets/preset";
 import { Expressions } from "../expressions";
 import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
-import { Presets2 } from "../preset/presets2";
+import { Presets } from "../preset/presets";
 
 /**
  * @hidden
@@ -9,7 +9,7 @@ import { Presets2 } from "../preset/presets2";
 export class InteractionPresetProvider {
 
     constructor(
-        private presets: Presets2<unknown>,
+        private presets: Presets<unknown>,
         private matcher = new ExpressionMatcher()) {
 
     }
