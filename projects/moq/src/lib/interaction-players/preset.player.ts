@@ -25,7 +25,7 @@ export class PresetPlayer {
             return this.callbackPresetPlayer.play(preset.callback, interaction);
         }
         if (preset instanceof ReplicatesPreset) {
-            return this.replicatePresetPlayer.play(preset, interaction);
+            return this.replicatePresetPlayer.play(preset.origin, interaction);
         }
         if (preset instanceof ThrowsPreset) {
             throw preset.exception;

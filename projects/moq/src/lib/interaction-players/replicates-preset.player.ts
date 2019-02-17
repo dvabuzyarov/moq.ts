@@ -1,11 +1,32 @@
-import { ReplicatesPreset } from "../presets/replicates.preset";
-import { Expressions } from "../expressions";
+import {
+    Expressions,
+    GetPropertyExpression,
+    MethodExpression,
+    NamedMethodExpression,
+    SetPropertyExpression
+} from "../expressions";
 
 /**
  * @hidden
  */
 export class ReplicatesPresetPlayer {
-    public play<T>(preset: ReplicatesPreset<T>, interaction: Expressions): any {
-        throw new Error("Not Implemented");
+    constructor(private apply: typeof Reflect.apply = Reflect.apply) {
+
+    }
+
+    public play(origin: any, interaction: Expressions): any {
+        if (interaction instanceof GetPropertyExpression) {
+            return origin[interaction.name];
+        }
+        if (interaction instanceof SetPropertyExpression) {
+            return origin[interaction.name] = interaction.value;
+        }
+        if (interaction instanceof NamedMethodExpression) {
+            const method = origin[interaction.name];
+            return this.apply(method, origin, interaction.args);
+        }
+        if (interaction instanceof MethodExpression) {
+            return this.apply(origin, undefined, interaction.args);
+        }
     }
 }

@@ -1,7 +1,7 @@
 import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
-import { InteractionPlayer } from "./interaction-player";
+import { ReplicatesPresetPlayer } from "./replicates-preset.player";
 
-describe("Interaction player", () => {
+describe("Replicates preset player", () => {
 
     it("Plays property read interaction", () => {
         const propertyName = "property_name";
@@ -10,8 +10,8 @@ describe("Interaction player", () => {
         const target = {};
         target[propertyName] = value;
 
-        const player = new InteractionPlayer();
-        const actual = player.play(new GetPropertyExpression(propertyName), target);
+        const player = new ReplicatesPresetPlayer();
+        const actual = player.play(target, new GetPropertyExpression(propertyName));
 
         expect(actual).toBe(value);
     });
@@ -22,8 +22,8 @@ describe("Interaction player", () => {
 
         const target = {};
 
-        const player = new InteractionPlayer();
-        const actual = player.play(new SetPropertyExpression(propertyName, value), target);
+        const player = new ReplicatesPresetPlayer();
+        const actual = player.play(target, new SetPropertyExpression(propertyName, value));
 
         expect(actual).toBe(value);
         expect(target[propertyName]).toBe(value);
@@ -41,8 +41,8 @@ describe("Interaction player", () => {
         const reflectApply = jasmine.createSpy();
         reflectApply.withArgs(method, target, [arg]).and.returnValue(result);
 
-        const player = new InteractionPlayer(reflectApply);
-        const actual = player.play(new NamedMethodExpression(propertyName, [arg]), target);
+        const player = new ReplicatesPresetPlayer(reflectApply);
+        const actual = player.play(target, new NamedMethodExpression(propertyName, [arg]));
 
         expect(actual).toBe(result);
     });
@@ -56,8 +56,8 @@ describe("Interaction player", () => {
         const reflectApply = jasmine.createSpy();
         reflectApply.withArgs(target, undefined, [arg]).and.returnValue(result);
 
-        const player = new InteractionPlayer(reflectApply);
-        const actual = player.play(new MethodExpression([arg]), target);
+        const player = new ReplicatesPresetPlayer(reflectApply);
+        const actual = player.play(target, new MethodExpression([arg]));
 
         expect(actual).toBe(result);
     });

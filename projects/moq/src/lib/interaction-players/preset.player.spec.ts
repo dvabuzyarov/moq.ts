@@ -40,11 +40,12 @@ describe("Preset player", () => {
     it("Plays replicate preset and returns result", () => {
         const expression = <Expressions>{};
 
-        const value = new Error();
-        const preset = new ReplicatesPreset<unknown>(undefined, undefined, undefined);
+        const origin = {};
+        const value = "value";
+        const preset = new ReplicatesPreset<unknown>(undefined, undefined, origin);
 
         const presetPlayer = jasmine.createSpyObj<ReplicatesPresetPlayer>(["play"]);
-        presetPlayer.play.withArgs(preset, expression).and.returnValue(value);
+        presetPlayer.play.withArgs(origin, expression).and.returnValue(value);
 
         const player = new PresetPlayer(null, presetPlayer);
         const actual = player.play(preset, expression);
