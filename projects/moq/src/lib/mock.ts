@@ -1,42 +1,37 @@
-import { Preset } from "./preset";
 import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
 import { Interceptor } from "./interceptor";
-import {
-    IInterceptorCallbacks,
-    interceptorCallbacksFactory,
-    MockBehavior
-} from "./interceptor-callbacks/interceptor-callbacks";
-import { IMock, ISequenceVerifier, ISetup, ISetupInvoke } from "./moq";
-import { Setup } from "./setup";
+import { IInterceptorCallbacks, MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
+import { IMock, ISequenceVerifier, IPresetBuilder } from "./moq";
 import { Times } from "./times";
 import { Tracker } from "./tracker";
 import { Verifier } from "./verifier";
-import { ExpressionMatcher } from "./expression-matchers/expression-matcher";
+import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
+import { mockDependenciesFactory } from "./mock-dependencies.factory";
 
 /**
- * @hidden
+ * The default implementation of {@link IMock} interface.
  */
-export class MockCore<T> implements IMock<T> {
+export class Mock<T> implements IMock<T> {
+    public tracker: Tracker;
+    private expressionReflector: ExpectedExpressionReflector;
     private interceptor: Interceptor<T>;
+    private readonly setupFactory: (mock: IMock<T>, target: ExpectedExpressions<T>) => IPresetBuilder<T>;
+    private verifier: Verifier<T>;
+    private interceptedCallbacks: IInterceptorCallbacks;
 
-    constructor(
-        private expressionReflector: ExpectedExpressionReflector,
-        private interceptorFactory: (callbacks: IInterceptorCallbacks) => Interceptor<T>,
-        private setupFactory: (mock: IMock<T>) => ISetupInvoke<T>,
-        private definedSetups: Preset<T>,
-        public tracker: Tracker,
-        private verifier: Verifier<T>,
-        private interceptedCallbacks: IInterceptorCallbacks,
-        public name?: string) {
-
-        this.interceptor = interceptorFactory(interceptedCallbacks);
+    constructor(public name?: string) {
+        const dependencies = mockDependenciesFactory<T>();
+        this.tracker = dependencies.tracker;
+        this.expressionReflector = dependencies.expressionReflector;
+        this.interceptor = dependencies.interceptor;
+        this.setupFactory = dependencies.presetBuilderFactory;
+        this.verifier = dependencies.verifier;
+        this.interceptedCallbacks = dependencies.interceptedCallbacks;
     }
 
-    public setup(expression: IExpectedExpression<T>): ISetup<T> {
-        const setup = this.setupFactory(this);
+    public setup(expression: IExpectedExpression<T>): IPresetBuilder<T> {
         const expectedExpression = this.expressionReflector.reflect(expression);
-        this.definedSetups.add(expectedExpression, setup);
-        return setup;
+        return this.setupFactory(this, expectedExpression);
     }
 
     public verify(expression: IExpectedExpression<T>, times?: Times): IMock<T> {
@@ -69,23 +64,3 @@ export class MockCore<T> implements IMock<T> {
     }
 }
 
-/**
- * The default implementation of {@link IMock} interface.
- */
-export class Mock<T> extends MockCore<T> {
-    constructor(name?: string) {
-        const definedSetups = new Preset<T>();
-        const tracker = new Tracker();
-        const callbacks = interceptorCallbacksFactory<T>(definedSetups, tracker);
-
-        super(
-            new ExpectedExpressionReflector(),
-            (callback: IInterceptorCallbacks) => new Interceptor<T>(callback),
-            (mock: IMock<T>) => new Setup<T>(mock),
-            definedSetups,
-            tracker,
-            new Verifier<T>(),
-            callbacks,
-            name);
-    }
-}

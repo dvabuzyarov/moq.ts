@@ -6,8 +6,8 @@ class Dummy {
     }
 }
 
-xdescribe("prototype with named method and property access", () => {
-    it("the bug", () => {
+describe("#21 Prototype & setup do not work in certain cases", () => {
+    xit("the bug", () => {
         const spy = jasmine.createSpy("callback");
         const mock = new Mock<Dummy>()
             .prototypeof(Dummy.prototype)

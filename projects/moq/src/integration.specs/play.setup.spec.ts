@@ -1,5 +1,5 @@
 import { Mock } from "../lib/mock";
-import { PlayTimes } from "../lib/play-times";
+import { PlayTimes } from "../lib/preset/play-times";
 
 type ITestFunction = (value: number) => number;
 

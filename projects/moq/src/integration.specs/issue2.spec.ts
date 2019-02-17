@@ -3,7 +3,7 @@ import { It } from "../lib/expected-expressions/expression-predicates";
 
 type ITestFunction = (value: number) => number;
 
-describe("bug demo", () => {
+describe("#2 Could not mock apply function: func.apply(null, arg)", () => {
     it("the bug", () => {
         const mock = new Mock<ITestFunction>();
         mock
