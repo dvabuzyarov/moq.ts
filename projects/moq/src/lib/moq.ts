@@ -8,7 +8,7 @@ import { Expressions } from "./expressions";
  * Sets a behaviour rule for a particular use case
  * @param T The type of mocked object.
  */
-export interface ISetup<T> {
+export interface IPresetBuilder<T> {
     /**
      * Returns the provided value as a result of interaction in case of
      * - get property value
@@ -27,7 +27,7 @@ export interface ISetup<T> {
 
     /**
      * @param callback A callback function that will intercept the invoked setup.
-     * The function may returns a value that will be provided as result (see {@link ISetup.returns})
+     * The function may returns a value that will be provided as result (see {@link IPresetBuilder.returns})
      * @example
      * ```typescript
      *
@@ -42,7 +42,7 @@ export interface ISetup<T> {
      * Plays the setup on target invocation when predicate returns true otherwise the setup will be ignored.
      * As predicate {@link PlayTimes} could be used.
      */
-    play(predicate: () => boolean): ISetup<T>;
+    play(predicate: () => boolean): IPresetBuilder<T>;
 
     replicates(origin: T): IMock<T>;
 }
@@ -131,9 +131,9 @@ export interface IMock<T> {
      * and either plays expected interaction or returns a predicate function.
      * Refer {@link It} class for parameter placeholders or predicate functions.
      * Refer the integration tests for more examples.
-     * @returns Setup config interface for the provided expression.
+     * @returns PresetBuilder config interface for the provided expression.
      */
-    setup(expression: IExpectedExpression<T>): ISetup<T>;
+    setup(expression: IExpectedExpression<T>): IPresetBuilder<T>;
 
     /**
      * Asserts expected interactions with the mocked object.

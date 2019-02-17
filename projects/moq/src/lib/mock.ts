@@ -1,7 +1,7 @@
 import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
 import { Interceptor } from "./interceptor";
 import { IInterceptorCallbacks, MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
-import { IMock, ISequenceVerifier, ISetup } from "./moq";
+import { IMock, ISequenceVerifier, IPresetBuilder } from "./moq";
 import { Times } from "./times";
 import { Tracker } from "./tracker";
 import { Verifier } from "./verifier";
@@ -15,7 +15,7 @@ export class Mock<T> implements IMock<T> {
     public tracker: Tracker;
     private expressionReflector: ExpectedExpressionReflector;
     private interceptor: Interceptor<T>;
-    private readonly setupFactory: (mock: IMock<T>, target: ExpectedExpressions<T>) => ISetup<T>;
+    private readonly setupFactory: (mock: IMock<T>, target: ExpectedExpressions<T>) => IPresetBuilder<T>;
     private verifier: Verifier<T>;
     private interceptedCallbacks: IInterceptorCallbacks;
 
@@ -24,12 +24,12 @@ export class Mock<T> implements IMock<T> {
         this.tracker = dependencies.tracker;
         this.expressionReflector = dependencies.expressionReflector;
         this.interceptor = dependencies.interceptor;
-        this.setupFactory = dependencies.setupFactory;
+        this.setupFactory = dependencies.presetBuilderFactory;
         this.verifier = dependencies.verifier;
         this.interceptedCallbacks = dependencies.interceptedCallbacks;
     }
 
-    public setup(expression: IExpectedExpression<T>): ISetup<T> {
+    public setup(expression: IExpectedExpression<T>): IPresetBuilder<T> {
         const expectedExpression = this.expressionReflector.reflect(expression);
         return this.setupFactory(this, expectedExpression);
     }

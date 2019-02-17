@@ -1,4 +1,4 @@
-import { IMock, ISetup } from "../moq";
+import { IMock, IPresetBuilder } from "../moq";
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { InvocableFactory } from "./invocable.factory";
 import { IPreset } from "../presets/preset";
@@ -8,11 +8,11 @@ import { ThrowsPreset } from "../presets/throws.preset";
 import { CallbacksPreset } from "../presets/callbacks.preset";
 
 /**
- * The default implementation of {@link ISetup} interface.
+ * The default implementation of {@link IPresetBuilder} interface.
  * Is it not intended to be used outside of the moq library.
  * @hidden
  */
-export class Setup<T> implements ISetup<T> {
+export class PresetBuilder<T> implements IPresetBuilder<T> {
 
     constructor(
         private mock: IMock<T>,
@@ -50,7 +50,7 @@ export class Setup<T> implements ISetup<T> {
         return this.mock;
     }
 
-    public play(predicate: () => boolean): ISetup<T> {
+    public play(predicate: () => boolean): IPresetBuilder<T> {
         this.invocableFactory.set(predicate);
         return this;
     }

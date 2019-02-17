@@ -1,5 +1,5 @@
 import { IMock } from "../moq";
-import { Setup } from "./setup";
+import { PresetBuilder } from "./preset-builder";
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { InvocableFactory } from "./invocable.factory";
 import { ReplicatesPreset } from "../presets/replicates.preset";
@@ -7,7 +7,7 @@ import { ReturnsPreset } from "../presets/returns.preset";
 import { ThrowsPreset } from "../presets/throws.preset";
 import { CallbacksPreset } from "../presets/callbacks.preset";
 
-describe("Setup", () => {
+describe("Preset bilder", () => {
 
     function resolve() {
         const mock = <IMock<any>>{};
@@ -22,8 +22,8 @@ describe("Setup", () => {
         };
     }
 
-    function create<T>(options = resolve()): Setup<T> {
-        return new Setup(
+    function create<T>(options = resolve()): PresetBuilder<T> {
+        return new PresetBuilder(
             options.mock,
             options.define,
             options.target,

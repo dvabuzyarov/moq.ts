@@ -1,4 +1,4 @@
-import { ISequenceVerifier, ISetup } from "./moq";
+import { ISequenceVerifier, IPresetBuilder } from "./moq";
 import { InterceptorCallbacks, MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 import { Times } from "./times";
 import { nameof } from "./nameof";
@@ -31,7 +31,7 @@ describe("Mock", () => {
             interceptedCallbacks,
             verifier,
             interceptor,
-            setupFactory,
+            presetBuilderFactory: setupFactory,
             tracker
         };
         spyOn(mockDependencies, "mockDependenciesFactory").and.returnValue(dependencies);
@@ -84,14 +84,14 @@ describe("Mock", () => {
     });
 
     it("Setups mock", () => {
-        const {expressionReflector, setupFactory} = dependencies;
-        const setup = <ISetup<any>>{};
+        const {expressionReflector, presetBuilderFactory} = dependencies;
+        const setup = <IPresetBuilder<any>>{};
         const expression = instance => instance["property"];
         const expectedExpression = {};
         expressionReflector.reflect.withArgs(expression).and.returnValue(expectedExpression);
 
         const mock = new Mock();
-        (setupFactory as jasmine.Spy).withArgs(mock, expectedExpression).and.returnValue(setup);
+        (presetBuilderFactory as jasmine.Spy).withArgs(mock, expectedExpression).and.returnValue(setup);
 
         const actual = mock.setup(expression);
 
