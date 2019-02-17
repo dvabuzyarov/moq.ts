@@ -2,6 +2,9 @@ import { Expressions } from "../expressions";
 import { InteractionPresetProvider } from "./interaction-preset.provider";
 import { PresetPlayer } from "./preset.player";
 
+/**
+ * @hidden
+ */
 export class InteractionPlayer<T> {
     constructor(
         private interactionPresetProvider: InteractionPresetProvider<T>,

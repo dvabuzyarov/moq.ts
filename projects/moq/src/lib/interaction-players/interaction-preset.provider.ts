@@ -3,6 +3,9 @@ import { Expressions } from "../expressions";
 import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
 import { Presets2 } from "../preset/presets2";
 
+/**
+ * @hidden
+ */
 export class InteractionPresetProvider<T> {
 
     constructor(
