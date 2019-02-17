@@ -12,7 +12,7 @@ describe("List of defined presets", () => {
     });
 
     it("Returns defined presets in LIFO order", () => {
-        class Preset implements IPreset<unknown>{
+        class Preset implements IPreset<unknown> {
             readonly invocable: () => boolean;
             readonly target: ExpectedExpressions<unknown>;
         }
