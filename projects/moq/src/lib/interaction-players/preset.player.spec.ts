@@ -1,11 +1,9 @@
 import { Expressions } from "../expressions";
 import { PresetPlayer } from "./preset.player";
 import { ReturnsPreset } from "../presets/returns.preset";
-import { ReturnPresetPlayer } from "./return-preset.player";
 import { CallbacksPreset } from "../presets/callbacks.preset";
 import { CallbackPresetPlayer } from "./callback-preset.player";
 import { ThrowsPreset } from "../presets/throws.preset";
-import { ThrowPresetPlayer } from "./throw-preset.player";
 import { ReplicatesPreset } from "../presets/replicates.preset";
 import { ReplicatesPresetPlayer } from "./replicates-preset.player";
 
@@ -15,12 +13,9 @@ describe("Preset player", () => {
         const expression = <Expressions>{};
 
         const value = "value";
-        const preset = new ReturnsPreset<unknown, string>(undefined, undefined, undefined);
+        const preset = new ReturnsPreset<unknown, string>(undefined, undefined, value);
 
-        const presetPlayer = jasmine.createSpyObj<ReturnPresetPlayer>(["play"]);
-        presetPlayer.play.withArgs(preset, expression).and.returnValue(value);
-
-        const player = new PresetPlayer(presetPlayer, null, null, null);
+        const player = new PresetPlayer(null, null);
         const actual = player.play(preset, expression);
 
         expect(actual).toBe(value);
@@ -36,7 +31,7 @@ describe("Preset player", () => {
         const presetPlayer = jasmine.createSpyObj<CallbackPresetPlayer>(["play"]);
         presetPlayer.play.withArgs(callback, expression).and.returnValue(value);
 
-        const player = new PresetPlayer(null, presetPlayer, null, null);
+        const player = new PresetPlayer(presetPlayer, null);
         const actual = player.play(preset, expression);
 
         expect(actual).toBe(value);
@@ -51,7 +46,7 @@ describe("Preset player", () => {
         const presetPlayer = jasmine.createSpyObj<ReplicatesPresetPlayer>(["play"]);
         presetPlayer.play.withArgs(preset, expression).and.returnValue(value);
 
-        const player = new PresetPlayer(null, null, presetPlayer, null);
+        const player = new PresetPlayer(null, presetPlayer);
         const actual = player.play(preset, expression);
 
         expect(actual).toBe(value);
@@ -61,14 +56,9 @@ describe("Preset player", () => {
         const expression = <Expressions>{};
 
         const value = new Error();
-        const preset = new ThrowsPreset<unknown, unknown>(undefined, undefined, undefined);
+        const preset = new ThrowsPreset<unknown, unknown>(undefined, undefined, value);
 
-        const presetPlayer = jasmine.createSpyObj<ThrowPresetPlayer>(["play"]);
-        presetPlayer.play.withArgs(preset).and.callFake(() => {
-            throw value;
-        });
-
-        const player = new PresetPlayer(null, null, null, presetPlayer);
+        const player = new PresetPlayer(null, null);
         expect(() => player.play(preset, expression)).toThrow(value);
     });
 });
