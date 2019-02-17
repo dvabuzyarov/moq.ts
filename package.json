@@ -14,7 +14,7 @@
     "semantic-release": "semantic-release",
     "typedoc": "node ./dist/docs/esm2015/docs.js",
     "serve-docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve",
-    "postpublish": ":> .released"
+    "postpublish": ":> .released && echo .released file has been created"
   },
   "private": true,
   "devDependencies": {
