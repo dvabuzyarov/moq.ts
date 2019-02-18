@@ -20,7 +20,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "0.13.2",
     "@angular-devkit/build-ng-packagr": "0.13.1",
-    "@angular/cli": "7.3.1",
+    "@angular/cli": "7.3.2",
     "@angular/compiler": "7.2.5",
     "@angular/compiler-cli": "7.2.5",
     "@angular/core": "7.2.5",
