@@ -4,7 +4,7 @@ import { nameof } from "../../nameof";
 describe("Object has property explorer", () => {
 
     it("Returns true when object has property", () => {
-        const name = () => undefined;
+        const name = "value";
         const target = {name};
 
         const explorer = new ObjectHasPropertyExplorer();
@@ -30,6 +30,16 @@ describe("Object has property explorer", () => {
 
         const explorer = new ObjectHasPropertyExplorer();
         const actual = explorer.has("name", target);
+
+        expect(actual).toBe(false);
+    });
+
+    it("Returns false when object has instance method", () => {
+        const name = () => undefined;
+        const target = {name};
+
+        const explorer = new ObjectHasPropertyExplorer();
+        const actual = explorer.has(nameof<typeof target>("name"), target);
 
         expect(actual).toBe(false);
     });

@@ -13,6 +13,7 @@ script:
   - npm run lint
   - npm run test
   - npm run build-docs
+  - npm run build-releaser
   - npm run build
   - npm run typedoc
 
@@ -27,7 +28,7 @@ deploy:
   local-dir: docs
   verbose: true
   on:
-    branch: dev
+    branch: master
     condition: -e .released
 
 env:

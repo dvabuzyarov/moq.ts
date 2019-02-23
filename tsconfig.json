@@ -30,6 +30,12 @@
       ],
       "docs/*": [
         "dist/docs/*"
+      ],
+      "releaser": [
+        "dist/releaser"
+      ],
+      "releaser/*": [
+        "dist/releaser/*"
       ]
     }
   }

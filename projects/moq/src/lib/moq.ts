@@ -47,7 +47,7 @@ export interface IPresetBuilder<T> {
      * Replicates interactions with original object.
      * The mock object keeps tracking all interactions and reflects them on the original object.
      *
-     *  * @example
+     * @example
      * ```typescript
      *
      * const value = 2;

@@ -5,16 +5,17 @@
     "start": "ng serve",
     "build": "ng build moq && cpx README.md ./dist/moq/",
     "build-docs": "ng build docs",
+    "build-releaser": "ng build releaser",
     "build-tests": "tsc -p ./projects/moq/tsconfig.spec.json ",
     "test": "npm run build-tests && node ./out-tsc/**/index.specs.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "commit": "git-cz",
     "commit-retry": "git cz --retry",
-    "semantic-release": "semantic-release",
+    "semantic-release": "node ./dist/releaser/esm2015/releaser.js",
     "typedoc": "node ./dist/docs/esm2015/docs.js",
     "serve-docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve",
-    "postpublish": ":> .released"
+    "postpublish": ":> .released && echo .released file has been created"
   },
   "private": true,
   "devDependencies": {
@@ -43,9 +44,6 @@
     "tslint": "5.12.1",
     "typedoc": "0.14.2",
     "typescript": "3.2.4"
-  },
-  "release": {
-    "pkgRoot": "dist/moq"
   },
   "config": {
     "commitizen": {
