@@ -59,13 +59,13 @@ export interface IPresetBuilder<T> {
      * const origin = new Origin();
      * const mock = new Mock<Origin>()
      * .setup(() => It.IsAny())
-     * .replicates(origin);
+     * .mimics(origin);
      *
      * const actual = mock.object().property;
      * expect(actual).toBe(2);
      * ```
      */
-    replicates(origin: T): IMock<T>;
+    mimics(origin: T): IMock<T>;
 }
 
 /**

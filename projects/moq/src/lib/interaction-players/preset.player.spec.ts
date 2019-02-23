@@ -4,8 +4,8 @@ import { ReturnsPreset } from "../presets/returns.preset";
 import { CallbacksPreset } from "../presets/callbacks.preset";
 import { CallbackPresetPlayer } from "./callback-preset.player";
 import { ThrowsPreset } from "../presets/throws.preset";
-import { ReplicatesPreset } from "../presets/replicates.preset";
-import { ReplicatesPresetPlayer } from "./replicates-preset.player";
+import { MimicsPreset } from "../presets/mimics.preset";
+import { MimicsPresetPlayer } from "./mimics-preset.player";
 
 describe("Preset player", () => {
 
@@ -37,14 +37,14 @@ describe("Preset player", () => {
         expect(actual).toBe(value);
     });
 
-    it("Plays replicate preset and returns result", () => {
+    it("Plays mimics preset and returns result", () => {
         const expression = <Expressions>{};
 
         const origin = {};
         const value = "value";
-        const preset = new ReplicatesPreset<unknown>(undefined, undefined, origin);
+        const preset = new MimicsPreset<unknown>(undefined, undefined, origin);
 
-        const presetPlayer = jasmine.createSpyObj<ReplicatesPresetPlayer>(["play"]);
+        const presetPlayer = jasmine.createSpyObj<MimicsPresetPlayer>(["play"]);
         presetPlayer.play.withArgs(origin, expression).and.returnValue(value);
 
         const player = new PresetPlayer(null, presetPlayer);

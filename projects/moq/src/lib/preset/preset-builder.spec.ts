@@ -2,7 +2,7 @@ import { IMock } from "../moq";
 import { PresetBuilder } from "./preset-builder";
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { InvocableFactory } from "./invocable.factory";
-import { ReplicatesPreset } from "../presets/replicates.preset";
+import { MimicsPreset } from "../presets/mimics.preset";
 import { ReturnsPreset } from "../presets/returns.preset";
 import { ThrowsPreset } from "../presets/throws.preset";
 import { CallbacksPreset } from "../presets/callbacks.preset";
@@ -31,7 +31,7 @@ describe("Preset bilder", () => {
         );
     }
 
-    it("Defines a replicates preset", () => {
+    it("Defines a mimics preset", () => {
         const origin = {};
         const invocable = () => true;
         const mocks = resolve();
@@ -39,9 +39,9 @@ describe("Preset bilder", () => {
         invocableFactory.get.and.returnValue(invocable);
 
         const setup = create(mocks);
-        const actual = setup.replicates(origin);
+        const actual = setup.mimics(origin);
 
-        const expected = new ReplicatesPreset(invocable, target, origin);
+        const expected = new MimicsPreset(invocable, target, origin);
         expect(define).toHaveBeenCalledWith(expected);
         expect(actual).toBe(mock);
     });

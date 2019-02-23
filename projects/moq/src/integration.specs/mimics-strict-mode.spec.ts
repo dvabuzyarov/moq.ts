@@ -1,8 +1,8 @@
 import { Mock } from "../lib/mock";
 import { It } from "../lib/expected-expressions/expression-predicates";
 
-describe("Replicates preset", () => {
-    it("Replicates property read interaction", () => {
+describe("Mimics preset", () => {
+    it("Mimics property read interaction", () => {
         const value = 0;
 
         class Origin {
@@ -11,14 +11,14 @@ describe("Replicates preset", () => {
 
         const mock = new Mock<Origin>()
             .setup(instance => instance.property)
-            .replicates(new Origin())
+            .mimics(new Origin())
             .object();
 
         const actual = mock.property;
         expect(actual).toBe(value);
     });
 
-    it("Replicates property read interaction with readonly property", () => {
+    it("Mimics property read interaction with readonly property", () => {
         const value = 0;
 
         class Origin {
@@ -29,14 +29,14 @@ describe("Replicates preset", () => {
 
         const mock = new Mock<Origin>()
             .setup(instance => instance.property)
-            .replicates(new Origin());
+            .mimics(new Origin());
 
         const actual = mock.object().property;
         expect(actual).toBe(value);
         mock.verify(instance => instance.property);
     });
 
-    it("Replicates property set interaction", () => {
+    it("Mimics property set interaction", () => {
         const value = 0;
 
         class Origin {
@@ -48,7 +48,7 @@ describe("Replicates preset", () => {
             .setup(instance => {
                 instance.property = It.IsAny();
             })
-            .replicates(origin);
+            .mimics(origin);
 
         const actual = mock.object().property = value;
         expect(actual).toBe(value);
@@ -57,7 +57,7 @@ describe("Replicates preset", () => {
         mock.verify(instance => instance.property = 0);
     });
 
-    it("Replicates instance method interaction", () => {
+    it("Mimics instance method interaction", () => {
         const value = 2;
 
         class Origin {
@@ -71,7 +71,7 @@ describe("Replicates preset", () => {
         const origin = new Origin();
         const mock = new Mock<Origin>()
             .setup(instance => instance.method(2))
-            .replicates(origin);
+            .mimics(origin);
 
         const actual = mock.object().method(2);
         expect(actual).toBe(4);
@@ -79,7 +79,7 @@ describe("Replicates preset", () => {
         mock.verify(instance => instance.method(2));
     });
 
-    it("Replicates method interaction", () => {
+    it("Mimics method interaction", () => {
         const value = 2;
 
         function origin(input: number): number {
@@ -88,14 +88,14 @@ describe("Replicates preset", () => {
 
         const mock = new Mock<typeof origin>()
             .setup(instance => instance(2))
-            .replicates(origin);
+            .mimics(origin);
 
         const actual = mock.object()(2);
         expect(actual).toBe(4);
         mock.verify(instance => instance(2));
     });
 
-    it("Replicates all interactions with instance method", () => {
+    it("Mimics all interactions with instance method", () => {
         const value = 2;
 
         class Origin {
@@ -109,14 +109,14 @@ describe("Replicates preset", () => {
         const origin = new Origin();
         const mock = new Mock<Origin>()
             .setup(() => It.IsAny())
-            .replicates(origin);
+            .mimics(origin);
 
         const actual = mock.object().method(2);
         expect(actual).toBe(4);
         mock.verify(instance => instance.method(2));
     });
 
-    it("Replicates all interactions with property read", () => {
+    it("Mimics all interactions with property read", () => {
         const value = 2;
 
         class Origin {
@@ -126,13 +126,13 @@ describe("Replicates preset", () => {
         const origin = new Origin();
         const mock = new Mock<Origin>()
             .setup(() => It.IsAny())
-            .replicates(origin);
+            .mimics(origin);
 
         const actual = mock.object().property;
         expect(actual).toBe(2);
     });
 
-    it("Replicates all interactions with property set", () => {
+    it("Mimics all interactions with property set", () => {
         const value = 2;
 
         class Origin {
@@ -142,7 +142,7 @@ describe("Replicates preset", () => {
         const origin = new Origin();
         const mock = new Mock<Origin>()
             .setup(() => It.IsAny())
-            .replicates(origin);
+            .mimics(origin);
 
         const actual = mock.object().property = 4;
         expect(actual).toBe(4);

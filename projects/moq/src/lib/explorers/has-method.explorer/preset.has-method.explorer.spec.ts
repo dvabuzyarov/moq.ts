@@ -3,7 +3,7 @@ import { IPreset } from "../../presets/preset";
 import { ExpectedExpressions } from "../../expected-expressions/expected-expressions";
 import { ExpressionHasMethodExplorer } from "./expression.has-method.explorer";
 import { ObjectHasMethodExplorer } from "./object.has-method.explorer";
-import { ReplicatesPreset } from "../../presets/replicates.preset";
+import { MimicsPreset } from "../../presets/mimics.preset";
 
 describe("Preset has instance method explorer", () => {
 
@@ -24,10 +24,10 @@ describe("Preset has instance method explorer", () => {
         expect(actual).toBe(true);
     });
 
-    it("Returns true when replicate preset origin has instance method", () => {
+    it("Returns true when mimic preset origin has instance method", () => {
         const name = "name";
         const target = {};
-        const preset = new ReplicatesPreset(undefined, undefined, target);
+        const preset = new MimicsPreset(undefined, undefined, target);
 
         const expressionExplorer = jasmine.createSpyObj<ExpressionHasMethodExplorer>("", ["has"]);
         expressionExplorer.has.and.returnValue(false);
@@ -43,7 +43,7 @@ describe("Preset has instance method explorer", () => {
 
     it("Returns false when preset does not have instance method", () => {
         const name = "name";
-        const preset = new ReplicatesPreset(undefined, undefined, undefined);
+        const preset = new MimicsPreset(undefined, undefined, undefined);
 
         const expressionExplorer = jasmine.createSpyObj<ExpressionHasMethodExplorer>("", ["has"]);
         expressionExplorer.has.and.returnValue(false);

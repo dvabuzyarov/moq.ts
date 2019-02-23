@@ -1,7 +1,7 @@
 import { IPreset } from "../../presets/preset";
 import { ExpressionHasPropertyExplorer } from "./expression-has-property.explorer";
 import { ObjectHasPropertyExplorer } from "./object-has-property.explorer";
-import { ReplicatesPreset } from "../../presets/replicates.preset";
+import { MimicsPreset } from "../../presets/mimics.preset";
 
 /**
  * @hidden
@@ -13,7 +13,7 @@ export class PresetHasPropertyExplorer {
     }
 
     public has(name: PropertyKey, preset: IPreset<unknown>): boolean {
-        if (preset instanceof ReplicatesPreset && this.objectHasPropertyExplorer.has(name, preset.origin)) {
+        if (preset instanceof MimicsPreset && this.objectHasPropertyExplorer.has(name, preset.origin)) {
             return true;
         }
         return this.expressionHasPropertyExplorer.has(name, preset.target);
