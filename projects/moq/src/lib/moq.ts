@@ -47,7 +47,7 @@ export interface IPresetBuilder<T> {
      * Replicates interactions with original object.
      * The mock object keeps tracking all interactions and reflects them on the original object.
      *
-     *  * @example
+     * @example
      * ```typescript
      *
      * const value = 2;
@@ -59,13 +59,13 @@ export interface IPresetBuilder<T> {
      * const origin = new Origin();
      * const mock = new Mock<Origin>()
      * .setup(() => It.IsAny())
-     * .replicates(origin);
+     * .mimics(origin);
      *
      * const actual = mock.object().property;
      * expect(actual).toBe(2);
      * ```
      */
-    replicates(origin: T): IMock<T>;
+    mimics(origin: T): IMock<T>;
 }
 
 /**

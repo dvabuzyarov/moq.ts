@@ -9,7 +9,7 @@ import {
 /**
  * @hidden
  */
-export class ReplicatesPresetPlayer {
+export class MimicsPresetPlayer {
     constructor(private apply: typeof Reflect.apply = Reflect.apply) {
 
     }

@@ -4,8 +4,8 @@ import { ReturnsPreset } from "../presets/returns.preset";
 import { CallbackPresetPlayer } from "./callback-preset.player";
 import { CallbacksPreset } from "../presets/callbacks.preset";
 import { ThrowsPreset } from "../presets/throws.preset";
-import { ReplicatesPresetPlayer } from "./replicates-preset.player";
-import { ReplicatesPreset } from "../presets/replicates.preset";
+import { MimicsPresetPlayer } from "./mimics-preset.player";
+import { MimicsPreset } from "../presets/mimics.preset";
 
 /**
  * @hidden
@@ -13,7 +13,7 @@ import { ReplicatesPreset } from "../presets/replicates.preset";
 export class PresetPlayer {
     constructor(
         private callbackPresetPlayer: CallbackPresetPlayer = new CallbackPresetPlayer(),
-        private replicatePresetPlayer: ReplicatesPresetPlayer = new ReplicatesPresetPlayer()) {
+        private replicatePresetPlayer: MimicsPresetPlayer = new MimicsPresetPlayer()) {
 
     }
 
@@ -24,7 +24,7 @@ export class PresetPlayer {
         if (preset instanceof CallbacksPreset) {
             return this.callbackPresetPlayer.play(preset.callback, interaction);
         }
-        if (preset instanceof ReplicatesPreset) {
+        if (preset instanceof MimicsPreset) {
             return this.replicatePresetPlayer.play(preset.origin, interaction);
         }
         if (preset instanceof ThrowsPreset) {

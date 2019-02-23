@@ -1,7 +1,7 @@
 import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
-import { ReplicatesPresetPlayer } from "./replicates-preset.player";
+import { MimicsPresetPlayer } from "./mimics-preset.player";
 
-describe("Replicates preset player", () => {
+describe("Mimics preset player", () => {
 
     it("Plays property read interaction", () => {
         const propertyName = "property_name";
@@ -10,7 +10,7 @@ describe("Replicates preset player", () => {
         const target = {};
         target[propertyName] = value;
 
-        const player = new ReplicatesPresetPlayer();
+        const player = new MimicsPresetPlayer();
         const actual = player.play(target, new GetPropertyExpression(propertyName));
 
         expect(actual).toBe(value);
@@ -22,7 +22,7 @@ describe("Replicates preset player", () => {
 
         const target = {};
 
-        const player = new ReplicatesPresetPlayer();
+        const player = new MimicsPresetPlayer();
         const actual = player.play(target, new SetPropertyExpression(propertyName, value));
 
         expect(actual).toBe(true);
@@ -41,7 +41,7 @@ describe("Replicates preset player", () => {
         const reflectApply = jasmine.createSpy();
         reflectApply.withArgs(method, target, [arg]).and.returnValue(result);
 
-        const player = new ReplicatesPresetPlayer(reflectApply);
+        const player = new MimicsPresetPlayer(reflectApply);
         const actual = player.play(target, new NamedMethodExpression(propertyName, [arg]));
 
         expect(actual).toBe(result);
@@ -56,7 +56,7 @@ describe("Replicates preset player", () => {
         const reflectApply = jasmine.createSpy();
         reflectApply.withArgs(target, undefined, [arg]).and.returnValue(result);
 
-        const player = new ReplicatesPresetPlayer(reflectApply);
+        const player = new MimicsPresetPlayer(reflectApply);
         const actual = player.play(target, new MethodExpression([arg]));
 
         expect(actual).toBe(result);

@@ -2,7 +2,7 @@ import { IMock, IPresetBuilder } from "../moq";
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { InvocableFactory } from "./invocable.factory";
 import { IPreset } from "../presets/preset";
-import { ReplicatesPreset } from "../presets/replicates.preset";
+import { MimicsPreset } from "../presets/mimics.preset";
 import { ReturnsPreset } from "../presets/returns.preset";
 import { ThrowsPreset } from "../presets/throws.preset";
 import { CallbacksPreset } from "../presets/callbacks.preset";
@@ -22,9 +22,9 @@ export class PresetBuilder<T> implements IPresetBuilder<T> {
 
     }
 
-    public replicates(origin: T): IMock<T> {
+    public mimics(origin: T): IMock<T> {
         const invocable = this.invocableFactory.get();
-        const preset = new ReplicatesPreset(invocable, this.target, origin);
+        const preset = new MimicsPreset(invocable, this.target, origin);
         this.set(preset);
         return this.mock;
     }
