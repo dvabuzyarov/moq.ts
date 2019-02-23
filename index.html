@@ -91,7 +91,7 @@
 					<li><a href="#mocking-functions-of-objects">Mocking functions of objects</a></li>
 					<li><a href="#mock-behavior">Mock behavior</a></li>
 					<li><a href="#mock-prototype">Mock prototype</a></li>
-					<li><a href="#replicates">Replicates</a></li>
+					<li><a href="#mimics">Mimics</a></li>
 				</ul>
 				<hr>
 				<!-- toc -->
@@ -253,7 +253,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
                 .object();
 
 mock.object() <span class="hljs-keyword">instanceof</span> TestObject;<span class="hljs-comment">// true</span></code></pre>
-				<h2 id="replicates">Replicates</h2>
+				<h2 id="mimics">Mimics</h2>
 				<p>If you need to replicate behaviour of an existing object you can reflect mock&#39;s interactions on the object.  </p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Origin {
     <span class="hljs-keyword">public</span> property = <span class="hljs-number">0</span>;
@@ -267,7 +267,7 @@ mock.object() <span class="hljs-keyword">instanceof</span> TestObject;<span clas
 
 <span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;Origin&gt;()
     .setup(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> It.IsAny())
-    .replicates(origin);
+    .mimics(origin);
 
 <span class="hljs-keyword">const</span> mocked = mock.object();
 mocked.property = <span class="hljs-number">3</span>;
