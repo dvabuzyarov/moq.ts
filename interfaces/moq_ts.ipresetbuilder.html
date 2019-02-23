@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ISetup | moq.ts | documentation</title>
+	<title>IPresetBuilder | moq.ts | documentation</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.isetup.html">ISetup</a>
+					<a href="moq_ts.ipresetbuilder.html">IPresetBuilder</a>
 				</li>
 			</ul>
-			<h1>Interface ISetup&lt;T&gt;</h1>
+			<h1>Interface IPresetBuilder&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -91,7 +91,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ISetup</span>
+						<span class="target">IPresetBuilder</span>
 					</li>
 				</ul>
 			</section>
@@ -102,10 +102,11 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="moq_ts.isetup.html#callback" class="tsd-kind-icon">callback</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="moq_ts.isetup.html#play" class="tsd-kind-icon">play</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="moq_ts.isetup.html#returns" class="tsd-kind-icon">returns</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="moq_ts.isetup.html#throws" class="tsd-kind-icon">throws</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="moq_ts.ipresetbuilder.html#callback" class="tsd-kind-icon">callback</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="moq_ts.ipresetbuilder.html#play" class="tsd-kind-icon">play</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="moq_ts.ipresetbuilder.html#replicates" class="tsd-kind-icon">replicates</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="moq_ts.ipresetbuilder.html#returns" class="tsd-kind-icon">returns</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="moq_ts.ipresetbuilder.html#throws" class="tsd-kind-icon">throws</a></li>
 							</ul>
 						</section>
 					</div>
@@ -123,7 +124,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a101b5f/projects/moq/src/lib/moq.ts#L38">moq.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/ee27574/projects/moq/src/lib/moq.ts#L38">moq.ts:38</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -148,7 +149,7 @@
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A callback function that will intercept the invoked setup.
-										The function may returns a value that will be provided as result (see <a href="moq_ts.isetup.html#returns">ISetup.returns</a>)</p>
+										The function may returns a value that will be provided as result (see <a href="moq_ts.ipresetbuilder.html#returns">IPresetBuilder.returns</a>)</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -178,13 +179,13 @@
 					<a name="play" class="tsd-anchor"></a>
 					<h3>play</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">play<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.isetup.html" class="tsd-signature-type">ISetup</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">play<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.ipresetbuilder.html" class="tsd-signature-type">IPresetBuilder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a101b5f/projects/moq/src/lib/moq.ts#L44">moq.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/ee27574/projects/moq/src/lib/moq.ts#L44">moq.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -211,7 +212,51 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="moq_ts.isetup.html" class="tsd-signature-type">ISetup</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="moq_ts.ipresetbuilder.html" class="tsd-signature-type">IPresetBuilder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="replicates" class="tsd-anchor"></a>
+					<h3>replicates</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">replicates<span class="tsd-signature-symbol">(</span>origin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.imock.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/ee27574/projects/moq/src/lib/moq.ts#L68">moq.ts:68</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Replicates interactions with original object.
+									The mock object keeps tracking all interactions and reflects them on the original object.</p>
+								</div>
+								<ul>
+									<li>@example
+									<code>`</code>typescript</li>
+								</ul>
+								<p>const value = 2;</p>
+								<p>class Origin {
+									public property = value;
+								}</p>
+								<p>const origin = new Origin();
+									const mock = new Mock<Origin>()
+										.setup(() =&gt; It.IsAny())
+								.replicates(origin);</p>
+								<p>const actual = mock.object().property;
+									expect(actual).toBe(2);
+								<code>`</code></p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>origin: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="moq_ts.imock.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -225,7 +270,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a101b5f/projects/moq/src/lib/moq.ts#L20">moq.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/ee27574/projects/moq/src/lib/moq.ts#L20">moq.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -270,7 +315,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a101b5f/projects/moq/src/lib/moq.ts#L25">moq.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/ee27574/projects/moq/src/lib/moq.ts#L25">moq.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -315,6 +360,9 @@
 					<li class=" tsd-kind-enum tsd-parent-kind-module">
 						<a href="../enums/moq_ts.range.html" class="tsd-kind-icon">Range</a>
 					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../classes/moq_ts.callbackspreset.html" class="tsd-kind-icon">Callbacks<wbr>Preset</a>
+					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/moq_ts.expectedexpressionreflector.html" class="tsd-kind-icon">Expected<wbr>Expression<wbr>Reflector</a>
 					</li>
@@ -348,8 +396,17 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/moq_ts.playtimes.html" class="tsd-kind-icon">Play<wbr>Times</a>
 					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../classes/moq_ts.replicatespreset.html" class="tsd-kind-icon">Replicates<wbr>Preset</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../classes/moq_ts.returnspreset.html" class="tsd-kind-icon">Returns<wbr>Preset</a>
+					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/moq_ts.setpropertyexpression.html" class="tsd-kind-icon">Set<wbr>Property<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../classes/moq_ts.throwspreset.html" class="tsd-kind-icon">Throws<wbr>Preset</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/moq_ts.times.html" class="tsd-kind-icon">Times</a>
@@ -363,22 +420,28 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="moq_ts.imock.html" class="tsd-kind-icon">IMock</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="moq_ts.ipreset.html" class="tsd-kind-icon">IPreset</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="moq_ts.isetup.html" class="tsd-kind-icon">ISetup</a>
+						<a href="moq_ts.ipresetbuilder.html" class="tsd-kind-icon">IPreset<wbr>Builder</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-								<a href="moq_ts.isetup.html#callback" class="tsd-kind-icon">callback</a>
+								<a href="moq_ts.ipresetbuilder.html#callback" class="tsd-kind-icon">callback</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="moq_ts.isetup.html#play" class="tsd-kind-icon">play</a>
+								<a href="moq_ts.ipresetbuilder.html#play" class="tsd-kind-icon">play</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="moq_ts.ipresetbuilder.html#replicates" class="tsd-kind-icon">replicates</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-								<a href="moq_ts.isetup.html#returns" class="tsd-kind-icon">returns</a>
+								<a href="moq_ts.ipresetbuilder.html#returns" class="tsd-kind-icon">returns</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-								<a href="moq_ts.isetup.html#throws" class="tsd-kind-icon">throws</a>
+								<a href="moq_ts.ipresetbuilder.html#throws" class="tsd-kind-icon">throws</a>
 							</li>
 						</ul>
 					</li>

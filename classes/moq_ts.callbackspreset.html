@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>GetPropertyExpression | moq.ts | documentation</title>
+	<title>CallbacksPreset | moq.ts | documentation</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,46 +57,36 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.getpropertyexpression.html">GetPropertyExpression</a>
+					<a href="moq_ts.callbackspreset.html">CallbacksPreset</a>
 				</li>
 			</ul>
-			<h1>Class GetPropertyExpression</h1>
+			<h1>Class CallbacksPreset&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>This class represents an expression tree node for property accessing.
-						It provides access to the name of property.</p>
-					</div>
-					<dl class="tsd-comment-tags">
-						<dt>example</dt>
-						<dd><pre><code class="language-typescript">
-<span class="hljs-keyword">const</span> name = <span class="hljs-string">'member_name'</span>;
-<span class="hljs-keyword">const</span> reflector = <span class="hljs-keyword">new</span> ExpectedExpressionReflector();
-<span class="hljs-keyword">const</span> actual = reflector.reflect(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance[name]);
-
-<span class="hljs-keyword">const</span> expected = <span class="hljs-keyword">new</span> ExpectedGetPropertyExpression(name);
-expect(actual).toEqual(expected);</code></pre>
-						</dd>
-					</dl>
-				</div>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T</h4>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">GetPropertyExpression</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<a href="moq_ts.expectedgetpropertyexpression.html" class="tsd-signature-type">ExpectedGetPropertyExpression</a>
-							</li>
-						</ul>
+						<span class="target">CallbacksPreset</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/moq_ts.ipreset.html" class="tsd-signature-type">IPreset</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -106,13 +96,15 @@ expect(actual).toEqual(expected);</code></pre>
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="moq_ts.getpropertyexpression.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="moq_ts.callbackspreset.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moq_ts.getpropertyexpression.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moq_ts.callbackspreset.html#callback" class="tsd-kind-icon">callback</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moq_ts.callbackspreset.html#invocable" class="tsd-kind-icon">invocable</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moq_ts.callbackspreset.html#target" class="tsd-kind-icon">target</a></li>
 							</ul>
 						</section>
 					</div>
@@ -124,22 +116,58 @@ expect(actual).toEqual(expected);</code></pre>
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Get<wbr>Property<wbr>Expression<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.getpropertyexpression.html" class="tsd-signature-type">GetPropertyExpression</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Callbacks<wbr>Preset<span class="tsd-signature-symbol">(</span>invocable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, target<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#expectedexpressions" class="tsd-signature-type">ExpectedExpressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.callbackspreset.html" class="tsd-signature-type">CallbacksPreset</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/ee27574/projects/moq/src/lib/expressions.ts#L55">expressions.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/ee27574/projects/moq/src/lib/presets/callbacks.preset.ts#L4">presets/callbacks.preset.ts:4</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>name: <span class="tsd-signature-type">PropertyKey</span></h5>
+									<h5>invocable: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5>target: <a href="../modules/moq_ts.html#expectedexpressions" class="tsd-signature-type">ExpectedExpressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="moq_ts.getpropertyexpression.html" class="tsd-signature-type">GetPropertyExpression</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="moq_ts.callbackspreset.html" class="tsd-signature-type">CallbacksPreset</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -147,12 +175,70 @@ expect(actual).toEqual(expected);</code></pre>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PropertyKey</span></div>
+					<a name="callback" class="tsd-anchor"></a>
+					<h3>callback</h3>
+					<div class="tsd-signature tsd-kind-icon">callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/ee27574/projects/moq/src/lib/expressions.ts#L56">expressions.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/ee27574/projects/moq/src/lib/presets/callbacks.preset.ts#L8">presets/callbacks.preset.ts:8</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="invocable" class="tsd-anchor"></a>
+					<h3>invocable</h3>
+					<div class="tsd-signature tsd-kind-icon">invocable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/moq_ts.ipreset.html">IPreset</a>.<a href="../interfaces/moq_ts.ipreset.html#invocable">invocable</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/ee27574/projects/moq/src/lib/presets/callbacks.preset.ts#L6">presets/callbacks.preset.ts:6</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="target" class="tsd-anchor"></a>
+					<h3>target</h3>
+					<div class="tsd-signature tsd-kind-icon">target<span class="tsd-signature-symbol">:</span> <a href="../modules/moq_ts.html#expectedexpressions" class="tsd-signature-type">ExpectedExpressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/moq_ts.ipreset.html">IPreset</a>.<a href="../interfaces/moq_ts.ipreset.html#target">target</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/ee27574/projects/moq/src/lib/presets/callbacks.preset.ts#L7">presets/callbacks.preset.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -177,9 +263,27 @@ expect(actual).toEqual(expected);</code></pre>
 					<li class=" tsd-kind-enum tsd-parent-kind-module">
 						<a href="../enums/moq_ts.range.html" class="tsd-kind-icon">Range</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="moq_ts.callbackspreset.html" class="tsd-kind-icon">Callbacks<wbr>Preset</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="moq_ts.callbackspreset.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="moq_ts.callbackspreset.html#callback" class="tsd-kind-icon">callback</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="moq_ts.callbackspreset.html#invocable" class="tsd-kind-icon">invocable</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="moq_ts.callbackspreset.html#target" class="tsd-kind-icon">target</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="moq_ts.expectedexpressionreflector.html" class="tsd-kind-icon">Expected<wbr>Expression<wbr>Reflector</a>
 					</li>
@@ -195,21 +299,9 @@ expect(actual).toEqual(expected);</code></pre>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="moq_ts.expectedsetpropertyexpression.html" class="tsd-kind-icon">Expected<wbr>Set<wbr>Property<wbr>Expression</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="moq_ts.getpropertyexpression.html" class="tsd-kind-icon">Get<wbr>Property<wbr>Expression</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="moq_ts.getpropertyexpression.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moq_ts.getpropertyexpression.html#name" class="tsd-kind-icon">name</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="moq_ts.it.html" class="tsd-kind-icon">It</a>
 					</li>
