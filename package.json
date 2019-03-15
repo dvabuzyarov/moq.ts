@@ -28,7 +28,7 @@
     "@angular/language-service": "7.2.9",
     "@commitlint/cli": "7.5.2",
     "@commitlint/config-conventional": "7.5.0",
-    "@types/jasmine": "3.3.9",
+    "@types/jasmine": "3.3.10",
     "@types/node": "8.10.44",
     "cpx": "1.5.0",
     "cz-conventional-changelog": "2.1.0",
