@@ -1,3 +1,9 @@
+export abstract class PropertyExpression {
+    protected constructor(public name: PropertyKey) {
+
+    }
+}
+
 /**
  * This class represents an expression tree node for invocation of a named function.
  * It provides access to the name of function and list of parameters.
@@ -13,9 +19,10 @@
  * expect(actual).toEqual(expected);
  * ```
  */
-export class NamedMethodExpression {
-    constructor(public name: PropertyKey,
+export class NamedMethodExpression extends PropertyExpression {
+    constructor(name: PropertyKey,
                 public args: any[]) {
+        super(name);
     }
 }
 
@@ -52,9 +59,9 @@ export class MethodExpression {
  * expect(actual).toEqual(expected);
  * ```
  */
-export class GetPropertyExpression {
-    constructor(public name: PropertyKey) {
-
+export class GetPropertyExpression extends PropertyExpression {
+    constructor(name: PropertyKey) {
+        super(name);
     }
 }
 
@@ -73,10 +80,10 @@ export class GetPropertyExpression {
  * expect(actual).toEqual(expected);
  * ```
  */
-export class SetPropertyExpression {
-    constructor(public name: PropertyKey,
+export class SetPropertyExpression extends PropertyExpression {
+    constructor(name: PropertyKey,
                 public value: any) {
-
+        super(name);
     }
 }
 
