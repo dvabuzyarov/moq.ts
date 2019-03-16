@@ -13,12 +13,13 @@ class Dummy extends SimpleMimic {
 }
 
 describe("#76 Prototypeof & mimics do not respect each other", () => {
-    fit("the bug", () => {
+    it("the bug", () => {
         const mock = new Mock<Dummy>()
             .prototypeof(Dummy.prototype)
             .setup(() => It.Is(expression => {
-                if (expression instanceof PropertyExpression)
+                if (expression instanceof PropertyExpression) {
                     return Reflect.has(SimpleMimic.prototype, expression.name);
+                }
                 return false;
             }))
             .mimics(<any>new SimpleMimic());
