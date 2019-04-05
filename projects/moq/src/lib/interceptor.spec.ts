@@ -15,14 +15,14 @@ describe("Mock interceptor", () => {
     }
 
     it("Returns proxy object", () => {
-        const interceptor = new Interceptor(undefined);
+        const interceptor = new Interceptor(undefined, {});
         const actual = interceptor.object();
 
         expect(actual).not.toBeUndefined();
     });
 
     it("Returns the same proxy object", () => {
-        const interceptor = new Interceptor(undefined);
+        const interceptor = new Interceptor(undefined, {});
         const first = interceptor.object();
         const second = interceptor.object();
 
@@ -32,7 +32,7 @@ describe("Mock interceptor", () => {
     it("Notifies about method interception", () => {
         const arg = "argument";
         const callbacks = callbacksFactory();
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         object(arg);
@@ -45,7 +45,7 @@ describe("Mock interceptor", () => {
         const name = "some_property_name";
         const callbacks = callbacksFactory();
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(false);
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         const value = object[name];
@@ -59,7 +59,7 @@ describe("Mock interceptor", () => {
         const name = "some_property_name";
         const callbacks = callbacksFactory();
         (callbacks.invoke as jasmine.Spy).and.returnValue(true);
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         object[name] = arg;
@@ -75,7 +75,7 @@ describe("Mock interceptor", () => {
         const callbacks = callbacksFactory();
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(true);
 
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         interceptor.prototypeof(prototype);
         const object = interceptor.object();
 
@@ -92,7 +92,7 @@ describe("Mock interceptor", () => {
         const expected = "returned value";
         const callbacks = callbacksFactory();
         (callbacks.invoke as jasmine.Spy).and.returnValue(expected);
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         const actual = object();
@@ -105,7 +105,7 @@ describe("Mock interceptor", () => {
         const name = "some_property_name";
         const callbacks = callbacksFactory();
         (callbacks.invoke as jasmine.Spy).and.returnValue(true);
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         object[name] = arg;
@@ -116,7 +116,7 @@ describe("Mock interceptor", () => {
         const name = "some_property_name";
         const callbacks = callbacksFactory();
         (callbacks.intercepted as jasmine.Spy).and.returnValue(undefined);
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         object[name] = arg;
@@ -128,7 +128,7 @@ describe("Mock interceptor", () => {
         const callbacks = callbacksFactory();
         (callbacks.invoke as jasmine.Spy).and.returnValue(true);
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(false);
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         object[name] = arg;
@@ -143,7 +143,7 @@ describe("Mock interceptor", () => {
         const callbacks = callbacksFactory();
         (callbacks.invoke as jasmine.Spy).and.returnValues(true, false);
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(false);
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         object[name] = arg1;
@@ -159,7 +159,7 @@ describe("Mock interceptor", () => {
         const name = "some_property_name";
         const callbacks = callbacksFactory();
         (callbacks.invoke as jasmine.Spy).and.returnValue(false);
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         expect(() => {
@@ -173,7 +173,7 @@ describe("Mock interceptor", () => {
         const callbacks = callbacksFactory();
         (callbacks.invoke as jasmine.Spy).and.returnValue(expected);
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(false);
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         const actual = object[name];
@@ -188,7 +188,7 @@ describe("Mock interceptor", () => {
         (callbacks.hasNamedMethod as jasmine.Spy).and.returnValue(true);
         (callbacks.invoke as jasmine.Spy).and.returnValue(expected);
 
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         const actual = object[name]();
@@ -198,7 +198,7 @@ describe("Mock interceptor", () => {
 
     it("Returns object that instanceof is a function by default", () => {
         const callbacks = callbacksFactory();
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         expect(object instanceof Function).toBe(true);
@@ -209,7 +209,7 @@ describe("Mock interceptor", () => {
         }
 
         const callbacks = callbacksFactory();
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
         const actual = interceptor.prototypeof(PrototypeClass.prototype);
 
@@ -226,7 +226,7 @@ describe("Mock interceptor", () => {
         }
 
         const callbacks = callbacksFactory();
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         interceptor.prototypeof(PrototypeClass);
 
         const actual = interceptor.prototypeof();
@@ -236,7 +236,7 @@ describe("Mock interceptor", () => {
 
     it("Sets null as instanceof value", () => {
         const callbacks = callbacksFactory();
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         interceptor.prototypeof(null);
         const object = interceptor.object();
 
@@ -251,7 +251,7 @@ describe("Mock interceptor", () => {
         }
 
         const callbacks = callbacksFactory();
-        const interceptor = new Interceptor<Function>(callbacks);
+        const interceptor = new Interceptor<Function>(callbacks, {});
         const object = interceptor.object();
 
         Object.setPrototypeOf(object, PrototypeClass.prototype);
@@ -262,5 +262,32 @@ describe("Mock interceptor", () => {
         expect(object instanceof Array).toBe(false);
 
         expect(actual).toBe(PrototypeClass.prototype);
+    });
+
+    it("Returns object that typeof is a function by default", () => {
+        const callbacks = callbacksFactory();
+        const interceptor = new Interceptor<Function>(callbacks, {});
+        const object = interceptor.object();
+
+        expect(typeof object).toBe("function");
+    });
+
+    it("Returns object that typeof is typeof of provided target", () => {
+        const callbacks = callbacksFactory();
+        const interceptor = new Interceptor<Function>(callbacks, {target: {}});
+        const object = interceptor.object();
+
+        expect(typeof object).toBe(typeof {});
+    });
+
+    it("Returns object that instanceof is instanceof of provided target", () => {
+        class PrototypeClass {
+        }
+
+        const callbacks = callbacksFactory();
+        const interceptor = new Interceptor<Function>(callbacks, {target: new PrototypeClass()});
+        const object = interceptor.object();
+
+        expect(object instanceof PrototypeClass).toBe(true);
     });
 });

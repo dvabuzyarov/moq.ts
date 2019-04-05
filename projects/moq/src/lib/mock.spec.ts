@@ -1,4 +1,4 @@
-import { ISequenceVerifier, IPresetBuilder } from "./moq";
+import { IPresetBuilder, ISequenceVerifier } from "./moq";
 import { InterceptorCallbacks, MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 import { Times } from "./times";
 import { nameof } from "./nameof";
@@ -35,6 +35,22 @@ describe("Mock", () => {
             tracker
         };
         spyOn(mockDependencies, "mockDependenciesFactory").and.returnValue(dependencies);
+    });
+
+    it("Exposes mock name", () => {
+        const name = "mock name";
+        const mock = new Mock({name});
+        const actual = mock.name;
+
+        expect(actual).toBe(name);
+    });
+
+    it("Creates dependencies with mock options", () => {
+        const name = "mock name";
+        const target = () => undefined;
+        const mock = new Mock({name, target});
+
+        expect(mockDependencies.mockDependenciesFactory).toHaveBeenCalledWith({name, target});
     });
 
     it("Returns object", () => {
