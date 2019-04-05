@@ -9,7 +9,7 @@ import { MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 export interface IMockOptions {
     /**
      * You can name the mock. The name will be displayed with any relative output, so you can easily distinct
-     * output of several mocks. On the mocked object you can find this name at '[[Mock]]' property of the target.
+     * output of several mocks. On the mocked object you can find this name at 'mockName' property of the [[Handler]].
      */
     name?: string;
     /**
@@ -127,7 +127,7 @@ export interface IPresetBuilder<T> {
 export interface IMock<T> {
     /**
      * You can name the mock. The name will be displayed with any relative output, so you can easily distinct
-     * output of several mocks. On the mocked object you can find this name at '[[Mock]]' property of the target.
+     * output of several mocks. On the mocked object you can find this name at 'mockName' property of the [[Handler]].
      */
     readonly name?: string;
 

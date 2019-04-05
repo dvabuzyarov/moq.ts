@@ -28,7 +28,7 @@ export function mockDependenciesFactory<T>(options: IMockOptions): IMockDependen
     const presets = new Presets<T>();
     const tracker = new Tracker();
     const interceptedCallbacks = interceptorCallbacksFactory<T>(tracker, presets);
-    const interceptor = new Interceptor<T>(interceptedCallbacks);
+    const interceptor = new Interceptor<T>(interceptedCallbacks, options);
     const presetBuilderFactory = (mock: IMock<T>, target: ExpectedExpressions<T>) => {
         return new PresetBuilder<T>(mock, preset => presets.add(preset), target);
     };

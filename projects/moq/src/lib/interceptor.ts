@@ -1,5 +1,6 @@
 import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "./expressions";
 import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks/interceptor-callbacks";
+import { IMockOptions } from "./moq";
 
 /**
  * @hidden
@@ -9,9 +10,12 @@ export class Interceptor<T> {
     private _proxy: T;
     private _prototype: any = null;
     private _values = {};
+    private options: IMockOptions;
 
-    constructor(private interceptorCallbacks: IInterceptorCallbacksStrategy) {
-        this._prototype = Function;
+    constructor(private interceptorCallbacks: IInterceptorCallbacksStrategy,
+                options: IMockOptions) {
+        this.options = {...{target: () => undefined}, ...options};
+        this._prototype = Object.getPrototypeOf(this.options.target);
     }
 
     public object(): T {
@@ -79,6 +83,10 @@ export class Interceptor<T> {
             }
         };
 
-        return new Proxy(() => undefined, options);
+        if (this.options.name) {
+            options["mockName"] = this.options.name;
+        }
+
+        return new Proxy(this.options.target, options);
     }
 }
