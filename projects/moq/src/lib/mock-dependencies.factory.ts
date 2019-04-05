@@ -1,7 +1,7 @@
 import { ExpectedExpressionReflector } from "./expected-expressions/expected-expression-reflector";
 import { Interceptor } from "./interceptor";
 import { IInterceptorCallbacks, interceptorCallbacksFactory } from "./interceptor-callbacks/interceptor-callbacks";
-import { IMock, IPresetBuilder } from "./moq";
+import { IMock, IMockOptions, IPresetBuilder } from "./moq";
 import { Tracker } from "./tracker";
 import { Verifier } from "./verifier";
 import { Presets } from "./preset/presets";
@@ -23,12 +23,12 @@ export interface IMockDependencies<T> {
 /**
  * @hidden
  */
-export function mockDependenciesFactory<T>(): IMockDependencies<T> {
+export function mockDependenciesFactory<T>(options: IMockOptions): IMockDependencies<T> {
     const expressionReflector = new ExpectedExpressionReflector();
     const presets = new Presets<T>();
     const tracker = new Tracker();
     const interceptedCallbacks = interceptorCallbacksFactory<T>(tracker, presets);
-    const interceptor = new Interceptor<T>(interceptedCallbacks);
+    const interceptor = new Interceptor<T>(interceptedCallbacks, options);
     const presetBuilderFactory = (mock: IMock<T>, target: ExpectedExpressions<T>) => {
         return new PresetBuilder<T>(mock, preset => presets.add(preset), target);
     };

@@ -1,4 +1,4 @@
-import { ISequenceVerifier, IPresetBuilder } from "./moq";
+import { IPresetBuilder, ISequenceVerifier } from "./moq";
 import { InterceptorCallbacks, MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 import { Times } from "./times";
 import { nameof } from "./nameof";
@@ -9,6 +9,7 @@ import { Tracker } from "./tracker";
 import { Interceptor } from "./interceptor";
 import { Verifier } from "./verifier";
 import { Mock } from "./mock";
+import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
 
 describe("Mock", () => {
 
@@ -34,7 +35,23 @@ describe("Mock", () => {
             presetBuilderFactory: setupFactory,
             tracker
         };
-        spyOn(mockDependencies, "mockDependenciesFactory").and.returnValue(dependencies);
+        spyOn(mockDependencies, "mockDependenciesFactory").and.returnValue(dependencies as any);
+    });
+
+    it("Exposes mock name", () => {
+        const name = "mock name";
+        const mock = new Mock({name});
+        const actual = mock.name;
+
+        expect(actual).toBe(name);
+    });
+
+    it("Creates dependencies with mock options", () => {
+        const name = "mock name";
+        const target = () => undefined;
+        const mock = new Mock({name, target});
+
+        expect(mockDependencies.mockDependenciesFactory).toHaveBeenCalledWith({name, target});
     });
 
     it("Returns object", () => {
@@ -87,7 +104,7 @@ describe("Mock", () => {
         const {expressionReflector, presetBuilderFactory} = dependencies;
         const setup = <IPresetBuilder<any>>{};
         const expression = instance => instance["property"];
-        const expectedExpression = {};
+        const expectedExpression = {} as ExpectedExpressions<unknown>;
         expressionReflector.reflect.withArgs(expression).and.returnValue(expectedExpression);
 
         const mock = new Mock();
