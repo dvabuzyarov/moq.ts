@@ -9,6 +9,7 @@ import { Tracker } from "./tracker";
 import { Interceptor } from "./interceptor";
 import { Verifier } from "./verifier";
 import { Mock } from "./mock";
+import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
 
 describe("Mock", () => {
 
@@ -34,7 +35,7 @@ describe("Mock", () => {
             presetBuilderFactory: setupFactory,
             tracker
         };
-        spyOn(mockDependencies, "mockDependenciesFactory").and.returnValue(dependencies);
+        spyOn(mockDependencies, "mockDependenciesFactory").and.returnValue(dependencies as any);
     });
 
     it("Exposes mock name", () => {
@@ -103,7 +104,7 @@ describe("Mock", () => {
         const {expressionReflector, presetBuilderFactory} = dependencies;
         const setup = <IPresetBuilder<any>>{};
         const expression = instance => instance["property"];
-        const expectedExpression = {};
+        const expectedExpression = {} as ExpectedExpressions<unknown>;
         expressionReflector.reflect.withArgs(expression).and.returnValue(expectedExpression);
 
         const mock = new Mock();
