@@ -4,6 +4,22 @@ import { Times } from "./times";
 import { MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 
 /**
+ * Mock creation options
+ */
+export interface IMockOptions {
+    /**
+     * You can name the mock. The name will be displayed with any relative output, so you can easily distinct
+     * output of several mocks. On the mocked object you can find this name at '[[Mock]]' property of the target.
+     */
+    name?: string;
+    /**
+     * The target object for Proxy that is used under the hood.
+     * typeof operation is applied to this target.
+     * The default value is function.
+     */
+    target?: any;
+}
+/**
  * Sets a behaviour rule for a particular use case
  * @param T The type of mocked object.
  */
@@ -111,14 +127,14 @@ export interface IPresetBuilder<T> {
 export interface IMock<T> {
     /**
      * You can name the mock. The name will be displayed with any relative output, so you can easily distinct
-     * output of several mocks.
+     * output of several mocks. On the mocked object you can find this name at '[[Mock]]' property of the target.
      */
-    name?: string;
+    readonly name?: string;
 
     /**
      * Returns the tracker object that responsible for storing history of interactions with the mocked object.
      */
-    tracker: Tracker;
+    readonly tracker: Tracker;
 
     /**
      * Returns instance of mocked object
