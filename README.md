@@ -35,6 +35,7 @@ You can find a pretty full set of usages in the integration tests. Check out [te
 - [Mock behavior](#mock-behavior)
 - [Mock prototype](#mock-prototype)
 - [Mimics](#mimics)
+- [typeof operator](#typeof-operator)
 * * *
 
 <!-- toc -->
@@ -247,6 +248,22 @@ const actual = mocked.method(2);
 
 expect(actual).toBe(6);
 mock.verify(instance => instance.method(2));
+```
+
+## typeof operator
+
+Some operations are not possible to trap in order to keep the language consistent, 
+one of them is typeof. The type of the proxy object will be the same as the proxy target. 
+So at the moment the only available options is to provider target option as a create mock parameter.
+```typescript
+class Origin {
+}
+
+const origin = new Origin();
+
+const mock = new Mock<Origin>({target: new Origin()});
+
+expect(typeof mock.object()).toBe(typeof new Origin());
 ```
 
 Sponsored by [2BIT](https://www.2bit.ch)
