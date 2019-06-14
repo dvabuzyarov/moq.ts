@@ -7,8 +7,8 @@ import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
 import { SpyFunctionProvider } from "./spy-function.provider";
-import { Type } from "@angular/core";
 import { IJasmineSpy } from "../jasmine-spy";
+import { Type } from "../type";
 
 describe("Get trap", () => {
     let resolve: <T>(token: Type<T>) => IJasmineSpy<T>;
@@ -21,18 +21,24 @@ describe("Get trap", () => {
         const hasMethodExplorer = jasmine.createSpyObj<HasMethodExplorer>("", ["has"]);
         const spyFunctionProvider = jasmine.createSpyObj<SpyFunctionProvider>("", ["get"]);
         resolve = <T>(token: Type<T | any>): T => {
-            if (token === PropertiesValueStorage)
+            if (token === PropertiesValueStorage) {
                 return storage as any as T;
-            if (token === Tracker)
+            }
+            if (token === Tracker) {
                 return tracker as any as T;
-            if (token === InteractionPlayer)
+            }
+            if (token === InteractionPlayer) {
                 return interactionPlayer as any as T;
-            if (token === HasPropertyExplorer)
+            }
+            if (token === HasPropertyExplorer) {
                 return hasPropertyExplorer as any as T;
-            if (token === HasMethodExplorer)
+            }
+            if (token === HasMethodExplorer) {
                 return hasMethodExplorer as any as T;
-            if (token === SpyFunctionProvider)
+            }
+            if (token === SpyFunctionProvider) {
                 return spyFunctionProvider as any as T;
+            }
         };
         return new GetTrap(tracker, storage, interactionPlayer, hasPropertyExplorer, hasMethodExplorer, spyFunctionProvider);
     }
