@@ -4,6 +4,7 @@ import { Times } from "./times";
 import { nameof } from "../tests.components/nameof";
 import * as mockDependencies from "./mock-dependencies.factory";
 import { IMockDependencies, mockDependenciesFactory } from "./mock-dependencies.factory";
+import * as buildMockOptions from "./build-mock-options";
 import { ExpectedExpressionReflector } from "./expected-expressions/expected-expression-reflector";
 import { Tracker } from "./tracker";
 import { Interceptor } from "./interceptor";
@@ -35,12 +36,19 @@ describe("Mock", () => {
             presetBuilderFactory: setupFactory,
             tracker
         };
+
         spyOn(mockDependencies, "mockDependenciesFactory").and.returnValue(dependencies as any);
+        spyOn(buildMockOptions, "buildMockOptions").and.returnValue({});
     });
 
     it("Exposes mock name", () => {
         const name = "mock name";
-        const mock = new Mock({name});
+        const options = {name};
+
+        (buildMockOptions.buildMockOptions as jasmine.Spy)
+            .withArgs(options).and.returnValue(options);
+
+        const mock = new Mock(options);
         const actual = mock.name;
 
         expect(actual).toBe(name);
@@ -49,9 +57,15 @@ describe("Mock", () => {
     it("Creates dependencies with mock options", () => {
         const name = "mock name";
         const target = () => undefined;
-        const mock = new Mock({name, target});
+        const input = {name};
+        const options = {name, target};
 
-        expect(mockDependencies.mockDependenciesFactory).toHaveBeenCalledWith({name, target});
+        (buildMockOptions.buildMockOptions as jasmine.Spy)
+            .withArgs(input).and.returnValue(options);
+
+        const mock = new Mock(input);
+
+        expect(mockDependencies.mockDependenciesFactory).toHaveBeenCalledWith(options);
     });
 
     it("Returns object", () => {

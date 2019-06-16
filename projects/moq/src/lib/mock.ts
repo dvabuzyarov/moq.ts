@@ -7,6 +7,7 @@ import { Tracker } from "./tracker";
 import { Verifier } from "./verifier";
 import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
 import { mockDependenciesFactory } from "./mock-dependencies.factory";
+import { buildMockOptions } from "./build-mock-options";
 
 /**
  * The default implementation of {@link IMock} interface.
@@ -20,7 +21,7 @@ export class Mock<T> implements IMock<T> {
     private interceptedCallbacks: IInterceptorCallbacks;
 
     constructor(private readonly options: IMockOptions = {}) {
-        this.options = {...{target: () => undefined}, ...options};
+        this.options = buildMockOptions(options);
         const dependencies = mockDependenciesFactory<T>(this.options);
         this.tracker = dependencies.tracker;
         this.expressionReflector = dependencies.expressionReflector;
