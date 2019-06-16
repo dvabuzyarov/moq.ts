@@ -19,7 +19,8 @@ export class Mock<T> implements IMock<T> {
     private verifier: Verifier<T>;
     private interceptedCallbacks: IInterceptorCallbacks;
 
-    constructor(private options: IMockOptions = {}) {
+    constructor(private readonly options: IMockOptions = {}) {
+        this.options = {...{target: () => undefined}, ...options};
         const dependencies = mockDependenciesFactory<T>(this.options);
         this.tracker = dependencies.tracker;
         this.expressionReflector = dependencies.expressionReflector;
