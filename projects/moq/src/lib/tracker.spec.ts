@@ -1,7 +1,7 @@
 import { GetPropertyExpression, MethodExpression } from "./expressions";
 import { SequenceId } from "./sequence-id";
 import { Tracker } from "./tracker";
-import { nameof } from "./nameof";
+import { nameof } from "../tests.components/nameof";
 
 describe("Mock tracker", () => {
 

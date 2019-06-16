@@ -5,20 +5,20 @@ import { SpyFunctionProvider } from "./spy-function.provider";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
+import { PrototypeStorage } from "./prototype.storage";
 
 /**
  * @hidden
  */
 export class GetTrap {
-    private _prototype: any;
-
     constructor(
         private tracker: Tracker,
         private propertiesValueStorage: PropertiesValueStorage,
         private interactionPlayer: InteractionPlayer,
         private hasPropertyExplorer: HasPropertyExplorer,
         private hasMethodExplorer: HasMethodExplorer,
-        private spyFunctionProvider: SpyFunctionProvider) {
+        private spyFunctionProvider: SpyFunctionProvider,
+        private prototypeStorage: PrototypeStorage) {
 
     }
 
@@ -39,14 +39,10 @@ export class GetTrap {
             return this.spyFunctionProvider.get(property);
         }
 
-        if (this._prototype && this._prototype[property] instanceof Function) {
+        if (this.prototypeStorage.prototype && this.prototypeStorage.prototype[property] instanceof Function) {
             return this.spyFunctionProvider.get(property);
         }
 
         return undefined;
-    }
-
-    public prototypeof(prototype: any): void {
-        this._prototype = prototype;
     }
 }

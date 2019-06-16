@@ -1,7 +1,7 @@
 import { IPresetBuilder, ISequenceVerifier } from "./moq";
 import { InterceptorCallbacks, MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 import { Times } from "./times";
-import { nameof } from "./nameof";
+import { nameof } from "../tests.components/nameof";
 import * as mockDependencies from "./mock-dependencies.factory";
 import { IMockDependencies, mockDependenciesFactory } from "./mock-dependencies.factory";
 import { ExpectedExpressionReflector } from "./expected-expressions/expected-expression-reflector";

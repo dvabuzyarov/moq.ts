@@ -1,24 +1,19 @@
 import { Tracker } from "../tracker";
 import { NamedMethodExpression } from "../expressions";
 import { SpyFunctionProvider } from "./spy-function.provider";
-import { Type } from "../type";
-import { IJasmineSpy } from "../jasmine-spy";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
+import { resolveBuilder } from "../../tests.components/resolve.builder";
 
 describe("Get trap", () => {
-    let resolve: <T>(token: Type<T>) => IJasmineSpy<T>;
+    let resolve: ReturnType<typeof resolveBuilder>;
 
     function get(): SpyFunctionProvider {
         const tracker = jasmine.createSpyObj<Tracker>("", ["add"]);
         const interactionPlayer = jasmine.createSpyObj<InteractionPlayer>("", ["play"]);
-        resolve = <T>(token: Type<T | any>): T => {
-            if (token === Tracker) {
-                return tracker as any as T;
-            }
-            if (token === InteractionPlayer) {
-                return interactionPlayer as any as T;
-            }
-        };
+        resolve = resolveBuilder([
+            [Tracker, tracker],
+            [InteractionPlayer, interactionPlayer]
+        ]);
         return new SpyFunctionProvider(tracker, interactionPlayer);
     }
 

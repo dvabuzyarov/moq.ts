@@ -1,7 +1,7 @@
 import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "./expressions";
 import { Interceptor } from "./interceptor";
 import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks/interceptor-callbacks";
-import { nameof } from "./nameof";
+import { nameof } from "../tests.components/nameof";
 
 declare var Object: any;
 

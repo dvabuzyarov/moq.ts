@@ -1,7 +1,7 @@
 import { GetPropertyExpression } from "../expressions";
 import { ExpressionFormatter } from "./expression-formatter";
 import { ExpectedExpressionFormatter } from "./expected-expression-formatter";
-import { nameof } from "../nameof";
+import { nameof } from "../../tests.components/nameof";
 
 describe("Expected expression message formatter", () => {
     function expressionFormatterFactory(): ExpressionFormatter {

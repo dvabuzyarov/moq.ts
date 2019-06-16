@@ -2,7 +2,7 @@ import { InterceptorCallbacksStrictStrategy } from "./interceptor-callbacks.stri
 import { InterceptorCallbacksLooseStrategy } from "./interceptor-callbacks.loose.strategy";
 import { InterceptorCallbacks, MockBehavior } from "./interceptor-callbacks";
 import { GetPropertyExpression } from "../expressions";
-import { nameof } from "../nameof";
+import { nameof } from "../../tests.components/nameof";
 
 describe("Interceptor callbacks", () => {
 

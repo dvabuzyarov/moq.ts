@@ -2,7 +2,7 @@ import { GetPropertyExpression } from "../expressions";
 import { VerifyFormatter } from "./verify-formatter";
 import { ExpectedExpressionFormatter } from "./expected-expression-formatter";
 import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
-import { nameof } from "../nameof";
+import { nameof } from "../../tests.components/nameof";
 
 describe("Verify message formatter", () => {
     function expectedExpressionFormatterFactory(): ExpectedExpressionFormatter {

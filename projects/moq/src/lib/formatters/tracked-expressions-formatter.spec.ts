@@ -1,7 +1,7 @@
 import { GetPropertyExpression, NamedMethodExpression } from "../expressions";
 import { ExpressionFormatter } from "./expression-formatter";
 import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
-import { nameof } from "../nameof";
+import { nameof } from "../../tests.components/nameof";
 
 describe("Tracked expression message formatter", () => {
     function expressionFormatterFactory(): ExpressionFormatter {

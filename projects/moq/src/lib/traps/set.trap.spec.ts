@@ -2,28 +2,21 @@ import { Tracker } from "../tracker";
 import { SetPropertyExpression } from "../expressions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
-import { IJasmineSpy } from "../jasmine-spy";
-import { Type } from "../type";
 import { SetTrap } from "./set.trap";
+import { resolveBuilder } from "../../tests.components/resolve.builder";
 
 describe("Set trap", () => {
-    let resolve: <T>(token: Type<T>) => IJasmineSpy<T>;
+    let resolve: ReturnType<typeof resolveBuilder>;
 
     function get(): SetTrap {
         const storage = jasmine.createSpyObj<PropertiesValueStorage>("", ["has", "set"]);
         const tracker = jasmine.createSpyObj<Tracker>("", ["add"]);
         const interactionPlayer = jasmine.createSpyObj<InteractionPlayer>("", ["play"]);
-        resolve = <T>(token: Type<T | any>): T => {
-            if (token === PropertiesValueStorage) {
-                return storage as any as T;
-            }
-            if (token === Tracker) {
-                return tracker as any as T;
-            }
-            if (token === InteractionPlayer) {
-                return interactionPlayer as any as T;
-            }
-        };
+        resolve = resolveBuilder([
+            [PropertiesValueStorage, storage],
+            [Tracker, tracker],
+            [InteractionPlayer, interactionPlayer],
+        ]);
         return new SetTrap(tracker, storage, interactionPlayer);
     }
 
