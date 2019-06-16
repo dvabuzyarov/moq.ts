@@ -1,14 +1,15 @@
 export class PropertiesValueStorage {
+    private storage = {};
 
     public has(property: PropertyKey): boolean {
-        throw new Error("Not Implemented");
+        return Reflect.has(this.storage, property);
     }
 
     public get(property: PropertyKey): any {
-        throw new Error("Not Implemented");
+        return this.storage[property];
     }
 
     public set(property: PropertyKey, value: any): void {
-        throw new Error("Not Implemented");
+        this.storage[property] = value;
     }
 }
