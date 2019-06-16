@@ -36,11 +36,11 @@ export class GetTrap {
         }
 
         if (this.hasMethodExplorer.has(property)) {
-            return this.spyFunctionProvider.get();
+            return this.spyFunctionProvider.get(property);
         }
 
         if (this._prototype && this._prototype[property] instanceof Function) {
-            return this.spyFunctionProvider.get();
+            return this.spyFunctionProvider.get(property);
         }
 
         return undefined;

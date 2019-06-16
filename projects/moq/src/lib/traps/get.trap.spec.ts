@@ -96,7 +96,7 @@ describe("Get trap", () => {
         resolve(HasMethodExplorer)
             .has.withArgs(propertyName).and.returnValue(true);
         resolve(SpyFunctionProvider)
-            .get.and.returnValue(spy);
+            .get.withArgs(propertyName).and.returnValue(spy);
 
         const actual = trap.intercept(propertyName);
 
@@ -121,7 +121,7 @@ describe("Get trap", () => {
         resolve(HasMethodExplorer)
             .has.withArgs(propertyName).and.returnValue(false);
         resolve(SpyFunctionProvider)
-            .get.and.returnValue(spy);
+            .get.withArgs(propertyName).and.returnValue(spy);
         trap.prototypeof(Prototype.prototype);
 
         const actual = trap.intercept(propertyName);
@@ -146,7 +146,7 @@ describe("Get trap", () => {
         resolve(HasMethodExplorer)
             .has.withArgs(propertyName).and.returnValue(false);
         resolve(SpyFunctionProvider)
-            .get.and.returnValue(spy);
+            .get.withArgs(propertyName).and.returnValue(spy);
 
         trap.prototypeof(Prototype.prototype);
         const actual = trap.intercept(propertyName);
@@ -169,7 +169,7 @@ describe("Get trap", () => {
         resolve(HasMethodExplorer)
             .has.withArgs(propertyName).and.returnValue(false);
         resolve(SpyFunctionProvider)
-            .get.and.returnValue(spy);
+            .get.withArgs(propertyName).and.returnValue(spy);
 
         trap.prototypeof(Prototype.prototype);
         const actual = trap.intercept(propertyName);
