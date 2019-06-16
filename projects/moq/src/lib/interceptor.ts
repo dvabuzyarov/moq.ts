@@ -26,6 +26,7 @@ export class Interceptor<T> {
         return this._proxy;
     }
 
+    //todo should be readonly
     public prototypeof(prototype?: any): any {
         if (prototype !== undefined) {
             this._prototype = prototype;
