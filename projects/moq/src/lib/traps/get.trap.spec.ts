@@ -9,6 +9,7 @@ import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.e
 import { SpyFunctionProvider } from "./spy-function.provider";
 import { PrototypeStorage } from "./prototype.storage";
 import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { HasInteractionExplorer } from "../explorers/has-interaction.explorer/has-interaction.explorer";
 
 describe("Get trap", () => {
     let resolve: ReturnType<typeof resolveBuilder>;
@@ -18,19 +19,24 @@ describe("Get trap", () => {
         const tracker = jasmine.createSpyObj<Tracker>("", ["add"]);
         const interactionPlayer = jasmine.createSpyObj<InteractionPlayer>("", ["play"]);
         const hasPropertyExplorer = jasmine.createSpyObj<HasPropertyExplorer>("", ["has"]);
+        const hasInteractionExplorer = jasmine.createSpyObj<HasInteractionExplorer>("", ["has"]);
         const hasMethodExplorer = jasmine.createSpyObj<HasMethodExplorer>("", ["has"]);
         const spyFunctionProvider = jasmine.createSpyObj<SpyFunctionProvider>("", ["get"]);
-        const prototypeStorage = {} as PrototypeStorage;
+        const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>("", ["get", "set"]);
         resolve = resolveBuilder([
             [PropertiesValueStorage, storage],
             [Tracker, tracker],
             [InteractionPlayer, interactionPlayer],
             [HasPropertyExplorer, hasPropertyExplorer],
+            [HasInteractionExplorer, hasInteractionExplorer],
             [HasMethodExplorer, hasMethodExplorer],
             [SpyFunctionProvider, spyFunctionProvider],
             [PrototypeStorage, prototypeStorage],
         ]);
-        return new GetTrap(tracker, storage, interactionPlayer, hasPropertyExplorer, hasMethodExplorer,
+        return new GetTrap(tracker, storage, interactionPlayer,
+            hasPropertyExplorer,
+            hasInteractionExplorer,
+            hasMethodExplorer,
             spyFunctionProvider, prototypeStorage);
     }
 
@@ -58,7 +64,7 @@ describe("Get trap", () => {
         expect(actual).toBe(value);
     });
 
-    it("Returns value from property read preset", () => {
+    it("Returns value of interaction when property is available", () => {
         const value = "value";
         const propertyName = "property name";
 
@@ -114,7 +120,7 @@ describe("Get trap", () => {
         resolve(SpyFunctionProvider)
             .get.withArgs(propertyName).and.returnValue(spy);
         resolve(PrototypeStorage)
-            .prototype = Prototype.prototype;
+            .get.and.returnValue(Prototype.prototype);
 
         const actual = trap.intercept(propertyName);
 
@@ -140,7 +146,7 @@ describe("Get trap", () => {
         resolve(SpyFunctionProvider)
             .get.withArgs(propertyName).and.returnValue(spy);
         resolve(PrototypeStorage)
-            .prototype = Prototype.prototype;
+            .get.and.returnValue(Prototype.prototype);
 
         const actual = trap.intercept(propertyName);
 
@@ -164,10 +170,29 @@ describe("Get trap", () => {
         resolve(SpyFunctionProvider)
             .get.withArgs(propertyName).and.returnValue(spy);
         resolve(PrototypeStorage)
-            .prototype = Prototype.prototype;
+            .get.and.returnValue(Prototype.prototype);
 
         const actual = trap.intercept(propertyName);
 
         expect(actual).toBeUndefined();
+    });
+
+    it("Returns value of interaction when there is available interaction", () => {
+        const value = "value";
+        const propertyName = "property name";
+
+        const trap = get();
+        resolve(PropertiesValueStorage)
+            .has.withArgs(propertyName).and.returnValue(false);
+        resolve(HasPropertyExplorer)
+            .has.withArgs(propertyName).and.returnValue(false);
+        resolve(HasInteractionExplorer)
+            .has.withArgs(new GetPropertyExpression(propertyName)).and.returnValue(true);
+        resolve(InteractionPlayer)
+            .play.withArgs(new GetPropertyExpression(propertyName)).and.returnValue(value);
+
+        const actual = trap.intercept(propertyName);
+
+        expect(actual).toBe(value);
     });
 });

@@ -8,6 +8,7 @@ import { Verifier } from "./verifier";
 import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
 import { mockDependenciesFactory } from "./mock-dependencies.factory";
 import { buildMockOptions } from "./build-mock-options";
+import { PrototypeStorage } from "./traps/prototype.storage";
 
 /**
  * The default implementation of {@link IMock} interface.
@@ -19,6 +20,7 @@ export class Mock<T> implements IMock<T> {
     private readonly setupFactory: (mock: IMock<T>, target: ExpectedExpressions<T>) => IPresetBuilder<T>;
     private verifier: Verifier<T>;
     private interceptedCallbacks: IInterceptorCallbacks;
+    private prototypeStorage: PrototypeStorage;
 
     constructor(private readonly options: IMockOptions = {}) {
         this.options = buildMockOptions(options);
@@ -29,6 +31,7 @@ export class Mock<T> implements IMock<T> {
         this.setupFactory = dependencies.presetBuilderFactory;
         this.verifier = dependencies.verifier;
         this.interceptedCallbacks = dependencies.interceptedCallbacks;
+        this.prototypeStorage = dependencies.prototypeStorage;
     }
 
     public get name() {
@@ -52,7 +55,7 @@ export class Mock<T> implements IMock<T> {
     }
 
     public prototypeof(prototype?: any): IMock<T> {
-        this.interceptor.prototypeof(prototype);
+        this.prototypeStorage.set(prototype);
         return this;
     }
 

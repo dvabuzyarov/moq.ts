@@ -1,21 +1,22 @@
-import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "./expressions";
-import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks/interceptor-callbacks";
-import { IMockOptions } from "./moq";
+import { GetTrap } from "./traps/get.trap";
+import { SetTrap } from "./traps/set.trap";
+import { ApplyTrap } from "./traps/apply.trap";
+import { GetPrototypeOfTrap } from "./traps/get-prototype-of.trap";
+import { SetPrototypeOfTrap } from "./traps/set-prototype-of.trap";
 
 /**
  * @hidden
  */
 export class Interceptor<T> {
-
     private _proxy: T;
-    private _prototype: any = null;
-    private _values = {};
-    private options: IMockOptions;
 
-    constructor(private interceptorCallbacks: IInterceptorCallbacksStrategy,
-                options: IMockOptions) {
-        this.options = {...{target: () => undefined}, ...options};
-        this._prototype = Object.getPrototypeOf(this.options.target);
+    constructor(private target: any,
+                private mockName: string,
+                private getTrap: GetTrap,
+                private setTrap: SetTrap,
+                private applyTrap: ApplyTrap,
+                private getPrototypeOfTrap: GetPrototypeOfTrap,
+                private setPrototypeOfTrap: SetPrototypeOfTrap) {
     }
 
     public object(): T {
@@ -26,68 +27,19 @@ export class Interceptor<T> {
         return this._proxy;
     }
 
-    // todo should be readonly
-    public prototypeof(prototype?: any): any {
-        if (prototype !== undefined) {
-            this._prototype = prototype;
-        }
-
-        return this._prototype;
-    }
-
     private createObject(): T {
         const options = {
-            get: (target, name) => {
-                const getPropertyExpression = new GetPropertyExpression(name);
-                this.interceptorCallbacks.intercepted(getPropertyExpression);
-
-                if (this.interceptorCallbacks.hasNamedMethod(name, this._prototype) === false) {
-
-                    if (this._values.hasOwnProperty(name) === true) {
-                        return this._values[name];
-                    }
-
-                    return this.interceptorCallbacks.invoke(getPropertyExpression);
-                }
-
-                return (...args) => {
-                    const namedMethodExpression = new NamedMethodExpression(name, args);
-                    this.interceptorCallbacks.intercepted(namedMethodExpression);
-                    return this.interceptorCallbacks.invoke(namedMethodExpression);
-                };
-            },
-
-            set: (target, name, value) => {
-                const expression = new SetPropertyExpression(name, value);
-                this.interceptorCallbacks.intercepted(expression);
-                const accepted = this.interceptorCallbacks.invoke(expression);
-                if (accepted === true || accepted === undefined) {
-                    this._values[name] = value;
-                }
-
-                return accepted === undefined ? true : accepted;
-            },
-
-            apply: (target, thisArg, args) => {
-                const expression = new MethodExpression(args);
-                this.interceptorCallbacks.intercepted(expression);
-                return this.interceptorCallbacks.invoke(expression);
-            },
-
-            getPrototypeOf: (target) => this._prototype,
-            setPrototypeOf: (target, prototype) => {
-                if (prototype !== undefined) {
-                    this._prototype = prototype;
-                    return true;
-                }
-                return false;
-            }
+            get: (target, name) => this.getTrap.intercept(name),
+            set: (target, name, value) => this.setTrap.intercept(target, name, value),
+            apply: (target, thisArg, args) => this.applyTrap.intercept(target, thisArg, args),
+            getPrototypeOf: () => this.getPrototypeOfTrap.intercept(),
+            setPrototypeOf: (target, prototype) => this.setPrototypeOfTrap.intercept(prototype)
         };
 
-        if (this.options.name) {
-            options["mockName"] = this.options.name;
+        if (this.mockName) {
+            options["mockName"] = this.mockName;
         }
 
-        return new Proxy(this.options.target, options);
+        return new Proxy(this.target, options);
     }
 }

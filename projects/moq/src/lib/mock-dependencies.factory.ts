@@ -7,6 +7,19 @@ import { Verifier } from "./verifier";
 import { Presets } from "./preset/presets";
 import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
 import { PresetBuilder } from "./preset/preset-builder";
+import { PrototypeStorage } from "./traps/prototype.storage";
+import { GetTrap } from "./traps/get.trap";
+import { PropertiesValueStorage } from "./traps/properties-value.storage";
+import { InteractionPlayer } from "./interaction-players/interaction.player";
+import { InteractionPresetProvider } from "./interaction-players/interaction-preset.provider";
+import { HasMethodExplorer } from "./explorers/has-method.explorer/has-method.explorer";
+import { HasPropertyExplorer } from "./explorers/has-property.explorer/has-property.explorer";
+import { SpyFunctionProvider } from "./traps/spy-function.provider";
+import { SetTrap } from "./traps/set.trap";
+import { ApplyTrap } from "./traps/apply.trap";
+import { GetPrototypeOfTrap } from "./traps/get-prototype-of.trap";
+import { SetPrototypeOfTrap } from "./traps/set-prototype-of.trap";
+import { HasInteractionExplorer } from "./explorers/has-interaction.explorer/has-interaction.explorer";
 
 /**
  * @hidden
@@ -18,6 +31,7 @@ export interface IMockDependencies<T> {
     presetBuilderFactory: (mock: IMock<T>, target: ExpectedExpressions<T>) => IPresetBuilder<T>;
     verifier: Verifier<T>;
     interceptedCallbacks: IInterceptorCallbacks;
+    prototypeStorage: PrototypeStorage;
 }
 
 /**
@@ -28,17 +42,48 @@ export function mockDependenciesFactory<T>(options: IMockOptions): IMockDependen
     const presets = new Presets<T>();
     const tracker = new Tracker();
     const interceptedCallbacks = interceptorCallbacksFactory<T>(tracker, presets);
-    const interceptor = new Interceptor<T>(interceptedCallbacks, options);
     const presetBuilderFactory = (mock: IMock<T>, target: ExpectedExpressions<T>) => {
         return new PresetBuilder<T>(mock, preset => presets.add(preset), target);
     };
     const verifier = new Verifier<T>();
+    const prototypeStorage = new PrototypeStorage(options.target);
+    const propertiesValueStorage = new PropertiesValueStorage();
+    const interactionPlayer = new InteractionPlayer(new InteractionPresetProvider(presets));
+    const hasPropertyExplorer = new HasPropertyExplorer(presets);
+    const hasInteractionExplorer = new HasInteractionExplorer(presets);
+    const hasMethodExplorer = new HasMethodExplorer(presets);
+    const spyFunctionProvider = new SpyFunctionProvider(tracker, interactionPlayer);
+    const getTrap = new GetTrap(
+        tracker,
+        propertiesValueStorage,
+        interactionPlayer,
+        hasPropertyExplorer,
+        hasInteractionExplorer,
+        hasMethodExplorer,
+        spyFunctionProvider,
+        prototypeStorage);
+    const setTrap = new SetTrap(tracker, propertiesValueStorage, interactionPlayer);
+    const applyTrap = new ApplyTrap(tracker, interactionPlayer);
+    const getPrototypeOfTrap = new GetPrototypeOfTrap(prototypeStorage);
+    const setPrototypeOfTrap = new SetPrototypeOfTrap(prototypeStorage);
+
+    const interceptor = new Interceptor<T>(
+        options.target,
+        options.name,
+        getTrap,
+        setTrap,
+        applyTrap,
+        getPrototypeOfTrap,
+        setPrototypeOfTrap
+    );
+
     return {
         expressionReflector,
         interceptor,
         presetBuilderFactory,
         tracker,
         verifier,
-        interceptedCallbacks
+        interceptedCallbacks,
+        prototypeStorage
     };
 }

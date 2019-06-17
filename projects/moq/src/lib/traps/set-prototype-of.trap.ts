@@ -11,7 +11,7 @@ export class SetPrototypeOfTrap {
 
     public intercept(prototype: any): any {
         if (prototype !== undefined) {
-            this.prototypeStorage.prototype = prototype;
+            this.prototypeStorage.set(prototype);
             return true;
         }
         return false;

@@ -1,5 +1,4 @@
 import { Mock } from "../lib/mock";
-import { MockBehavior } from "../lib/interceptor-callbacks/interceptor-callbacks";
 import { Times } from "../lib/times";
 import { It } from "../lib/expected-expressions/expression-predicates";
 
@@ -28,8 +27,9 @@ describe("#1 Verify context of a named function expression is incorrect", () => 
         const value = 4;
         const field1 = 2;
         const myServiceMock = new Mock<IMyService>();
-        myServiceMock.setBehaviorStrategy(MockBehavior.Loose);
         myServiceMock
+            .setup(instance => instance.doSomething(It.IsAny()))
+            .returns(undefined)
             .setup(instance => instance.findSomething(value))
             .returns(field1);
 

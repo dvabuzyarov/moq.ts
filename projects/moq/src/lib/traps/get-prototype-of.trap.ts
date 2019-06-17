@@ -10,6 +10,6 @@ export class GetPrototypeOfTrap {
     }
 
     public intercept(): any {
-        return this.prototypeStorage.prototype;
+        return this.prototypeStorage.get();
     }
 }

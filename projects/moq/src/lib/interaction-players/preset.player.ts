@@ -13,7 +13,7 @@ import { MimicsPreset } from "../presets/mimics.preset";
 export class PresetPlayer {
     constructor(
         private callbackPresetPlayer: CallbackPresetPlayer = new CallbackPresetPlayer(),
-        private replicatePresetPlayer: MimicsPresetPlayer = new MimicsPresetPlayer()) {
+        private mimicsPresetPlayer: MimicsPresetPlayer = new MimicsPresetPlayer()) {
 
     }
 
@@ -25,7 +25,7 @@ export class PresetPlayer {
             return this.callbackPresetPlayer.play(preset.callback, interaction);
         }
         if (preset instanceof MimicsPreset) {
-            return this.replicatePresetPlayer.play(preset.origin, interaction);
+            return this.mimicsPresetPlayer.play(preset.origin, interaction);
         }
         if (preset instanceof ThrowsPreset) {
             throw preset.exception;

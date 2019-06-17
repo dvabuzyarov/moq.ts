@@ -15,6 +15,7 @@ export class HasInteractionExplorer {
     public has(interaction: Expressions): boolean {
         return this.presets
             .get()
-            .find(preset => this.matcher.matched(interaction, preset.target)) !== undefined;
+            .find(preset => this.matcher.matched(interaction, preset.target)
+                && preset.invocable() === true) !== undefined;
     }
 }

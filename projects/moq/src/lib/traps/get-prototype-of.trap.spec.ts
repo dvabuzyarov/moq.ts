@@ -6,7 +6,7 @@ describe("Get prototype of trap", () => {
     let resolve: ReturnType<typeof resolveBuilder>;
 
     function get(): GetPrototypeOfTrap {
-        const prototypeStorage = {} as PrototypeStorage;
+        const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>("", ["get"]);
         resolve = resolveBuilder([
             [PrototypeStorage, prototypeStorage],
         ]);
@@ -19,7 +19,7 @@ describe("Get prototype of trap", () => {
 
         const trap = get();
         resolve(PrototypeStorage)
-            .prototype = Prototype.prototype;
+            .get.and.returnValue(Prototype.prototype);
 
         const actual = trap.intercept();
 

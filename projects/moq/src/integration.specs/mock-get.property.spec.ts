@@ -35,7 +35,7 @@ describe("Mock: Get property", () => {
         expect(object.property).toBe(value);
     });
 
-    it("Returns undefined for unset property in strict mode", () => {
+    it("Returns undefined for unset property", () => {
         const value = "value";
         const object = new Mock<ITestObject>()
             .object();
@@ -43,17 +43,6 @@ describe("Mock: Get property", () => {
         const actual = object.property;
 
         expect(actual).toBeUndefined();
-    });
-
-    it("Returns unset function for unset property", () => {
-        const mock = new Mock<ITestObject>()
-            .setBehaviorStrategy(MockBehavior.Loose);
-        const object = mock.object();
-
-        const actual = object.property;
-
-        expect(actual).toEqual(jasmine.any(Function));
-        mock.verify(instance => instance.property);
     });
 
     it("Returns last written value", () => {

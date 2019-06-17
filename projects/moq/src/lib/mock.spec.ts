@@ -11,6 +11,7 @@ import { Interceptor } from "./interceptor";
 import { Verifier } from "./verifier";
 import { Mock } from "./mock";
 import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
+import { PrototypeStorage } from "./traps/prototype.storage";
 
 describe("Mock", () => {
 
@@ -27,6 +28,7 @@ describe("Mock", () => {
         const interceptor = jasmine.createSpyObj<Interceptor<unknown>>(["object", "prototypeof"]);
         const setupFactory = jasmine.createSpy();
         const verifier = jasmine.createSpyObj<Verifier<unknown>>(["test"]);
+        const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>("", ["set"]);
 
         dependencies = {
             expressionReflector,
@@ -34,7 +36,8 @@ describe("Mock", () => {
             verifier,
             interceptor,
             presetBuilderFactory: setupFactory,
-            tracker
+            tracker,
+            prototypeStorage
         };
 
         spyOn(mockDependencies, "mockDependenciesFactory").and.returnValue(dependencies as any);
@@ -129,14 +132,14 @@ describe("Mock", () => {
         expect(actual).toBe(setup);
     });
 
-    it("Sets instance of object", () => {
-        const {interceptor} = dependencies;
+    it("Sets prototype of mock", () => {
+        const {prototypeStorage} = dependencies;
         const prototype = {};
 
         const mock = new Mock();
         mock.prototypeof(prototype);
 
-        expect(interceptor.prototypeof).toHaveBeenCalledWith(prototype);
+        expect(prototypeStorage.set).toHaveBeenCalledWith(prototype);
     });
 
     it("Returns the current instance of mock from prototypeof", () => {

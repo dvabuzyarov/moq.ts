@@ -11,7 +11,7 @@ describe("Has interaction explorer", () => {
         const name = "name";
         const expression = new GetPropertyExpression(name);
         const target = new ExpectedGetPropertyExpression(name);
-        const preset = <IPreset<unknown>>{target};
+        const preset = <IPreset<unknown>>{target, invocable: () => true};
 
         const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
         presets.get.and.returnValue([preset]);
@@ -25,11 +25,29 @@ describe("Has interaction explorer", () => {
         expect(actual).toBe(true);
     });
 
+    it("Returns false when there is an interaction but is not invokable", () => {
+        const name = "name";
+        const expression = new GetPropertyExpression(name);
+        const target = new ExpectedGetPropertyExpression(name);
+        const preset = <IPreset<unknown>>{target, invocable: () => false};
+
+        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
+        presets.get.and.returnValue([preset]);
+
+        const expressionMatcher = jasmine.createSpyObj<ExpressionMatcher>("", ["matched"]);
+        expressionMatcher.matched.withArgs(expression, target).and.returnValue(true);
+
+        const explorer = new HasInteractionExplorer(presets, expressionMatcher);
+        const actual = explorer.has(expression);
+
+        expect(actual).toBe(false);
+    });
+
     it("Returns false when there is no property", () => {
         const name = "name";
         const expression = new GetPropertyExpression(name);
         const target = new ExpectedGetPropertyExpression(name);
-        const preset = <IPreset<unknown>>{target};
+        const preset = <IPreset<unknown>>{target, invocable: () => true};
 
         const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
         presets.get.and.returnValue([preset]);
