@@ -2,6 +2,6 @@
   "name": "docs",
   "version": "0.0.1",
   "peerDependencies": {
-    "typedoc": "0.14.2"
+    "typedoc": "0.15.0"
   }
 }
