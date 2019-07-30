@@ -36,7 +36,7 @@
     "jasmine": "3.4.0",
     "jasmine-core": "3.4.0",
     "ng-packagr": "4.7.1",
-    "semantic-release": "15.13.18",
+    "semantic-release": "15.13.19",
     "serve": "11.1.0",
     "ts-node": "8.3.0",
     "tsickle": "0.36.0",
