@@ -1,7 +1,7 @@
 import { Tracker } from "../tracker";
 import { nameof } from "../../tests.components/nameof";
 import { GetTrap } from "./get.trap";
-import { GetPropertyExpression } from "../expressions";
+import { GetPropertyInteraction } from "../interactions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
@@ -46,7 +46,7 @@ describe("Get trap", () => {
         const trap = get();
         trap.intercept(propertyName);
 
-        expect(resolve(Tracker).add).toHaveBeenCalledWith(new GetPropertyExpression(propertyName));
+        expect(resolve(Tracker).add).toHaveBeenCalledWith(new GetPropertyInteraction(propertyName));
     });
 
     it("Returns value from property values storage", () => {
@@ -74,7 +74,7 @@ describe("Get trap", () => {
         resolve(HasPropertyExplorer)
             .has.withArgs(propertyName).and.returnValue(true);
         resolve(InteractionPlayer)
-            .play.withArgs(new GetPropertyExpression(propertyName)).and.returnValue(value);
+            .play.withArgs(new GetPropertyInteraction(propertyName)).and.returnValue(value);
 
         const actual = trap.intercept(propertyName);
 
@@ -187,9 +187,9 @@ describe("Get trap", () => {
         resolve(HasPropertyExplorer)
             .has.withArgs(propertyName).and.returnValue(false);
         resolve(HasInteractionExplorer)
-            .has.withArgs(new GetPropertyExpression(propertyName)).and.returnValue(true);
+            .has.withArgs(new GetPropertyInteraction(propertyName)).and.returnValue(true);
         resolve(InteractionPlayer)
-            .play.withArgs(new GetPropertyExpression(propertyName)).and.returnValue(value);
+            .play.withArgs(new GetPropertyInteraction(propertyName)).and.returnValue(value);
 
         const actual = trap.intercept(propertyName);
 

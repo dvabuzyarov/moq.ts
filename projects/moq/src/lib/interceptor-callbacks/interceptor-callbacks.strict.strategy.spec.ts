@@ -1,13 +1,13 @@
 import { Tracker } from "../tracker";
 import { InterceptorCallbacksStrictStrategy } from "./interceptor-callbacks.strict.strategy";
-import { Expressions } from "../expressions";
+import { Interactions } from "../interactions";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
 
 describe("Interceptor callbacks strict strategy", () => {
 
     it("Tracks intercepted calls", () => {
-        const expression = <Expressions>{};
+        const expression = <Interactions>{};
 
         const tracker = jasmine.createSpyObj<Tracker>(["add"]);
 
@@ -19,7 +19,7 @@ describe("Interceptor callbacks strict strategy", () => {
 
     it("Returns preset play result", () => {
         const value = "value";
-        const expression = <Expressions>{};
+        const expression = <Interactions>{};
 
         const interactionPlayer = jasmine.createSpyObj<InteractionPlayer>(["play"]);
         interactionPlayer.play.withArgs(expression).and.returnValue(value);

@@ -1,4 +1,4 @@
-import { NamedMethodExpression } from "../expressions";
+import { NamedMethodInteraction } from "../interactions";
 import { ConstantFormatter } from "./constant-formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
 
@@ -12,7 +12,7 @@ export class NamedMethodExpressionFormatter {
 
     }
 
-    public format(expression: NamedMethodExpression): string {
+    public format(expression: NamedMethodInteraction): string {
         const formatted: string[] = [];
 
         expression.args.forEach(arg => {

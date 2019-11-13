@@ -1,10 +1,10 @@
 import {
-    Expressions,
-    GetPropertyExpression,
-    MethodExpression,
-    NamedMethodExpression,
-    SetPropertyExpression
-} from "../expressions";
+    Interactions,
+    GetPropertyInteraction,
+    MethodInteraction,
+    NamedMethodInteraction,
+    SetPropertyInteraction
+} from "../interactions";
 import { It } from "../expected-expressions/expression-predicates";
 import { GetPropertyExpressionFormatter } from "./get.property-formatter";
 import { SetPropertyExpressionFormatter } from "./set.property-formatter";
@@ -25,11 +25,11 @@ export class ExpressionFormatter {
 
     }
 
-    public format(expression: Expressions | It<any>): string {
-        if (expression instanceof GetPropertyExpression) return this.getPropertyFormatter.format(expression);
-        if (expression instanceof SetPropertyExpression) return this.setPropertyFormatter.format(expression);
-        if (expression instanceof MethodExpression) return this.methodFormatter.format(expression);
-        if (expression instanceof NamedMethodExpression) return this.namedMethodFormatter.format(expression);
+    public format(expression: Interactions | It<any>): string {
+        if (expression instanceof GetPropertyInteraction) return this.getPropertyFormatter.format(expression);
+        if (expression instanceof SetPropertyInteraction) return this.setPropertyFormatter.format(expression);
+        if (expression instanceof MethodInteraction) return this.methodFormatter.format(expression);
+        if (expression instanceof NamedMethodInteraction) return this.namedMethodFormatter.format(expression);
         if (expression instanceof It) return this.constantFormatter.format(expression);
 
         return undefined;

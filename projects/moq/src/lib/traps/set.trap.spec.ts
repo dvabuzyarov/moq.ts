@@ -1,5 +1,5 @@
 import { Tracker } from "../tracker";
-import { SetPropertyExpression } from "../expressions";
+import { SetPropertyInteraction } from "../interactions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { SetTrap } from "./set.trap";
@@ -27,7 +27,7 @@ describe("Set trap", () => {
         const trap = get();
         trap.intercept(undefined, propertyName, value);
 
-        expect(resolve(Tracker).add).toHaveBeenCalledWith(new SetPropertyExpression(propertyName, value));
+        expect(resolve(Tracker).add).toHaveBeenCalledWith(new SetPropertyInteraction(propertyName, value));
     });
 
     it("Assigns new value to property when interaction returns true", () => {
@@ -36,7 +36,7 @@ describe("Set trap", () => {
 
         const trap = get();
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(true);
+            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(true);
 
         trap.intercept(undefined, propertyName, value);
 
@@ -49,7 +49,7 @@ describe("Set trap", () => {
 
         const trap = get();
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(undefined);
+            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(undefined);
 
         trap.intercept(undefined, propertyName, value);
 
@@ -62,7 +62,7 @@ describe("Set trap", () => {
 
         const trap = get();
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(false);
+            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(false);
 
         trap.intercept(undefined, propertyName, value);
 
@@ -75,7 +75,7 @@ describe("Set trap", () => {
 
         const trap = get();
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(undefined);
+            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(undefined);
 
         const actual = trap.intercept(undefined, propertyName, value);
 
@@ -88,7 +88,7 @@ describe("Set trap", () => {
 
         const trap = get();
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(true);
+            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(true);
 
         const actual = trap.intercept(undefined, propertyName, value);
 
@@ -101,7 +101,7 @@ describe("Set trap", () => {
 
         const trap = get();
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(false);
+            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(false);
 
         const actual = trap.intercept(undefined, propertyName, value);
 

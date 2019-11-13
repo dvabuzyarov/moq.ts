@@ -2,9 +2,9 @@
 import {It} from "../expected-expressions/expression-predicates";
 import {ExpressionMatcher} from "./expression-matcher";
 import {
-    GetPropertyExpression, SetPropertyExpression, MethodExpression,
-    NamedMethodExpression
-} from "../expressions";
+    GetPropertyInteraction, SetPropertyInteraction, MethodInteraction,
+    NamedMethodInteraction
+} from "../interactions";
 import {GetPropertyExpressionMatcher} from "./get.property-matcher";
 import {
     ExpectedGetPropertyExpression,
@@ -43,7 +43,7 @@ describe("Expression matcher", () => {
 
 
     it("Returns true when right is undefined", () => {
-        const left = new GetPropertyExpression("name");
+        const left = new GetPropertyInteraction("name");
         const right = undefined;
 
         const matcher = new ExpressionMatcher(undefined, undefined, undefined, undefined);
@@ -53,7 +53,7 @@ describe("Expression matcher", () => {
     });
 
     it("Returns value from GetPropertyExpressionMatcher when left and right are GetProperty expressions", () => {
-        const left = new GetPropertyExpression("left name");
+        const left = new GetPropertyInteraction("left name");
         const right = new ExpectedGetPropertyExpression("right name");
 
         const expected = true;
@@ -67,7 +67,7 @@ describe("Expression matcher", () => {
     });
 
     it("Returns value from GetPropertyExpressionMatcher when left is GetProperty and right is It", () => {
-        const left = new GetPropertyExpression("name");
+        const left = new GetPropertyInteraction("name");
         const right = It.Is(() => undefined);
 
         const expected = true;
@@ -81,7 +81,7 @@ describe("Expression matcher", () => {
     });
 
     it("Returns value from SetPropertyExpressionMatcher when left and right are SetProperty expressions", () => {
-        const left = new SetPropertyExpression("left name", "left value");
+        const left = new SetPropertyInteraction("left name", "left value");
         const right = new ExpectedSetPropertyExpression("right name", "right value");
 
         const expected = true;
@@ -95,7 +95,7 @@ describe("Expression matcher", () => {
     });
 
     it("Returns value from SetPropertyExpressionMatcher when left is SetProperty and right is It", () => {
-        const left = new SetPropertyExpression("name", "value");
+        const left = new SetPropertyInteraction("name", "value");
         const right = It.Is(() => undefined);
 
         const expected = true;
@@ -109,7 +109,7 @@ describe("Expression matcher", () => {
     });
 
     it("Returns value from MethodExpressionMatcher when left and right are Method expressions", () => {
-        const left = new MethodExpression([]);
+        const left = new MethodInteraction([]);
         const right = new ExpectedMethodExpression([]);
 
         const expected = true;
@@ -123,7 +123,7 @@ describe("Expression matcher", () => {
     });
 
     it("Returns value from MethodExpressionMatcher when left is Method expression and right is It", () => {
-        const left = new MethodExpression([]);
+        const left = new MethodInteraction([]);
         const right = It.Is(() => undefined);
 
         const expected = true;
@@ -137,7 +137,7 @@ describe("Expression matcher", () => {
     });
 
     it("Returns value from NamedMethodExpressionMatcher when left and right are NamedMethod expressions", () => {
-        const left = new NamedMethodExpression("name", []);
+        const left = new NamedMethodInteraction("name", []);
         const right = new ExpectedNamedMethodExpression("name", []);
 
         const expected = true;
@@ -151,7 +151,7 @@ describe("Expression matcher", () => {
     });
 
     it("Returns value from NamedMethodExpressionMatcher when left is NamedMethod expression and right is It", () => {
-        const left = new NamedMethodExpression("name", []);
+        const left = new NamedMethodInteraction("name", []);
         const right = It.Is(() => undefined);
 
         const expected = true;
@@ -165,7 +165,7 @@ describe("Expression matcher", () => {
     });
 
     it("Returns false when left and right represent different expressions", () => {
-        const left = new NamedMethodExpression("name", []);
+        const left = new NamedMethodInteraction("name", []);
         const right = new ExpectedGetPropertyExpression("name");
 
         const matcher = new ExpressionMatcher(undefined, undefined, undefined, undefined);

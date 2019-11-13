@@ -1,10 +1,10 @@
 import {
-    Expressions,
-    GetPropertyExpression,
-    MethodExpression,
-    NamedMethodExpression,
-    SetPropertyExpression
-} from "../expressions";
+    Interactions,
+    GetPropertyInteraction,
+    MethodInteraction,
+    NamedMethodInteraction,
+    SetPropertyInteraction
+} from "../interactions";
 
 /**
  * @hidden
@@ -14,19 +14,19 @@ export class MimicsPresetPlayer {
 
     }
 
-    public play(origin: any, interaction: Expressions): any {
-        if (interaction instanceof GetPropertyExpression) {
+    public play(origin: any, interaction: Interactions): any {
+        if (interaction instanceof GetPropertyInteraction) {
             return origin[interaction.name];
         }
-        if (interaction instanceof SetPropertyExpression) {
+        if (interaction instanceof SetPropertyInteraction) {
             origin[interaction.name] = interaction.value;
             return true;
         }
-        if (interaction instanceof NamedMethodExpression) {
+        if (interaction instanceof NamedMethodInteraction) {
             const method = origin[interaction.name];
             return this.apply(method, origin, interaction.args);
         }
-        if (interaction instanceof MethodExpression) {
+        if (interaction instanceof MethodInteraction) {
             return this.apply(origin, undefined, interaction.args);
         }
     }

@@ -1,7 +1,7 @@
 import { InterceptorCallbacksStrictStrategy } from "./interceptor-callbacks.strict.strategy";
 import { InterceptorCallbacksLooseStrategy } from "./interceptor-callbacks.loose.strategy";
 import { InterceptorCallbacks, MockBehavior } from "./interceptor-callbacks";
-import { GetPropertyExpression } from "../expressions";
+import { GetPropertyInteraction } from "../interactions";
 import { nameof } from "../../tests.components/nameof";
 
 describe("Interceptor callbacks", () => {
@@ -36,7 +36,7 @@ describe("Interceptor callbacks", () => {
 
         const expected = {};
         const propertyName = "property";
-        const expression = new GetPropertyExpression(propertyName);
+        const expression = new GetPropertyInteraction(propertyName);
         const prototype = {};
         (<jasmine.Spy>strictStrategy.intercepted).and.returnValue(expected);
 
@@ -53,7 +53,7 @@ describe("Interceptor callbacks", () => {
 
         const expected = {};
         const propertyName = "property";
-        const expression = new GetPropertyExpression(propertyName);
+        const expression = new GetPropertyInteraction(propertyName);
         const prototype = {};
         (<jasmine.Spy>looseStrategy.intercepted).and.returnValue(expected);
 
@@ -71,7 +71,7 @@ describe("Interceptor callbacks", () => {
 
         const expected = {};
         const propertyName = "property";
-        const expression = new GetPropertyExpression(propertyName);
+        const expression = new GetPropertyInteraction(propertyName);
         const prototype = {};
 
         (<jasmine.Spy>strictStrategy.intercepted).and.returnValue(expected);

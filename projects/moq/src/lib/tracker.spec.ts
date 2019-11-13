@@ -1,4 +1,4 @@
-import { GetPropertyExpression, MethodExpression } from "./expressions";
+import { GetPropertyInteraction, MethodInteraction } from "./interactions";
 import { SequenceId } from "./sequence-id";
 import { Tracker } from "./tracker";
 import { nameof } from "../tests.components/nameof";
@@ -11,8 +11,8 @@ describe("Mock tracker", () => {
         (<jasmine.Spy>sequenceId.next).and.returnValues(1, 2);
 
         const tracker = new Tracker(sequenceId);
-        const action1 = new MethodExpression([]);
-        const action2 = new GetPropertyExpression("property name");
+        const action1 = new MethodInteraction([]);
+        const action2 = new GetPropertyInteraction("property name");
 
         tracker.add(action1);
         tracker.add(action2);

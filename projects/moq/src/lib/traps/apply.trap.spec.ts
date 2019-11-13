@@ -1,5 +1,5 @@
 import { Tracker } from "../tracker";
-import { MethodExpression } from "../expressions";
+import { MethodInteraction } from "../interactions";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { Type } from "../../tests.components/type";
 import { ApplyTrap } from "./apply.trap";
@@ -32,7 +32,7 @@ describe("Apply trap", () => {
         const trap = get();
         trap.intercept(undefined, undefined, args);
 
-        expect(resolve(Tracker).add).toHaveBeenCalledWith(new MethodExpression(args));
+        expect(resolve(Tracker).add).toHaveBeenCalledWith(new MethodInteraction(args));
     });
 
     it("Returns interaction result", () => {
@@ -41,7 +41,7 @@ describe("Apply trap", () => {
 
         const trap = get();
         resolve(InteractionPlayer)
-            .play.withArgs(new MethodExpression(args)).and.returnValue(result);
+            .play.withArgs(new MethodInteraction(args)).and.returnValue(result);
 
         const actual = trap.intercept(undefined, undefined, args);
 

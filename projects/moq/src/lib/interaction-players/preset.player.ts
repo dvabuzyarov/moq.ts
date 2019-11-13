@@ -1,5 +1,5 @@
 import { IPreset } from "../presets/preset";
-import { Expressions } from "../expressions";
+import { Interactions } from "../interactions";
 import { ReturnsPreset } from "../presets/returns.preset";
 import { CallbackPresetPlayer } from "./callback-preset.player";
 import { CallbacksPreset } from "../presets/callbacks.preset";
@@ -17,7 +17,7 @@ export class PresetPlayer {
 
     }
 
-    public play<T>(preset: IPreset<T>, interaction: Expressions): any {
+    public play<T>(preset: IPreset<T>, interaction: Interactions): any {
         if (preset instanceof ReturnsPreset) {
             return preset.value;
         }

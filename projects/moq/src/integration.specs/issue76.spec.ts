@@ -1,6 +1,6 @@
 import { Mock } from "../lib/mock";
 import { It } from "../lib/expected-expressions/expression-predicates";
-import { PropertyExpression } from "../lib/expressions";
+import { PropertyInteraction } from "../lib/interactions";
 
 class SimpleMimic {
 
@@ -17,7 +17,7 @@ describe("#76 Prototypeof & mimics do not respect each other", () => {
         const mock = new Mock<Dummy>()
             .prototypeof(Dummy.prototype)
             .setup(() => It.Is(expression => {
-                if (expression instanceof PropertyExpression) {
+                if (expression instanceof PropertyInteraction) {
                     return Reflect.has(SimpleMimic.prototype, expression.name);
                 }
                 return false;

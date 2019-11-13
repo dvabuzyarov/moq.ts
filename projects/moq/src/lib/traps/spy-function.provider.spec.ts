@@ -1,5 +1,5 @@
 import { Tracker } from "../tracker";
-import { NamedMethodExpression } from "../expressions";
+import { NamedMethodInteraction } from "../interactions";
 import { SpyFunctionProvider } from "./spy-function.provider";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { resolveBuilder } from "../../tests.components/resolve.builder";
@@ -25,7 +25,7 @@ describe("Get trap", () => {
         const spy = provider.get(propertyName);
         spy(arg);
 
-        expect(resolve(Tracker).add).toHaveBeenCalledWith(new NamedMethodExpression(propertyName, [arg]));
+        expect(resolve(Tracker).add).toHaveBeenCalledWith(new NamedMethodInteraction(propertyName, [arg]));
     });
 
     it("Returns result of interaction", () => {
@@ -35,7 +35,7 @@ describe("Get trap", () => {
 
         const provider = get();
         resolve(InteractionPlayer)
-            .play.withArgs(new NamedMethodExpression(propertyName, [arg])).and.returnValue(value);
+            .play.withArgs(new NamedMethodInteraction(propertyName, [arg])).and.returnValue(value);
 
         const spy = provider.get(propertyName);
         const actual = spy(arg);

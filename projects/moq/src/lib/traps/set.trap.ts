@@ -1,5 +1,5 @@
 import { Tracker } from "../tracker";
-import { SetPropertyExpression } from "../expressions";
+import { SetPropertyInteraction } from "../interactions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 
@@ -15,7 +15,7 @@ export class SetTrap {
     }
 
     public intercept(target: any, property: PropertyKey, value: any): boolean {
-        const expression = new SetPropertyExpression(property, value);
+        const expression = new SetPropertyInteraction(property, value);
 
         this.tracker.add(expression);
 

@@ -1,6 +1,6 @@
 import { Tracker } from "../tracker";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
-import { NamedMethodExpression } from "../expressions";
+import { NamedMethodInteraction } from "../interactions";
 
 /**
  * @hidden
@@ -14,9 +14,9 @@ export class SpyFunctionProvider {
 
     public get(property: PropertyKey): (...args) => any {
         return (...args): any => {
-            const expression = new NamedMethodExpression(property, args);
-            this.tracker.add(expression);
-            return this.interactionPlayer.play(expression);
+            const interaction = new NamedMethodInteraction(property, args);
+            this.tracker.add(interaction);
+            return this.interactionPlayer.play(interaction);
         };
     }
 }

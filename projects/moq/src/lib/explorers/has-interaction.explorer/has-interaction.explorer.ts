@@ -1,6 +1,6 @@
 import { Presets } from "../../preset/presets";
 import { ExpressionMatcher } from "../../expression-matchers/expression-matcher";
-import { Expressions } from "../../expressions";
+import { Interactions } from "../../interactions";
 
 /**
  * @hidden
@@ -11,8 +11,8 @@ export class HasInteractionExplorer {
         private matcher = new ExpressionMatcher()) {
 
     }
-
-    public has(interaction: Expressions): boolean {
+// todo: inconsistency with invocable behaviour, it should not change the internal state
+    public has(interaction: Interactions): boolean {
         return this.presets
             .get()
             .find(preset => this.matcher.matched(interaction, preset.target)

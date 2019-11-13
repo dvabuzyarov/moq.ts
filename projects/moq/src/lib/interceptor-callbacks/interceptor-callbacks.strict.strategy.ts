@@ -1,4 +1,4 @@
-import { Expressions } from "../expressions";
+import { Interactions } from "../interactions";
 import { Tracker } from "../tracker";
 import { IInterceptorCallbacksStrategy } from "./interceptor-callbacks";
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
@@ -15,11 +15,11 @@ export class InterceptorCallbacksStrictStrategy<T> implements IInterceptorCallba
 
     }
 
-    public intercepted(expression: Expressions): void {
+    public intercepted(expression: Interactions): void {
         this.tracker.add(expression);
     }
 
-    public invoke(expression: Expressions): any {
+    public invoke(expression: Interactions): any {
         return this.interactionPlayer.play(expression);
     }
 

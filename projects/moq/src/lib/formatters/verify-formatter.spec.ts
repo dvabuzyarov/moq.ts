@@ -1,4 +1,4 @@
-import { GetPropertyExpression } from "../expressions";
+import { GetPropertyInteraction } from "../interactions";
 import { VerifyFormatter } from "./verify-formatter";
 import { ExpectedExpressionFormatter } from "./expected-expression-formatter";
 import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
@@ -21,7 +21,7 @@ describe("Verify message formatter", () => {
         const trackedExpressionsDescription = "tracked expressions description";
         const trackedExpressions = [];
 
-        const expression = new GetPropertyExpression("name");
+        const expression = new GetPropertyInteraction("name");
         const expectedExpressionFormatter = expectedExpressionFormatterFactory();
 
         (<jasmine.Spy>expectedExpressionFormatter.format).and.returnValue(expressionDescription);

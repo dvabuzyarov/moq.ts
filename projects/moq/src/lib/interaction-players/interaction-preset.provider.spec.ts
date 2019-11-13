@@ -1,6 +1,6 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
-import { Expressions } from "../expressions";
+import { Interactions } from "../interactions";
 import { Presets } from "../preset/presets";
 import { InteractionPresetProvider } from "./interaction-preset.provider";
 import { IPreset } from "../presets/preset";
@@ -9,7 +9,7 @@ describe("Interaction preset provider", () => {
 
     it("Returns playable preset by expression", () => {
         const expectedExpression = <ExpectedExpressions<unknown>>{};
-        const expression = <Expressions>{};
+        const expression = <Interactions>{};
 
         const preset = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
         (<any>preset).target = expectedExpression;
@@ -29,7 +29,7 @@ describe("Interaction preset provider", () => {
 
     it("Returns the first playable preset", () => {
         const expectedExpression = <ExpectedExpressions<unknown>>{};
-        const expression = <Expressions>{};
+        const expression = <Interactions>{};
 
         const preset1 = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
         (<any>preset1).target = expectedExpression;
@@ -53,7 +53,7 @@ describe("Interaction preset provider", () => {
 
     it("Skips unplayable preset by expression and returns undefined", () => {
         const expectedExpression = <ExpectedExpressions<unknown>>{};
-        const expression = <Expressions>{};
+        const expression = <Interactions>{};
 
         const preset = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
         (<any>preset).target = expectedExpression;
@@ -73,7 +73,7 @@ describe("Interaction preset provider", () => {
 
     it("Skips preset that expected expression does not match to the interaction expression", () => {
         const expectedExpression = <ExpectedExpressions<unknown>>{};
-        const expression = <Expressions>{};
+        const expression = <Interactions>{};
 
         const preset = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
         (<any>preset).target = expectedExpression;
@@ -93,7 +93,7 @@ describe("Interaction preset provider", () => {
 
     it("Does not check playability of a preset when its expected expression does not match to the interaction expression", () => {
         const expectedExpression = <ExpectedExpressions<unknown>>{};
-        const expression = <Expressions>{};
+        const expression = <Interactions>{};
 
         const preset = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
         (<any>preset).target = expectedExpression;

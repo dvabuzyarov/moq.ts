@@ -1,4 +1,4 @@
-import { Expressions } from "../expressions";
+import { Interactions } from "../interactions";
 import { PresetPlayer } from "./preset.player";
 import { ReturnsPreset } from "../presets/returns.preset";
 import { CallbacksPreset } from "../presets/callbacks.preset";
@@ -10,7 +10,7 @@ import { MimicsPresetPlayer } from "./mimics-preset.player";
 describe("Preset player", () => {
 
     it("Plays returns preset and returns result", () => {
-        const expression = <Expressions>{};
+        const expression = <Interactions>{};
 
         const value = "value";
         const preset = new ReturnsPreset<unknown, string>(undefined, undefined, value);
@@ -22,7 +22,7 @@ describe("Preset player", () => {
     });
 
     it("Plays callback preset and returns result", () => {
-        const expression = <Expressions>{};
+        const expression = <Interactions>{};
 
         const value = "value";
         const callback = jasmine.createSpy();
@@ -38,7 +38,7 @@ describe("Preset player", () => {
     });
 
     it("Plays mimics preset and returns result", () => {
-        const expression = <Expressions>{};
+        const expression = <Interactions>{};
 
         const origin = {};
         const value = "value";
@@ -54,7 +54,7 @@ describe("Preset player", () => {
     });
 
     it("Throws value of throw preset", () => {
-        const expression = <Expressions>{};
+        const expression = <Interactions>{};
 
         const value = new Error();
         const preset = new ThrowsPreset<unknown, unknown>(undefined, undefined, value);

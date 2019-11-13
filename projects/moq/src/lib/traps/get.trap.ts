@@ -1,5 +1,5 @@
 import { Tracker } from "../tracker";
-import { GetPropertyExpression } from "../expressions";
+import { GetPropertyInteraction } from "../interactions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { SpyFunctionProvider } from "./spy-function.provider";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
@@ -25,16 +25,16 @@ export class GetTrap {
     }
 
     public intercept(property: PropertyKey): any {
-        const expression = new GetPropertyExpression(property);
+        const interaction = new GetPropertyInteraction(property);
 
-        this.tracker.add(expression);
+        this.tracker.add(interaction);
 
         if (this.propertiesValueStorage.has(property)) {
             return this.propertiesValueStorage.get(property);
         }
 
         if (this.hasPropertyExplorer.has(property)) {
-            return this.interactionPlayer.play(expression);
+            return this.interactionPlayer.play(interaction);
         }
 
         if (this.hasMethodExplorer.has(property)) {
@@ -46,8 +46,8 @@ export class GetTrap {
             return this.spyFunctionProvider.get(property);
         }
 
-        if (this.hasInteractionExplorer.has(expression)) {
-            return this.interactionPlayer.play(expression);
+        if (this.hasInteractionExplorer.has(interaction)) {
+            return this.interactionPlayer.play(interaction);
         }
 
         return undefined;

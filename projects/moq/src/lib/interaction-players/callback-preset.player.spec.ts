@@ -1,21 +1,21 @@
-import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
+import { GetPropertyInteraction, MethodInteraction, NamedMethodInteraction, SetPropertyInteraction } from "../interactions";
 import { CallbackPresetPlayer } from "./callback-preset.player";
 
 describe("Callback preset player", () => {
 
-    it("Returns value from callback for GetPropertyExpression", () => {
+    it("Returns value from callback for GetPropertyInteraction", () => {
         const value = [];
 
         const callback = jasmine.createSpy();
         callback.withArgs().and.returnValue(value);
 
         const player = new CallbackPresetPlayer();
-        const actual = player.play(callback, new GetPropertyExpression(undefined));
+        const actual = player.play(callback, new GetPropertyInteraction(undefined));
 
         expect(actual).toBe(value);
     });
 
-    it("Returns value from callback for SetPropertyExpression", () => {
+    it("Returns value from callback for SetPropertyInteraction", () => {
         const value = [];
         const arg = "argument 1";
 
@@ -23,12 +23,12 @@ describe("Callback preset player", () => {
         callback.withArgs(arg).and.returnValue(value);
 
         const player = new CallbackPresetPlayer();
-        const actual = player.play(callback, new SetPropertyExpression(undefined, arg));
+        const actual = player.play(callback, new SetPropertyInteraction(undefined, arg));
 
         expect(actual).toBe(value);
     });
 
-    it("Returns value from callback for MethodExpression", () => {
+    it("Returns value from callback for MethodInteraction", () => {
         const value = [];
         const arg1 = "argument 1";
         const arg2 = "argument 2";
@@ -37,12 +37,12 @@ describe("Callback preset player", () => {
         callback.withArgs(arg1, arg2).and.returnValue(value);
 
         const player = new CallbackPresetPlayer();
-        const actual = player.play(callback, new MethodExpression([arg1, arg2]));
+        const actual = player.play(callback, new MethodInteraction([arg1, arg2]));
 
         expect(actual).toBe(value);
     });
 
-    it("Returns value from callback for NamedMethodExpression", () => {
+    it("Returns value from callback for NamedMethodInteraction", () => {
         const value = [];
         const arg = "argument 1";
 
@@ -50,7 +50,7 @@ describe("Callback preset player", () => {
         callback.withArgs(arg).and.returnValue(value);
 
         const player = new CallbackPresetPlayer();
-        const actual = player.play(callback, new NamedMethodExpression(undefined, [arg]));
+        const actual = player.play(callback, new NamedMethodInteraction(undefined, [arg]));
 
         expect(actual).toBe(value);
     });

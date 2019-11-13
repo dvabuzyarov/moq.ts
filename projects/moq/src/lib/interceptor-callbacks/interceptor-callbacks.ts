@@ -1,4 +1,4 @@
-import { Expressions } from "../expressions";
+import { Interactions } from "../interactions";
 import { Tracker } from "../tracker";
 import { InterceptorCallbacksLooseStrategy } from "./interceptor-callbacks.loose.strategy";
 import { InterceptorCallbacksStrictStrategy } from "./interceptor-callbacks.strict.strategy";
@@ -21,11 +21,11 @@ export enum MockBehavior {
  * @hidden
  */
 export interface IInterceptorCallbacksStrategy {
-    intercepted(expression: Expressions): void;
+    intercepted(expression: Interactions): void;
 
     hasNamedMethod(methodName: PropertyKey, prototype: any): boolean;
 
-    invoke(expression: Expressions): any;
+    invoke(expression: Interactions): any;
 }
 
 /**
@@ -47,11 +47,11 @@ export class InterceptorCallbacks<T> implements IInterceptorCallbacks {
         this.activeStrategy = strictStrategy;
     }
 
-    public invoke(expression: Expressions): any {
+    public invoke(expression: Interactions): any {
         return this.activeStrategy.invoke(expression);
     }
 
-    public intercepted(expression: Expressions): void {
+    public intercepted(expression: Interactions): void {
         return this.activeStrategy.intercepted(expression);
     }
 
