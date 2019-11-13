@@ -1,35 +1,26 @@
 import { Tracker } from "../tracker";
 import { MethodInteraction } from "../interactions";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
-import { Type } from "../../tests.components/type";
 import { ApplyTrap } from "./apply.trap";
 import { resolveBuilder } from "../../tests.components/resolve.builder";
 
 describe("Apply trap", () => {
     let resolve: ReturnType<typeof resolveBuilder>;
 
-    function get(): ApplyTrap {
+    beforeEach(() => {
         const tracker = jasmine.createSpyObj<Tracker>("", ["add"]);
         const interactionPlayer = jasmine.createSpyObj<InteractionPlayer>("", ["play"]);
         resolve = resolveBuilder([
             [Tracker, tracker],
-            [InteractionPlayer, interactionPlayer]
+            [InteractionPlayer, interactionPlayer],
+            [ApplyTrap, new ApplyTrap(tracker, interactionPlayer)]
         ]);
-        resolve = <T>(token: Type<T | any>): T => {
-            if (token === Tracker) {
-                return tracker as any as T;
-            }
-            if (token === InteractionPlayer) {
-                return interactionPlayer as any as T;
-            }
-        };
-        return new ApplyTrap(tracker, interactionPlayer);
-    }
+    });
 
     it("Tracks method invocation", () => {
         const args = [];
 
-        const trap = get();
+        const trap = resolve(ApplyTrap);
         trap.intercept(undefined, undefined, args);
 
         expect(resolve(Tracker).add).toHaveBeenCalledWith(new MethodInteraction(args));
@@ -39,7 +30,7 @@ describe("Apply trap", () => {
         const args = [];
         const result = {};
 
-        const trap = get();
+        const trap = resolve(ApplyTrap);
         resolve(InteractionPlayer)
             .play.withArgs(new MethodInteraction(args)).and.returnValue(result);
 

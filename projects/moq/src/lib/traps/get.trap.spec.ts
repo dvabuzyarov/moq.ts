@@ -9,17 +9,15 @@ import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.e
 import { SpyFunctionProvider } from "./spy-function.provider";
 import { PrototypeStorage } from "./prototype.storage";
 import { resolveBuilder } from "../../tests.components/resolve.builder";
-import { HasInteractionExplorer } from "../explorers/has-interaction.explorer/has-interaction.explorer";
 
 describe("Get trap", () => {
     let resolve: ReturnType<typeof resolveBuilder>;
 
-    function get(): GetTrap {
+    beforeEach(() => {
         const storage = jasmine.createSpyObj<PropertiesValueStorage>("", ["has", "get"]);
         const tracker = jasmine.createSpyObj<Tracker>("", ["add"]);
         const interactionPlayer = jasmine.createSpyObj<InteractionPlayer>("", ["play"]);
         const hasPropertyExplorer = jasmine.createSpyObj<HasPropertyExplorer>("", ["has"]);
-        const hasInteractionExplorer = jasmine.createSpyObj<HasInteractionExplorer>("", ["has"]);
         const hasMethodExplorer = jasmine.createSpyObj<HasMethodExplorer>("", ["has"]);
         const spyFunctionProvider = jasmine.createSpyObj<SpyFunctionProvider>("", ["get"]);
         const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>("", ["get", "set"]);
@@ -28,22 +26,20 @@ describe("Get trap", () => {
             [Tracker, tracker],
             [InteractionPlayer, interactionPlayer],
             [HasPropertyExplorer, hasPropertyExplorer],
-            [HasInteractionExplorer, hasInteractionExplorer],
             [HasMethodExplorer, hasMethodExplorer],
             [SpyFunctionProvider, spyFunctionProvider],
             [PrototypeStorage, prototypeStorage],
+            [GetTrap, new GetTrap(tracker, storage, interactionPlayer,
+                hasPropertyExplorer,
+                hasMethodExplorer,
+                spyFunctionProvider, prototypeStorage)]
         ]);
-        return new GetTrap(tracker, storage, interactionPlayer,
-            hasPropertyExplorer,
-            hasInteractionExplorer,
-            hasMethodExplorer,
-            spyFunctionProvider, prototypeStorage);
-    }
+    });
 
     it("Tracks get property call", () => {
         const propertyName = "property name";
 
-        const trap = get();
+        const trap = resolve(GetTrap);
         trap.intercept(propertyName);
 
         expect(resolve(Tracker).add).toHaveBeenCalledWith(new GetPropertyInteraction(propertyName));
@@ -53,12 +49,12 @@ describe("Get trap", () => {
         const value = "value";
         const propertyName = "property name";
 
-        const trap = get();
         resolve(PropertiesValueStorage)
             .has.withArgs(propertyName).and.returnValue(true);
         resolve(PropertiesValueStorage)
             .get.withArgs(propertyName).and.returnValue(value);
 
+        const trap = resolve(GetTrap);
         const actual = trap.intercept(propertyName);
 
         expect(actual).toBe(value);
@@ -68,7 +64,6 @@ describe("Get trap", () => {
         const value = "value";
         const propertyName = "property name";
 
-        const trap = get();
         resolve(PropertiesValueStorage)
             .has.withArgs(propertyName).and.returnValue(false);
         resolve(HasPropertyExplorer)
@@ -76,6 +71,7 @@ describe("Get trap", () => {
         resolve(InteractionPlayer)
             .play.withArgs(new GetPropertyInteraction(propertyName)).and.returnValue(value);
 
+        const trap = resolve(GetTrap);
         const actual = trap.intercept(propertyName);
 
         expect(actual).toBe(value);
@@ -85,7 +81,6 @@ describe("Get trap", () => {
         const spy = () => undefined;
         const propertyName = "property name";
 
-        const trap = get();
         resolve(PropertiesValueStorage)
             .has.withArgs(propertyName).and.returnValue(false);
         resolve(HasPropertyExplorer)
@@ -95,6 +90,7 @@ describe("Get trap", () => {
         resolve(SpyFunctionProvider)
             .get.withArgs(propertyName).and.returnValue(spy);
 
+        const trap = resolve(GetTrap);
         const actual = trap.intercept(propertyName);
 
         expect(actual).toBe(spy);
@@ -110,7 +106,6 @@ describe("Get trap", () => {
         const propertyName = nameof<Prototype>("method");
         const spy = () => undefined;
 
-        const trap = get();
         resolve(PropertiesValueStorage)
             .has.withArgs(propertyName).and.returnValue(false);
         resolve(HasPropertyExplorer)
@@ -122,6 +117,7 @@ describe("Get trap", () => {
         resolve(PrototypeStorage)
             .get.and.returnValue(Prototype.prototype);
 
+        const trap = resolve(GetTrap);
         const actual = trap.intercept(propertyName);
 
         expect(actual).toBe(spy);
@@ -135,8 +131,6 @@ describe("Get trap", () => {
         const propertyName = nameof<Prototype>("method");
         const spy = () => undefined;
 
-        const trap = get();
-
         resolve(PropertiesValueStorage)
             .has.withArgs(propertyName).and.returnValue(false);
         resolve(HasPropertyExplorer)
@@ -148,6 +142,7 @@ describe("Get trap", () => {
         resolve(PrototypeStorage)
             .get.and.returnValue(Prototype.prototype);
 
+        const trap = resolve(GetTrap);
         const actual = trap.intercept(propertyName);
 
         expect(actual).toBeUndefined();
@@ -160,7 +155,6 @@ describe("Get trap", () => {
         const propertyName = "property name";
         const spy = () => undefined;
 
-        const trap = get();
         resolve(PropertiesValueStorage)
             .has.withArgs(propertyName).and.returnValue(false);
         resolve(HasPropertyExplorer)
@@ -172,25 +166,24 @@ describe("Get trap", () => {
         resolve(PrototypeStorage)
             .get.and.returnValue(Prototype.prototype);
 
+        const trap = resolve(GetTrap);
         const actual = trap.intercept(propertyName);
 
         expect(actual).toBeUndefined();
     });
 
-    it("Returns value of interaction when there is available interaction", () => {
+    it("Returns value of interaction", () => {
         const value = "value";
         const propertyName = "property name";
 
-        const trap = get();
         resolve(PropertiesValueStorage)
             .has.withArgs(propertyName).and.returnValue(false);
         resolve(HasPropertyExplorer)
             .has.withArgs(propertyName).and.returnValue(false);
-        resolve(HasInteractionExplorer)
-            .has.withArgs(new GetPropertyInteraction(propertyName)).and.returnValue(true);
         resolve(InteractionPlayer)
             .play.withArgs(new GetPropertyInteraction(propertyName)).and.returnValue(value);
 
+        const trap = resolve(GetTrap);
         const actual = trap.intercept(propertyName);
 
         expect(actual).toBe(value);

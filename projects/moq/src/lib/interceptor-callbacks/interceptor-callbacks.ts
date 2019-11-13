@@ -7,6 +7,8 @@ import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.e
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { InteractionPresetProvider } from "../interaction-players/interaction-preset.provider";
 import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
+import { ITypeMember } from "../moq";
+import { MembersExplorer } from "../explorers/members.explorer/members.explorer";
 
 /**
  * @obsolete
@@ -73,9 +75,10 @@ export class InterceptorCallbacks<T> implements IInterceptorCallbacks {
 /**
  * @hidden
  */
-export function interceptorCallbacksFactory<T>(tracker: Tracker, presets: Presets<unknown>): InterceptorCallbacks<T> {
+export function interceptorCallbacksFactory<T>(tracker: Tracker, presets: Presets<unknown>, members: ITypeMember[]): InterceptorCallbacks<T> {
     const interactionPlayer = new InteractionPlayer(new InteractionPresetProvider(presets));
-    const strictStrategy = new InterceptorCallbacksStrictStrategy<T>(tracker, new HasMethodExplorer(presets), interactionPlayer);
-    const looseStrategy = new InterceptorCallbacksLooseStrategy<T>(tracker, new HasPropertyExplorer(presets), interactionPlayer);
+    const membersExplorer = new MembersExplorer(members);
+    const strictStrategy = new InterceptorCallbacksStrictStrategy<T>(tracker, new HasMethodExplorer(presets, membersExplorer), interactionPlayer);
+    const looseStrategy = new InterceptorCallbacksLooseStrategy<T>(tracker, new HasPropertyExplorer(presets, membersExplorer), interactionPlayer);
     return new InterceptorCallbacks<T>(strictStrategy, looseStrategy);
 }

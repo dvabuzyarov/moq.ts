@@ -1,6 +1,7 @@
 import { Presets } from "./presets";
 import { IPreset } from "../presets/preset";
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
+import { PlayOptions } from "../moq";
 
 describe("List of defined presets", () => {
     it("Returns a copy of presets list", () => {

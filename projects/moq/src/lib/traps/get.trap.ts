@@ -6,7 +6,6 @@ import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
 import { PrototypeStorage } from "./prototype.storage";
-import { HasInteractionExplorer } from "../explorers/has-interaction.explorer/has-interaction.explorer";
 
 /**
  * @hidden
@@ -17,7 +16,6 @@ export class GetTrap {
         private propertiesValueStorage: PropertiesValueStorage,
         private interactionPlayer: InteractionPlayer,
         private hasPropertyExplorer: HasPropertyExplorer,
-        private hasInteractionExplorer: HasInteractionExplorer,
         private hasMethodExplorer: HasMethodExplorer,
         private spyFunctionProvider: SpyFunctionProvider,
         private prototypeStorage: PrototypeStorage) {
@@ -46,10 +44,6 @@ export class GetTrap {
             return this.spyFunctionProvider.get(property);
         }
 
-        if (this.hasInteractionExplorer.has(interaction)) {
-            return this.interactionPlayer.play(interaction);
-        }
-
-        return undefined;
+        return this.interactionPlayer.play(interaction);
     }
 }

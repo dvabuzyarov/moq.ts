@@ -19,7 +19,7 @@ import { SetTrap } from "./traps/set.trap";
 import { ApplyTrap } from "./traps/apply.trap";
 import { GetPrototypeOfTrap } from "./traps/get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./traps/set-prototype-of.trap";
-import { HasInteractionExplorer } from "./explorers/has-interaction.explorer/has-interaction.explorer";
+import { MembersExplorer } from "./explorers/members.explorer/members.explorer";
 
 /**
  * @hidden
@@ -41,7 +41,7 @@ export function mockDependenciesFactory<T>(options: IMockOptions): IMockDependen
     const expressionReflector = new ExpectedExpressionReflector();
     const presets = new Presets<T>();
     const tracker = new Tracker();
-    const interceptedCallbacks = interceptorCallbacksFactory<T>(tracker, presets);
+    const interceptedCallbacks = interceptorCallbacksFactory<T>(tracker, presets, options.members);
     const presetBuilderFactory = (mock: IMock<T>, target: ExpectedExpressions<T>) => {
         return new PresetBuilder<T>(mock, preset => presets.add(preset), target);
     };
@@ -49,16 +49,15 @@ export function mockDependenciesFactory<T>(options: IMockOptions): IMockDependen
     const prototypeStorage = new PrototypeStorage(options.target);
     const propertiesValueStorage = new PropertiesValueStorage();
     const interactionPlayer = new InteractionPlayer(new InteractionPresetProvider(presets));
-    const hasPropertyExplorer = new HasPropertyExplorer(presets);
-    const hasInteractionExplorer = new HasInteractionExplorer(presets);
-    const hasMethodExplorer = new HasMethodExplorer(presets);
+    const membersExplorer = new MembersExplorer(options.members);
+    const hasPropertyExplorer = new HasPropertyExplorer(presets, membersExplorer);
+    const hasMethodExplorer = new HasMethodExplorer(presets, membersExplorer);
     const spyFunctionProvider = new SpyFunctionProvider(tracker, interactionPlayer);
     const getTrap = new GetTrap(
         tracker,
         propertiesValueStorage,
         interactionPlayer,
         hasPropertyExplorer,
-        hasInteractionExplorer,
         hasMethodExplorer,
         spyFunctionProvider,
         prototypeStorage);

@@ -3,6 +3,18 @@ import { Tracker } from "./tracker";
 import { Times } from "./times";
 import { MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 
+export interface ITypeMember {
+    name: PropertyKey;
+    type: "property" | "method";
+}
+
+export class PlayOptions {
+    constructor(public predicate: () => boolean = () => true,
+                public commit: () => void = () => undefined) {
+
+    }
+}
+
 /**
  * Mock creation options
  */
@@ -18,7 +30,9 @@ export interface IMockOptions {
      * The default value is function.
      */
     target?: any;
+    members?: ITypeMember[];
 }
+
 /**
  * Sets a behaviour rule for a particular use case
  * @param T The type of mocked object.

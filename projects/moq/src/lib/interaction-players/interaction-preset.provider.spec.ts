@@ -4,8 +4,21 @@ import { Interactions } from "../interactions";
 import { Presets } from "../preset/presets";
 import { InteractionPresetProvider } from "./interaction-preset.provider";
 import { IPreset } from "../presets/preset";
+import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { PlayOptions } from "../moq";
 
 describe("Interaction preset provider", () => {
+    let resolve: ReturnType<typeof resolveBuilder>;
+
+    beforeEach(() => {
+        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
+        const matcher = jasmine.createSpyObj<ExpressionMatcher>(["matched"]);
+        resolve = resolveBuilder([
+            [Presets, presets],
+            [ExpressionMatcher, matcher],
+            [InteractionPresetProvider, new InteractionPresetProvider(presets, matcher)]
+        ]);
+    });
 
     it("Returns playable preset by expression", () => {
         const expectedExpression = <ExpectedExpressions<unknown>>{};
@@ -15,13 +28,13 @@ describe("Interaction preset provider", () => {
         (<any>preset).target = expectedExpression;
         preset.invocable.and.returnValue(true);
 
-        const matcher = jasmine.createSpyObj<ExpressionMatcher>(["matched"]);
-        matcher.matched.withArgs(expression, expectedExpression).and.returnValue(true);
+        resolve(ExpressionMatcher)
+            .matched.withArgs(expression, expectedExpression).and.returnValue(true);
 
-        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
-        presets.get.and.returnValue([preset]);
+        resolve(Presets)
+            .get.and.returnValue([preset]);
 
-        const provider = new InteractionPresetProvider(presets, matcher);
+        const provider = resolve(InteractionPresetProvider);
         const actual = provider.get(expression);
 
         expect(actual).toBe(preset);
@@ -39,13 +52,13 @@ describe("Interaction preset provider", () => {
         (<any>preset2).target = expectedExpression;
         preset2.invocable.and.returnValue(true);
 
-        const matcher = jasmine.createSpyObj<ExpressionMatcher>(["matched"]);
-        matcher.matched.withArgs(expression, expectedExpression).and.returnValue(true);
+        resolve(ExpressionMatcher)
+            .matched.withArgs(expression, expectedExpression).and.returnValue(true);
 
-        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
-        presets.get.and.returnValue([preset1, preset2]);
+        resolve(Presets)
+            .get.and.returnValue([preset1, preset2]);
 
-        const provider = new InteractionPresetProvider(presets, matcher);
+        const provider = resolve(InteractionPresetProvider);
         const actual = provider.get(expression);
 
         expect(actual).toBe(preset1);
@@ -59,13 +72,13 @@ describe("Interaction preset provider", () => {
         (<any>preset).target = expectedExpression;
         preset.invocable.and.returnValue(false);
 
-        const matcher = jasmine.createSpyObj<ExpressionMatcher>(["matched"]);
-        matcher.matched.withArgs(expression, expectedExpression).and.returnValue(true);
+        resolve(ExpressionMatcher)
+            .matched.withArgs(expression, expectedExpression).and.returnValue(true);
 
-        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
-        presets.get.and.returnValue([preset]);
+        resolve(Presets)
+            .get.and.returnValue([preset]);
 
-        const provider = new InteractionPresetProvider(presets, matcher);
+        const provider = resolve(InteractionPresetProvider);
         const actual = provider.get(expression);
 
         expect(actual).toBeUndefined();
@@ -79,13 +92,13 @@ describe("Interaction preset provider", () => {
         (<any>preset).target = expectedExpression;
         preset.invocable.and.returnValue(true);
 
-        const matcher = jasmine.createSpyObj<ExpressionMatcher>(["matched"]);
-        matcher.matched.withArgs(expression, expectedExpression).and.returnValue(false);
+        resolve(ExpressionMatcher)
+            .matched.withArgs(expression, expectedExpression).and.returnValue(false);
 
-        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
-        presets.get.and.returnValue([preset]);
+        resolve(Presets)
+            .get.and.returnValue([preset]);
 
-        const provider = new InteractionPresetProvider(presets, matcher);
+        const provider = resolve(InteractionPresetProvider);
         const actual = provider.get(expression);
 
         expect(actual).toBeUndefined();
@@ -98,13 +111,13 @@ describe("Interaction preset provider", () => {
         const preset = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
         (<any>preset).target = expectedExpression;
 
-        const matcher = jasmine.createSpyObj<ExpressionMatcher>(["matched"]);
-        matcher.matched.withArgs(expression, expectedExpression).and.returnValue(false);
+        resolve(ExpressionMatcher)
+            .matched.withArgs(expression, expectedExpression).and.returnValue(false);
 
-        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
-        presets.get.and.returnValue([preset]);
+        resolve(Presets)
+            .get.and.returnValue([preset]);
 
-        const provider = new InteractionPresetProvider(presets, matcher);
+        const provider = resolve(InteractionPresetProvider);
         provider.get(expression);
 
         expect(preset.invocable).not.toHaveBeenCalled();
