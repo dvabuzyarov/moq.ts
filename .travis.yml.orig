@@ -1,7 +1,11 @@
 language: node_js
 node_js:
+<<<<<<< HEAD
+  - '11'
+=======
 #  - stable
   - "11"
+>>>>>>> master
 sudo: false
 git:
   depth: 1
