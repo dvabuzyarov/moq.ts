@@ -8,7 +8,7 @@ interface ITestObject {
     method(arg: number): string;
 }
 
-describe("Mock: Named method", () => {
+describe("Instance method", () => {
 
     it("Returns value with a simple setup", () => {
         const value = "value";

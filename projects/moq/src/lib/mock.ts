@@ -1,6 +1,5 @@
 import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
 import { Interceptor } from "./interceptor";
-import { IInterceptorCallbacks, MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 import { IMock, IMockOptions, IPresetBuilder, ISequenceVerifier } from "./moq";
 import { Times } from "./times";
 import { Tracker } from "./tracker";
@@ -19,7 +18,6 @@ export class Mock<T> implements IMock<T> {
     private interceptor: Interceptor<T>;
     private readonly setupFactory: (mock: IMock<T>, target: ExpectedExpressions<T>) => IPresetBuilder<T>;
     private verifier: Verifier<T>;
-    private interceptedCallbacks: IInterceptorCallbacks;
     private prototypeStorage: PrototypeStorage;
 
     constructor(private readonly options: IMockOptions = {}) {
@@ -30,7 +28,6 @@ export class Mock<T> implements IMock<T> {
         this.interceptor = dependencies.interceptor;
         this.setupFactory = dependencies.presetBuilderFactory;
         this.verifier = dependencies.verifier;
-        this.interceptedCallbacks = dependencies.interceptedCallbacks;
         this.prototypeStorage = dependencies.prototypeStorage;
     }
 
@@ -56,11 +53,6 @@ export class Mock<T> implements IMock<T> {
 
     public prototypeof(prototype?: any): IMock<T> {
         this.prototypeStorage.set(prototype);
-        return this;
-    }
-
-    public setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T> {
-        this.interceptedCallbacks.setBehaviorStrategy(behaviorStrategy);
         return this;
     }
 

@@ -1,18 +1,10 @@
 import { IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
 import { Tracker } from "./tracker";
 import { Times } from "./times";
-import { MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 
 export interface ITypeMember {
     name: PropertyKey;
     type: "property" | "method";
-}
-
-export class PlayOptions {
-    constructor(public predicate: () => boolean = () => true,
-                public commit: () => void = () => undefined) {
-
-    }
 }
 
 /**
@@ -209,15 +201,6 @@ export interface IMock<T> {
      * ```
      */
     prototypeof(prototype?: any): IMock<T>;
-
-    /**
-     * @deprecated
-     * @obsolete
-     * Use custom setup as described
-     * ["How to throw an exception on missed setup?"]
-     * (https://github.com/dvabuzyarov/moq.ts/wiki/How-to-throw-an-exception-on-missed-setup%3F).
-     */
-    setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T>;
 
     /**
      * @experimental

@@ -2,7 +2,6 @@ import { Mock } from "../lib/mock";
 import { It } from "../lib/expected-expressions/expression-predicates";
 import { ExpectedGetPropertyExpression } from "../lib/expected-expressions/expected-expressions";
 import { Times } from "../lib/times";
-import { MockBehavior } from "../lib/interceptor-callbacks/interceptor-callbacks";
 
 interface ITestObject {
     property: string;

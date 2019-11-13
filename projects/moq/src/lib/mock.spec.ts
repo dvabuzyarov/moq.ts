@@ -1,5 +1,4 @@
 import { IPresetBuilder, ISequenceVerifier } from "./moq";
-import { InterceptorCallbacks, MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 import { Times } from "./times";
 import { nameof } from "../tests.components/nameof";
 import * as mockDependencies from "./mock-dependencies.factory";
@@ -24,7 +23,6 @@ describe("Mock", () => {
     beforeEach(() => {
         const expressionReflector = jasmine.createSpyObj<ExpectedExpressionReflector>(["reflect"]);
         const tracker = jasmine.createSpyObj<Tracker>(["get"]);
-        const interceptedCallbacks = jasmine.createSpyObj<InterceptorCallbacks<unknown>>(["setBehaviorStrategy"]);
         const interceptor = jasmine.createSpyObj<Interceptor<unknown>>(["object"]);
         const setupFactory = jasmine.createSpy();
         const verifier = jasmine.createSpyObj<Verifier<unknown>>(["test"]);
@@ -32,7 +30,6 @@ describe("Mock", () => {
 
         dependencies = {
             expressionReflector,
-            interceptedCallbacks,
             verifier,
             interceptor,
             presetBuilderFactory: setupFactory,
@@ -80,15 +77,6 @@ describe("Mock", () => {
         const actual = mock.object();
 
         expect(actual).toBe(object);
-    });
-
-    it("Sets mock behavior strategy", () => {
-        const mock = new Mock();
-        const actual = mock.setBehaviorStrategy(MockBehavior.Loose);
-
-        const {interceptedCallbacks} = dependencies;
-        expect(actual).toBe(mock);
-        expect(interceptedCallbacks.setBehaviorStrategy).toHaveBeenCalledWith(MockBehavior.Loose);
     });
 
     it("Verifies an expression", () => {

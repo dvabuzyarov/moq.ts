@@ -6,7 +6,7 @@ interface ITestObject {
     property: string;
 }
 
-describe("Mock: Set property", () => {
+describe("Set property", () => {
 
 
     it("Allows write", () => {

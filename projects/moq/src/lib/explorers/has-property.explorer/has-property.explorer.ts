@@ -14,8 +14,9 @@ export class HasPropertyExplorer {
     }
 
     public has(name: PropertyKey): boolean {
-        if (this.membersExplorer.hasProperty(name))
+        if (this.membersExplorer.hasProperty(name)) {
             return true;
+        }
         return this.presets
             .get()
             .find(preset => this.explorer.has(name, preset)) !== undefined;

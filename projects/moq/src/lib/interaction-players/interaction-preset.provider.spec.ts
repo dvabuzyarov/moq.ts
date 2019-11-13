@@ -5,7 +5,6 @@ import { Presets } from "../preset/presets";
 import { InteractionPresetProvider } from "./interaction-preset.provider";
 import { IPreset } from "../presets/preset";
 import { resolveBuilder } from "../../tests.components/resolve.builder";
-import { PlayOptions } from "../moq";
 
 describe("Interaction preset provider", () => {
     let resolve: ReturnType<typeof resolveBuilder>;

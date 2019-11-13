@@ -14,8 +14,9 @@ export class HasMethodExplorer {
     }
 
     public has(name: PropertyKey): boolean {
-        if (this.membersExplorer.hasMethod(name))
+        if (this.membersExplorer.hasMethod(name)) {
             return true;
+        }
 
         return this.presets
             .get()

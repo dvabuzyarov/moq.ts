@@ -31,6 +31,7 @@
     "javascript"
   ],
   "devDependencies": {
-    "jasmine": "3.3.1"
+    "jasmine": "3.3.1",
+    "@angular/core": "8.2.13"
   }
 }
