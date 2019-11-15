@@ -196,17 +196,6 @@ You can control mock behavior when accessing to a property without a correspondi
       .throws(new Error("setup is missed"));
 ```
 
-**The behaviour API is obsolete.**
-**In future versions it will behave as its prototype which is Object by default and desired behaviours should be set 
-thought custom setups.**
-```typescript
-    mock = new Mock<ITestObject>()
-    .setBehaviorStrategy(MockBehavior.Loose) //obsolete
-    //or
-    .setBehaviorStrategy(MockBehavior.Strict); //obsolete
-```
-The default behavior is strict. 
-
 ## Mock prototype
 If you need to make work instanceof operator or you need to deal with prototype of the mock object you can 
 use prototypeof function of Mock class. Or you can use [Object.getPrototypeOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf) or [Object.setPrototypeOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf) functions
