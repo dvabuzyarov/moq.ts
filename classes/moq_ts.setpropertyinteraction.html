@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ExpectedGetPropertyExpression | moq.ts | documentation</title>
+	<title>SetPropertyInteraction | moq.ts | documentation</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.expectedgetpropertyexpression.html">ExpectedGetPropertyExpression</a>
+					<a href="moq_ts.setpropertyinteraction.html">SetPropertyInteraction</a>
 				</li>
 			</ul>
-			<h1>Class ExpectedGetPropertyExpression</h1>
+			<h1>Class SetPropertyInteraction</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>See <a href="moq_ts.getpropertyinteraction.html">GetPropertyInteraction</a></p>
+						<p>This class represents a property write interaction.
+						It provides access to the name of property and the value.</p>
 					</div>
 				</div>
 			</section>
@@ -78,10 +79,15 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="moq_ts.getpropertyinteraction.html" class="tsd-signature-type">GetPropertyInteraction</a>
+						<a href="moq_ts.propertyinteraction.html" class="tsd-signature-type">PropertyInteraction</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">ExpectedGetPropertyExpression</span>
+								<span class="target">SetPropertyInteraction</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="moq_ts.expectedsetpropertyexpression.html" class="tsd-signature-type">ExpectedSetPropertyExpression</a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</li>
@@ -91,36 +97,36 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="moq_ts.expectedgetpropertyexpression.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="moq_ts.setpropertyinteraction.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="moq_ts.expectedgetpropertyexpression.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="moq_ts.setpropertyinteraction.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moq_ts.setpropertyinteraction.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Expected<wbr>Get<wbr>Property<wbr>Expression<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.expectedgetpropertyexpression.html" class="tsd-signature-type">ExpectedGetPropertyExpression</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Set<wbr>Property<wbr>Interaction<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.setpropertyinteraction.html" class="tsd-signature-type">SetPropertyInteraction</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="moq_ts.getpropertyinteraction.html">GetPropertyInteraction</a>.<a href="moq_ts.getpropertyinteraction.html#constructor">constructor</a></p>
 								<p>Overrides <a href="moq_ts.propertyinteraction.html">PropertyInteraction</a>.<a href="moq_ts.propertyinteraction.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/09c5ecc/projects/moq/src/lib/interactions.ts#L31">interactions.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/09c5ecc/projects/moq/src/lib/interactions.ts#L41">interactions.ts:41</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -128,13 +134,16 @@
 								<li>
 									<h5>name: <span class="tsd-signature-type">PropertyKey</span></h5>
 								</li>
+								<li>
+									<h5>value: <span class="tsd-signature-type">any</span></h5>
+								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="moq_ts.expectedgetpropertyexpression.html" class="tsd-signature-type">ExpectedGetPropertyExpression</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="moq_ts.setpropertyinteraction.html" class="tsd-signature-type">SetPropertyInteraction</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="name" class="tsd-anchor"></a>
@@ -144,6 +153,16 @@
 						<p>Inherited from <a href="moq_ts.propertyinteraction.html">PropertyInteraction</a>.<a href="moq_ts.propertyinteraction.html#name">name</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/09c5ecc/projects/moq/src/lib/interactions.ts#L2">interactions.ts:2</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="value" class="tsd-anchor"></a>
+					<h3>value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/09c5ecc/projects/moq/src/lib/interactions.ts#L43">interactions.ts:43</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -171,21 +190,9 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="moq_ts.expectedexpressionreflector.html" class="tsd-kind-icon">Expected<wbr>Expression<wbr>Reflector</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="moq_ts.expectedgetpropertyexpression.html" class="tsd-kind-icon">Expected<wbr>Get<wbr>Property<wbr>Expression</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="moq_ts.expectedgetpropertyexpression.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="moq_ts.expectedgetpropertyexpression.html#name" class="tsd-kind-icon">name</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="moq_ts.expectedmethodexpression.html" class="tsd-kind-icon">Expected<wbr>Method<wbr>Expression</a>
 					</li>
@@ -225,9 +232,24 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="moq_ts.returnspreset.html" class="tsd-kind-icon">Returns<wbr>Preset</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="moq_ts.setpropertyinteraction.html" class="tsd-kind-icon">Set<wbr>Property<wbr>Interaction</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="moq_ts.setpropertyinteraction.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="moq_ts.setpropertyinteraction.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="moq_ts.setpropertyinteraction.html#value" class="tsd-kind-icon">value</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="moq_ts.throwspreset.html" class="tsd-kind-icon">Throws<wbr>Preset</a>
 					</li>
