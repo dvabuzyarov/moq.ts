@@ -41,7 +41,7 @@ You can find a pretty full set of usages in the integration tests. Check out [te
 <!-- toc -->
 Mocking property of objects
 -
-[mock-get.property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts)
+[get.property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts)
 ```typescript
 import {Mock, It, Times, ExpectedGetPropertyExpression} from 'moq.ts';
 interface ITestObject {
@@ -85,7 +85,7 @@ Mocking property setting
 [The documentation on returned value from 'set hook' on Proxy object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set)
 
 
-[mock-set.property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-set.property.IntegrationTests.ts)
+[set-property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-set.property.IntegrationTests.ts)
 ```typescript
 import {Mock, It, Times, ExpectedSetPropertyExpression} from 'moq.ts';
 interface ITestObject {
@@ -153,7 +153,7 @@ mock.verify(instance => instance(It.Is(value=> value === 1)), Times.Exactly(1));
  
  Mocking functions of objects
  -
-[mock-named.method.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-named.method.IntegrationTests.ts)
+[instance-method.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-named.method.IntegrationTests.ts)
  ```typescript
 import {Mock, It, Times} from 'moq.ts';
 interface ITestObject {
@@ -265,5 +265,9 @@ const mock = new Mock<Origin>({target: new Origin()});
 
 expect(typeof mock.object()).toBe(typeof new Origin());
 ```
-
+Тип объекта формируем из прототипа, а setup селекторы определяют,
+как на тип прототипа накладывается указанное поведение. Если прототип не указан,
+то используем прототип по умолчанию.
+По поводу объектов в луз режиме, которые для любого свойства возвращают спай-функцию: их необходимость
+с практической точки зрения нулевая и нет необъодимости в ней.
 Sponsored by [2BIT](https://www.2bit.ch)

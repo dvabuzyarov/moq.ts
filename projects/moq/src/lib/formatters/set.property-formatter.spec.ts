@@ -1,4 +1,4 @@
-import { SetPropertyExpression } from "../expressions";
+import { SetPropertyInteraction } from "../interactions";
 import { SetPropertyExpressionFormatter } from "./set.property-formatter";
 import { ConstantFormatter } from "./constant-formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
@@ -19,7 +19,7 @@ describe("Set property expression formatter", () => {
         const value = "value";
         const nameDescription = "name description";
         const valueDescription = "value description";
-        const expression = new SetPropertyExpression(name, value);
+        const expression = new SetPropertyInteraction(name, value);
 
         const constantFormatter = constantFormatterFactory();
         (<jasmine.Spy>constantFormatter.format).and.returnValue(valueDescription);

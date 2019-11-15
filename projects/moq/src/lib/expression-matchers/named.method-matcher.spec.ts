@@ -1,6 +1,6 @@
 import {ArgumentsMatcher} from "./arguments-matcher";
 import {It} from "../expected-expressions/expression-predicates";
-import {NamedMethodExpression} from "../expressions";
+import {NamedMethodInteraction} from "../interactions";
 import {NamedMethodExpressionMatcher} from "./named.method-matcher";
 import {ExpectedNamedMethodExpression} from "../expected-expressions/expected-expressions";
 
@@ -17,7 +17,7 @@ describe("Named method expression matcher", () => {
         const arguments2 = [];
 
         const name = "name";
-        const left = new NamedMethodExpression(name, arguments1);
+        const left = new NamedMethodInteraction(name, arguments1);
         const right = new ExpectedNamedMethodExpression(name, arguments2);
 
         const matched = (lvalue, rvalue): boolean => {
@@ -33,7 +33,7 @@ describe("Named method expression matcher", () => {
     });
 
     it("Returns true when right is predicate that returns true", () => {
-        const left = new NamedMethodExpression("name", []);
+        const left = new NamedMethodInteraction("name", []);
 
         const right = It.Is((value) => {
             expect(value).toBe(left);
@@ -51,7 +51,7 @@ describe("Named method expression matcher", () => {
         const arguments2 = [];
 
         const name = "name";
-        const left = new NamedMethodExpression(name, arguments1);
+        const left = new NamedMethodInteraction(name, arguments1);
         const right = new ExpectedNamedMethodExpression(name, arguments2);
 
         const matched = (lvalue, rvalue): boolean => {
@@ -69,7 +69,7 @@ describe("Named method expression matcher", () => {
     it("Returns false when left does not equal to right by name", () => {
         const args = [];
 
-        const left = new NamedMethodExpression("left name", args);
+        const left = new NamedMethodInteraction("left name", args);
         const right = new ExpectedNamedMethodExpression("right name", args);
 
         const matched = (lvalue, rvalue): boolean => {
@@ -85,7 +85,7 @@ describe("Named method expression matcher", () => {
     });
 
     it("Returns false when right is predicate that returns false", () => {
-        const left = new NamedMethodExpression("name", []);
+        const left = new NamedMethodInteraction("name", []);
         const right = It.Is((value) => {
             expect(value).toBe(left);
             return false;
@@ -100,7 +100,7 @@ describe("Named method expression matcher", () => {
     it("Does not call args matcher when names are not equal", () => {
         const args = [];
 
-        const left = new NamedMethodExpression("left name", args);
+        const left = new NamedMethodInteraction("left name", args);
         const right = new ExpectedNamedMethodExpression("right name", args);
 
         const matched = (lvalue, rvalue): boolean => {

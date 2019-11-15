@@ -1,5 +1,5 @@
 import { ObjectHasMethodExplorer } from "./object.has-method.explorer";
-import { nameof } from "../../nameof";
+import { nameof } from "../../../tests.components/nameof";
 
 describe("Object has instance method explorer", () => {
 

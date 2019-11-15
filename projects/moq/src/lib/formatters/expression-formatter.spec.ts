@@ -1,8 +1,8 @@
 import {ExpressionFormatter} from "./expression-formatter";
 import {
-    GetPropertyExpression, SetPropertyExpression, NamedMethodExpression,
-    MethodExpression
-} from "../expressions";
+    GetPropertyInteraction, SetPropertyInteraction, NamedMethodInteraction,
+    MethodInteraction
+} from "../interactions";
 import {GetPropertyExpressionFormatter} from "./get.property-formatter";
 import {SetPropertyExpressionFormatter} from "./set.property-formatter";
 import {NamedMethodExpressionFormatter} from "./named.method-formatter";
@@ -19,7 +19,7 @@ describe("Expression formatter", () => {
     }
 
     it("Returns formatted description for GetPropertyExpression", () => {
-        const expression = new GetPropertyExpression("name");
+        const expression = new GetPropertyInteraction("name");
         const expected = "get property description";
 
         const getPropertyFormatter = formatterFactory<GetPropertyExpressionFormatter>();
@@ -34,7 +34,7 @@ describe("Expression formatter", () => {
 
 
     it("Returns formatted description for SetPropertyExpression", () => {
-        const expression = new SetPropertyExpression("name", "value");
+        const expression = new SetPropertyInteraction("name", "value");
         const expected = "set property description";
 
         const setPropertyFormatter = formatterFactory<SetPropertyExpressionFormatter>();
@@ -48,7 +48,7 @@ describe("Expression formatter", () => {
     });
 
     it("Returns formatted description for MethodExpression", () => {
-        const expression = new MethodExpression(["value"]);
+        const expression = new MethodInteraction(["value"]);
         const expected = "method description";
 
         const methodExpressionFormatter = formatterFactory<MethodExpressionFormatter>();
@@ -62,7 +62,7 @@ describe("Expression formatter", () => {
     });
 
     it("Returns formatted description for NamedMethodExpression", () => {
-        const expression = new NamedMethodExpression("name", ["value"]);
+        const expression = new NamedMethodInteraction("name", ["value"]);
         const expected = "named method description";
 
         const namedMethodExpressionFormatter = formatterFactory<NamedMethodExpressionFormatter>();

@@ -7,7 +7,7 @@ class Dummy {
 }
 
 describe("#21 Prototype & setup do not work in certain cases", () => {
-    xit("the bug", () => {
+    it("the bug", () => {
         const spy = jasmine.createSpy("callback");
         const mock = new Mock<Dummy>()
             .prototypeof(Dummy.prototype)

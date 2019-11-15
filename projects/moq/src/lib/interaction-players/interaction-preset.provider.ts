@@ -1,5 +1,5 @@
 import { IPreset } from "../presets/preset";
-import { Expressions } from "../expressions";
+import { Interactions } from "../interactions";
 import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
 import { Presets } from "../preset/presets";
 
@@ -14,7 +14,7 @@ export class InteractionPresetProvider {
 
     }
 
-    public get(interaction: Expressions): IPreset<unknown> | undefined {
+    public get(interaction: Interactions): IPreset<unknown> | undefined {
         for (const preset of this.presets.get()) {
             if (this.matcher.matched(interaction, preset.target) && preset.invocable() === true) {
                 return preset;

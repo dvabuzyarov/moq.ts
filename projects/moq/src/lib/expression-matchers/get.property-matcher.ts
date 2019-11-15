@@ -1,4 +1,4 @@
-import {GetPropertyExpression} from "../expressions";
+import {GetPropertyInteraction} from "../interactions";
 import {It} from "../expected-expressions/expression-predicates";
 import {ExpectedGetPropertyExpression} from "../expected-expressions/expected-expressions";
 
@@ -7,7 +7,7 @@ import {ExpectedGetPropertyExpression} from "../expected-expressions/expected-ex
  */
 export class GetPropertyExpressionMatcher {
 
-    public matched(left: GetPropertyExpression, right: ExpectedGetPropertyExpression|It<any>): boolean {
+    public matched(left: GetPropertyInteraction, right: ExpectedGetPropertyExpression|It<any>): boolean {
         if (right instanceof It) {
             return (right as It<any>).test(left);
         }

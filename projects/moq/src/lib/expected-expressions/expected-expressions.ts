@@ -1,31 +1,31 @@
 import { It } from "./expression-predicates";
-import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
+import { GetPropertyInteraction, MethodInteraction, NamedMethodInteraction, SetPropertyInteraction } from "../interactions";
 
 /**
- * See {@link NamedMethodExpression}
+ * See {@link NamedMethodInteraction}
  */
-export class ExpectedNamedMethodExpression extends NamedMethodExpression {
+export class ExpectedNamedMethodExpression extends NamedMethodInteraction {
 
 }
 
 /**
- * See {@link MethodExpression}
+ * See {@link MethodInteraction}
  */
-export class ExpectedMethodExpression extends MethodExpression {
+export class ExpectedMethodExpression extends MethodInteraction {
 
 }
 
 /**
- * See {@link GetPropertyExpression}
+ * See {@link GetPropertyInteraction}
  */
-export class ExpectedGetPropertyExpression extends GetPropertyExpression {
+export class ExpectedGetPropertyExpression extends GetPropertyInteraction {
 
 }
 
 /**
- * See {@link SetPropertyExpression}
+ * See {@link SetPropertyInteraction}
  */
-export class ExpectedSetPropertyExpression extends SetPropertyExpression {
+export class ExpectedSetPropertyExpression extends SetPropertyInteraction {
 
 }
 

@@ -1,5 +1,5 @@
 import { ObjectHasPropertyExplorer } from "./object-has-property.explorer";
-import { nameof } from "../../nameof";
+import { nameof } from "../../../tests.components/nameof";
 
 describe("Object has property explorer", () => {
 

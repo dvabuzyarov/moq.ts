@@ -1,6 +1,6 @@
 import {It} from "../expected-expressions/expression-predicates";
 import {ArgumentsMatcher} from "./arguments-matcher";
-import {MethodExpression} from "../expressions";
+import {MethodInteraction} from "../interactions";
 import {ExpectedMethodExpression} from "../expected-expressions/expected-expressions";
 import {MethodExpressionMatcher} from "./method-matcher";
 
@@ -16,7 +16,7 @@ describe("Method expression matcher", () => {
         const arguments1 = [];
         const arguments2 = [];
 
-        const left = new MethodExpression(arguments1);
+        const left = new MethodInteraction(arguments1);
         const right = new ExpectedMethodExpression(arguments2);
 
         const matched = (lvalue, rvalue): boolean => {
@@ -32,7 +32,7 @@ describe("Method expression matcher", () => {
     });
 
     it("Returns true when right is predicate that returns true", () => {
-        const left = new MethodExpression([]);
+        const left = new MethodInteraction([]);
 
         const right = It.Is((value) => {
             expect(value).toBe(left);
@@ -49,7 +49,7 @@ describe("Method expression matcher", () => {
         const arguments1 = [];
         const arguments2 = [];
 
-        const left = new MethodExpression(arguments1);
+        const left = new MethodInteraction(arguments1);
         const right = new ExpectedMethodExpression(arguments2);
 
         const matched = (lvalue, rvalue): boolean => {
@@ -65,7 +65,7 @@ describe("Method expression matcher", () => {
     });
 
     it("Returns false when right is predicate that returns false", () => {
-        const left = new MethodExpression([]);
+        const left = new MethodInteraction([]);
         const right = It.Is((value) => {
             expect(value).toBe(left);
             return false;

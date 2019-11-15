@@ -2,14 +2,13 @@ import { Mock } from "../lib/mock";
 import { It } from "../lib/expected-expressions/expression-predicates";
 import { ExpectedNamedMethodExpression } from "../lib/expected-expressions/expected-expressions";
 import { Times } from "../lib/times";
-import { MockBehavior } from "../lib/interceptor-callbacks/interceptor-callbacks";
+import { nameof } from "../tests.components/nameof";
 
 interface ITestObject {
     method(arg: number): string;
 }
 
-describe("Mock: Named method", () => {
-
+describe("Instance method", () => {
 
     it("Returns value with a simple setup", () => {
         const value = "value";
@@ -23,13 +22,10 @@ describe("Mock: Named method", () => {
         expect(actual).toBe(value);
     });
 
-
-    // todo: it will work only in Loose mode
     it("Returns value with a predicated setup", () => {
         const value = "value";
 
-        const object = new Mock<ITestObject>()
-            .setBehaviorStrategy(MockBehavior.Loose)
+        const object = new Mock<ITestObject>({members: [{name: "method", type: "method"}]})
             .setup(instance => It.Is((expression: ExpectedNamedMethodExpression) => {
                 return expression.name === "method" && expression.args[0] === 1;
             }))
@@ -70,28 +66,15 @@ describe("Mock: Named method", () => {
     });
 
     it("Returns undefined when call an unset method in loose mode", () => {
-        const mock = new Mock<ITestObject>()
-            .setBehaviorStrategy(MockBehavior.Loose);
+        const mock = new Mock<ITestObject>({members: [{type: "method", name: nameof<ITestObject>("method")}]})
+            .setup(() => It.IsAny())
+            .callback(() => undefined);
 
         const object = mock.object();
         const actual = object.method(1);
 
         expect(actual).toBeUndefined();
         mock.verify(instance => instance.method(1));
-    });
-
-    it("Calls callback", () => {
-        const value = "value";
-        const callback = jasmine.createSpy("callback").and.returnValue(value);
-        const object = new Mock<ITestObject>()
-            .setup(instance => instance.method(1))
-            .callback(callback)
-            .object();
-
-        const actual = object.method(1);
-
-        expect(actual).toBe(value);
-        expect(callback).toHaveBeenCalledWith(1);
     });
 
     it("Calls callback", () => {

@@ -3,12 +3,12 @@ import { SetPropertyExpressionMatcher } from "./set.property-matcher";
 import { MethodExpressionMatcher } from "./method-matcher";
 import { NamedMethodExpressionMatcher } from "./named.method-matcher";
 import {
-    Expressions,
-    GetPropertyExpression,
-    MethodExpression,
-    NamedMethodExpression,
-    SetPropertyExpression
-} from "../expressions";
+    Interactions,
+    GetPropertyInteraction,
+    MethodInteraction,
+    NamedMethodInteraction,
+    SetPropertyInteraction
+} from "../interactions";
 import {
     ExpectedExpressions,
     ExpectedGetPropertyExpression,
@@ -30,21 +30,21 @@ export class ExpressionMatcher {
 
     }
 
-    public matched(left: Expressions, right: ExpectedExpressions<any>): boolean {
+    public matched(left: Interactions, right: ExpectedExpressions<any>): boolean {
 
         if (left === right) return true;
         if (right === undefined) return true;
 
-        if (left instanceof GetPropertyExpression && (right instanceof ExpectedGetPropertyExpression || right instanceof It)) {
+        if (left instanceof GetPropertyInteraction && (right instanceof ExpectedGetPropertyExpression || right instanceof It)) {
             return this.getPropertyExpressionMatcher.matched(left, <ExpectedGetPropertyExpression | It<any>>right);
         }
-        if (left instanceof SetPropertyExpression && (right instanceof ExpectedSetPropertyExpression || right instanceof It)) {
+        if (left instanceof SetPropertyInteraction && (right instanceof ExpectedSetPropertyExpression || right instanceof It)) {
             return this.setPropertyExpressionMatcher.matched(left, <ExpectedSetPropertyExpression | It<any>>right);
         }
-        if (left instanceof MethodExpression && (right instanceof ExpectedMethodExpression || right instanceof It)) {
+        if (left instanceof MethodInteraction && (right instanceof ExpectedMethodExpression || right instanceof It)) {
             return this.methodExpressionMatcher.matched(left, <ExpectedMethodExpression | It<any>>right);
         }
-        if (left instanceof NamedMethodExpression && (right instanceof ExpectedNamedMethodExpression || right instanceof It)) {
+        if (left instanceof NamedMethodInteraction && (right instanceof ExpectedNamedMethodExpression || right instanceof It)) {
             return this.namedMethodExpressionMatcher.matched(left, <ExpectedNamedMethodExpression | It<any>>right);
         }
 

@@ -1,5 +1,5 @@
 import { ExpectedSetPropertyExpression } from "../expected-expressions/expected-expressions";
-import { SetPropertyExpression } from "../expressions";
+import { SetPropertyInteraction } from "../interactions";
 import { It } from "../expected-expressions/expression-predicates";
 import { ConstantMatcher } from "./constant-matcher";
 
@@ -12,7 +12,7 @@ export class SetPropertyExpressionMatcher {
 
     }
 
-    public matched(left: SetPropertyExpression, right: ExpectedSetPropertyExpression | It<any>): boolean {
+    public matched(left: SetPropertyInteraction, right: ExpectedSetPropertyExpression | It<any>): boolean {
         if (right instanceof It) {
             return (right as It<any>).test(left);
         }

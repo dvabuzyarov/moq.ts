@@ -2,7 +2,6 @@ import { Mock } from "../lib/mock";
 import { It } from "../lib/expected-expressions/expression-predicates";
 import { ExpectedGetPropertyExpression } from "../lib/expected-expressions/expected-expressions";
 import { Times } from "../lib/times";
-import { MockBehavior } from "../lib/interceptor-callbacks/interceptor-callbacks";
 
 interface ITestObject {
     property: string;
@@ -35,7 +34,7 @@ describe("Mock: Get property", () => {
         expect(object.property).toBe(value);
     });
 
-    it("Returns undefined for unset property in strict mode", () => {
+    it("Returns undefined for unset property", () => {
         const value = "value";
         const object = new Mock<ITestObject>()
             .object();
@@ -43,17 +42,6 @@ describe("Mock: Get property", () => {
         const actual = object.property;
 
         expect(actual).toBeUndefined();
-    });
-
-    it("Returns unset function for unset property", () => {
-        const mock = new Mock<ITestObject>()
-            .setBehaviorStrategy(MockBehavior.Loose);
-        const object = mock.object();
-
-        const actual = object.property;
-
-        expect(actual).toEqual(jasmine.any(Function));
-        mock.verify(instance => instance.property);
     });
 
     it("Returns last written value", () => {

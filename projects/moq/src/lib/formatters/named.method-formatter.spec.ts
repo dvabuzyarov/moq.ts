@@ -1,4 +1,4 @@
-import { NamedMethodExpression } from "../expressions";
+import { NamedMethodInteraction } from "../interactions";
 import { ConstantFormatter } from "./constant-formatter";
 import { NamedMethodExpressionFormatter } from "./named.method-formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
@@ -20,7 +20,7 @@ describe("Named method expression formatter", () => {
         const valueDescription = "value description";
         const nameDescription = "name description";
 
-        const expression = new NamedMethodExpression(name, [value]);
+        const expression = new NamedMethodInteraction(name, [value]);
 
         const constantFormatter = constantFormatterFactory();
         (<jasmine.Spy>constantFormatter.format).and.returnValue(valueDescription);
@@ -45,7 +45,7 @@ describe("Named method expression formatter", () => {
         const secondValue = "first value";
         const firstValueDescription = "first value description";
         const secondValueDescription = "second value description";
-        const expression = new NamedMethodExpression(name, [firstValue, secondValue]);
+        const expression = new NamedMethodInteraction(name, [firstValue, secondValue]);
 
         const propertyKeyFormatter = propertyKeyFormatterFactory();
         (<jasmine.Spy>propertyKeyFormatter.format).and.returnValue(nameDescription);

@@ -1,4 +1,4 @@
-import { SetPropertyExpression } from "../expressions";
+import { SetPropertyInteraction } from "../interactions";
 import { ConstantFormatter } from "./constant-formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
 
@@ -12,7 +12,7 @@ export class SetPropertyExpressionFormatter {
 
     }
 
-    public format(expression: SetPropertyExpression): string {
+    public format(expression: SetPropertyInteraction): string {
         const value = this.constantFormatter.format(expression.value);
         const propertyKey = this.propertyKeyFormatter.format(expression.name);
         return `Assignment of ${value} to property \'${propertyKey}\'`;
