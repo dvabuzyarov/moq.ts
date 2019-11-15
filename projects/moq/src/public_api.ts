@@ -10,4 +10,3 @@ export * from "./lib/times";
 export * from "./lib/preset/play-times";
 export * from "./lib/expected-expressions/expected-expressions";
 export * from "./lib/expected-expressions/expression-predicates";
-export * from "./lib/interceptor-callbacks/interceptor-callbacks";
