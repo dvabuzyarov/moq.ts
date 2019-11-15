@@ -1,7 +1,7 @@
-import { GetPropertyExpression, NamedMethodExpression } from "../expressions";
+import { GetPropertyInteraction, NamedMethodInteraction } from "../interactions";
 import { ExpressionFormatter } from "./expression-formatter";
 import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
-import { nameof } from "../nameof";
+import { nameof } from "../../tests.components/nameof";
 
 describe("Tracked expression message formatter", () => {
     function expressionFormatterFactory(): ExpressionFormatter {
@@ -11,8 +11,8 @@ describe("Tracked expression message formatter", () => {
     it("Returns formatted description of tracked expressions", () => {
         const getPropertyExpressionDescription = "GetProperty Name";
         const namedMethodExpressionDescription = "NamedMethod Name";
-        const getPropertyExpression = new GetPropertyExpression("name");
-        const namedMethodExpression = new NamedMethodExpression("name", []);
+        const getPropertyExpression = new GetPropertyInteraction("name");
+        const namedMethodExpression = new NamedMethodInteraction("name", []);
 
         const expressionFormatter = expressionFormatterFactory();
 

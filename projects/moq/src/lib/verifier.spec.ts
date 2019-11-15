@@ -4,7 +4,7 @@ import { Times } from "./times";
 import { CallCounter } from "./call-counter";
 import { ExpectedGetPropertyExpression } from "./expected-expressions/expected-expressions";
 import { VerifyFormatter } from "./formatters/verify-formatter";
-import { nameof } from "./nameof";
+import { nameof } from "../tests.components/nameof";
 
 describe("Verifier", () => {
 

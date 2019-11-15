@@ -1,5 +1,5 @@
 import {ArgumentsMatcher} from "./arguments-matcher";
-import {MethodExpression} from "../expressions";
+import {MethodInteraction} from "../interactions";
 import {ExpectedMethodExpression} from "../expected-expressions/expected-expressions";
 import {It} from "../expected-expressions/expression-predicates";
 
@@ -12,7 +12,7 @@ export class MethodExpressionMatcher {
 
     }
 
-    public matched(left: MethodExpression, right: ExpectedMethodExpression|It<any>): boolean {
+    public matched(left: MethodInteraction, right: ExpectedMethodExpression|It<any>): boolean {
         if (right instanceof It) {
             return (right as It<any>).test(left);
         }

@@ -1,4 +1,4 @@
-import { MethodExpression } from "../expressions";
+import { MethodInteraction } from "../interactions";
 import { ConstantFormatter } from "./constant-formatter";
 
 /**
@@ -10,7 +10,7 @@ export class MethodExpressionFormatter {
 
     }
 
-    public format(expression: MethodExpression): string {
+    public format(expression: MethodInteraction): string {
         const value = this.constantFormatter.format(expression.args);
         return `(${value})`;
     }

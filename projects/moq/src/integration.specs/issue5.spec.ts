@@ -1,6 +1,6 @@
 import { dump } from "../lib/dump";
-import { MockBehavior } from "../lib/interceptor-callbacks/interceptor-callbacks";
 import { Mock } from "../lib/mock";
+import { It } from "../lib/expected-expressions/expression-predicates";
 
 interface IMyService {
     findSomething(value: number): number;
@@ -29,8 +29,9 @@ describe("dumps all interactions into console.log", () => {
         const value = 4;
         const field1 = 2;
         const myServiceMock = new Mock<IMyService>();
-        myServiceMock.setBehaviorStrategy(MockBehavior.Loose);
         myServiceMock
+            .setup(instance => instance.doSomething(It.IsAny()))
+            .returns(undefined)
             .setup(instance => instance.findSomething(value))
             .returns(field1);
 

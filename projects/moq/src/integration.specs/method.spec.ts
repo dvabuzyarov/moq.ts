@@ -7,7 +7,7 @@ import {Times} from "../lib/times";
 
 type ITestFunction = (arg: number) => string;
 
-describe("Mock: Method", () => {
+describe("Method", () => {
 
 
     it("Returns value with a simple setup", () => {

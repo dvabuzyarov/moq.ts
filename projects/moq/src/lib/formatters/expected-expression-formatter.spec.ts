@@ -1,7 +1,7 @@
-import { GetPropertyExpression } from "../expressions";
+import { GetPropertyInteraction } from "../interactions";
 import { ExpressionFormatter } from "./expression-formatter";
 import { ExpectedExpressionFormatter } from "./expected-expression-formatter";
-import { nameof } from "../nameof";
+import { nameof } from "../../tests.components/nameof";
 
 describe("Expected expression message formatter", () => {
     function expressionFormatterFactory(): ExpressionFormatter {
@@ -14,7 +14,7 @@ describe("Expected expression message formatter", () => {
         const haveBeenCalledTimes = 2;
         const expressionDescription = "expression description";
 
-        const expression = new GetPropertyExpression("name");
+        const expression = new GetPropertyInteraction("name");
         const expressionFormatter = expressionFormatterFactory();
 
         (<jasmine.Spy>expressionFormatter.format).and.returnValue(expressionDescription);
@@ -33,7 +33,7 @@ describe("Expected expression message formatter", () => {
         const haveBeenCalledTimes = 2;
         const expressionDescription = "expression description";
 
-        const expression = new GetPropertyExpression("name");
+        const expression = new GetPropertyInteraction("name");
         const expressionFormatter = expressionFormatterFactory();
 
         (<jasmine.Spy>expressionFormatter.format).and.returnValue(expressionDescription);

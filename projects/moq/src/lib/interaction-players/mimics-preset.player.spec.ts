@@ -1,4 +1,4 @@
-import { GetPropertyExpression, MethodExpression, NamedMethodExpression, SetPropertyExpression } from "../expressions";
+import { GetPropertyInteraction, MethodInteraction, NamedMethodInteraction, SetPropertyInteraction } from "../interactions";
 import { MimicsPresetPlayer } from "./mimics-preset.player";
 
 describe("Mimics preset player", () => {
@@ -11,7 +11,7 @@ describe("Mimics preset player", () => {
         target[propertyName] = value;
 
         const player = new MimicsPresetPlayer();
-        const actual = player.play(target, new GetPropertyExpression(propertyName));
+        const actual = player.play(target, new GetPropertyInteraction(propertyName));
 
         expect(actual).toBe(value);
     });
@@ -23,7 +23,7 @@ describe("Mimics preset player", () => {
         const target = {};
 
         const player = new MimicsPresetPlayer();
-        const actual = player.play(target, new SetPropertyExpression(propertyName, value));
+        const actual = player.play(target, new SetPropertyInteraction(propertyName, value));
 
         expect(actual).toBe(true);
         expect(target[propertyName]).toBe(value);
@@ -42,7 +42,7 @@ describe("Mimics preset player", () => {
         reflectApply.withArgs(method, target, [arg]).and.returnValue(result);
 
         const player = new MimicsPresetPlayer(reflectApply);
-        const actual = player.play(target, new NamedMethodExpression(propertyName, [arg]));
+        const actual = player.play(target, new NamedMethodInteraction(propertyName, [arg]));
 
         expect(actual).toBe(result);
     });
@@ -57,7 +57,7 @@ describe("Mimics preset player", () => {
         reflectApply.withArgs(target, undefined, [arg]).and.returnValue(result);
 
         const player = new MimicsPresetPlayer(reflectApply);
-        const actual = player.play(target, new MethodExpression([arg]));
+        const actual = player.play(target, new MethodInteraction([arg]));
 
         expect(actual).toBe(result);
     });

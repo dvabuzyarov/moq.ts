@@ -1,7 +1,11 @@
 import { IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
 import { Tracker } from "./tracker";
 import { Times } from "./times";
-import { MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
+
+export interface ITypeMember {
+    name: PropertyKey;
+    type: "property" | "method";
+}
 
 /**
  * Mock creation options
@@ -18,7 +22,9 @@ export interface IMockOptions {
      * The default value is function.
      */
     target?: any;
+    members?: ITypeMember[];
 }
+
 /**
  * Sets a behaviour rule for a particular use case
  * @param T The type of mocked object.
@@ -195,15 +201,6 @@ export interface IMock<T> {
      * ```
      */
     prototypeof(prototype?: any): IMock<T>;
-
-    /**
-     * @deprecated
-     * @obsolete
-     * Use custom setup as described
-     * ["How to throw an exception on missed setup?"]
-     * (https://github.com/dvabuzyarov/moq.ts/wiki/How-to-throw-an-exception-on-missed-setup%3F).
-     */
-    setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T>;
 
     /**
      * @experimental

@@ -1,4 +1,4 @@
-import { Expressions } from "../expressions";
+import { Interactions } from "../interactions";
 import { InteractionPresetProvider } from "./interaction-preset.provider";
 import { PresetPlayer } from "./preset.player";
 
@@ -12,9 +12,9 @@ export class InteractionPlayer {
 
     }
 
-    public play(expression: Expressions): any {
-        const preset = this.interactionPresetProvider.get(expression);
+    public play(interaction: Interactions): any {
+        const preset = this.interactionPresetProvider.get(interaction);
         if (preset === undefined) return undefined;
-        return this.presetPlayer.play(preset, expression);
+        return this.presetPlayer.play(preset, interaction);
     }
 }

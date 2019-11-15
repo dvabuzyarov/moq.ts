@@ -1,7 +1,7 @@
 import { ExpressionMatcher } from "./expression-matchers/expression-matcher";
 import { CallCounter } from "./call-counter";
 import { ExpectedGetPropertyExpression } from "./expected-expressions/expected-expressions";
-import { GetPropertyExpression } from "./expressions";
+import { GetPropertyInteraction } from "./interactions";
 
 describe("Call counter", () => {
 
@@ -18,7 +18,7 @@ describe("Call counter", () => {
 
         const counter = new CallCounter(expressionMatcher);
         const expectedExpression = new ExpectedGetPropertyExpression("property");
-        const expression = new GetPropertyExpression("property");
+        const expression = new GetPropertyInteraction("property");
 
         const actual = counter.count(expectedExpression, [expression]);
 
@@ -32,7 +32,7 @@ describe("Call counter", () => {
 
         const counter = new CallCounter(expressionMatcher);
         const expectedExpression = new ExpectedGetPropertyExpression("property");
-        const expression = new GetPropertyExpression("property");
+        const expression = new GetPropertyInteraction("property");
 
         const actual = counter.count(expectedExpression, [expression]);
 

@@ -1,15 +1,16 @@
 import { IPresetBuilder, ISequenceVerifier } from "./moq";
-import { InterceptorCallbacks, MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 import { Times } from "./times";
-import { nameof } from "./nameof";
+import { nameof } from "../tests.components/nameof";
 import * as mockDependencies from "./mock-dependencies.factory";
 import { IMockDependencies, mockDependenciesFactory } from "./mock-dependencies.factory";
+import * as buildMockOptions from "./build-mock-options";
 import { ExpectedExpressionReflector } from "./expected-expressions/expected-expression-reflector";
 import { Tracker } from "./tracker";
 import { Interceptor } from "./interceptor";
 import { Verifier } from "./verifier";
 import { Mock } from "./mock";
 import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
+import { PrototypeStorage } from "./traps/prototype.storage";
 
 describe("Mock", () => {
 
@@ -22,25 +23,32 @@ describe("Mock", () => {
     beforeEach(() => {
         const expressionReflector = jasmine.createSpyObj<ExpectedExpressionReflector>(["reflect"]);
         const tracker = jasmine.createSpyObj<Tracker>(["get"]);
-        const interceptedCallbacks = jasmine.createSpyObj<InterceptorCallbacks<unknown>>(["setBehaviorStrategy"]);
-        const interceptor = jasmine.createSpyObj<Interceptor<unknown>>(["object", "prototypeof"]);
+        const interceptor = jasmine.createSpyObj<Interceptor<unknown>>(["object"]);
         const setupFactory = jasmine.createSpy();
         const verifier = jasmine.createSpyObj<Verifier<unknown>>(["test"]);
+        const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>("", ["set"]);
 
         dependencies = {
             expressionReflector,
-            interceptedCallbacks,
             verifier,
             interceptor,
             presetBuilderFactory: setupFactory,
-            tracker
+            tracker,
+            prototypeStorage
         };
+
         spyOn(mockDependencies, "mockDependenciesFactory").and.returnValue(dependencies as any);
+        spyOn(buildMockOptions, "buildMockOptions").and.returnValue({});
     });
 
     it("Exposes mock name", () => {
         const name = "mock name";
-        const mock = new Mock({name});
+        const options = {name};
+
+        (buildMockOptions.buildMockOptions as jasmine.Spy)
+            .withArgs(options).and.returnValue(options);
+
+        const mock = new Mock(options);
         const actual = mock.name;
 
         expect(actual).toBe(name);
@@ -49,9 +57,15 @@ describe("Mock", () => {
     it("Creates dependencies with mock options", () => {
         const name = "mock name";
         const target = () => undefined;
-        const mock = new Mock({name, target});
+        const input = {name};
+        const options = {name, target};
 
-        expect(mockDependencies.mockDependenciesFactory).toHaveBeenCalledWith({name, target});
+        (buildMockOptions.buildMockOptions as jasmine.Spy)
+            .withArgs(input).and.returnValue(options);
+
+        const mock = new Mock(input);
+
+        expect(mockDependencies.mockDependenciesFactory).toHaveBeenCalledWith(options);
     });
 
     it("Returns object", () => {
@@ -63,15 +77,6 @@ describe("Mock", () => {
         const actual = mock.object();
 
         expect(actual).toBe(object);
-    });
-
-    it("Sets mock behavior strategy", () => {
-        const mock = new Mock();
-        const actual = mock.setBehaviorStrategy(MockBehavior.Loose);
-
-        const {interceptedCallbacks} = dependencies;
-        expect(actual).toBe(mock);
-        expect(interceptedCallbacks.setBehaviorStrategy).toHaveBeenCalledWith(MockBehavior.Loose);
     });
 
     it("Verifies an expression", () => {
@@ -115,14 +120,14 @@ describe("Mock", () => {
         expect(actual).toBe(setup);
     });
 
-    it("Sets instance of object", () => {
-        const {interceptor} = dependencies;
+    it("Sets prototype of mock", () => {
+        const {prototypeStorage} = dependencies;
         const prototype = {};
 
         const mock = new Mock();
         mock.prototypeof(prototype);
 
-        expect(interceptor.prototypeof).toHaveBeenCalledWith(prototype);
+        expect(prototypeStorage.set).toHaveBeenCalledWith(prototype);
     });
 
     it("Returns the current instance of mock from prototypeof", () => {

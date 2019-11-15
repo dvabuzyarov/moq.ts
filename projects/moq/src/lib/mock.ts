@@ -1,12 +1,13 @@
 import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
 import { Interceptor } from "./interceptor";
-import { IInterceptorCallbacks, MockBehavior } from "./interceptor-callbacks/interceptor-callbacks";
 import { IMock, IMockOptions, IPresetBuilder, ISequenceVerifier } from "./moq";
 import { Times } from "./times";
 import { Tracker } from "./tracker";
 import { Verifier } from "./verifier";
 import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
 import { mockDependenciesFactory } from "./mock-dependencies.factory";
+import { buildMockOptions } from "./build-mock-options";
+import { PrototypeStorage } from "./traps/prototype.storage";
 
 /**
  * The default implementation of {@link IMock} interface.
@@ -17,16 +18,17 @@ export class Mock<T> implements IMock<T> {
     private interceptor: Interceptor<T>;
     private readonly setupFactory: (mock: IMock<T>, target: ExpectedExpressions<T>) => IPresetBuilder<T>;
     private verifier: Verifier<T>;
-    private interceptedCallbacks: IInterceptorCallbacks;
+    private prototypeStorage: PrototypeStorage;
 
-    constructor(private options: IMockOptions = {}) {
+    constructor(private readonly options: IMockOptions = {}) {
+        this.options = buildMockOptions(options);
         const dependencies = mockDependenciesFactory<T>(this.options);
         this.tracker = dependencies.tracker;
         this.expressionReflector = dependencies.expressionReflector;
         this.interceptor = dependencies.interceptor;
         this.setupFactory = dependencies.presetBuilderFactory;
         this.verifier = dependencies.verifier;
-        this.interceptedCallbacks = dependencies.interceptedCallbacks;
+        this.prototypeStorage = dependencies.prototypeStorage;
     }
 
     public get name() {
@@ -50,12 +52,7 @@ export class Mock<T> implements IMock<T> {
     }
 
     public prototypeof(prototype?: any): IMock<T> {
-        this.interceptor.prototypeof(prototype);
-        return this;
-    }
-
-    public setBehaviorStrategy(behaviorStrategy: MockBehavior): IMock<T> {
-        this.interceptedCallbacks.setBehaviorStrategy(behaviorStrategy);
+        this.prototypeStorage.set(prototype);
         return this;
     }
 

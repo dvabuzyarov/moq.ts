@@ -1,4 +1,4 @@
-import {GetPropertyExpression} from "../expressions";
+import {GetPropertyInteraction} from "../interactions";
 import {GetPropertyExpressionFormatter} from "./get.property-formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
 
@@ -12,7 +12,7 @@ describe("Get property expression formatter", () => {
         const name = "name";
         const nameDescription = "name description";
 
-        const expression = new GetPropertyExpression(name);
+        const expression = new GetPropertyInteraction(name);
 
         const propertyKeyFormatter = propertyKeyFormatterFactory();
         (<jasmine.Spy>propertyKeyFormatter.format).and.returnValue(nameDescription);

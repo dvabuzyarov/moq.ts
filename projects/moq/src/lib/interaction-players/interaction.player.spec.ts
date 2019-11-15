@@ -1,4 +1,4 @@
-import { GetPropertyExpression } from "../expressions";
+import { GetPropertyInteraction } from "../interactions";
 import { InteractionPlayer } from "./interaction.player";
 import { InteractionPresetProvider } from "./interaction-preset.provider";
 import { IPreset } from "../presets/preset";
@@ -7,7 +7,7 @@ import { PresetPlayer } from "./preset.player";
 describe("Interaction player", () => {
 
     it("Plays interaction on appropriate preset and returns result", () => {
-        const expression = new GetPropertyExpression("");
+        const expression = new GetPropertyInteraction("");
         const preset = <IPreset<unknown>>{};
         const result = {};
 
@@ -24,7 +24,7 @@ describe("Interaction player", () => {
     });
 
     it("Does not play interaction when there is no appropriate preset and returns undefined", () => {
-        const expression = new GetPropertyExpression("");
+        const expression = new GetPropertyInteraction("");
 
         const interactionPresetProvider = jasmine.createSpyObj<InteractionPresetProvider>("", ["get"]);
         interactionPresetProvider.get.and.returnValue(undefined);
