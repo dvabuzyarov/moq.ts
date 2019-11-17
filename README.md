@@ -253,4 +253,5 @@ const mock = new Mock<Origin>({target: new Origin()});
 
 expect(typeof mock.object()).toBe(typeof new Origin());
 ```
+
 Sponsored by [2BIT](https://www.2bit.ch)
