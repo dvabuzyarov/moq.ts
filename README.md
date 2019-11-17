@@ -25,7 +25,7 @@ npm install moq.ts --save-dev
 
 moq.ts as the original [Moq library](https://github.com/moq/moq4) is intended to be simple to use, strongly typed (no magic strings!, and therefore full compiler-verified and refactoring-friendly) and minimalistic (while still fully functional!).
 
-You can find a pretty full set of usages in the integration tests. Check out [tests.integration](https://github.com/dvabuzyarov/moq.ts/tree/master/tests.integration) folder.
+You can find a pretty full set of usages in the integration tests. Check out [tests.integration](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/) folder.
 * * *
 
 - [Mocking property of objects](#mocking-property-of-objects)
@@ -41,7 +41,7 @@ You can find a pretty full set of usages in the integration tests. Check out [te
 <!-- toc -->
 Mocking property of objects
 -
-[get.property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts)
+[get.property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/get.property.spec.ts)
 ```typescript
 import {Mock, It, Times, ExpectedGetPropertyExpression} from 'moq.ts';
 interface ITestObject {
@@ -84,7 +84,7 @@ Mocking property setting
 [The documentation on returned value from 'set hook' on Proxy object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set)
 
 
-[set-property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-set.property.IntegrationTests.ts)
+[set-property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/set.property.spec.ts)
 ```typescript
 import {Mock, It, Times, ExpectedSetPropertyExpression} from 'moq.ts';
 interface ITestObject {
@@ -118,7 +118,7 @@ mock.verify(instance=> {instance.property = 1}, Times.Once());
 Mocking functions
 -
 
-[mock-method.property.IntegrationTests.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-method.IntegrationTests.ts)
+[mock-method.property.IntegrationTests.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/method.spec.ts)
 ```typescript
 import {Mock, It, Times} from 'moq.ts';
 interface ITestFunction {
@@ -152,7 +152,7 @@ mock.verify(instance => instance(It.Is(value=> value === 1)), Times.Exactly(1));
  
  Mocking functions of objects
  -
-[instance-method.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-named.method.IntegrationTests.ts)
+[instance-method.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/instance-method.spec.ts)
  ```typescript
 import {Mock, It, Times} from 'moq.ts';
 interface ITestObject {
