@@ -3,6 +3,7 @@ import { It } from "../lib/expected-expressions/expression-predicates";
 import { ExpectedNamedMethodExpression } from "../lib/expected-expressions/expected-expressions";
 import { Times } from "../lib/times";
 import { nameof } from "../tests.components/nameof";
+import { NamedMethodInteraction } from "../lib/interactions";
 
 interface ITestObject {
     method(arg: number): string;
@@ -77,7 +78,7 @@ describe("Instance method", () => {
         mock.verify(instance => instance.method(1));
     });
 
-    it("Calls callback", () => {
+    it("Returns callback result", () => {
         const value = "value";
         const callback = jasmine.createSpy("callback").and.returnValue(value);
         const object = new Mock<ITestObject>()
@@ -88,7 +89,19 @@ describe("Instance method", () => {
         const actual = object.method(1);
 
         expect(actual).toBe(value);
-        expect(callback).toHaveBeenCalledWith(1);
+        expect(callback).toHaveBeenCalledWith(new NamedMethodInteraction(nameof<ITestObject>("method"), [1]));
+    });
+
+    it("Returns callback result", () => {
+        const value = "value";
+        const object = new Mock<ITestObject>()
+            .setup(instance => instance.method(1))
+            .callback(({args: [arg]}) => arg === 1 ? value : undefined)
+            .object();
+
+        const actual = object.method(1);
+
+        expect(actual).toBe(value);
     });
 
     it("Throws an exception", () => {

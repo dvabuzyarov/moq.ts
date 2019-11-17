@@ -1,5 +1,7 @@
-export abstract class PropertyInteraction {
-    protected constructor(public name: PropertyKey) {
+export abstract class Interaction {
+    protected constructor(
+        public readonly name: PropertyKey,
+        public readonly args: any[]) {
 
     }
 }
@@ -8,10 +10,10 @@ export abstract class PropertyInteraction {
  * This class represents an invocation of a named function.
  * It provides access to the name of function and list of parameters.
  */
-export class NamedMethodInteraction extends PropertyInteraction {
+export class NamedMethodInteraction extends Interaction {
     constructor(name: PropertyKey,
-                public args: any[]) {
-        super(name);
+                args: any[]) {
+        super(name, args);
     }
 }
 
@@ -19,8 +21,9 @@ export class NamedMethodInteraction extends PropertyInteraction {
  * This class represents an invocation of a function.
  * It provides access to the list of parameters.
  */
-export class MethodInteraction {
-    constructor(public args: any[]) {
+export class MethodInteraction extends Interaction {
+    constructor(args: any[]) {
+        super(undefined, args);
     }
 }
 
@@ -28,9 +31,9 @@ export class MethodInteraction {
  * This class represents a property accessing.
  * It provides access to the name of property.
  */
-export class GetPropertyInteraction extends PropertyInteraction {
+export class GetPropertyInteraction extends Interaction {
     constructor(name: PropertyKey) {
-        super(name);
+        super(name, undefined);
     }
 }
 
@@ -38,10 +41,10 @@ export class GetPropertyInteraction extends PropertyInteraction {
  * This class represents a property write interaction.
  * It provides access to the name of property and the value.
  */
-export class SetPropertyInteraction extends PropertyInteraction {
+export class SetPropertyInteraction extends Interaction {
     constructor(name: PropertyKey,
-                public value: any) {
-        super(name);
+                public readonly value: any) {
+        super(name, [value]);
     }
 }
 
