@@ -118,8 +118,7 @@
 }
 
 <span class="hljs-keyword">const</span> property4Name = <span class="hljs-string">'property4'</span>;
-<span class="hljs-keyword">const</span> mockName = <span class="hljs-string">'mock name is optional'</span>;
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;(mockName)
+<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
     .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.property1)
     .returns(<span class="hljs-number">1</span>)
 
@@ -193,7 +192,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
     .returns(<span class="hljs-string">'called with 1'</span>)
 
     .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(<span class="hljs-number">2</span>))
-    .callback(<span class="hljs-function">(<span class="hljs-params">argument</span>)=&gt;</span> argument === <span class="hljs-number">2</span> ? <span class="hljs-string">'called with 2'</span> : <span class="hljs-string">`called with <span class="hljs-subst">${argument}</span>`</span>)
+    .callback(<span class="hljs-function">(<span class="hljs-params">{args: [argument]}</span>)=&gt;</span> argument === <span class="hljs-number">2</span> ? <span class="hljs-string">'called with 2'</span> : <span class="hljs-string">`called with <span class="hljs-subst">${argument}</span>`</span>)
 
     .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(value))
     .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Argument is object with date'</span>))
@@ -224,7 +223,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
     .returns(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2016</span>))
 
     .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(It.Is(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === <span class="hljs-number">2</span>), values[<span class="hljs-number">1</span>]))
-    .callback(<span class="hljs-function">(<span class="hljs-params">arg1, arg2</span>)=&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2017</span> + arg1))
+    .callback(<span class="hljs-function">(<span class="hljs-params">{args: [arg1, arg2]}</span>)=&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2017</span> + arg1))
 
     .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(<span class="hljs-number">3</span>, It.Is(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === values[<span class="hljs-number">2</span>])))
     .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Invoking method with 3 and c'</span>));
@@ -245,7 +244,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 				The latest setup has the highest precedence. </p>
 				<p>You can control mock behavior when accessing to a property without a corresponding setup. </p>
 				<pre><code class="language-typescript">    mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;();
-    mock.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function"><span class="hljs-params">expression</span> =&gt;</span> <span class="hljs-literal">true</span>))
+    mock.setup(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> It.IsAny())
       .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"setup is missed"</span>));</code></pre>
 				<a href="#mock-prototype" id="mock-prototype" style="color: inherit; text-decoration: none;">
 					<h2>Mock prototype</h2>
@@ -300,12 +299,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 <span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;Origin&gt;({target: <span class="hljs-keyword">new</span> Origin()});
 
 expect(<span class="hljs-keyword">typeof</span> mock.object()).toBe(<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">new</span> Origin());</code></pre>
-				<p>Тип объекта формируем из прототипа, а setup селекторы определяют,
-					как на тип прототипа накладывается указанное поведение. Если прототип не указан,
-					то используем прототип по умолчанию.
-					По поводу объектов в луз режиме, которые для любого свойства возвращают спай-функцию: их необходимость
-					с практической точки зрения нулевая и нет необъодимости в ней.
-				Sponsored by <a href="https://www.2bit.ch">2BIT</a></p>
+				<p>Sponsored by <a href="https://www.2bit.ch">2BIT</a></p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
