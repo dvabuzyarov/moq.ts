@@ -53,8 +53,7 @@ interface ITestObject {
 }
 
 const property4Name = 'property4';
-const mockName = 'mock name is optional';
-const mock = new Mock<ITestObject>(mockName)
+const mock = new Mock<ITestObject>()
     .setup(instance => instance.property1)
     .returns(1)
     
@@ -133,7 +132,7 @@ const mock = new Mock<ITestFunction>()
     .returns('called with 1')
     
     .setup(instance => instance(2))
-    .callback((argument)=> argument === 2 ? 'called with 2' : `called with ${argument}`)
+    .callback(({args: [argument]})=> argument === 2 ? 'called with 2' : `called with ${argument}`)
     
     .setup(instance => instance(value))
     .throws(new Error('Argument is object with date'))
@@ -167,7 +166,7 @@ const mock = new Mock<ITestObject>()
     .returns(new Date(2016))
     
     .setup(instance => instance.method(It.Is(value => value === 2), values[1]))
-    .callback((arg1, arg2)=> new Date(2017 + arg1))
+    .callback(({args: [arg1, arg2]})=> new Date(2017 + arg1))
     
     .setup(instance => instance.method(3, It.Is(value => value === values[2])))
     .throws(new Error('Invoking method with 3 and c'));
@@ -192,7 +191,7 @@ The latest setup has the highest precedence.
 You can control mock behavior when accessing to a property without a corresponding setup. 
 ```typescript
     mock = new Mock<ITestObject>();
-    mock.setup(instance => It.Is(expression => true))
+    mock.setup(() => It.IsAny())
       .throws(new Error("setup is missed"));
 ```
 

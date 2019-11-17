@@ -6,6 +6,7 @@ import { MimicsPreset } from "../presets/mimics.preset";
 import { ReturnsPreset } from "../presets/returns.preset";
 import { ThrowsPreset } from "../presets/throws.preset";
 import { CallbacksPreset } from "../presets/callbacks.preset";
+import { Interactions } from "../interactions";
 
 /**
  * The default implementation of {@link IPresetBuilder} interface.
@@ -43,7 +44,7 @@ export class PresetBuilder<T> implements IPresetBuilder<T> {
         return this.mock;
     }
 
-    public callback<TValue>(callback: (args: any[]) => TValue): IMock<T> {
+    public callback<TValue>(callback: (interaction: Interactions) => TValue): IMock<T> {
         const invocable = this.invocableFactory.get();
         const preset = new CallbacksPreset(invocable, this.target, callback);
         this.set(preset);

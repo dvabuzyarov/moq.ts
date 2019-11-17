@@ -1,6 +1,7 @@
 import { IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
 import { Tracker } from "./tracker";
 import { Times } from "./times";
+import { Interactions } from "./interactions";
 
 export interface ITypeMember {
     name: PropertyKey;
@@ -47,17 +48,17 @@ export interface IPresetBuilder<T> {
     throws<TException>(exception: TException): IMock<T>;
 
     /**
-     * @param callback A callback function that will intercept the invoked setup.
+     * @param callback A callback function that will intercept the interaction.
      * The function may returns a value that will be provided as result (see {@link IPresetBuilder.returns})
      * @example
      * ```typescript
      *
      *     const ipcRendererMock = new StrictMock<typeof ipcRenderer>()
      *     .setup(instance => instance.on(ipcRendererChannelName, It.IsAny()))
-     *     .callback((channel, listener) => listener(undefined, response));
+     *     .callback(({args: [channel, listener]}) => listener(undefined, response));
      * ```
      */
-    callback<TValue>(callback: (...args: any[]) => TValue): IMock<T>;
+    callback<TValue>(callback: (interaction: Interactions) => TValue): IMock<T>;
 
     /**
      * Plays the setup on target invocation when predicate returns true otherwise the setup will be ignored.
