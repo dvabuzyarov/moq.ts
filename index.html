@@ -90,7 +90,7 @@
 					<h4>Quick start</h4>
 				</a>
 				<p>moq.ts as the original <a href="https://github.com/moq/moq4">Moq library</a> is intended to be simple to use, strongly typed (no magic strings!, and therefore full compiler-verified and refactoring-friendly) and minimalistic (while still fully functional!).</p>
-				<p>You can find a pretty full set of usages in the integration tests. Check out <a href="https://github.com/dvabuzyarov/moq.ts/tree/master/tests.integration">tests.integration</a> folder.</p>
+				<p>You can find a pretty full set of usages in the integration tests. Check out <a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/">tests.integration</a> folder.</p>
 				<hr>
 				<ul>
 					<li><a href="#mocking-property-of-objects">Mocking property of objects</a></li>
@@ -107,7 +107,7 @@
 				<a href="#mocking-property-of-objects" id="mocking-property-of-objects" style="color: inherit; text-decoration: none;">
 					<h2>Mocking property of objects</h2>
 				</a>
-				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-get.property.IntegrationTests.ts">get.property.spec.ts</a></p>
+				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/get.property.spec.ts">get.property.spec.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {Mock, It, Times, ExpectedGetPropertyExpression} <span class="hljs-keyword">from</span> <span class="hljs-string">'moq.ts'</span>;
 <span class="hljs-keyword">interface</span> ITestObject {
     property1: <span class="hljs-built_in">number</span>;
@@ -147,7 +147,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 					<h2>Mocking property setting</h2>
 				</a>
 				<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set">The documentation on returned value from &#39;set hook&#39; on Proxy object</a></p>
-				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-set.property.IntegrationTests.ts">set-property.spec.ts</a></p>
+				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/set.property.spec.ts">set-property.spec.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {Mock, It, Times, ExpectedSetPropertyExpression} <span class="hljs-keyword">from</span> <span class="hljs-string">'moq.ts'</span>;
 <span class="hljs-keyword">interface</span> ITestObject {
     property: <span class="hljs-built_in">number</span>|<span class="hljs-built_in">any</span>;
@@ -179,7 +179,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 				<a href="#mocking-functions" id="mocking-functions" style="color: inherit; text-decoration: none;">
 					<h2>Mocking functions</h2>
 				</a>
-				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-method.IntegrationTests.ts">mock-method.property.IntegrationTests.ts</a></p>
+				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/method.spec.ts">mock-method.property.IntegrationTests.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {Mock, It, Times} <span class="hljs-keyword">from</span> <span class="hljs-string">'moq.ts'</span>;
 <span class="hljs-keyword">interface</span> ITestFunction {
     (arg: <span class="hljs-built_in">number</span>|<span class="hljs-built_in">any</span>): <span class="hljs-built_in">string</span>;
@@ -210,7 +210,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 				<a href="#mocking-functions-of-objects" id="mocking-functions-of-objects" style="color: inherit; text-decoration: none;">
 					<h2> Mocking functions of objects</h2>
 				</a>
-				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.integration/mock-named.method.IntegrationTests.ts">instance-method.spec.ts</a></p>
+				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/instance-method.spec.ts">instance-method.spec.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {Mock, It, Times} <span class="hljs-keyword">from</span> <span class="hljs-string">'moq.ts'</span>;
 <span class="hljs-keyword">interface</span> ITestObject {
     method(arg1: <span class="hljs-built_in">number</span>, arg2: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">Date</span>;
