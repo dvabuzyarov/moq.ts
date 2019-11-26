@@ -1,8 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/lib",
+    "outDir": "../../dist/docs",
     "target": "es2015",
+    "moduleResolution": "node",
+    "module": "commonjs",
     "inlineSources": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
