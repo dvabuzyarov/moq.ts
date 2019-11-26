@@ -81,7 +81,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`[1,'string value',true,It.Is(function () { return undefined; }),[0,3]]`);
+        expect(actual).toBe(`[1,'string value',true,It.Is(() => undefined),[0,3]]`);
     });
 
     it("Returns formatted description for It", () => {
@@ -91,7 +91,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`It.Is(function () { return undefined; })`);
+        expect(actual).toBe(`It.Is(() => undefined)`);
     });
 
     it("Returns formatted description for function", () => {
@@ -111,7 +111,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`function () { return 1; }`);
+        expect(actual).toBe(`() => 1`);
     });
 
 });

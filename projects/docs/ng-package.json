@@ -2,6 +2,13 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/docs",
   "lib": {
-    "entryFile": "src/public_api.ts"
+    "entryFile": "src/public_api.ts",
+    "umdModuleIds": {
+      "typedoc": "typedoc",
+      "typedoc/dist/lib/models/reflections/abstract": "typedoc/dist/lib/models/reflections/abstract",
+      "typedoc/dist/lib/converter/components": "typedoc/dist/lib/converter/components",
+      "typedoc/dist/lib/converter/converter": "typedoc/dist/lib/converter/converter",
+      "typedoc/dist/lib/converter/plugins": "typedoc/dist/lib/converter/plugins"
+    }
   }
 }

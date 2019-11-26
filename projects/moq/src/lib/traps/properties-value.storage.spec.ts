@@ -1,4 +1,5 @@
 import { PropertiesValueStorage } from "./properties-value.storage";
+import { nameof } from "../../tests.components/nameof";
 
 describe("Properties value storage", () => {
 
@@ -36,6 +37,15 @@ describe("Properties value storage", () => {
 
     it("Returns false for unset property", () => {
         const propertyName = "property name";
+
+        const storage = new PropertiesValueStorage();
+        const actual = storage.has(propertyName);
+
+        expect(actual).toBe(false);
+    });
+
+    it("Returns false for toString", () => {
+        const propertyName = nameof<Object>("toString");
 
         const storage = new PropertiesValueStorage();
         const actual = storage.has(propertyName);

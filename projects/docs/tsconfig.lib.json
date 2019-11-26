@@ -1,16 +1,13 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/lib",
+    "outDir": "../../dist/docs",
     "target": "es2015",
-    "module": "commonjs",
     "moduleResolution": "node",
-    "declaration": true,
-    "sourceMap": true,
+    "module": "commonjs",
     "inlineSources": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "importHelpers": true,
     "types": [],
     "lib": [
       "dom",
