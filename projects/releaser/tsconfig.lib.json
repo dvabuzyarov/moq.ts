@@ -3,6 +3,8 @@
   "compilerOptions": {
     "outDir": "../../dist/releaser",
     "target": "es2015",
+    "moduleResolution": "node",
+    "module": "commonjs",
     "declaration": true,
     "inlineSources": true,
     "types": ["node"],
