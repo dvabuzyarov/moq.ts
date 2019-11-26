@@ -1,4 +1,4 @@
-import * as semanticRelease from "semantic-release";
+import semanticRelease from "semantic-release";
 import { createReleaseMarker } from "./create-release-marker";
 
 export async function release() {
