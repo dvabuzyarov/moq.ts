@@ -4,7 +4,7 @@ import { SpyFunctionProvider } from "./spy-function.provider";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { resolveBuilder } from "../../tests.components/resolve.builder";
 
-describe("Get trap", () => {
+describe("Spy function provider", () => {
     let resolve: ReturnType<typeof resolveBuilder>;
 
     beforeEach(() => {
