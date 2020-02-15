@@ -26,7 +26,11 @@ describe("Instance method", () => {
     it("Returns value with a predicated setup", () => {
         const value = "value";
 
-        const object = new Mock<ITestObject>({members: [{name: "method", type: "method"}]})
+        const target = {};
+        const name = nameof<ITestObject>("method");
+        Object.defineProperty(target, name, {value: () => undefined});
+
+        const object = new Mock<ITestObject>({target: Object.create(target)})
             .setup(instance => It.Is((expression: ExpectedNamedMethodExpression) => {
                 return expression.name === "method" && expression.args[0] === 1;
             }))
@@ -67,7 +71,11 @@ describe("Instance method", () => {
     });
 
     it("Returns undefined when call an unset method in loose mode", () => {
-        const mock = new Mock<ITestObject>({members: [{type: "method", name: nameof<ITestObject>("method")}]})
+        const target = {};
+        const name = nameof<ITestObject>("method");
+        Object.defineProperty(target, name, {value: () => undefined});
+
+        const mock = new Mock<ITestObject>({target: Object.create(target)})
             .setup(() => It.IsAny())
             .callback(() => undefined);
 

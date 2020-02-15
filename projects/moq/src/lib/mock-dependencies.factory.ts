@@ -46,7 +46,7 @@ export function mockDependenciesFactory<T>(options: IMockOptions): IMockDependen
     const prototypeStorage = new PrototypeStorage(options.target);
     const propertiesValueStorage = new PropertiesValueStorage();
     const interactionPlayer = new InteractionPlayer(new InteractionPresetProvider(presets));
-    const membersExplorer = new MembersExplorer(options.members);
+    const membersExplorer = new MembersExplorer(prototypeStorage);
     const hasPropertyExplorer = new HasPropertyExplorer(presets, membersExplorer);
     const hasMethodExplorer = new HasMethodExplorer(presets, membersExplorer);
     const spyFunctionProvider = new SpyFunctionProvider(tracker, interactionPlayer);
@@ -56,8 +56,7 @@ export function mockDependenciesFactory<T>(options: IMockOptions): IMockDependen
         interactionPlayer,
         hasPropertyExplorer,
         hasMethodExplorer,
-        spyFunctionProvider,
-        prototypeStorage);
+        spyFunctionProvider);
     const setTrap = new SetTrap(tracker, propertiesValueStorage, interactionPlayer);
     const applyTrap = new ApplyTrap(tracker, interactionPlayer);
     const getPrototypeOfTrap = new GetPrototypeOfTrap(prototypeStorage);
