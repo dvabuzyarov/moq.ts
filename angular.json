@@ -14,6 +14,11 @@
           "options": {
             "tsConfig": "projects/moq/tsconfig.lib.json",
             "project": "projects/moq/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/moq/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -49,6 +54,11 @@
           "options": {
             "tsConfig": "projects/docs/tsconfig.lib.json",
             "project": "projects/docs/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/docs/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -84,6 +94,11 @@
           "options": {
             "tsConfig": "projects/releaser/tsconfig.lib.json",
             "project": "projects/releaser/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/releaser/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -109,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "moq"
+  "defaultProject": "moq",
+  "cli": {
+    "analytics": "7f863846-4447-4e31-8d79-e5a9f64df4f3"
+  }
 }

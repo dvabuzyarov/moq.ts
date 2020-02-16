@@ -5,7 +5,6 @@ import { SpyFunctionProvider } from "./spy-function.provider";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
-import { PrototypeStorage } from "./prototype.storage";
 
 /**
  * @hidden
@@ -17,8 +16,7 @@ export class GetTrap {
         private interactionPlayer: InteractionPlayer,
         private hasPropertyExplorer: HasPropertyExplorer,
         private hasMethodExplorer: HasMethodExplorer,
-        private spyFunctionProvider: SpyFunctionProvider,
-        private prototypeStorage: PrototypeStorage) {
+        private spyFunctionProvider: SpyFunctionProvider) {
 
     }
 
@@ -36,11 +34,6 @@ export class GetTrap {
         }
 
         if (this.hasMethodExplorer.has(property)) {
-            return this.spyFunctionProvider.get(property);
-        }
-
-        const prototype = this.prototypeStorage.get();
-        if (prototype && prototype[property] instanceof Function) {
             return this.spyFunctionProvider.get(property);
         }
 

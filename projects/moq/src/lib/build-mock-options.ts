@@ -3,6 +3,7 @@ import { IMockOptions } from "./moq";
 /**
  * @hidden
  */
-export function buildMockOptions(options: IMockOptions): IMockOptions {
-    return {...{target: () => undefined, members: []}, ...options};
+export function buildMockOptions<T>(options: IMockOptions<T>): IMockOptions<T> {
+    const target = (() => undefined) as unknown as T;
+    return {target, ...options};
 }

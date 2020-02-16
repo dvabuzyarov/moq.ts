@@ -15,6 +15,6 @@ describe("Build mock options function", () => {
         const target = new Target();
         const actual = buildMockOptions({target, name});
 
-        expect(actual).toEqual({target, name, members: []});
+        expect(actual).toEqual({target, name});
     });
 });
