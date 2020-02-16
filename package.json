@@ -3,7 +3,7 @@
   "version": "0.0.0-semantically-released",
   "scripts": {
     "start": "ng serve",
-    "build": "ng build moq && cpx README.md ./dist/moq/",
+    "build": "ng build moq --prod && cpx README.md ./dist/moq/",
     "build-docs": "tsc -p ./projects/docs/tsconfig.lib.json",
     "build-releaser": "tsc -p ./projects/releaser/tsconfig.lib.json",
     "build-tests": "tsc -p ./projects/moq/tsconfig.spec.json ",
