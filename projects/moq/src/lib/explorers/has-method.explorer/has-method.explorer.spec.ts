@@ -3,7 +3,7 @@ import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
 import { IPreset } from "../../presets/preset";
 import { Presets } from "../../preset/presets";
 import { resolveBuilder } from "../../../tests.components/resolve.builder";
-import { MembersExplorer } from "../members.explorer/members.explorer";
+import { MembersMethodExplorer } from "../members.explorer/members-method.explorer";
 
 describe("Has instance method explorer", () => {
     let resolve: ReturnType<typeof resolveBuilder>;
@@ -11,11 +11,11 @@ describe("Has instance method explorer", () => {
     beforeEach(() => {
         const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
         const presetExplorer = jasmine.createSpyObj<PresetHasMethodExplorer>("", ["has"]);
-        const membersExplorer = jasmine.createSpyObj<MembersExplorer>("", ["hasMethod"]);
+        const membersExplorer = jasmine.createSpyObj<MembersMethodExplorer>("", ["hasMethod"]);
         resolve = resolveBuilder([
             [Presets, presets],
             [PresetHasMethodExplorer, presetExplorer],
-            [MembersExplorer, membersExplorer],
+            [MembersMethodExplorer, membersExplorer],
             [HasMethodExplorer, new HasMethodExplorer(presets, membersExplorer, presetExplorer)]
         ]);
     });
@@ -23,7 +23,7 @@ describe("Has instance method explorer", () => {
     it("Returns true when there is a member", () => {
         const name = "name";
 
-        resolve(MembersExplorer)
+        resolve(MembersMethodExplorer)
             .hasMethod.withArgs(name).and.returnValue(true);
 
         const explorer = resolve(HasMethodExplorer);
@@ -35,7 +35,7 @@ describe("Has instance method explorer", () => {
     it("Returns true when there is an instance method", () => {
         const name = "name";
         const preset = <IPreset<unknown>>{};
-        resolve(MembersExplorer)
+        resolve(MembersMethodExplorer)
             .hasMethod.and.returnValue(false);
 
         resolve(Presets)
@@ -54,7 +54,7 @@ describe("Has instance method explorer", () => {
         const name = "name";
         const preset = <IPreset<unknown>>{};
 
-        resolve(MembersExplorer)
+        resolve(MembersMethodExplorer)
             .hasMethod.and.returnValue(false);
 
         resolve(Presets)
