@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TrackedAction | moq.ts | documentation</title>
+	<title>Range | moq.ts | documentation</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.trackedaction.html">TrackedAction</a>
+					<a href="moq_ts.range-1.html">Range</a>
 				</li>
 			</ul>
-			<h1>Interface TrackedAction</h1>
+			<h1>Enumeration Range</h1>
 		</div>
 	</div>
 </header>
@@ -70,51 +70,44 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>This class represents a recorded interaction with the a mocked object.</p>
+						<p>Sets the rules where bounds of a range are included or excluded from the range.
+						See <a href="../classes/moq_ts.times-1.html#between">Times.Between</a></p>
 					</div>
 				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">TrackedAction</span>
-					</li>
-				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="moq_ts.trackedaction.html#expression" class="tsd-kind-icon">expression</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="moq_ts.trackedaction.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="moq_ts.range-1.html#exclusive" class="tsd-kind-icon">Exclusive</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="moq_ts.range-1.html#inclusive" class="tsd-kind-icon">Inclusive</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="expression" class="tsd-anchor"></a>
-					<h3>expression</h3>
-					<div class="tsd-signature tsd-kind-icon">expression<span class="tsd-signature-symbol">:</span> <a href="../classes/moq_ts.methodinteraction-1.html" class="tsd-signature-type">MethodInteraction</a><span class="tsd-signature-symbol"> | </span><a href="../classes/moq_ts.getpropertyinteraction-1.html" class="tsd-signature-type">GetPropertyInteraction</a><span class="tsd-signature-symbol"> | </span><a href="../classes/moq_ts.setpropertyinteraction-1.html" class="tsd-signature-type">SetPropertyInteraction</a></div>
+				<h2>Enumeration members</h2>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="exclusive" class="tsd-anchor"></a>
+					<h3>Exclusive</h3>
+					<div class="tsd-signature tsd-kind-icon">Exclusive<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/5452298/projects/moq/src/lib/tracker.ts#L9">projects/moq/src/lib/tracker.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/5452298/projects/moq/src/lib/times.ts#L6">projects/moq/src/lib/times.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="inclusive" class="tsd-anchor"></a>
+					<h3>Inclusive</h3>
+					<div class="tsd-signature tsd-kind-icon">Inclusive<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/5452298/projects/moq/src/lib/tracker.ts#L8">projects/moq/src/lib/tracker.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/5452298/projects/moq/src/lib/times.ts#L7">projects/moq/src/lib/times.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -135,14 +128,14 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="moq_ts.trackedaction.html" class="tsd-kind-icon">Tracked<wbr>Action</a>
+					<li class="current tsd-kind-enum tsd-parent-kind-module">
+						<a href="moq_ts.range-1.html" class="tsd-kind-icon">Range</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="moq_ts.trackedaction.html#expression" class="tsd-kind-icon">expression</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="moq_ts.range-1.html#exclusive" class="tsd-kind-icon">Exclusive</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="moq_ts.trackedaction.html#id" class="tsd-kind-icon">id</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="moq_ts.range-1.html#inclusive" class="tsd-kind-icon">Inclusive</a>
 							</li>
 						</ul>
 					</li>
