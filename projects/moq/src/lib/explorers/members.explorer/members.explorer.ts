@@ -1,19 +1,27 @@
-import { ITypeMember } from "../../moq";
+import { PrototypeStorage } from "../../traps/prototype.storage";
 
 /**
  * @hidden
  */
 export class MembersExplorer {
     constructor(
-        private members: ITypeMember[]) {
+        private storage: PrototypeStorage) {
 
     }
 
     public hasProperty(name: PropertyKey): boolean {
-        return this.members.find(member => member.type === "property" && member.name === name) !== undefined;
+        const prototype = this.storage.get();
+        if (prototype) {
+            return Reflect.has(prototype, name) && (prototype[name] instanceof Function) === false;
+        }
+        return false;
     }
 
     public hasMethod(name: PropertyKey): boolean {
-        return this.members.find(member => member.type === "method" && member.name === name) !== undefined;
+        const prototype = this.storage.get();
+        if (prototype) {
+            return prototype[name] instanceof Function;
+        }
+        return false;
     }
 }

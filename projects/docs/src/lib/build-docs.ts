@@ -1,9 +1,12 @@
 import { Application } from "typedoc";
 import { MoqPlugin } from "./typedoc.plugin";
+import { ModuleKind, ScriptTarget } from "typescript";
 
-const application = new Application({
-    module: "commonjs",
-    target: "es6",
+const application = new Application();
+
+application.bootstrap({
+    module: ModuleKind.CommonJS,
+    target: ScriptTarget.ES2020,
     name: "moq.ts | documentation",
     // theme: "markdown",
     excludePrivate: true,

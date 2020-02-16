@@ -32,6 +32,7 @@ You can find a pretty full set of usages in the integration tests. Check out [te
 - [Mocking property setting](#mocking-property-setting)
 - [Mocking functions](#mocking-functions)
 - [Mocking functions of objects](#mocking-functions-of-objects)
+- [Type Discovering](#type-discovering)
 - [Mock behavior](#mock-behavior)
 - [Mock prototype](#mock-prototype)
 - [Mimics](#mimics)
@@ -175,6 +176,96 @@ const object = mock.object();
 const actual = object.method(1, 'a');
 
 mock.verify(instance => instance.method(2, 'a'), Times.Never());
+```
+
+## Type Discovering
+Despite the fact that Mock class is generic type where T parameter is stands for mocked type
+it works only at design time. At the runtime phase the type is not available 
+and Moq library relays on other ways to discover the type information. It is required to 
+implement correct behaviour of mocked object.
+
+Consider this case:
+
+```typescript
+    class Prototype {
+        method(): void {
+            throw new Error("Not Implemented");
+        }
+    }
+
+    const object = new Mock<Prototype>()
+        .object();
+
+    const actual = object.method(); // throws TypeError: object.method is not a function
+
+    expect(actual).toBe(undefined);
+```
+It happens because at runtime the mock does not know that method is a part of the mocked type. 
+So at the moment there are 3 ways how type could be discovered at runtime.
+
+#### Target
+It is possible to provide a target object instance when a new instance of mock is being created.
+It will fix typeof operator. The prototype of the target will be used for type discovering and fixing 
+instanceof operator.
+
+By default a mock is instantiated as Function object, so at runtime the mock "knows" about Function inherited 
+properties and methods. 
+
+```typescript
+    class Prototype {
+        method(): void {
+            throw new Error("Not Implemented");
+        }
+    }
+
+    const object = new Mock<Prototype>({target: new Prototype()})
+        .object();
+
+    const actual = object.method();
+
+    expect(actual).toBe(undefined);
+    expect(typeof object).toBe("object");
+    expect(object instanceof Prototype).toBe(true);
+```
+
+#### Prototype
+Another way to deal with type discovering is to provide a prototype object.
+```typescript
+    class Prototype {
+        method(): void {
+            throw new Error("Not Implemented");
+        }
+    }
+
+    const object = new Mock<Prototype>()
+        .prototypeof(Prototype.prototype)
+        .object();
+
+    const actual = object.method();
+
+    expect(actual).toBe(undefined);
+    expect(typeof object).toBe("function");
+    expect(object instanceof Prototype).toBe(true);
+```
+
+#### Setup examination
+In some cases Moq library can discover type information from provided setup information.
+```typescript
+        class Prototype {
+            method(): number {
+                throw new Error("Not Implemented");
+            }
+        }
+
+        const object = new Mock<Prototype>()
+            .setup(instance => instance.method()) // this would be used for type discovering
+            .returns(2)
+            .object();
+
+        const actual = object.method();
+
+        expect(actual).toBe(2);
+        expect(typeof object).toBe("function");
 ```
 
 ## Mock behavior
