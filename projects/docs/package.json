@@ -2,6 +2,7 @@
   "name": "docs",
   "version": "0.0.1",
   "peerDependencies": {
-    "typedoc": "*"
+    "typedoc": "*",
+    "typescript": "*"
   }
 }
