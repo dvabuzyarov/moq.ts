@@ -18,7 +18,8 @@ import { SetTrap } from "./traps/set.trap";
 import { ApplyTrap } from "./traps/apply.trap";
 import { GetPrototypeOfTrap } from "./traps/get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./traps/set-prototype-of.trap";
-import { MembersExplorer } from "./explorers/members.explorer/members.explorer";
+import { MembersPropertyExplorer } from "./explorers/members.explorer/members-property.explorer";
+import { MembersMethodExplorer } from "./explorers/members.explorer/members-method.explorer";
 
 /**
  * @hidden
@@ -46,9 +47,10 @@ export function mockDependenciesFactory<T>(options: IMockOptions<T>): IMockDepen
     const prototypeStorage = new PrototypeStorage(options.target);
     const propertiesValueStorage = new PropertiesValueStorage();
     const interactionPlayer = new InteractionPlayer(new InteractionPresetProvider(presets));
-    const membersExplorer = new MembersExplorer(prototypeStorage);
-    const hasPropertyExplorer = new HasPropertyExplorer(presets, membersExplorer);
-    const hasMethodExplorer = new HasMethodExplorer(presets, membersExplorer);
+    const membersPropertyExplorer = new MembersPropertyExplorer(prototypeStorage);
+    const membersMethodExplorer = new MembersMethodExplorer(prototypeStorage);
+    const hasPropertyExplorer = new HasPropertyExplorer(presets, membersPropertyExplorer);
+    const hasMethodExplorer = new HasMethodExplorer(presets, membersMethodExplorer);
     const spyFunctionProvider = new SpyFunctionProvider(tracker, interactionPlayer);
     const getTrap = new GetTrap(
         tracker,

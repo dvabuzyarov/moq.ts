@@ -3,7 +3,7 @@ import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
 import { IPreset } from "../../presets/preset";
 import { Presets } from "../../preset/presets";
 import { resolveBuilder } from "../../../tests.components/resolve.builder";
-import { MembersExplorer } from "../members.explorer/members.explorer";
+import { MembersPropertyExplorer } from "../members.explorer/members-property.explorer";
 
 describe("Has property explorer", () => {
     let resolve: ReturnType<typeof resolveBuilder>;
@@ -11,11 +11,11 @@ describe("Has property explorer", () => {
     beforeEach(() => {
         const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
         const presetExplorer = jasmine.createSpyObj<PresetHasPropertyExplorer>("", ["has"]);
-        const membersExplorer = jasmine.createSpyObj<MembersExplorer>("", ["hasProperty"]);
+        const membersExplorer = jasmine.createSpyObj<MembersPropertyExplorer>("", ["hasProperty"]);
         resolve = resolveBuilder([
             [Presets, presets],
             [PresetHasPropertyExplorer, presetExplorer],
-            [MembersExplorer, membersExplorer],
+            [MembersPropertyExplorer, membersExplorer],
             [HasPropertyExplorer, new HasPropertyExplorer(presets, membersExplorer, presetExplorer)]
         ]);
     });
@@ -23,7 +23,7 @@ describe("Has property explorer", () => {
     it("Returns true when there is a member", () => {
         const name = "name";
 
-        resolve(MembersExplorer)
+        resolve(MembersPropertyExplorer)
             .hasProperty.withArgs(name).and.returnValue(true);
 
         const explorer = resolve(HasPropertyExplorer);
@@ -35,7 +35,7 @@ describe("Has property explorer", () => {
     it("Returns true when there is a property", () => {
         const name = "name";
         const preset = <IPreset<unknown>>{};
-        resolve(MembersExplorer)
+        resolve(MembersPropertyExplorer)
             .hasProperty.and.returnValue(false);
 
         resolve(Presets)
@@ -54,7 +54,7 @@ describe("Has property explorer", () => {
         const name = "name";
         const preset = <IPreset<unknown>>{};
 
-        resolve(MembersExplorer)
+        resolve(MembersPropertyExplorer)
             .hasProperty.and.returnValue(false);
 
         resolve(Presets)

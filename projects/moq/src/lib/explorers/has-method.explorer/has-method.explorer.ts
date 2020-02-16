@@ -1,6 +1,6 @@
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
 import { Presets } from "../../preset/presets";
-import { MembersExplorer } from "../members.explorer/members.explorer";
+import { MembersMethodExplorer } from "../members.explorer/members-method.explorer";
 
 /**
  * @hidden
@@ -8,7 +8,7 @@ import { MembersExplorer } from "../members.explorer/members.explorer";
 export class HasMethodExplorer {
     constructor(
         private presets: Presets<unknown>,
-        private membersExplorer: MembersExplorer,
+        private membersExplorer: MembersMethodExplorer,
         private explorer: PresetHasMethodExplorer = new PresetHasMethodExplorer()) {
 
     }
