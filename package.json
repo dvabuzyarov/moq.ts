@@ -44,7 +44,8 @@
     "typedoc": "0.16.10",
     "typescript": "3.7.5",
     "rxjs": "6.5.4",
-    "zone.js": "0.10.2"
+    "zone.js": "0.10.2",
+    "tslib": "1.10.0"
   },
   "config": {
     "commitizen": {
@@ -61,8 +62,5 @@
       "pre-commit": "npm run lint && npm run test",
       "commit-msg": "commitlint --edit"
     }
-  },
-  "dependencies": {
-    "tslib": "1.10.0"
   }
 }
