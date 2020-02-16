@@ -59,7 +59,7 @@ describe("Members explorer", () => {
     it("Returns false when there is no property", () => {
         const name = "name";
         resolve(PrototypeStorage)
-            .get.and.returnValue({name: ()=> undefined});
+            .get.and.returnValue({name: () => undefined});
 
         const explorer = new MembersExplorer(resolve(PrototypeStorage));
         const actual = explorer.hasProperty(name);
@@ -70,7 +70,7 @@ describe("Members explorer", () => {
     it("Returns true when there is a method", () => {
         const name = "name";
         resolve(PrototypeStorage)
-            .get.and.returnValue({name: ()=> undefined});
+            .get.and.returnValue({name: () => undefined});
 
         const explorer = new MembersExplorer(resolve(PrototypeStorage));
         const actual = explorer.hasMethod(name);
@@ -81,7 +81,7 @@ describe("Members explorer", () => {
     it("Returns false when there is no method with this name", () => {
         const name = "name";
         resolve(PrototypeStorage)
-            .get.and.returnValue({name1: ()=> undefined});
+            .get.and.returnValue({name1: () => undefined});
 
         const explorer = new MembersExplorer(resolve(PrototypeStorage));
         const actual = explorer.hasMethod(name);

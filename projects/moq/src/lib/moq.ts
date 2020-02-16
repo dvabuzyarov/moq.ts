@@ -3,15 +3,10 @@ import { Tracker } from "./tracker";
 import { Times } from "./times";
 import { Interactions } from "./interactions";
 
-export interface ITypeMember {
-    name: PropertyKey;
-    type: "property" | "method";
-}
-
 /**
  * Mock creation options
  */
-export interface IMockOptions {
+export interface IMockOptions<T> {
     /**
      * You can name the mock. The name will be displayed with any relative output, so you can easily distinct
      * output of several mocks. On the mocked object you can find this name at 'mockName' property of the [[Handler]].
@@ -20,10 +15,9 @@ export interface IMockOptions {
     /**
      * The target object for Proxy that is used under the hood.
      * typeof operation is applied to this target.
-     * The default value is function.
+     * The default value is a function.
      */
-    target?: any;
-    members?: ITypeMember[];
+    target?: T;
 }
 
 /**

@@ -35,7 +35,7 @@ export interface IMockDependencies<T> {
 /**
  * @hidden
  */
-export function mockDependenciesFactory<T>(options: IMockOptions): IMockDependencies<T> {
+export function mockDependenciesFactory<T>(options: IMockOptions<T>): IMockDependencies<T> {
     const expressionReflector = new ExpectedExpressionReflector();
     const presets = new Presets<T>();
     const tracker = new Tracker();

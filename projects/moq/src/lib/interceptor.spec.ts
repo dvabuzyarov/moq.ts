@@ -145,9 +145,16 @@ describe("Mock interceptor", () => {
     });
 
     it("Returns object that typeof is typeof of provided target", () => {
-        const interceptor = get({});
+        class Prototype {
+        }
+
+        const interceptor = get(Prototype);
+        resolve(GetPrototypeOfTrap)
+            .intercept.and.returnValue(Prototype.prototype);
+
         const object = interceptor.object();
 
-        expect(typeof object).toBe(typeof {});
+        expect(typeof object).toBe(typeof Prototype);
+        expect(object instanceof Prototype).toBe(true);
     });
 });

@@ -20,7 +20,7 @@ export class Mock<T> implements IMock<T> {
     private verifier: Verifier<T>;
     private prototypeStorage: PrototypeStorage;
 
-    constructor(private readonly options: IMockOptions = {}) {
+    constructor(private readonly options: IMockOptions<T> = {}) {
         this.options = buildMockOptions(options);
         const dependencies = mockDependenciesFactory<T>(this.options);
         this.tracker = dependencies.tracker;
