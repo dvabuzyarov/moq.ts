@@ -18,8 +18,8 @@ import { SetTrap } from "./traps/set.trap";
 import { ApplyTrap } from "./traps/apply.trap";
 import { GetPrototypeOfTrap } from "./traps/get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./traps/set-prototype-of.trap";
-import { MembersPropertyExplorer } from "./explorers/members.explorer/members-property.explorer";
 import { MembersMethodExplorer } from "./explorers/members.explorer/members-method.explorer";
+import { MembersPropertyExplorer } from "./explorers/members.explorer/members-property.explorer";
 
 /**
  * @hidden
