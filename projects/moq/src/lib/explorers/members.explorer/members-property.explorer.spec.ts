@@ -45,6 +45,17 @@ describe("Members property explorer", () => {
         expect(actual).toBe(true);
     });
 
+    it("Returns true when there is a property in the prototype chain", () => {
+        const name = "name";
+        resolve(PrototypeStorage)
+            .get.and.returnValue(Object.create({name}));
+
+        const explorer = new MembersPropertyExplorer(resolve(PrototypeStorage));
+        const actual = explorer.hasProperty(name);
+
+        expect(actual).toBe(true);
+    });
+
     it("Returns false when there is no property with this name", () => {
         const name = "name";
         resolve(PrototypeStorage)
