@@ -45,7 +45,8 @@ export class ExpectedExpressionReflector {
         const proxy = this.expressionProxy();
         const predicate = expression(proxy);
 
-        return predicate instanceof It ? predicate : this.reflectedInfo;
+        return predicate instanceof It && (this.reflectedInfo instanceof ExpectedSetPropertyExpression) === false
+            ? predicate : this.reflectedInfo;
     }
 
     private expressionProxy(): any {

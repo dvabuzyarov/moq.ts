@@ -1,9 +1,11 @@
-import {ExpectedExpressionReflector} from "./expected-expression-reflector";
+import { ExpectedExpressionReflector } from "./expected-expression-reflector";
 import {
+    ExpectedGetPropertyExpression,
     ExpectedMethodExpression,
-    ExpectedGetPropertyExpression, ExpectedSetPropertyExpression, ExpectedNamedMethodExpression
+    ExpectedNamedMethodExpression,
+    ExpectedSetPropertyExpression
 } from "./expected-expressions";
-import {It} from "./expression-predicates";
+import { It } from "./expression-predicates";
 
 describe("Expected Expression Reflector", () => {
 
@@ -51,7 +53,9 @@ describe("Expected Expression Reflector", () => {
         const name = "member_name";
         const arg = "argument";
         const reflector = new ExpectedExpressionReflector();
-        const actual = reflector.reflect(instance => {instance[name] = arg; });
+        const actual = reflector.reflect(instance => {
+            instance[name] = arg;
+        });
 
         const expected = new ExpectedSetPropertyExpression(name, arg);
         expect(actual).toEqual(expected);
@@ -62,7 +66,19 @@ describe("Expected Expression Reflector", () => {
         const arg = "argument";
         const reflector = new ExpectedExpressionReflector();
         const it = It.Is(value => value === arg);
-        const actual = reflector.reflect(instance => {instance[name] = it; });
+        const actual = reflector.reflect(instance => {
+            instance[name] = it;
+        });
+
+        const expected = new ExpectedSetPropertyExpression(name, it);
+        expect(actual).toEqual(expected);
+    });
+
+    it("Resolves set property with it without braces", () => {
+        const name = "member_name";
+        const reflector = new ExpectedExpressionReflector();
+        const it = It.IsAny();
+        const actual = reflector.reflect(instance => instance[name] = it);
 
         const expected = new ExpectedSetPropertyExpression(name, it);
         expect(actual).toEqual(expected);
