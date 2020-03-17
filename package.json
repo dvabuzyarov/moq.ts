@@ -44,7 +44,7 @@
     "typedoc": "0.16.11",
     "typescript": "3.7.5",
     "rxjs": "6.5.4",
-    "zone.js": "0.10.2",
+    "zone.js": "0.10.3",
     "tslib": "1.11.1"
   },
   "config": {
