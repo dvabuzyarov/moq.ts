@@ -39,7 +39,7 @@
     "ng-packagr": "9.0.3",
     "semantic-release": "17.0.4",
     "serve": "11.3.0",
-    "ts-node": "8.6.2",
+    "ts-node": "8.7.0",
     "tslint": "5.20.1",
     "typedoc": "0.16.11",
     "typescript": "3.7.5",
