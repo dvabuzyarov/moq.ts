@@ -5,6 +5,7 @@ import { SetTrap } from "./traps/set.trap";
 import { ApplyTrap } from "./traps/apply.trap";
 import { GetPrototypeOfTrap } from "./traps/get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./traps/set-prototype-of.trap";
+import { HasTrap } from "./traps/has.trap";
 
 describe("Mock interceptor", () => {
 
@@ -13,6 +14,7 @@ describe("Mock interceptor", () => {
     function get(target: any = () => undefined, mockName?: string): Interceptor<any> {
         const getTrap = jasmine.createSpyObj<GetTrap>("", ["intercept"]);
         const setTrap = jasmine.createSpyObj<SetTrap>("", ["intercept"]);
+        const hasTrap = jasmine.createSpyObj<HasTrap>("", ["intercept"]);
         const applyTrap = jasmine.createSpyObj<ApplyTrap>("", ["intercept"]);
         const getPrototypeOfTrap = jasmine.createSpyObj<GetPrototypeOfTrap>("", ["intercept"]);
         const setPrototypeOfTrap = jasmine.createSpyObj<SetPrototypeOfTrap>("", ["intercept"]);
@@ -20,11 +22,12 @@ describe("Mock interceptor", () => {
         resolve = resolveBuilder([
             [GetTrap, getTrap],
             [SetTrap, setTrap],
+            [HasTrap, hasTrap],
             [ApplyTrap, applyTrap],
             [GetPrototypeOfTrap, getPrototypeOfTrap],
             [SetPrototypeOfTrap, setPrototypeOfTrap],
         ]);
-        return new Interceptor<any>(target, mockName, getTrap, setTrap, applyTrap, getPrototypeOfTrap, setPrototypeOfTrap);
+        return new Interceptor<any>(target, mockName, getTrap, setTrap, hasTrap, applyTrap, getPrototypeOfTrap, setPrototypeOfTrap);
     }
 
     it("Returns proxy object", () => {
@@ -85,6 +88,21 @@ describe("Mock interceptor", () => {
         expect(() => {
             object[name] = value;
         }).toThrow(jasmine.any(TypeError));
+    });
+
+    it("Traps has", () => {
+        const name = "some_property_name";
+        const value = true;
+        const target = () => undefined;
+
+        const interceptor = get(target);
+        resolve(HasTrap)
+            .intercept.withArgs(name).and.returnValue(value);
+
+        const object = interceptor.object();
+        const actual = name in object;
+
+        expect(actual).toBe(value);
     });
 
     it("Traps apply", () => {

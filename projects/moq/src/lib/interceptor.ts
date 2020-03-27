@@ -3,6 +3,7 @@ import { SetTrap } from "./traps/set.trap";
 import { ApplyTrap } from "./traps/apply.trap";
 import { GetPrototypeOfTrap } from "./traps/get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./traps/set-prototype-of.trap";
+import { HasTrap } from "./traps/has.trap";
 
 /**
  * @hidden
@@ -14,6 +15,7 @@ export class Interceptor<T> {
                 private mockName: string,
                 private getTrap: GetTrap,
                 private setTrap: SetTrap,
+                private hasTrap: HasTrap,
                 private applyTrap: ApplyTrap,
                 private getPrototypeOfTrap: GetPrototypeOfTrap,
                 private setPrototypeOfTrap: SetPrototypeOfTrap) {
@@ -31,6 +33,7 @@ export class Interceptor<T> {
         const options = {
             get: (target, name) => this.getTrap.intercept(name),
             set: (target, name, value) => this.setTrap.intercept(target, name, value),
+            has: (target, name) => this.hasTrap.intercept(name),
             apply: (target, thisArg, args) => this.applyTrap.intercept(target, thisArg, args),
             getPrototypeOf: () => this.getPrototypeOfTrap.intercept(),
             setPrototypeOf: (target, prototype) => this.setPrototypeOfTrap.intercept(prototype)

@@ -20,6 +20,7 @@ import { GetPrototypeOfTrap } from "./traps/get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./traps/set-prototype-of.trap";
 import { MembersMethodExplorer } from "./explorers/members.explorer/members-method.explorer";
 import { MembersPropertyExplorer } from "./explorers/members.explorer/members-property.explorer";
+import { HasTrap } from "./traps/has.trap";
 
 /**
  * @hidden
@@ -60,6 +61,12 @@ export function mockDependenciesFactory<T>(options: IMockOptions<T>): IMockDepen
         hasMethodExplorer,
         spyFunctionProvider);
     const setTrap = new SetTrap(tracker, propertiesValueStorage, interactionPlayer);
+    const hasTrap = new HasTrap(tracker,
+        propertiesValueStorage,
+        interactionPlayer,
+        hasPropertyExplorer,
+        hasMethodExplorer,
+        spyFunctionProvider);
     const applyTrap = new ApplyTrap(tracker, interactionPlayer);
     const getPrototypeOfTrap = new GetPrototypeOfTrap(prototypeStorage);
     const setPrototypeOfTrap = new SetPrototypeOfTrap(prototypeStorage);
@@ -69,6 +76,7 @@ export function mockDependenciesFactory<T>(options: IMockOptions<T>): IMockDepen
         options.name,
         getTrap,
         setTrap,
+        hasTrap,
         applyTrap,
         getPrototypeOfTrap,
         setPrototypeOfTrap
