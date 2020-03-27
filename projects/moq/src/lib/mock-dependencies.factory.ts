@@ -65,8 +65,7 @@ export function mockDependenciesFactory<T>(options: IMockOptions<T>): IMockDepen
         propertiesValueStorage,
         interactionPlayer,
         hasPropertyExplorer,
-        hasMethodExplorer,
-        spyFunctionProvider);
+        hasMethodExplorer);
     const applyTrap = new ApplyTrap(tracker, interactionPlayer);
     const getPrototypeOfTrap = new GetPrototypeOfTrap(prototypeStorage);
     const setPrototypeOfTrap = new SetPrototypeOfTrap(prototypeStorage);
