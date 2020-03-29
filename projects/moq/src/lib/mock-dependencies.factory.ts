@@ -10,7 +10,7 @@ import { PrototypeStorage } from "./traps/prototype.storage";
 import { GetTrap } from "./traps/get.trap";
 import { PropertiesValueStorage } from "./traps/properties-value.storage";
 import { InteractionPlayer } from "./interaction-players/interaction.player";
-import { InteractionPresetProvider } from "./interaction-players/interaction-preset.provider";
+import { PlayablePresetProvider } from "./interaction-players/playable-preset.provider";
 import { HasMethodExplorer } from "./explorers/has-method.explorer/has-method.explorer";
 import { HasPropertyExplorer } from "./explorers/has-property.explorer/has-property.explorer";
 import { SpyFunctionProvider } from "./traps/spy-function.provider";
@@ -20,6 +20,7 @@ import { GetPrototypeOfTrap } from "./traps/get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./traps/set-prototype-of.trap";
 import { MembersMethodExplorer } from "./explorers/members.explorer/members-method.explorer";
 import { MembersPropertyExplorer } from "./explorers/members.explorer/members-property.explorer";
+import { PresetPlayablesUpdater } from "./playables/preset-playables.updater";
 
 /**
  * @hidden
@@ -46,7 +47,7 @@ export function mockDependenciesFactory<T>(options: IMockOptions<T>): IMockDepen
     const verifier = new Verifier<T>();
     const prototypeStorage = new PrototypeStorage(options.target);
     const propertiesValueStorage = new PropertiesValueStorage();
-    const interactionPlayer = new InteractionPlayer(new InteractionPresetProvider(presets));
+    const interactionPlayer = new InteractionPlayer(new PlayablePresetProvider(presets), new PresetPlayablesUpdater(presets));
     const membersPropertyExplorer = new MembersPropertyExplorer(prototypeStorage);
     const membersMethodExplorer = new MembersMethodExplorer(prototypeStorage);
     const hasPropertyExplorer = new HasPropertyExplorer(presets, membersPropertyExplorer);

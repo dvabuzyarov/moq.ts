@@ -1,12 +1,13 @@
 import { IPreset } from "./preset";
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
-import { Interactions } from "../interactions";
+import { Interaction } from "../interactions";
+import { IPlayable } from "../moq";
 
 export class CallbacksPreset<T> implements IPreset<T> {
     constructor(
-        public readonly invocable: () => boolean,
+        public readonly playable: IPlayable,
         public readonly target: ExpectedExpressions<T>,
-        public readonly callback: (interaction: Interactions) => unknown) {
+        public readonly callback: (interaction: Interaction) => unknown) {
 
     }
 }

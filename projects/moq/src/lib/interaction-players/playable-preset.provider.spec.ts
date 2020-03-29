@@ -1,31 +1,37 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
-import { Interactions } from "../interactions";
+import { Interaction } from "../interactions";
 import { Presets } from "../preset/presets";
-import { InteractionPresetProvider } from "./interaction-preset.provider";
+import { PlayablePresetProvider } from "./playable-preset.provider";
 import { IPreset } from "../presets/preset";
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { resolveBuilder, SpiedObject } from "../../tests.components/resolve.builder";
+import { IPlayable } from "../moq";
 
-describe("Interaction preset provider", () => {
+describe("Playable preset provider", () => {
     let resolve: ReturnType<typeof resolveBuilder>;
 
     beforeEach(() => {
         const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
         const matcher = jasmine.createSpyObj<ExpressionMatcher>(["matched"]);
+
         resolve = resolveBuilder([
             [Presets, presets],
             [ExpressionMatcher, matcher],
-            [InteractionPresetProvider, new InteractionPresetProvider(presets, matcher)]
+            [PlayablePresetProvider, new PlayablePresetProvider(presets, matcher)]
         ]);
     });
 
+    function createPreset(target: ExpectedExpressions<unknown>): SpiedObject<IPreset<unknown>> {
+        const playable = jasmine.createSpyObj<IPlayable>(["isPlayable"]);
+        return {target, playable} as any;
+    }
+
     it("Returns playable preset by expression", () => {
         const expectedExpression = <ExpectedExpressions<unknown>>{};
-        const expression = <Interactions>{};
+        const expression = <Interaction>{};
 
-        const preset = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
-        (<any>preset).target = expectedExpression;
-        preset.invocable.and.returnValue(true);
+        const preset = createPreset(expectedExpression);
+        preset.playable.isPlayable.and.returnValue(true);
 
         resolve(ExpressionMatcher)
             .matched.withArgs(expression, expectedExpression).and.returnValue(true);
@@ -33,7 +39,7 @@ describe("Interaction preset provider", () => {
         resolve(Presets)
             .get.and.returnValue([preset]);
 
-        const provider = resolve(InteractionPresetProvider);
+        const provider = resolve(PlayablePresetProvider);
         const actual = provider.get(expression);
 
         expect(actual).toBe(preset);
@@ -41,15 +47,13 @@ describe("Interaction preset provider", () => {
 
     it("Returns the first playable preset", () => {
         const expectedExpression = <ExpectedExpressions<unknown>>{};
-        const expression = <Interactions>{};
+        const expression = <Interaction>{};
 
-        const preset1 = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
-        (<any>preset1).target = expectedExpression;
-        preset1.invocable.and.returnValue(true);
+        const preset1 = createPreset(expectedExpression);
+        preset1.playable.isPlayable.and.returnValue(true);
 
-        const preset2 = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
-        (<any>preset2).target = expectedExpression;
-        preset2.invocable.and.returnValue(true);
+        const preset2 = createPreset(expectedExpression);
+        preset2.playable.isPlayable.and.returnValue(true);
 
         resolve(ExpressionMatcher)
             .matched.withArgs(expression, expectedExpression).and.returnValue(true);
@@ -57,7 +61,7 @@ describe("Interaction preset provider", () => {
         resolve(Presets)
             .get.and.returnValue([preset1, preset2]);
 
-        const provider = resolve(InteractionPresetProvider);
+        const provider = resolve(PlayablePresetProvider);
         const actual = provider.get(expression);
 
         expect(actual).toBe(preset1);
@@ -65,11 +69,10 @@ describe("Interaction preset provider", () => {
 
     it("Skips unplayable preset by expression and returns undefined", () => {
         const expectedExpression = <ExpectedExpressions<unknown>>{};
-        const expression = <Interactions>{};
+        const expression = <Interaction>{};
 
-        const preset = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
-        (<any>preset).target = expectedExpression;
-        preset.invocable.and.returnValue(false);
+        const preset = createPreset(expectedExpression);
+        preset.playable.isPlayable.and.returnValue(false);
 
         resolve(ExpressionMatcher)
             .matched.withArgs(expression, expectedExpression).and.returnValue(true);
@@ -77,7 +80,7 @@ describe("Interaction preset provider", () => {
         resolve(Presets)
             .get.and.returnValue([preset]);
 
-        const provider = resolve(InteractionPresetProvider);
+        const provider = resolve(PlayablePresetProvider);
         const actual = provider.get(expression);
 
         expect(actual).toBeUndefined();
@@ -85,11 +88,10 @@ describe("Interaction preset provider", () => {
 
     it("Skips preset that expected expression does not match to the interaction expression", () => {
         const expectedExpression = <ExpectedExpressions<unknown>>{};
-        const expression = <Interactions>{};
+        const expression = <Interaction>{};
 
-        const preset = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
-        (<any>preset).target = expectedExpression;
-        preset.invocable.and.returnValue(true);
+        const preset = createPreset(expectedExpression);
+        preset.playable.isPlayable.and.returnValue(true);
 
         resolve(ExpressionMatcher)
             .matched.withArgs(expression, expectedExpression).and.returnValue(false);
@@ -97,7 +99,7 @@ describe("Interaction preset provider", () => {
         resolve(Presets)
             .get.and.returnValue([preset]);
 
-        const provider = resolve(InteractionPresetProvider);
+        const provider = resolve(PlayablePresetProvider);
         const actual = provider.get(expression);
 
         expect(actual).toBeUndefined();
@@ -105,9 +107,9 @@ describe("Interaction preset provider", () => {
 
     it("Does not check playability of a preset when its expected expression does not match to the interaction expression", () => {
         const expectedExpression = <ExpectedExpressions<unknown>>{};
-        const expression = <Interactions>{};
+        const expression = <Interaction>{};
 
-        const preset = jasmine.createSpyObj<IPreset<unknown>>(["invocable"]);
+        const preset = jasmine.createSpyObj<IPreset<unknown>>(["playable"]);
         (<any>preset).target = expectedExpression;
 
         resolve(ExpressionMatcher)
@@ -116,9 +118,9 @@ describe("Interaction preset provider", () => {
         resolve(Presets)
             .get.and.returnValue([preset]);
 
-        const provider = resolve(InteractionPresetProvider);
+        const provider = resolve(PlayablePresetProvider);
         provider.get(expression);
 
-        expect(preset.invocable).not.toHaveBeenCalled();
+        expect(preset.playable).not.toHaveBeenCalled();
     });
 });

@@ -1,5 +1,5 @@
 import { Mock } from "../lib/mock";
-import { PlayTimes } from "../lib/preset/play-times";
+import { PlayTimes } from "../lib/playables/play-times";
 import { It } from "../lib/expected-expressions/expression-predicates";
 
 type ITestFunction = (value: number) => number;
@@ -19,7 +19,7 @@ describe("Play setup", () => {
         expect(actual2).toBeUndefined();
     });
 
-    it("Plays a sequence", () => {
+    it("Plays a sequence on a method", () => {
         const object = new Mock<ITestFunction>()
             .setup(instance => instance(2))
             .play(PlayTimes.Sequence([false, true, false]))
@@ -36,7 +36,7 @@ describe("Play setup", () => {
         expect(actual3).toBeUndefined();
     });
 
-    it("Does not affect play state", () => {
+    it("Plays a sequence on a property", () => {
         const object = new Mock<{ prop: number }>()
             .setup(() => It.IsAny())
             .play(PlayTimes.Sequence([false, true, false]))

@@ -3,8 +3,8 @@ import { SetPropertyExpressionMatcher } from "./set.property-matcher";
 import { MethodExpressionMatcher } from "./method-matcher";
 import { NamedMethodExpressionMatcher } from "./named.method-matcher";
 import {
-    Interactions,
     GetPropertyInteraction,
+    Interaction,
     MethodInteraction,
     NamedMethodInteraction,
     SetPropertyInteraction
@@ -30,7 +30,7 @@ export class ExpressionMatcher {
 
     }
 
-    public matched(left: Interactions, right: ExpectedExpressions<any>): boolean {
+    public matched(left: Interaction, right: ExpectedExpressions<any>): boolean {
 
         if (left === right) return true;
         if (right === undefined) return true;

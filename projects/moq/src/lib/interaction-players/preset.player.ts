@@ -1,5 +1,5 @@
 import { IPreset } from "../presets/preset";
-import { Interactions } from "../interactions";
+import { Interaction } from "../interactions";
 import { ReturnsPreset } from "../presets/returns.preset";
 import { CallbackPresetPlayer } from "./callback-preset.player";
 import { CallbacksPreset } from "../presets/callbacks.preset";
@@ -12,12 +12,12 @@ import { MimicsPreset } from "../presets/mimics.preset";
  */
 export class PresetPlayer {
     constructor(
-        private callbackPresetPlayer: CallbackPresetPlayer = new CallbackPresetPlayer(),
-        private mimicsPresetPlayer: MimicsPresetPlayer = new MimicsPresetPlayer()) {
+        private callbackPresetPlayer = new CallbackPresetPlayer(),
+        private mimicsPresetPlayer = new MimicsPresetPlayer()) {
 
     }
 
-    public play<T>(preset: IPreset<T>, interaction: Interactions): any {
+    public play<T>(preset: IPreset<T>, interaction: Interaction): any {
         if (preset instanceof ReturnsPreset) {
             return preset.value;
         }

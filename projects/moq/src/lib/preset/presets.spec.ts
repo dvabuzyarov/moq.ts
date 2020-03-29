@@ -13,7 +13,7 @@ describe("List of defined presets", () => {
 
     it("Returns defined presets in LIFO order", () => {
         class Preset implements IPreset<unknown> {
-            readonly invocable: () => boolean;
+            readonly playable: undefined;
             readonly target: ExpectedExpressions<unknown>;
         }
 

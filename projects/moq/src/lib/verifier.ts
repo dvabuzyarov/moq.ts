@@ -1,5 +1,5 @@
 import { Times } from "./times";
-import { Interactions } from "./interactions";
+import { Interaction } from "./interactions";
 import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
 import { CallCounter } from "./call-counter";
 import { VerifyFormatter } from "./formatters/verify-formatter";
@@ -22,7 +22,7 @@ export class Verifier<T> {
 
     }
 
-    public test(expected: IExpectedExpression<T>, times: Times, expressions: Interactions[], mockName?: string): void {
+    public test(expected: IExpectedExpression<T>, times: Times, expressions: Interaction[], mockName?: string): void {
         const expression = this.reflector.reflect(expected);
         const callCount = this.callCounter.count(expression, expressions);
         const passed = times.test(callCount);
