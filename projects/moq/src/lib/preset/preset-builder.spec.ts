@@ -1,105 +1,92 @@
-import { IMock } from "../moq";
+import { IMock, IPlayable } from "../moq";
 import { PresetBuilder } from "./preset-builder";
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
-import { InvocableFactory } from "./invocable.factory";
 import { MimicsPreset } from "../presets/mimics.preset";
 import { ReturnsPreset } from "../presets/returns.preset";
 import { ThrowsPreset } from "../presets/throws.preset";
 import { CallbacksPreset } from "../presets/callbacks.preset";
+import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { InjectionToken } from "@angular/core";
+import { IPreset } from "../presets/preset";
+import { PlayTimes } from "../playables/play-times";
 
-describe("Preset bilder", () => {
+describe("Preset builder", () => {
+    let resolve: ReturnType<typeof resolveBuilder>;
+    const Mock = new InjectionToken<IMock<unknown>>("mock");
+    const Set = new InjectionToken<(preset: IPreset<unknown>) => void>("set");
+    const Target = new InjectionToken<ExpectedExpressions<any>>("target");
 
-    function resolve() {
-        const mock = <IMock<any>>{};
-        const define = jasmine.createSpy("define");
+    beforeEach(() => {
+        const mock = <IMock<unknown>>{};
+        const set = jasmine.createSpy("set");
         const target = <ExpectedExpressions<any>>{};
-        const invocableFactory = jasmine.createSpyObj<InvocableFactory>("", ["set", "get"]);
-        return {
-            mock,
-            define,
-            target,
-            invocableFactory
-        };
-    }
 
-    function create<T>(options = resolve()): PresetBuilder<T> {
-        return new PresetBuilder(
-            options.mock,
-            options.define,
-            options.target,
-            options.invocableFactory
-        );
-    }
+        resolve = resolveBuilder([
+            [Mock, mock],
+            [Set, set],
+            [Target, target],
+            [PresetBuilder, new PresetBuilder(mock, set, target)]
+        ]);
+    });
 
     it("Defines a mimics preset", () => {
         const origin = {};
-        const invocable = () => true;
-        const mocks = resolve();
-        const {mock, invocableFactory, define, target} = mocks;
-        invocableFactory.get.and.returnValue(invocable);
 
-        const setup = create(mocks);
-        const actual = setup.mimics(origin);
+        const builder = resolve(PresetBuilder);
+        const actual = builder.mimics(origin);
 
-        const expected = new MimicsPreset(invocable, target, origin);
-        expect(define).toHaveBeenCalledWith(expected);
-        expect(actual).toBe(mock);
+        const expected = new MimicsPreset(PlayTimes.Always(), resolve(Target), origin);
+        expect(resolve(Set)).toHaveBeenCalledWith(expected);
+        expect(actual).toBe(resolve(Mock));
     });
 
     it("Defines a returns preset", () => {
         const value = "value";
-        const invocable = () => true;
-        const mocks = resolve();
-        const {mock, target, invocableFactory, define} = mocks;
-        invocableFactory.get.and.returnValue(invocable);
 
-        const setup = create(mocks);
-        const actual = setup.returns(value);
+        const builder = resolve(PresetBuilder);
+        const actual = builder.returns(value);
 
-        const expected = new ReturnsPreset(invocable, target, value);
-        expect(define).toHaveBeenCalledWith(expected);
-        expect(actual).toBe(mock);
+        const expected = new ReturnsPreset(PlayTimes.Always(), resolve(Target), value);
+        expect(resolve(Set)).toHaveBeenCalledWith(expected);
+        expect(actual).toBe(resolve(Mock));
     });
 
     it("Defines a throws preset", () => {
         const exception = new Error();
-        const invocable = () => true;
-        const mocks = resolve();
-        const {mock, target, invocableFactory, define} = mocks;
-        invocableFactory.get.and.returnValue(invocable);
 
-        const setup = create(mocks);
-        const actual = setup.throws(exception);
+        const builder = resolve(PresetBuilder);
+        const actual = builder.throws(exception);
 
-        const expected = new ThrowsPreset(invocable, target, exception);
-        expect(define).toHaveBeenCalledWith(expected);
-        expect(actual).toBe(mock);
+        const expected = new ThrowsPreset(PlayTimes.Always(), resolve(Target), exception);
+        expect(resolve(Set)).toHaveBeenCalledWith(expected);
+        expect(actual).toBe(resolve(Mock));
     });
 
     it("Defines a callbacks preset", () => {
         const callback = () => undefined;
-        const invocable = () => true;
-        const mocks = resolve();
-        const {mock, target, invocableFactory, define} = mocks;
-        invocableFactory.get.and.returnValue(invocable);
 
-        const setup = create(mocks);
-        const actual = setup.callback(callback);
+        const builder = resolve(PresetBuilder);
+        const actual = builder.callback(callback);
 
-        const expected = new CallbacksPreset(invocable, target, callback);
-        expect(define).toHaveBeenCalledWith(expected);
-        expect(actual).toBe(mock);
+        const expected = new CallbacksPreset(PlayTimes.Always(), resolve(Target), callback);
+        expect(resolve(Set)).toHaveBeenCalledWith(expected);
+        expect(actual).toBe(resolve(Mock));
     });
 
-    it("Sets a predicate on invocableFactory", () => {
-        const value = () => undefined;
-        const mocks = resolve();
-        const {invocableFactory} = mocks;
+    it("Sets playable", () => {
+        const playable = <IPlayable>{};
 
-        const setup = create(mocks);
-        const actual = setup.play(value);
+        const builder = new PresetBuilder(resolve(Mock), resolve(Set), resolve(Target));
+        const actual = builder.play(playable);
+        builder.callback(undefined);
+        builder.returns(undefined);
+        builder.mimics(undefined);
+        builder.throws(undefined);
 
-        expect(invocableFactory.set).toHaveBeenCalledWith(value);
-        expect(actual).toBe(setup);
+        expect(resolve(Set)).toHaveBeenCalledWith(new CallbacksPreset(playable, resolve(Target), undefined));
+        expect(resolve(Set)).toHaveBeenCalledWith(new ReturnsPreset(playable, resolve(Target), undefined));
+        expect(resolve(Set)).toHaveBeenCalledWith(new MimicsPreset(playable, resolve(Target), undefined));
+        expect(resolve(Set)).toHaveBeenCalledWith(new ThrowsPreset(playable, resolve(Target), undefined));
+        expect(actual).toBe(builder);
     });
 });

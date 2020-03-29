@@ -47,5 +47,3 @@ export class SetPropertyInteraction extends Interaction {
         super(name, [value]);
     }
 }
-
-export type Interactions = MethodInteraction | GetPropertyInteraction | SetPropertyInteraction | NamedMethodInteraction;

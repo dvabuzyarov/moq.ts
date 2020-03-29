@@ -1,12 +1,12 @@
-import { IMock, IPresetBuilder } from "../moq";
+import { IMock, IPlayable, IPresetBuilder } from "../moq";
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
-import { InvocableFactory } from "./invocable.factory";
 import { IPreset } from "../presets/preset";
 import { MimicsPreset } from "../presets/mimics.preset";
 import { ReturnsPreset } from "../presets/returns.preset";
 import { ThrowsPreset } from "../presets/throws.preset";
 import { CallbacksPreset } from "../presets/callbacks.preset";
-import { Interactions } from "../interactions";
+import { Interaction } from "../interactions";
+import { PlayTimes } from "../playables/play-times";
 
 /**
  * The default implementation of {@link IPresetBuilder} interface.
@@ -19,40 +19,36 @@ export class PresetBuilder<T> implements IPresetBuilder<T> {
         private mock: IMock<T>,
         private set: (preset: IPreset<T>) => void,
         private target: ExpectedExpressions<T>,
-        private invocableFactory: InvocableFactory = new InvocableFactory()) {
+        private playable: IPlayable = PlayTimes.Always()) {
 
     }
 
     public mimics(origin: T): IMock<T> {
-        const invocable = this.invocableFactory.get();
-        const preset = new MimicsPreset(invocable, this.target, origin);
+        const preset = new MimicsPreset(this.playable, this.target, origin);
         this.set(preset);
         return this.mock;
     }
 
     public returns<TValue>(value: TValue): IMock<T> {
-        const invocable = this.invocableFactory.get();
-        const preset = new ReturnsPreset(invocable, this.target, value);
+        const preset = new ReturnsPreset(this.playable, this.target, value);
         this.set(preset);
         return this.mock;
     }
 
     public throws<TException>(exception: TException): IMock<T> {
-        const invocable = this.invocableFactory.get();
-        const preset = new ThrowsPreset(invocable, this.target, exception);
+        const preset = new ThrowsPreset(this.playable, this.target, exception);
         this.set(preset);
         return this.mock;
     }
 
-    public callback<TValue>(callback: (interaction: Interactions) => TValue): IMock<T> {
-        const invocable = this.invocableFactory.get();
-        const preset = new CallbacksPreset(invocable, this.target, callback);
+    public callback<TValue>(callback: (interaction: Interaction) => TValue): IMock<T> {
+        const preset = new CallbacksPreset(this.playable, this.target, callback);
         this.set(preset);
         return this.mock;
     }
 
-    public play(predicate: () => boolean): IPresetBuilder<T> {
-        this.invocableFactory.set(predicate);
+    public play(playable: IPlayable): IPresetBuilder<T> {
+        this.playable = playable;
         return this;
     }
 }

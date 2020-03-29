@@ -1,6 +1,6 @@
 import {
-    Interactions,
     GetPropertyInteraction,
+    Interaction,
     MethodInteraction,
     NamedMethodInteraction,
     SetPropertyInteraction
@@ -14,7 +14,7 @@ export class MimicsPresetPlayer {
 
     }
 
-    public play(origin: any, interaction: Interactions): any {
+    public play(origin: any, interaction: Interaction): any {
         if (interaction instanceof GetPropertyInteraction) {
             return origin[interaction.name];
         }
