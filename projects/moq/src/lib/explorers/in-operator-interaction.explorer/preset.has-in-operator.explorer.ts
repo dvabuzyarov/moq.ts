@@ -8,8 +8,9 @@ import { It } from "../../expected-expressions/expression-predicates";
  */
 export class PresetHasInOperatorExplorer {
     public has(name: PropertyKey, preset: IPreset<unknown>): boolean {
-        if (preset.invocable() === false)
+        if (preset.invocable() === false) {
             return false;
+        }
 
         if (preset.target instanceof ExpectedInOperatorExpression) {
             return preset.target.name === name;

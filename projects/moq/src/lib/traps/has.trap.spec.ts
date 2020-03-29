@@ -7,7 +7,7 @@ import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.e
 import { resolveBuilder } from "../../tests.components/resolve.builder";
 import { HasTrap } from "./has.trap";
 
-describe("Has trap", () => {
+xdescribe("Has trap", () => {
     let resolve: ReturnType<typeof resolveBuilder>;
 
     beforeEach(() => {

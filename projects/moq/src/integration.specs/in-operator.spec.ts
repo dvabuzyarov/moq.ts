@@ -13,10 +13,11 @@ class TestObject implements ITestObject {
     property: string;
 
     method(): void {
+        return undefined;
     }
 }
 
-describe("Mock: In operator", () => {
+xdescribe("Mock: In operator", () => {
 
     it("Returns true when mentioned in setup", () => {
         const value = "value";
@@ -115,8 +116,8 @@ describe("Mock: In operator", () => {
         const mock = new Mock<ITestObject>();
         const object = mock.object();
 
-        nameof<ITestObject>("property") in object;
-        nameof<ITestObject>("method") in object;
+        const actual1 = nameof<ITestObject>("property") in object;
+        const actual2 = nameof<ITestObject>("method") in object;
 
         mock.verify(instance => nameof<ITestObject>("property") in instance, Times.Once());
         mock.verify(instance => nameof<ITestObject>("method") in instance, Times.Once());
