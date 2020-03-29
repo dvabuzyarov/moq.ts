@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Tracker | moq.ts | documentation</title>
+	<title>PlayableOnce | moq.ts | documentation</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.tracker.html">Tracker</a>
+					<a href="moq_ts.playableonce-1.html">PlayableOnce</a>
 				</li>
 			</ul>
-			<h1>Class Tracker</h1>
+			<h1>Class PlayableOnce</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>This class records all interactions with a mocked object.</p>
+						<p>The configured setup will be applied only to the first invocation.</p>
 					</div>
 				</div>
 			</section>
@@ -78,8 +78,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Tracker</span>
+						<span class="target">PlayableOnce</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -87,67 +93,56 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="moq_ts.tracker.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.tracker.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.playableonce-1.html#isplayable" class="tsd-kind-icon">is<wbr>Playable</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.playableonce-1.html#update" class="tsd-kind-icon">update</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Tracker<span class="tsd-signature-symbol">(</span>sequenceId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">SequenceId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.tracker.html" class="tsd-signature-type">Tracker</a></li>
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="isplayable" class="tsd-anchor"></a>
+					<h3>is<wbr>Playable</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Playable<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/moq_ts.iplayable-1.html">IPlayable</a>.<a href="../interfaces/moq_ts.iplayable-1.html#isplayable">isPlayable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/tracker.ts#L16">projects/moq/src/lib/tracker.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/playables/playable-once.ts#L15">projects/moq/src/lib/playables/playable-once.ts:15</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="update" class="tsd-anchor"></a>
+					<h3>update</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">: </span><a href="../enums/moq_ts.playableupdatereason-1.html" class="tsd-signature-type">PlayableUpdateReason</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/moq_ts.iplayable-1.html">IPlayable</a>.<a href="../interfaces/moq_ts.iplayable-1.html#update">update</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/playables/playable-once.ts#L9">projects/moq/src/lib/playables/playable-once.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> sequenceId: <span class="tsd-signature-type">SequenceId</span><span class="tsd-signature-symbol"> = sequenceIdFactory()</span></h5>
+									<h5>reason: <a href="../enums/moq_ts.playableupdatereason-1.html" class="tsd-signature-type">PlayableUpdateReason</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="moq_ts.tracker.html" class="tsd-signature-type">Tracker</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="get" class="tsd-anchor"></a>
-					<h3>get</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.trackedaction.html" class="tsd-signature-type">TrackedAction</a><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/tracker.ts#L33">projects/moq/src/lib/tracker.ts:33</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns recorded interactions.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/moq_ts.trackedaction.html" class="tsd-signature-type">TrackedAction</a><span class="tsd-signature-symbol">[]</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -169,13 +164,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="moq_ts.tracker.html" class="tsd-kind-icon">Tracker</a>
+						<a href="moq_ts.playableonce-1.html" class="tsd-kind-icon">Playable<wbr>Once</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="moq_ts.tracker.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="moq_ts.playableonce-1.html#isplayable" class="tsd-kind-icon">is<wbr>Playable</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="moq_ts.tracker.html#get" class="tsd-kind-icon">get</a>
+								<a href="moq_ts.playableonce-1.html#update" class="tsd-kind-icon">update</a>
 							</li>
 						</ul>
 					</li>

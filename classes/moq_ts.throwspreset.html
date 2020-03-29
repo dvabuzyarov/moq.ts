@@ -106,7 +106,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moq_ts.throwspreset.html#exception" class="tsd-kind-icon">exception</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moq_ts.throwspreset.html#invocable" class="tsd-kind-icon">invocable</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moq_ts.throwspreset.html#playable" class="tsd-kind-icon">playable</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moq_ts.throwspreset.html#target" class="tsd-kind-icon">target</a></li>
 							</ul>
 						</section>
@@ -119,31 +119,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Throws<wbr>Preset<span class="tsd-signature-symbol">(</span>invocable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, target<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#expectedexpressions" class="tsd-signature-type">ExpectedExpressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, exception<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TException</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.throwspreset.html" class="tsd-signature-type">ThrowsPreset</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Throws<wbr>Preset<span class="tsd-signature-symbol">(</span>playable<span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a>, target<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#expectedexpressions" class="tsd-signature-type">ExpectedExpressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, exception<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TException</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.throwspreset.html" class="tsd-signature-type">ThrowsPreset</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/presets/throws.preset.ts#L4">projects/moq/src/lib/presets/throws.preset.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/presets/throws.preset.ts#L5">projects/moq/src/lib/presets/throws.preset.ts:5</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>invocable: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
+									<h5>playable: <a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></h5>
 								</li>
 								<li>
 									<h5>target: <a href="../modules/moq_ts.html#expectedexpressions" class="tsd-signature-type">ExpectedExpressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
@@ -165,35 +153,20 @@
 					<div class="tsd-signature tsd-kind-icon">exception<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TException</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/presets/throws.preset.ts#L8">projects/moq/src/lib/presets/throws.preset.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/presets/throws.preset.ts#L9">projects/moq/src/lib/presets/throws.preset.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="invocable" class="tsd-anchor"></a>
-					<h3>invocable</h3>
-					<div class="tsd-signature tsd-kind-icon">invocable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></div>
+					<a name="playable" class="tsd-anchor"></a>
+					<h3>playable</h3>
+					<div class="tsd-signature tsd-kind-icon">playable<span class="tsd-signature-symbol">:</span> <a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/moq_ts.ipreset.html">IPreset</a>.<a href="../interfaces/moq_ts.ipreset.html#invocable">invocable</a></p>
+						<p>Implementation of <a href="../interfaces/moq_ts.ipreset.html">IPreset</a>.<a href="../interfaces/moq_ts.ipreset.html#playable">playable</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/presets/throws.preset.ts#L6">projects/moq/src/lib/presets/throws.preset.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/presets/throws.preset.ts#L7">projects/moq/src/lib/presets/throws.preset.ts:7</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="target" class="tsd-anchor"></a>
@@ -202,7 +175,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/moq_ts.ipreset.html">IPreset</a>.<a href="../interfaces/moq_ts.ipreset.html#target">target</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/presets/throws.preset.ts#L7">projects/moq/src/lib/presets/throws.preset.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/presets/throws.preset.ts#L8">projects/moq/src/lib/presets/throws.preset.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -233,7 +206,7 @@
 								<a href="moq_ts.throwspreset.html#exception" class="tsd-kind-icon">exception</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="moq_ts.throwspreset.html#invocable" class="tsd-kind-icon">invocable</a>
+								<a href="moq_ts.throwspreset.html#playable" class="tsd-kind-icon">playable</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="moq_ts.throwspreset.html#target" class="tsd-kind-icon">target</a>

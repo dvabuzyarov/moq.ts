@@ -118,13 +118,13 @@
 					<a name="callback" class="tsd-anchor"></a>
 					<h3>callback</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">callback&lt;TValue&gt;<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>interaction<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#interactions" class="tsd-signature-type">Interactions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">callback&lt;TValue&gt;<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>interaction<span class="tsd-signature-symbol">: </span><a href="../classes/moq_ts.interaction-1.html" class="tsd-signature-type">Interaction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/moq.ts#L55">projects/moq/src/lib/moq.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/moq.ts#L103">projects/moq/src/lib/moq.ts:103</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -146,7 +146,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>callback: <span class="tsd-signature-symbol">(</span>interaction<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#interactions" class="tsd-signature-type">Interactions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TValue</span></h5>
+									<h5>callback: <span class="tsd-signature-symbol">(</span>interaction<span class="tsd-signature-symbol">: </span><a href="../classes/moq_ts.interaction-1.html" class="tsd-signature-type">Interaction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TValue</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A callback function that will intercept the interaction.
 										The function may returns a value that will be provided as result (see <a href="moq_ts.ipresetbuilder-1.html#returns">IPresetBuilder.returns</a>)</p>
@@ -154,14 +154,14 @@
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>interaction<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#interactions" class="tsd-signature-type">Interactions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TValue</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>interaction<span class="tsd-signature-symbol">: </span><a href="../classes/moq_ts.interaction-1.html" class="tsd-signature-type">Interaction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TValue</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>interaction: <a href="../modules/moq_ts.html#interactions" class="tsd-signature-type">Interactions</a></h5>
+															<h5>interaction: <a href="../classes/moq_ts.interaction-1.html" class="tsd-signature-type">Interaction</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TValue</span></h4>
@@ -185,7 +185,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/moq.ts#L85">projects/moq/src/lib/moq.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/moq.ts#L133">projects/moq/src/lib/moq.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -226,13 +226,13 @@ expect(actual).toBe(<span class="hljs-number">2</span>);</code></pre>
 					<a name="play" class="tsd-anchor"></a>
 					<h3>play</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">play<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.ipresetbuilder-1.html" class="tsd-signature-type">IPresetBuilder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">play<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.ipresetbuilder-1.html" class="tsd-signature-type">IPresetBuilder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/moq.ts#L61">projects/moq/src/lib/moq.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/moq.ts#L109">projects/moq/src/lib/moq.ts:109</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -244,19 +244,7 @@ expect(actual).toBe(<span class="hljs-number">2</span>);</code></pre>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>predicate: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
+									<h5>predicate: <a href="moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="moq_ts.ipresetbuilder-1.html" class="tsd-signature-type">IPresetBuilder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -273,7 +261,7 @@ expect(actual).toBe(<span class="hljs-number">2</span>);</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/moq.ts#L37">projects/moq/src/lib/moq.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/moq.ts#L85">projects/moq/src/lib/moq.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -318,7 +306,7 @@ expect(actual).toBe(<span class="hljs-number">2</span>);</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/moq.ts#L42">projects/moq/src/lib/moq.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/moq.ts#L90">projects/moq/src/lib/moq.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

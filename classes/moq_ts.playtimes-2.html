@@ -57,7 +57,7 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.playtimes-1.html">PlayTimes</a>
+					<a href="moq_ts.playtimes-2.html">PlayTimes</a>
 				</li>
 			</ul>
 			<h1>Class PlayTimes</h1>
@@ -67,27 +67,6 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>This class sets rules when a configured setup should be applied to the target invocation or not.</p>
-					</div>
-					<dl class="tsd-comment-tags">
-						<dt>example</dt>
-						<dd><pre><code class="language-typescript">
-<span class="hljs-keyword">const</span> value = <span class="hljs-string">'value'</span>;
-<span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-built_in">Function</span>&gt;()
-.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(<span class="hljs-number">1</span>))
-.play(PlayTimes.Once())
-.returns(value)
-.object();
-
-expect(object(<span class="hljs-number">1</span>).toBe(value);
-expect(object(<span class="hljs-number">1</span>).toBe(<span class="hljs-literal">undefined</span>);</code></pre>
-						</dd>
-					</dl>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -103,10 +82,11 @@ expect(object(<span class="hljs-number">1</span>).toBe(<span class="hljs-literal
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="moq_ts.playtimes-1.html#exactly" class="tsd-kind-icon">Exactly</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="moq_ts.playtimes-1.html#never" class="tsd-kind-icon">Never</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="moq_ts.playtimes-1.html#once" class="tsd-kind-icon">Once</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="moq_ts.playtimes-1.html#sequence" class="tsd-kind-icon">Sequence</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="moq_ts.playtimes-2.html#always" class="tsd-kind-icon">Always</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="moq_ts.playtimes-2.html#exactly" class="tsd-kind-icon">Exactly</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="moq_ts.playtimes-2.html#never" class="tsd-kind-icon">Never</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="moq_ts.playtimes-2.html#once" class="tsd-kind-icon">Once</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="moq_ts.playtimes-2.html#sequence" class="tsd-kind-icon">Sequence</a></li>
 							</ul>
 						</section>
 					</div>
@@ -115,16 +95,38 @@ expect(object(<span class="hljs-number">1</span>).toBe(<span class="hljs-literal
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="exactly" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Exactly</h3>
+					<a name="always" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Always</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">Exactly<span class="tsd-signature-symbol">(</span>count<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">Always<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/preset/play-times.ts#L23">projects/moq/src/lib/preset/play-times.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/playables/play-times.ts#L39">projects/moq/src/lib/playables/play-times.ts:39</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The configured setup will be always applied to invocations.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="exactly" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Exactly</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">Exactly<span class="tsd-signature-symbol">(</span>count<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/playables/play-times.ts#L32">projects/moq/src/lib/playables/play-times.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -138,19 +140,7 @@ expect(object(<span class="hljs-number">1</span>).toBe(<span class="hljs-literal
 									<h5>count: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter-siganture">
-									<ul class="tsd-signatures tsd-kind-type-literal">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-									</ul>
-									<ul class="tsd-descriptions">
-										<li class="tsd-description">
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-										</li>
-									</ul>
-								</li>
-							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -158,13 +148,13 @@ expect(object(<span class="hljs-number">1</span>).toBe(<span class="hljs-literal
 					<a name="never" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> Never</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">Never<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">Never<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/preset/play-times.ts#L35">projects/moq/src/lib/preset/play-times.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/playables/play-times.ts#L46">projects/moq/src/lib/playables/play-times.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -172,19 +162,7 @@ expect(object(<span class="hljs-number">1</span>).toBe(<span class="hljs-literal
 									<p>The configured setup will be never applied to invocations.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter-siganture">
-									<ul class="tsd-signatures tsd-kind-type-literal">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-									</ul>
-									<ul class="tsd-descriptions">
-										<li class="tsd-description">
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-										</li>
-									</ul>
-								</li>
-							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -192,13 +170,13 @@ expect(object(<span class="hljs-number">1</span>).toBe(<span class="hljs-literal
 					<a name="once" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> Once</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">Once<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">Once<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/preset/play-times.ts#L42">projects/moq/src/lib/preset/play-times.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/playables/play-times.ts#L53">projects/moq/src/lib/playables/play-times.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -206,19 +184,7 @@ expect(object(<span class="hljs-number">1</span>).toBe(<span class="hljs-literal
 									<p>The configured setup will be applied only to the first invocation.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter-siganture">
-									<ul class="tsd-signatures tsd-kind-type-literal">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-									</ul>
-									<ul class="tsd-descriptions">
-										<li class="tsd-description">
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-										</li>
-									</ul>
-								</li>
-							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -226,13 +192,13 @@ expect(object(<span class="hljs-number">1</span>).toBe(<span class="hljs-literal
 					<a name="sequence" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> Sequence</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">Sequence<span class="tsd-signature-symbol">(</span>sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">Sequence<span class="tsd-signature-symbol">(</span>sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/6c0fcd4/projects/moq/src/lib/preset/play-times.ts#L68">projects/moq/src/lib/preset/play-times.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b4f6b0c/projects/moq/src/lib/playables/play-times.ts#L74">projects/moq/src/lib/playables/play-times.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -261,19 +227,7 @@ expect(object(<span class="hljs-number">1</span>).toBe(<span class="hljs-literal
 									<h5>sequence: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter-siganture">
-									<ul class="tsd-signatures tsd-kind-type-literal">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-									</ul>
-									<ul class="tsd-descriptions">
-										<li class="tsd-description">
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-										</li>
-									</ul>
-								</li>
-							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -295,19 +249,22 @@ expect(object(<span class="hljs-number">1</span>).toBe(<span class="hljs-literal
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="moq_ts.playtimes-1.html" class="tsd-kind-icon">Play<wbr>Times</a>
+						<a href="moq_ts.playtimes-2.html" class="tsd-kind-icon">Play<wbr>Times</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="moq_ts.playtimes-1.html#exactly" class="tsd-kind-icon">Exactly</a>
+								<a href="moq_ts.playtimes-2.html#always" class="tsd-kind-icon">Always</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="moq_ts.playtimes-1.html#never" class="tsd-kind-icon">Never</a>
+								<a href="moq_ts.playtimes-2.html#exactly" class="tsd-kind-icon">Exactly</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="moq_ts.playtimes-1.html#once" class="tsd-kind-icon">Once</a>
+								<a href="moq_ts.playtimes-2.html#never" class="tsd-kind-icon">Never</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="moq_ts.playtimes-1.html#sequence" class="tsd-kind-icon">Sequence</a>
+								<a href="moq_ts.playtimes-2.html#once" class="tsd-kind-icon">Once</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="moq_ts.playtimes-2.html#sequence" class="tsd-kind-icon">Sequence</a>
 							</li>
 						</ul>
 					</li>
