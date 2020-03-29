@@ -28,13 +28,13 @@ export class HasTrap {
         }
 
         if (this.hasPropertyExplorer.has(property)) {
-            return true;
+            return this.interactionPlayer.play(interaction);
         }
 
         if (this.hasMethodExplorer.has(property)) {
             return true;
         }
 
-        return false;
+        return this.interactionPlayer.play(interaction);
     }
 }

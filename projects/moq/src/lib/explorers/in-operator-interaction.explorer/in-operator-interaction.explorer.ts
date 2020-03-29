@@ -1,22 +1,18 @@
-import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
+import { PresetHasInOperatorExplorer } from "./preset.has-in-operator.explorer";
 import { Presets } from "../../preset/presets";
 import { MembersPropertyExplorer } from "../members.explorer/members-property.explorer";
 
 /**
  * @hidden
  */
-export class HasPropertyExplorer {
+export class InOperatorInteractionExplorer {
     constructor(
         private presets: Presets<unknown>,
-        private membersExplorer: MembersPropertyExplorer,
-        private explorer = new PresetHasPropertyExplorer()) {
+        private explorer = new PresetHasInOperatorExplorer()) {
 
     }
 
     public has(name: PropertyKey): boolean {
-        if (this.membersExplorer.hasProperty(name)) {
-            return true;
-        }
         return this.presets
             .get()
             .find(preset => this.explorer.has(name, preset)) !== undefined;

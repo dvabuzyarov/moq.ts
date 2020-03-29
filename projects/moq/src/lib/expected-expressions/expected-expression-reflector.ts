@@ -2,6 +2,7 @@
 import {
     ExpectedExpressions,
     ExpectedGetPropertyExpression,
+    ExpectedInOperatorExpression,
     ExpectedMethodExpression,
     ExpectedNamedMethodExpression,
     ExpectedSetPropertyExpression
@@ -66,6 +67,11 @@ export class ExpectedExpressionReflector {
 
             apply: (target, thisArg, args) => {
                 this.reflectedInfo = new ExpectedMethodExpression(args);
+            },
+
+            has: (target, name) => {
+                this.reflectedInfo = new ExpectedInOperatorExpression(name);
+                return true;
             }
         };
 
