@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ExpectedExpressionReflector | moq.ts | documentation</title>
+	<title>InOperatorInteraction | moq.ts | documentation</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.expectedexpressionreflector.html">ExpectedExpressionReflector</a>
+					<a href="moq_ts.inoperatorinteraction-1.html">InOperatorInteraction</a>
 				</li>
 			</ul>
-			<h1>Class ExpectedExpressionReflector</h1>
+			<h1>Class InOperatorInteraction</h1>
 		</div>
 	</div>
 </header>
@@ -70,29 +70,26 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>This class reflects an expression to an expression tree representation.</p>
+						<p>This class represents applying of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in">in operator</a>.
+						It provides access to the name of property.</p>
 					</div>
-					<dl class="tsd-comment-tags">
-						<dt>example</dt>
-						<dd><pre><code class="language-typescript">
-<span class="hljs-keyword">const</span> arg = <span class="hljs-string">'argument'</span>;
-<span class="hljs-keyword">const</span> reflector = <span class="hljs-keyword">new</span> ExpectedExpressionReflector();
-<span class="hljs-keyword">const</span> actual = reflector.reflect&lt;<span class="hljs-built_in">any</span>&gt;(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(arg));
-
-<span class="hljs-keyword">const</span> expected = <span class="hljs-keyword">new</span> ExpectedMethodExpression([arg]);
-expect(actual).toEqual(expected);</code></pre>
-							<p>For more examples check
-								[unit tests for this class]
-							(<a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.unit/expected-expressions/expected-expression-reflector.UnitTests.ts">https://github.com/dvabuzyarov/moq.ts/blob/master/tests.unit/expected-expressions/expected-expression-reflector.UnitTests.ts</a>)</p>
-						</dd>
-					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ExpectedExpressionReflector</span>
+						<a href="moq_ts.interaction-1.html" class="tsd-signature-type">Interaction</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">InOperatorInteraction</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="moq_ts.expectedinoperatorexpression-1.html" class="tsd-signature-type">ExpectedInOperatorExpression</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -101,49 +98,71 @@ expect(actual).toEqual(expected);</code></pre>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Methods</h3>
+							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="moq_ts.expectedexpressionreflector.html#reflect" class="tsd-kind-icon">reflect</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="moq_ts.inoperatorinteraction-1.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-inherited">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="moq_ts.inoperatorinteraction-1.html#args" class="tsd-kind-icon">args</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="moq_ts.inoperatorinteraction-1.html#name" class="tsd-kind-icon">name</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-					<a name="reflect" class="tsd-anchor"></a>
-					<h3>reflect</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">reflect&lt;T&gt;<span class="tsd-signature-symbol">(</span>expression<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#iexpectedexpression" class="tsd-signature-type">IExpectedExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#expectedexpressions" class="tsd-signature-type">ExpectedExpressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>InOperator<wbr>Interaction<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.inoperatorinteraction-1.html" class="tsd-signature-type">InOperatorInteraction</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="moq_ts.interaction-1.html">Interaction</a>.<a href="moq_ts.interaction-1.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/de7fd4d/projects/moq/src/lib/expected-expressions/expected-expression-reflector.ts#L43">projects/moq/src/lib/expected-expressions/expected-expression-reflector.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/de7fd4d/projects/moq/src/lib/interactions.ts#L55">projects/moq/src/lib/interactions.ts:55</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Reflects the provided code as an expression tree.</p>
-								</div>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-								</li>
-							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>expression: <a href="../modules/moq_ts.html#iexpectedexpression" class="tsd-signature-type">IExpectedExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>name: <span class="tsd-signature-type">PropertyKey</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../modules/moq_ts.html#expectedexpressions" class="tsd-signature-type">ExpectedExpressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="moq_ts.inoperatorinteraction-1.html" class="tsd-signature-type">InOperatorInteraction</a></h4>
 						</li>
 					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="args" class="tsd-anchor"></a>
+					<h3>args</h3>
+					<div class="tsd-signature tsd-kind-icon">args<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="moq_ts.interaction-1.html">Interaction</a>.<a href="moq_ts.interaction-1.html#args">args</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/de7fd4d/projects/moq/src/lib/interactions.ts#L4">projects/moq/src/lib/interactions.ts:4</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PropertyKey</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="moq_ts.interaction-1.html">Interaction</a>.<a href="moq_ts.interaction-1.html#name">name</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/de7fd4d/projects/moq/src/lib/interactions.ts#L3">projects/moq/src/lib/interactions.ts:3</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -163,10 +182,16 @@ expect(actual).toEqual(expected);</code></pre>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="moq_ts.expectedexpressionreflector.html" class="tsd-kind-icon">Expected<wbr>Expression<wbr>Reflector</a>
+						<a href="moq_ts.inoperatorinteraction-1.html" class="tsd-kind-icon">In<wbr>Operator<wbr>Interaction</a>
 						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="moq_ts.expectedexpressionreflector.html#reflect" class="tsd-kind-icon">reflect</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="moq_ts.inoperatorinteraction-1.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="moq_ts.inoperatorinteraction-1.html#args" class="tsd-kind-icon">args</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="moq_ts.inoperatorinteraction-1.html#name" class="tsd-kind-icon">name</a>
 							</li>
 						</ul>
 					</li>
