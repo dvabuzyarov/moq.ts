@@ -2,6 +2,7 @@ import { Mock } from "../lib/mock";
 import { It } from "../lib/expected-expressions/expression-predicates";
 import { Times } from "../lib/times";
 import { nameof } from "../tests.components/nameof";
+import { PlayTimes } from "../lib/playables/play-times";
 
 interface ITestObject {
     property: string;
@@ -17,7 +18,7 @@ class TestObject implements ITestObject {
     }
 }
 
-xdescribe("Mock: In operator", () => {
+describe("Mock: In operator", () => {
 
     it("Returns true when mentioned in setup", () => {
         const value = "value";
@@ -65,7 +66,7 @@ xdescribe("Mock: In operator", () => {
             .mimics(new TestObject())
             .object();
 
-        expect(nameof<ITestObject>("property") in object).toBe(true);
+        expect(nameof<ITestObject>("property") in object).toBe(false);
         expect(nameof<ITestObject>("method") in object).toBe(true);
     });
 
@@ -79,23 +80,63 @@ xdescribe("Mock: In operator", () => {
         expect(nameof<ITestObject>("method") in object).toBe(false);
     });
 
-    it("Returns true", () => {
+    it("Returns true when has returns setup", () => {
+        const name = "arbitrary name";
         const object = new Mock<ITestObject>()
-            .setup(instance => nameof<ITestObject>("property") in instance)
+            .setup(instance => name in instance)
             .returns(true)
             .object();
 
-        expect(nameof<ITestObject>("property") in object).toBe(true);
-        expect(nameof<ITestObject>("method") in object).toBe(false);
+        expect(name in object).toBe(true);
     });
 
-    it("Returns false", () => {
+    it("Returns sequence values", () => {
+        const name = "arbitrary name";
         const object = new Mock<ITestObject>()
-            .setup(instance => nameof<ITestObject>("property") in instance)
+            .setup(instance => name in instance)
+            .play(PlayTimes.Sequence([true, false, true]))
+            .returns(true)
+            .object();
+
+        expect(name in object).toBe(true);
+        expect(name in object).toBe(false);
+        expect(name in object).toBe(true);
+        expect(name in object).toBe(false);
+    });
+
+    it("Returns sequence values", () => {
+        const name = "arbitrary name";
+        const object = new Mock<ITestObject>()
+            .setup(instance => name in instance)
+            .play(PlayTimes.Sequence([true, false, true]))
+            .returns(true)
+            .object();
+
+        expect(name in object).toBe(true);
+        expect(name in object).toBe(false);
+        expect(name in object).toBe(true);
+        expect(name in object).toBe(false);
+    });
+
+    it("Returns value for case when property has mentioned in the setup and has a dedicated setup", () => {
+        const object = new Mock<ITestObject>()
+            .prototypeof(TestObject.prototype)
+            .setup(instance => nameof<ITestObject>("method") in instance)
+            .play(PlayTimes.Once())
             .returns(false)
             .object();
 
-        expect(nameof<ITestObject>("property") in object).toBe(false);
+        expect(nameof<ITestObject>("method") in object).toBe(false);
+        expect(nameof<ITestObject>("method") in object).toBe(true);
+    });
+
+    it("Returns result of callback", () => {
+        const object = new Mock<ITestObject>()
+            .setup(instance => nameof<ITestObject>("property") in instance)
+            .callback(() => true )
+            .object();
+
+        expect(nameof<ITestObject>("property") in object).toBe(true);
         expect(nameof<ITestObject>("method") in object).toBe(false);
     });
 

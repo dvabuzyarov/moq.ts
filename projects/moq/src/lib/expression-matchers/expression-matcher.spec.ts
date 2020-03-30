@@ -1,22 +1,28 @@
-
-import {It} from "../expected-expressions/expression-predicates";
-import {ExpressionMatcher} from "./expression-matcher";
+import { It } from "../expected-expressions/expression-predicates";
+import { ExpressionMatcher } from "./expression-matcher";
+import { GetPropertyExpressionMatcher } from "./get.property-matcher";
+import { SetPropertyExpressionMatcher } from "./set.property-matcher";
+import { MethodExpressionMatcher } from "./method-matcher";
+import { NamedMethodExpressionMatcher } from "./named.method-matcher";
+import { InOperatorMatcher } from "./in-operator.matcher";
 import {
-    GetPropertyInteraction, SetPropertyInteraction, MethodInteraction,
-    NamedMethodInteraction, InOperatorInteraction
+    GetPropertyInteraction,
+    InOperatorInteraction,
+    MethodInteraction,
+    NamedMethodInteraction,
+    SetPropertyInteraction
 } from "../interactions";
-import {GetPropertyExpressionMatcher} from "./get.property-matcher";
 import {
     ExpectedGetPropertyExpression,
-    ExpectedSetPropertyExpression, ExpectedMethodExpression, ExpectedNamedMethodExpression, ExpectedInOperatorExpression
+    ExpectedInOperatorExpression,
+    ExpectedMethodExpression,
+    ExpectedNamedMethodExpression,
+    ExpectedSetPropertyExpression
 } from "../expected-expressions/expected-expressions";
-import {SetPropertyExpressionMatcher} from "./set.property-matcher";
-import {MethodExpressionMatcher} from "./method-matcher";
-import {NamedMethodExpressionMatcher} from "./named.method-matcher";
-import { InOperatorMatcher } from "./in-operator.matcher";
+
 
 describe("Expression matcher", () => {
-    function argumentsMatcherFactory<T>(matched?: (left: any[], right: (any|It<any>)[]) => boolean): T {
+    function argumentsMatcherFactory<T>(matched?: (left: any[], right: (any | It<any>)[]) => boolean): T {
         return (<any>{
             matched: matched
         } as T);

@@ -15,37 +15,43 @@
  * expect(object(1).toBe(undefined);
  * ```
  */
+import { IPlayable } from "../moq";
+import { PlayableExactly } from "./playable-exactly";
+import { PlayableNever } from "./playable-never";
+import { PlayableOnce } from "./playable-once";
+import { PlayableSequence } from "./playable-sequence";
+import { PlayableAlways } from "./playable-always";
+
 export class PlayTimes {
+    private static readonly always = new PlayableAlways();
+    private static readonly never = new PlayableNever();
 
     /**
      * The configured setup will be applied to invocations exactly n-times. After that it will be ignored.
      */
-    public static Exactly(count: number): () => boolean {
-        let invoked = 0;
-        return () => {
-            if (invoked >= count) return false;
-            invoked++;
-            return true;
-        };
+    public static Exactly(count: number): IPlayable {
+        return new PlayableExactly(count);
+    }
+
+    /**
+     * The configured setup will be always applied to invocations.
+     */
+    public static Always(): IPlayable {
+        return PlayTimes.always;
     }
 
     /**
      * The configured setup will be never applied to invocations.
      */
-    public static Never(): () => boolean {
-        return () => false;
+    public static Never(): IPlayable {
+        return PlayTimes.never;
     }
 
     /**
      * The configured setup will be applied only to the first invocation.
      */
-    public static Once(): () => boolean {
-        let played = false;
-        return () => {
-            if (played) return false;
-            played = true;
-            return true;
-        };
+    public static Once(): IPlayable {
+        return new PlayableOnce();
     }
 
     /**
@@ -65,13 +71,7 @@ export class PlayTimes {
      * expect(object(1).toBe(undefined);
      * ```
      */
-    public static Sequence(sequence: boolean[]): () => boolean {
-        let index = 0;
-        return () => {
-            if (index >= sequence.length) return false;
-            const value = sequence[index];
-            index++;
-            return value;
-        };
+    public static Sequence(sequence: boolean[]): IPlayable {
+        return new PlayableSequence(sequence);
     }
 }

@@ -1,7 +1,7 @@
 import {
     GetPropertyInteraction,
     InOperatorInteraction,
-    Interactions,
+    Interaction,
     MethodInteraction,
     NamedMethodInteraction,
     SetPropertyInteraction
@@ -28,7 +28,7 @@ export class ExpressionFormatter {
 
     }
 
-    public format(expression: Interactions | It<any>): string {
+    public format(expression: Interaction | It<any>): string {
         if (expression instanceof GetPropertyInteraction) return this.getPropertyFormatter.format(expression);
         if (expression instanceof SetPropertyInteraction) return this.setPropertyFormatter.format(expression);
         if (expression instanceof InOperatorInteraction) return this.inOperatorFormatter.format(expression);

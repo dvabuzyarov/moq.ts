@@ -38,16 +38,6 @@ export class GetPropertyInteraction extends Interaction {
 }
 
 /**
- * This class represents applying of [in operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in).
- * It provides access to the name of property.
- */
-export class InOperatorInteraction extends Interaction {
-    constructor(name: PropertyKey) {
-        super(name, undefined);
-    }
-}
-
-/**
  * This class represents a property write interaction.
  * It provides access to the name of property and the value.
  */
@@ -58,4 +48,12 @@ export class SetPropertyInteraction extends Interaction {
     }
 }
 
-export type Interactions = MethodInteraction | GetPropertyInteraction | SetPropertyInteraction | NamedMethodInteraction;
+/**
+ * This class represents applying of [in operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in).
+ * It provides access to the name of property.
+ */
+export class InOperatorInteraction extends Interaction {
+    constructor(name: PropertyKey) {
+        super(name, undefined);
+    }
+}

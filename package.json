@@ -14,7 +14,7 @@
     "commit-retry": "git cz --retry",
     "semantic-release": "node ./dist/releaser/public_api.js",
     "typedoc": "node ./dist/docs/public_api.js",
-    "serve-docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve",
+    "serve:docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve",
     "postpublish": ":> .released && echo .released file has been created"
   },
   "private": true,

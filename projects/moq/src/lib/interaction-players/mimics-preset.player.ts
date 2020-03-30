@@ -1,6 +1,7 @@
 import {
-    Interactions,
     GetPropertyInteraction,
+    InOperatorInteraction,
+    Interaction,
     MethodInteraction,
     NamedMethodInteraction,
     SetPropertyInteraction
@@ -14,7 +15,7 @@ export class MimicsPresetPlayer {
 
     }
 
-    public play(origin: any, interaction: Interactions): any {
+    public play(origin: any, interaction: Interaction): any {
         if (interaction instanceof GetPropertyInteraction) {
             return origin[interaction.name];
         }
@@ -29,5 +30,9 @@ export class MimicsPresetPlayer {
         if (interaction instanceof MethodInteraction) {
             return this.apply(origin, undefined, interaction.args);
         }
+        if (interaction instanceof InOperatorInteraction) {
+            return interaction.name in origin;
+        }
+
     }
 }

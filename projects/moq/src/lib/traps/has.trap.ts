@@ -1,10 +1,11 @@
 import { Tracker } from "../tracker";
-import { GetPropertyInteraction, InOperatorInteraction } from "../interactions";
+import { InOperatorInteraction } from "../interactions";
 import { PropertiesValueStorage } from "./properties-value.storage";
-import { SpyFunctionProvider } from "./spy-function.provider";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
+import { InOperatorInteractionExplorer } from "../explorers/in-operator-interaction.explorer/in-operator-interaction.explorer";
+import { PresetPlayablesUpdater } from "../playables/preset-playables.updater";
 
 /**
  * @hidden
@@ -14,8 +15,10 @@ export class HasTrap {
         private tracker: Tracker,
         private propertiesValueStorage: PropertiesValueStorage,
         private interactionPlayer: InteractionPlayer,
+        private inOperatorInteractionExplorer: InOperatorInteractionExplorer,
         private hasPropertyExplorer: HasPropertyExplorer,
-        private hasMethodExplorer: HasMethodExplorer) {
+        private hasMethodExplorer: HasMethodExplorer,
+        private p: PresetPlayablesUpdater) {
 
     }
 
@@ -27,14 +30,20 @@ export class HasTrap {
             return true;
         }
 
-        if (this.hasPropertyExplorer.has(property)) {
+        if (this.inOperatorInteractionExplorer.has(property)) {
             return this.interactionPlayer.play(interaction);
+        }
+
+        this.p.update(interaction, undefined);
+
+        if (this.hasPropertyExplorer.has(property)) {
+            return true;
         }
 
         if (this.hasMethodExplorer.has(property)) {
             return true;
         }
 
-        return this.interactionPlayer.play(interaction);
+        return false;
     }
 }

@@ -1,5 +1,5 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
-import { Interactions } from "../interactions";
+import { Interaction } from "../interactions";
 import { ExpectedExpressionFormatter } from "./expected-expression-formatter";
 import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
 
@@ -18,7 +18,7 @@ export class VerifyFormatter {
         expected: ExpectedExpressions<any>,
         timesMessage: string,
         haveBeenCalledTimes: number,
-        trackedExpressions: Interactions[],
+        trackedExpressions: Interaction[],
         mockName?: string): string {
         const expectedExpressionMessage = this.expectedExpressionFormatter.format(expected, timesMessage, haveBeenCalledTimes, mockName);
         const trackedExpressionsMessage = this.trackedExpressionsFormatter.format(trackedExpressions);

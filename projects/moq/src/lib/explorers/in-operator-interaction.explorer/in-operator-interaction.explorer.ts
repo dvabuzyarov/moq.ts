@@ -1,6 +1,5 @@
 import { PresetHasInOperatorExplorer } from "./preset.has-in-operator.explorer";
 import { Presets } from "../../preset/presets";
-import { MembersPropertyExplorer } from "../members.explorer/members-property.explorer";
 
 /**
  * @hidden

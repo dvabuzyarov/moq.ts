@@ -1,7 +1,7 @@
 import { IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
 import { Tracker } from "./tracker";
 import { Times } from "./times";
-import { Interactions } from "./interactions";
+import { Interaction } from "./interactions";
 
 /**
  * Mock creation options
@@ -18,6 +18,54 @@ export interface IMockOptions<T> {
      * The default value is a function.
      */
     target?: T;
+}
+
+export const enum PlayableUpdateReason {
+    /**
+     * The playable is update because it's setup is about to be played
+     */
+    OwnSetupWouldBePlayed,
+    /**
+     * The playable is update because another setup is about to be played
+     */
+    OtherSetupWouldBePlayed
+}
+
+/**
+ * Provides playable logic for a setup
+ */
+export interface IPlayable {
+    /**
+     * Tests if setup is playable
+     */
+    isPlayable(): boolean;
+
+    /**
+     * Invokes as the setup is about to be played, so the playable logic can change it's state.
+     * @param reason The reason why this update is called {@link PlayableUpdateReason}
+     * @example
+     * ```typescript
+     *
+     *     const playable1 = new PlayableOnce();
+     *     const playable2 = new PlayableOnce();
+     *
+     *     const mock = new Mock<(val: number) => void)>()
+     *     // setup A
+     *     .setup(instance => instance(1))
+     *     .play(playable1)
+     *     .returns(1)
+     *     // setup B
+     *     .setup(instance => instance(2))
+     *     .play(playable2)
+     *     .returns(2);
+     *
+     *     const actual = mock.object()(1);
+     *     // at this point the update of playable1 should be called with OwnSetupWouldBePlayed
+     *     // because setup A would be played
+     *     // and the update of playable2 should be called with OtherSetupWouldBePlayed
+     * ```
+     */
+    update(reason: PlayableUpdateReason): void;
 }
 
 /**
@@ -52,13 +100,13 @@ export interface IPresetBuilder<T> {
      *     .callback(({args: [channel, listener]}) => listener(undefined, response));
      * ```
      */
-    callback<TValue>(callback: (interaction: Interactions) => TValue): IMock<T>;
+    callback<TValue>(callback: (interaction: Interaction) => TValue): IMock<T>;
 
     /**
      * Plays the setup on target invocation when predicate returns true otherwise the setup will be ignored.
      * As predicate {@link PlayTimes} could be used.
      */
-    play(predicate: () => boolean): IPresetBuilder<T>;
+    play(predicate: IPlayable): IPresetBuilder<T>;
 
     /**
      * Replicates interactions with original object.
@@ -167,7 +215,7 @@ export interface IMock<T> {
      * @param expression A function that accepts a
      * [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
      * and either plays expected interaction or returns a predicate function.
-     * Refer {@link It} class for parameter placeholders or predicate functions.
+     * Refer {@link It} class for parameter placeholders or redicate functions.
      * Refer the integration tests for more examples.
      * @returns PresetBuilder config interface for the provided expression.
      */

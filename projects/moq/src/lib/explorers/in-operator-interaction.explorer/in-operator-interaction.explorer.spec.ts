@@ -17,7 +17,7 @@ describe("In operator interaction explorer", () => {
         ]);
     });
 
-    it("Returns true when there is an invokable preset", () => {
+    it("Returns true when there is a playable preset", () => {
         const name = "name";
         const preset = <IPreset<unknown>>{};
 
@@ -33,7 +33,7 @@ describe("In operator interaction explorer", () => {
         expect(actual).toBe(true);
     });
 
-    it("Returns false when there is no invocable preset", () => {
+    it("Returns false when there is no playable preset", () => {
         const name = "name";
         const preset = <IPreset<unknown>>{};
 
