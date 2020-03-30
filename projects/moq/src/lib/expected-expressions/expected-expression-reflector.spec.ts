@@ -1,6 +1,6 @@
 import { ExpectedExpressionReflector } from "./expected-expression-reflector";
 import {
-    ExpectedGetPropertyExpression,
+    ExpectedGetPropertyExpression, ExpectedInOperatorExpression,
     ExpectedMethodExpression,
     ExpectedNamedMethodExpression,
     ExpectedSetPropertyExpression
@@ -46,6 +46,15 @@ describe("Expected Expression Reflector", () => {
         const actual = reflector.reflect(instance => instance[name]);
 
         const expected = new ExpectedGetPropertyExpression(name);
+        expect(actual).toEqual(expected);
+    });
+
+    it("Resolves in operator", () => {
+        const name = "member_name";
+        const reflector = new ExpectedExpressionReflector();
+        const actual = reflector.reflect(instance => name in (instance as any));
+
+        const expected = new ExpectedInOperatorExpression(name);
         expect(actual).toEqual(expected);
     });
 

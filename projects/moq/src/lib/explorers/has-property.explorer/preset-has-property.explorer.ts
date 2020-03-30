@@ -7,8 +7,8 @@ import { MimicsPreset } from "../../presets/mimics.preset";
  * @hidden
  */
 export class PresetHasPropertyExplorer {
-    constructor(private expressionHasPropertyExplorer: ExpressionHasPropertyExplorer = new ExpressionHasPropertyExplorer(),
-                private objectHasPropertyExplorer: ObjectHasPropertyExplorer = new ObjectHasPropertyExplorer()) {
+    constructor(private expressionHasPropertyExplorer = new ExpressionHasPropertyExplorer(),
+                private objectHasPropertyExplorer = new ObjectHasPropertyExplorer()) {
 
     }
 

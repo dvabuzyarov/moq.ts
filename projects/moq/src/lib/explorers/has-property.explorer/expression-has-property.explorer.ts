@@ -1,5 +1,6 @@
 import {
     ExpectedExpressions,
+    ExpectedInOperatorExpression,
     ExpectedMethodExpression,
     ExpectedNamedMethodExpression
 } from "../../expected-expressions/expected-expressions";
@@ -12,7 +13,8 @@ export class ExpressionHasPropertyExplorer {
     public has(name: PropertyKey, expression: ExpectedExpressions<unknown>): boolean {
         if (expression instanceof It
             || expression instanceof ExpectedMethodExpression
-            || expression instanceof ExpectedNamedMethodExpression) {
+            || expression instanceof ExpectedNamedMethodExpression
+            || expression instanceof ExpectedInOperatorExpression) {
             return false;
         }
 

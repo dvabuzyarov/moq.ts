@@ -1,5 +1,6 @@
 import {
     GetPropertyInteraction,
+    InOperatorInteraction,
     Interaction,
     MethodInteraction,
     NamedMethodInteraction,
@@ -29,5 +30,9 @@ export class MimicsPresetPlayer {
         if (interaction instanceof MethodInteraction) {
             return this.apply(origin, undefined, interaction.args);
         }
+        if (interaction instanceof InOperatorInteraction) {
+            return interaction.name in origin;
+        }
+
     }
 }

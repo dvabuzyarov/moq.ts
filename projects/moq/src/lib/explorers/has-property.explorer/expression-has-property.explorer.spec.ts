@@ -1,6 +1,6 @@
 import { ExpressionHasPropertyExplorer } from "./expression-has-property.explorer";
 import {
-    ExpectedGetPropertyExpression,
+    ExpectedGetPropertyExpression, ExpectedInOperatorExpression,
     ExpectedMethodExpression,
     ExpectedNamedMethodExpression,
     ExpectedSetPropertyExpression
@@ -82,6 +82,16 @@ describe("Expression has property explorer", () => {
     it("Returns false when expression is It", () => {
         const name = "name";
         const expression = It.IsAny();
+
+        const explorer = new ExpressionHasPropertyExplorer();
+        const actual = explorer.has(name, expression);
+
+        expect(actual).toBe(false);
+    });
+
+    it("Returns false when expression is In operator", () => {
+        const name = "name";
+        const expression = new ExpectedInOperatorExpression(name);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);

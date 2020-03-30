@@ -1,5 +1,11 @@
 import { It } from "./expression-predicates";
-import { GetPropertyInteraction, MethodInteraction, NamedMethodInteraction, SetPropertyInteraction } from "../interactions";
+import {
+    GetPropertyInteraction,
+    InOperatorInteraction,
+    MethodInteraction,
+    NamedMethodInteraction,
+    SetPropertyInteraction
+} from "../interactions";
 
 /**
  * See {@link NamedMethodInteraction}
@@ -30,11 +36,19 @@ export class ExpectedSetPropertyExpression extends SetPropertyInteraction {
 }
 
 /**
+ * See {@link InOperatorInteraction}
+ */
+export class ExpectedInOperatorExpression extends InOperatorInteraction {
+
+}
+
+/**
  * This types are special sub types of expressions that are used in an expectation context.
  */
 export type ExpectedExpressions<T> =
     ExpectedMethodExpression
     | ExpectedGetPropertyExpression
     | ExpectedSetPropertyExpression
+    | ExpectedInOperatorExpression
     | ExpectedNamedMethodExpression
     | It<T>;

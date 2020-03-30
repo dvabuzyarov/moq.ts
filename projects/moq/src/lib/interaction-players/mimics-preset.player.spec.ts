@@ -1,5 +1,12 @@
-import { GetPropertyInteraction, MethodInteraction, NamedMethodInteraction, SetPropertyInteraction } from "../interactions";
+import {
+    GetPropertyInteraction,
+    InOperatorInteraction,
+    MethodInteraction,
+    NamedMethodInteraction,
+    SetPropertyInteraction
+} from "../interactions";
 import { MimicsPresetPlayer } from "./mimics-preset.player";
+import { nameof } from "../../tests.components/nameof";
 
 describe("Mimics preset player", () => {
 
@@ -60,5 +67,17 @@ describe("Mimics preset player", () => {
         const actual = player.play(target, new MethodInteraction([arg]));
 
         expect(actual).toBe(result);
+    });
+
+    it("Plays in operator", () => {
+        const name = "value";
+
+        const target = {name};
+
+
+        const player = new MimicsPresetPlayer();
+        const actual = player.play(target, new InOperatorInteraction(nameof<typeof target>("name")));
+
+        expect(actual).toBe(true);
     });
 });
