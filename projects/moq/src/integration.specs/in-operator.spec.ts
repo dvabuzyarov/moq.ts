@@ -104,20 +104,6 @@ describe("Mock: In operator", () => {
         expect(name in object).toBe(false);
     });
 
-    it("Returns sequence values", () => {
-        const name = "arbitrary name";
-        const object = new Mock<ITestObject>()
-            .setup(instance => name in instance)
-            .play(PlayTimes.Sequence([true, false, true]))
-            .returns(true)
-            .object();
-
-        expect(name in object).toBe(true);
-        expect(name in object).toBe(false);
-        expect(name in object).toBe(true);
-        expect(name in object).toBe(false);
-    });
-
     it("Returns value for case when property has mentioned in the setup and has a dedicated setup", () => {
         const object = new Mock<ITestObject>()
             .prototypeof(TestObject.prototype)

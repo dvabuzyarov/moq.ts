@@ -37,6 +37,7 @@ You can find a pretty full set of usages in the integration tests. Check out [te
 - [Mock prototype](#mock-prototype)
 - [Mimics](#mimics)
 - [typeof operator](#typeof-operator)
+- [in operator](#in-operator)
 * * *
 
 <!-- toc -->
@@ -343,6 +344,57 @@ const origin = new Origin();
 const mock = new Mock<Origin>({target: new Origin()});
 
 expect(typeof mock.object()).toBe(typeof new Origin());
+```
+
+## in operator
+
+The library supports [in operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in).
+More examples could be found [here](https://raw.githubusercontent.com/dvabuzyarov/moq.ts/master/projects/moq/src/integration.specs/in-operator.spec.ts)
+
+```typescript
+        const name = "arbitrary name";
+        const object = new Mock<{}>()
+            .setup(instance => name in instance)
+            .returns(true)
+            .object();
+
+        expect(name in object).toBe(true);
+```
+
+```typescript
+        interface ITestObject {
+             property: string;
+         
+             method(): void;
+         }
+         
+         class TestObject implements ITestObject {
+             property: string;
+         
+             method(): void {
+                 return undefined;
+             }
+         }
+
+        const object = new Mock<ITestObject>()
+            .prototypeof(TestObject.prototype)
+            .object();
+        
+        // because "property" in new TestObject() === false
+        expect("property" in object).toBe(false);
+        expect("method" in object).toBe(true);
+```
+
+```typescript
+
+        const mock = new Mock<{}>();
+        const object = mock.object();
+
+        const actual1 = "property" in object;
+        const actual2 = "method" in object;
+
+        mock.verify(instance => "property" in instance, Times.Once());
+        mock.verify(instance => "method" in instance, Times.Once());
 ```
 
 Sponsored by [2BIT](https://www.2bit.ch)
