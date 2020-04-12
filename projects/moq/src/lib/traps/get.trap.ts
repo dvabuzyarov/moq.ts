@@ -28,8 +28,9 @@ export class GetTrap {
 
         this.tracker.add(interaction);
 
-        if (property === MoqAPI)
+        if (property === MoqAPI) {
             return this.mock;
+        }
 
         if (this.propertiesValueStorage.has(property)) {
             return this.propertiesValueStorage.get(property);

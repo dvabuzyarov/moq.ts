@@ -20,8 +20,9 @@ export class SetTrap {
 
         this.tracker.add(expression);
 
-        if (property === MoqAPI)
+        if (property === MoqAPI) {
             return false;
+        }
 
         const accepted = this.interactionPlayer.play(expression);
         if (accepted === true || accepted === undefined) {
