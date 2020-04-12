@@ -23,7 +23,7 @@ deploy:
   script:
     - npx semantic-release --dry-run
   on:
-    tags: true
+    tags: false
     all_branches: true
 env:
   global:
