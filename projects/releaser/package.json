@@ -1,9 +1,0 @@
-{
-  "name": "releaser",
-  "version": "0.0.1",
-  "peerDependencies": {
-    "@angular/common": "*",
-    "@angular/core": "*",
-    "semantic-release": "*"
-  }
-}
