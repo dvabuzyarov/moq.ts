@@ -56,7 +56,7 @@
         "name": "master"
       },
       {
-        "name": "next",
+        "name": "dev",
         "channel": "next"
       }
     ],
@@ -76,7 +76,7 @@
         }
       ],
       [
-        "@semantic-release/git",
+        "@semantic-release/github",
         {
           "assets": [
             "CHANGELOG.md"
