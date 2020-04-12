@@ -3,6 +3,7 @@ import { It } from "../lib/expected-expressions/expression-predicates";
 import { Times } from "../lib/times";
 import { nameof } from "../tests.components/nameof";
 import { PlayTimes } from "../lib/playables/play-times";
+import { MoqAPI } from "../lib/moq";
 
 interface ITestObject {
     property: string;
@@ -31,6 +32,24 @@ describe("Mock: In operator", () => {
 
         expect(nameof<ITestObject>("property") in object).toBe(true);
         expect(nameof<ITestObject>("method") in object).toBe(true);
+    });
+
+    it("Returns false for MoqAPI", () => {
+        const object = new Mock<ITestObject>()
+            .object();
+
+        expect(MoqAPI in object).toBe(false);
+    });
+
+    it("Returns true for MoqAPI when it is mentioned in setup", () => {
+        const mock = new Mock<ITestObject>();
+        const object = mock
+            .setup(instance => instance[MoqAPI])
+            .returns(undefined)
+            .object();
+
+        expect(MoqAPI in object).toBe(true);
+        expect(object[MoqAPI]).toBe(mock);
     });
 
     it("Returns false when does not mentioned in setup", () => {

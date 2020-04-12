@@ -22,7 +22,6 @@ describe("Mock: Get property", () => {
         expect(actual).toBe(value);
     });
 
-
     it("Returns value with a predicated setup", () => {
         const value = "value";
 

@@ -65,7 +65,7 @@ describe("Mock", () => {
 
         const mock = new Mock(input);
 
-        expect(mockDependencies.mockDependenciesFactory).toHaveBeenCalledWith(options);
+        expect(mockDependencies.mockDependenciesFactory).toHaveBeenCalledWith(options, mock);
     });
 
     it("Returns object", () => {
@@ -113,7 +113,7 @@ describe("Mock", () => {
         expressionReflector.reflect.withArgs(expression).and.returnValue(expectedExpression);
 
         const mock = new Mock();
-        (presetBuilderFactory as jasmine.Spy).withArgs(mock, expectedExpression).and.returnValue(setup);
+        (presetBuilderFactory as jasmine.Spy).withArgs(expectedExpression).and.returnValue(setup);
 
         const actual = mock.setup(expression);
 

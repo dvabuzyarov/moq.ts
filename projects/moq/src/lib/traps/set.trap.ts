@@ -2,6 +2,7 @@ import { Tracker } from "../tracker";
 import { SetPropertyInteraction } from "../interactions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
+import { MoqAPI } from "../moq";
 
 /**
  * @hidden
@@ -18,6 +19,9 @@ export class SetTrap {
         const expression = new SetPropertyInteraction(property, value);
 
         this.tracker.add(expression);
+
+        if (property === MoqAPI)
+            return false;
 
         const accepted = this.interactionPlayer.play(expression);
         if (accepted === true || accepted === undefined) {

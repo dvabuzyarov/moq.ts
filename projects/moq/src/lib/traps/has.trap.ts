@@ -18,7 +18,7 @@ export class HasTrap {
         private inOperatorInteractionExplorer: InOperatorInteractionExplorer,
         private hasPropertyExplorer: HasPropertyExplorer,
         private hasMethodExplorer: HasMethodExplorer,
-        private p: PresetPlayablesUpdater) {
+        private presetPlayablesUpdater: PresetPlayablesUpdater) {
 
     }
 
@@ -34,7 +34,7 @@ export class HasTrap {
             return this.interactionPlayer.play(interaction);
         }
 
-        this.p.update(interaction, undefined);
+        this.presetPlayablesUpdater.update(interaction, undefined);
 
         if (this.hasPropertyExplorer.has(property)) {
             return true;

@@ -23,6 +23,7 @@ import { MembersPropertyExplorer } from "./explorers/members.explorer/members-pr
 import { HasTrap } from "./traps/has.trap";
 import { PresetPlayablesUpdater } from "./playables/preset-playables.updater";
 import { InOperatorInteractionExplorer } from "./explorers/in-operator-interaction.explorer/in-operator-interaction.explorer";
+import { Mock } from "./mock";
 
 /**
  * @hidden
@@ -31,7 +32,7 @@ export interface IMockDependencies<T> {
     tracker: Tracker;
     expressionReflector: ExpectedExpressionReflector;
     interceptor: Interceptor<T>;
-    presetBuilderFactory: (mock: IMock<T>, target: ExpectedExpressions<T>) => IPresetBuilder<T>;
+    presetBuilderFactory: (target: ExpectedExpressions<T>) => IPresetBuilder<T>;
     verifier: Verifier<T>;
     prototypeStorage: PrototypeStorage;
 }
@@ -39,12 +40,12 @@ export interface IMockDependencies<T> {
 /**
  * @hidden
  */
-export function mockDependenciesFactory<T>(options: IMockOptions<T>): IMockDependencies<T> {
+export function mockDependenciesFactory<T>(options: IMockOptions<T>, thisMock: Mock<T>): IMockDependencies<T> {
     const expressionReflector = new ExpectedExpressionReflector();
     const presets = new Presets<T>();
     const tracker = new Tracker();
-    const presetBuilderFactory = (mock: IMock<T>, target: ExpectedExpressions<T>) => {
-        return new PresetBuilder<T>(mock, preset => presets.add(preset), target);
+    const presetBuilderFactory = (target: ExpectedExpressions<T>) => {
+        return new PresetBuilder<T>(thisMock, preset => presets.add(preset), target);
     };
     const verifier = new Verifier<T>();
     const prototypeStorage = new PrototypeStorage(options.target);
@@ -58,6 +59,7 @@ export function mockDependenciesFactory<T>(options: IMockOptions<T>): IMockDepen
     const hasMethodExplorer = new HasMethodExplorer(presets, membersMethodExplorer);
     const spyFunctionProvider = new SpyFunctionProvider(tracker, interactionPlayer);
     const getTrap = new GetTrap(
+        thisMock,
         tracker,
         propertiesValueStorage,
         interactionPlayer,

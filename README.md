@@ -38,6 +38,7 @@ You can find a pretty full set of usages in the integration tests. Check out [te
 - [Mimics](#mimics)
 - [typeof operator](#typeof-operator)
 - [in operator](#in-operator)
+- [MoqAPI symbol](#moqapi-symbol)
 * * *
 
 <!-- toc -->
@@ -395,6 +396,49 @@ More examples could be found [here](https://raw.githubusercontent.com/dvabuzyaro
 
         mock.verify(instance => "property" in instance, Times.Once());
         mock.verify(instance => "method" in instance, Times.Once());
+```
+
+## MoqAPI symbol
+
+In some scenarios it is necessary to get Moq API from mocked object. For this purposes the library
+provides a predefined symbol MoqAPI. Mocked objects in their turns exposes a symbol property to 
+access to its Moq API.
+
+Since this property makes sense only in context of the moq library
+and is not specific for mocked types it is not possible to define an interaction behaviour 
+with Setup API.
+
+The property is read only and trackabel, so it possible to use for verification.
+```typescript
+   const func = new Mock<() => void>()
+   .object();
+ 
+   func[MoqAPI]
+   .setup(instance => instance())
+   .returns(12);
+ 
+   const actual = func();
+ 
+   expect(actual).toBe(12);
+```
+
+In operator does not sees this property until it is used in setups.
+```typescript
+        const object = new Mock<{}>()
+            .object();
+
+        expect(MoqAPI in object).toBe(false);
+```
+BUT
+```typescript
+        const mock = new Mock<ITestObject>();
+        const object = mock
+            .setup(instance => instance[MoqAPI])
+            .returns(undefined)
+            .object();
+
+        expect(MoqAPI in object).toBe(true);
+        expect(object[MoqAPI]).toBe(mock);
 ```
 
 Sponsored by [2BIT](https://www.2bit.ch)
