@@ -1,21 +1,28 @@
-
-import {It} from "../expected-expressions/expression-predicates";
-import {ExpressionMatcher} from "./expression-matcher";
+import { It } from "../expected-expressions/expression-predicates";
+import { ExpressionMatcher } from "./expression-matcher";
+import { GetPropertyExpressionMatcher } from "./get.property-matcher";
+import { SetPropertyExpressionMatcher } from "./set.property-matcher";
+import { MethodExpressionMatcher } from "./method-matcher";
+import { NamedMethodExpressionMatcher } from "./named.method-matcher";
+import { InOperatorMatcher } from "./in-operator.matcher";
 import {
-    GetPropertyInteraction, SetPropertyInteraction, MethodInteraction,
-    NamedMethodInteraction
+    GetPropertyInteraction,
+    InOperatorInteraction,
+    MethodInteraction,
+    NamedMethodInteraction,
+    SetPropertyInteraction
 } from "../interactions";
-import {GetPropertyExpressionMatcher} from "./get.property-matcher";
 import {
     ExpectedGetPropertyExpression,
-    ExpectedSetPropertyExpression, ExpectedMethodExpression, ExpectedNamedMethodExpression
+    ExpectedInOperatorExpression,
+    ExpectedMethodExpression,
+    ExpectedNamedMethodExpression,
+    ExpectedSetPropertyExpression
 } from "../expected-expressions/expected-expressions";
-import {SetPropertyExpressionMatcher} from "./set.property-matcher";
-import {MethodExpressionMatcher} from "./method-matcher";
-import {NamedMethodExpressionMatcher} from "./named.method-matcher";
+
 
 describe("Expression matcher", () => {
-    function argumentsMatcherFactory<T>(matched?: (left: any[], right: (any|It<any>)[]) => boolean): T {
+    function argumentsMatcherFactory<T>(matched?: (left: any[], right: (any | It<any>)[]) => boolean): T {
         return (<any>{
             matched: matched
         } as T);
@@ -102,6 +109,34 @@ describe("Expression matcher", () => {
         const matched = jasmine.createSpy("matched").and.returnValue(expected);
         const setPropertyExpressionMatcher = argumentsMatcherFactory<SetPropertyExpressionMatcher>(matched);
         const matcher = new ExpressionMatcher(undefined, setPropertyExpressionMatcher, undefined, undefined);
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(expected);
+        expect(matched).toHaveBeenCalledWith(left, right);
+    });
+
+    it("Returns value from InOperatorExpressionMatcher when left and right are InOperator expressions", () => {
+        const left = new InOperatorInteraction("left name");
+        const right = new ExpectedInOperatorExpression("right name");
+
+        const expected = true;
+        const matched = jasmine.createSpy("matched").and.returnValue(expected);
+        const inOperatorExpressionMatcher = argumentsMatcherFactory<InOperatorMatcher>(matched);
+        const matcher = new ExpressionMatcher(undefined, undefined, undefined, undefined, inOperatorExpressionMatcher);
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(expected);
+        expect(matched).toHaveBeenCalledWith(left, right);
+    });
+
+    it("Returns value from InOperatorExpressionMatcher when left is InOperator and right is It", () => {
+        const left = new InOperatorInteraction("name");
+        const right = It.Is(() => undefined);
+
+        const expected = true;
+        const matched = jasmine.createSpy("matched").and.returnValue(expected);
+        const inOperatorExpressionMatcher = argumentsMatcherFactory<InOperatorMatcher>(matched);
+        const matcher = new ExpressionMatcher(undefined, undefined, undefined, undefined, inOperatorExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(expected);

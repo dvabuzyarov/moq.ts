@@ -97,7 +97,7 @@ export class It<T> {
     /**
      * @hidden
      */
-    public test(instance: T): boolean {
+    public test(instance?: T): boolean {
         try {
             const result = this.predicate(instance);
             return result === true || result === undefined;

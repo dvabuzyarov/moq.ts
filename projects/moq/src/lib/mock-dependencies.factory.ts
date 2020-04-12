@@ -10,7 +10,7 @@ import { PrototypeStorage } from "./traps/prototype.storage";
 import { GetTrap } from "./traps/get.trap";
 import { PropertiesValueStorage } from "./traps/properties-value.storage";
 import { InteractionPlayer } from "./interaction-players/interaction.player";
-import { InteractionPresetProvider } from "./interaction-players/interaction-preset.provider";
+import { PlayablePresetProvider } from "./interaction-players/playable-preset.provider";
 import { HasMethodExplorer } from "./explorers/has-method.explorer/has-method.explorer";
 import { HasPropertyExplorer } from "./explorers/has-property.explorer/has-property.explorer";
 import { SpyFunctionProvider } from "./traps/spy-function.provider";
@@ -20,6 +20,9 @@ import { GetPrototypeOfTrap } from "./traps/get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./traps/set-prototype-of.trap";
 import { MembersMethodExplorer } from "./explorers/members.explorer/members-method.explorer";
 import { MembersPropertyExplorer } from "./explorers/members.explorer/members-property.explorer";
+import { HasTrap } from "./traps/has.trap";
+import { PresetPlayablesUpdater } from "./playables/preset-playables.updater";
+import { InOperatorInteractionExplorer } from "./explorers/in-operator-interaction.explorer/in-operator-interaction.explorer";
 
 /**
  * @hidden
@@ -46,10 +49,12 @@ export function mockDependenciesFactory<T>(options: IMockOptions<T>): IMockDepen
     const verifier = new Verifier<T>();
     const prototypeStorage = new PrototypeStorage(options.target);
     const propertiesValueStorage = new PropertiesValueStorage();
-    const interactionPlayer = new InteractionPlayer(new InteractionPresetProvider(presets));
+    const presetPlayablesUpdater = new PresetPlayablesUpdater(presets);
+    const interactionPlayer = new InteractionPlayer(new PlayablePresetProvider(presets), presetPlayablesUpdater);
     const membersPropertyExplorer = new MembersPropertyExplorer(prototypeStorage);
     const membersMethodExplorer = new MembersMethodExplorer(prototypeStorage);
     const hasPropertyExplorer = new HasPropertyExplorer(presets, membersPropertyExplorer);
+    const inOperatorInteractionExplorer = new InOperatorInteractionExplorer(presets);
     const hasMethodExplorer = new HasMethodExplorer(presets, membersMethodExplorer);
     const spyFunctionProvider = new SpyFunctionProvider(tracker, interactionPlayer);
     const getTrap = new GetTrap(
@@ -60,6 +65,13 @@ export function mockDependenciesFactory<T>(options: IMockOptions<T>): IMockDepen
         hasMethodExplorer,
         spyFunctionProvider);
     const setTrap = new SetTrap(tracker, propertiesValueStorage, interactionPlayer);
+    const hasTrap = new HasTrap(tracker,
+        propertiesValueStorage,
+        interactionPlayer,
+        inOperatorInteractionExplorer,
+        hasPropertyExplorer,
+        hasMethodExplorer,
+        presetPlayablesUpdater);
     const applyTrap = new ApplyTrap(tracker, interactionPlayer);
     const getPrototypeOfTrap = new GetPrototypeOfTrap(prototypeStorage);
     const setPrototypeOfTrap = new SetPrototypeOfTrap(prototypeStorage);
@@ -69,6 +81,7 @@ export function mockDependenciesFactory<T>(options: IMockOptions<T>): IMockDepen
         options.name,
         getTrap,
         setTrap,
+        hasTrap,
         applyTrap,
         getPrototypeOfTrap,
         setPrototypeOfTrap

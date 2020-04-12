@@ -9,7 +9,7 @@ export class HasPropertyExplorer {
     constructor(
         private presets: Presets<unknown>,
         private membersExplorer: MembersPropertyExplorer,
-        private explorer: PresetHasPropertyExplorer = new PresetHasPropertyExplorer()) {
+        private explorer = new PresetHasPropertyExplorer()) {
 
     }
 

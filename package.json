@@ -1,21 +1,22 @@
 {
   "name": "",
   "version": "0.0.0-semantically-released",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dvabuzyarov/moq.ts"
+  },
   "scripts": {
     "start": "ng serve",
     "build": "ng build moq --prod && cpx README.md ./dist/moq/",
     "build-docs": "tsc -p ./projects/docs/tsconfig.lib.json",
-    "build-releaser": "tsc -p ./projects/releaser/tsconfig.lib.json",
     "build-tests": "tsc -p ./projects/moq/tsconfig.spec.json ",
     "test": "npm run build-tests && node ./out-tsc/**/index.specs.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "commit": "git-cz",
     "commit-retry": "git cz --retry",
-    "semantic-release": "node ./dist/releaser/public_api.js",
     "typedoc": "node ./dist/docs/public_api.js",
-    "serve-docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve",
-    "postpublish": ":> .released && echo .released file has been created"
+    "serve:docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve"
   },
   "private": true,
   "devDependencies": {
@@ -28,6 +29,8 @@
     "@angular/language-service": "9.1.1",
     "@commitlint/cli": "8.3.5",
     "@commitlint/config-conventional": "8.3.4",
+    "@qiwi/semantic-release-gh-pages-plugin": "1.15.10",
+    "@semantic-release/changelog": "^5.0.1",
     "@types/jasmine": "3.5.10",
     "@types/node": "12.12.35",
     "codelyzer": "5.2.2",
@@ -37,15 +40,51 @@
     "jasmine": "3.5.0",
     "jasmine-core": "3.5.0",
     "ng-packagr": "9.1.0",
+    "rxjs": "6.5.4",
     "semantic-release": "17.0.4",
     "serve": "11.3.0",
     "ts-node": "8.8.2",
     "tslint": "6.1.1",
     "typedoc": "0.16.11",
     "typescript": "3.7.5",
-    "rxjs": "6.5.5",
     "zone.js": "0.10.3",
     "tslib": "1.11.1"
+  },
+  "release": {
+    "branches": [
+      {
+        "name": "master"
+      },
+      {
+        "name": "dev",
+        "channel": "next"
+      }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "dist/moq"
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            "CHANGELOG.md"
+          ]
+        }
+      ],
+      "@qiwi/semantic-release-gh-pages-plugin"
+    ]
   },
   "config": {
     "commitizen": {

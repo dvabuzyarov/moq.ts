@@ -14,28 +14,16 @@ script:
   - npm run lint
   - npm run test
   - npm run build-docs
-  - npm run build-releaser
   - npm run build
   - npm run typedoc
 
-after_success:
-  - npm run semantic-release
-
 deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  keep-history: true
-  local-dir: docs
-  verbose: true
-  on:
-    branch: master
-    condition: -e .released
+  provider: script
+  skip_cleanup: true
+  script:
+    - npx semantic-release --dry-run
 
 env:
   global:
     - secure: fEl503u3ijCYu+/oMIo2/ymwvUm22Dg5uBc1gD1l15jPtZouP3cuUm+qEe2XACZLDR25zqx3T9HSZGFR39pWqrAugEHPSRZUJHgQ+ES7KcATkPn8xnRUWKd95FRRbvG3F51iogYAu28xwj2ugf/YfnNSU6WqO1GlGFMlFDe8jmQVwTtydgYKkko7jE55b+rYexDRplrN93qv8mJldPnPoiRGyoSNty+8E586sSp5fm7XLnYk//Bvy7T/ILrb1wq8BNhG/rA4DMxewiZ1/hWgcqp2E4EvRnyCdT7cT5gWsNxYzO/Zf5sYPHQXOZYUjWynYmNViLWynTo8ehBtkP+KlZaJ0gLhgiot/UU87oZZllfM3p5+I6+1SFOPJhp4vcI8nqoYnfRNLMqPgiqg+m/szG2pg62e1jjMROdY50y1D9fKHn9Ki+NbYGRP/EkyNruDzfv5TjEnLpVAGuAOjRAheJ4N8+/a2JzvsVmGKxFvx8RQqq7hPDTEhr/cm74x/zT//oqeeG1FdycWGHemyASRhhLQl7+w4iq1+F4a9PJ63f5nezN1ILivQFO3mxZgBNsx8yvhAUsNfk5n7CTyCCJB1UXdP79PpvVgIECLCDFqEYXw6meptUFOg5K6XoDbCh6C/X/ks+IpabwobUlNUvgzdb5uekwSScO2MprzVzLn218=
     - secure: m6dSfwPRxrmWKpUuMW0jP0z98tdgzzSzpJ/E3pdAscmifDbg7gincYOBgU47ZhRJGfT/4eFoAYlGcAbs6KfCAk9z+GThmzMLbRaui4ZxyLYBmvn+UUehrxKc2AV0Vo4bHwo0K3VzHaiXvDt0HqoWcfB+ekqORzeiUs9XvNNX7fj2cy1KvGnaJd6jUY0XcObpd/ihot/FuY3/jM+LBUsNfQ4eH10yR83gyLf44ZCwuMfSZmj6sQ6Q909rttLPvgRwsrlkFwnscEbeQjGLFOezP85NmJqWnh2LEehEEdOLZ+nnpcb9GM7V87YVsg9sffvNVbr6JwD3tq4yDsEt4PJN4J5pYoJ7dfGSnNGylkMymY60YJhK3wInRS/wNJNbD1MpY7glFggWBTLk0xbrl3ATU3cE43IByLn1BJT/TKe2sPoAynRakyVsNgEpMSY+tfVUiPDdr0JMBwYgyLMTPoaSqIycKVxImEV2wTWDL7LZHtFJ7DWRCR6mUJaHCnHQbk6699hh9Q0DiI/3YtsLQbkj3IEsS80Z6+ti0QZOZMO6iqjY+/7awJ/yJvt9ZH02Ggmf7S5re8axARrtD/tSOF0LuDpOJo09yJo0S4rXXBi+X448PWzZFKGvhjgTe7QY4BUTMYiJjJjRPr1bzXxwkvmcVDdtnPc8Cn7EFb2/JvTyvOA=
-branches:
-  except:
-    - "/^v\\d+\\.\\d+\\.\\d+$/"
