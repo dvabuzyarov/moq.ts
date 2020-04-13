@@ -21,7 +21,7 @@ deploy:
   provider: script
   skip_cleanup: true
   script:
-    - npx semantic-release --dry-run
+    - npx semantic-release
   on:
     tags: false
     all_branches: true
