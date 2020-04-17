@@ -7,11 +7,14 @@ import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-prop
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
 import { SpyFunctionProvider } from "./spy-function.provider";
 import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { Mock } from "../mock";
+import { MoqAPI } from "../moq";
 
 describe("Get trap", () => {
     let resolve: ReturnType<typeof resolveBuilder>;
 
     beforeEach(() => {
+        const mock = jasmine.createSpyObj<Mock<unknown>>("", ["name"]);
         const storage = jasmine.createSpyObj<PropertiesValueStorage>("", ["has", "get"]);
         const tracker = jasmine.createSpyObj<Tracker>("", ["add"]);
         const interactionPlayer = jasmine.createSpyObj<InteractionPlayer>("", ["play"]);
@@ -19,13 +22,14 @@ describe("Get trap", () => {
         const hasMethodExplorer = jasmine.createSpyObj<HasMethodExplorer>("", ["has"]);
         const spyFunctionProvider = jasmine.createSpyObj<SpyFunctionProvider>("", ["get"]);
         resolve = resolveBuilder([
+            [Mock, mock],
             [PropertiesValueStorage, storage],
             [Tracker, tracker],
             [InteractionPlayer, interactionPlayer],
             [HasPropertyExplorer, hasPropertyExplorer],
             [HasMethodExplorer, hasMethodExplorer],
             [SpyFunctionProvider, spyFunctionProvider],
-            [GetTrap, new GetTrap(tracker, storage, interactionPlayer,
+            [GetTrap, new GetTrap(mock, tracker, storage, interactionPlayer,
                 hasPropertyExplorer,
                 hasMethodExplorer,
                 spyFunctionProvider)]
@@ -39,6 +43,20 @@ describe("Get trap", () => {
         trap.intercept(propertyName);
 
         expect(resolve(Tracker).add).toHaveBeenCalledWith(new GetPropertyInteraction(propertyName));
+    });
+
+    it("Tracks get property call for MoqAPI", () => {
+        const trap = resolve(GetTrap);
+        trap.intercept(MoqAPI);
+
+        expect(resolve(Tracker).add).toHaveBeenCalledWith(new GetPropertyInteraction(MoqAPI));
+    });
+
+    it("Returns MoqAPI", () => {
+        const trap = resolve(GetTrap);
+        const actual = trap.intercept(MoqAPI);
+
+        expect(actual).toBe(resolve(Mock));
     });
 
     it("Returns value from property values storage", () => {

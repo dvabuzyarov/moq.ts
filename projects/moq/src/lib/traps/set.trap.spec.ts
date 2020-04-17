@@ -4,6 +4,7 @@ import { PropertiesValueStorage } from "./properties-value.storage";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { SetTrap } from "./set.trap";
 import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { MoqAPI } from "../moq";
 
 describe("Set trap", () => {
     let resolve: ReturnType<typeof resolveBuilder>;
@@ -28,6 +29,15 @@ describe("Set trap", () => {
         trap.intercept(undefined, propertyName, value);
 
         expect(resolve(Tracker).add).toHaveBeenCalledWith(new SetPropertyInteraction(propertyName, value));
+    });
+
+    it("Tracks set MoqAPI call", () => {
+        const value = "value";
+
+        const trap = get();
+        trap.intercept(undefined, MoqAPI, value);
+
+        expect(resolve(Tracker).add).toHaveBeenCalledWith(new SetPropertyInteraction(MoqAPI, value));
     });
 
     it("Assigns new value to property when interaction returns true", () => {
@@ -69,6 +79,15 @@ describe("Set trap", () => {
         expect(resolve(PropertiesValueStorage).set).not.toHaveBeenCalledWith(propertyName, value);
     });
 
+    it("Does not assign the value to MoqAPI property", () => {
+        const value = "value";
+
+        const trap = get();
+        trap.intercept(undefined, MoqAPI, value);
+
+        expect(resolve(PropertiesValueStorage).set).not.toHaveBeenCalledWith(MoqAPI, value);
+    });
+
     it("Returns true when interaction returns undefined", () => {
         const value = "value";
         const propertyName = "property name";
@@ -104,6 +123,16 @@ describe("Set trap", () => {
             .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(false);
 
         const actual = trap.intercept(undefined, propertyName, value);
+
+        expect(actual).toBe(false);
+    });
+
+    it("Returns false when property is MoqAPI", () => {
+        const value = "value";
+
+        const trap = get();
+
+        const actual = trap.intercept(undefined, MoqAPI, value);
 
         expect(actual).toBe(false);
     });

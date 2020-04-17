@@ -261,3 +261,26 @@ export interface ISequenceVerifier {
 
     verify(times?: Times): void;
 }
+
+/**
+ * A mock object exposes a symbol property to access to its Moq API.
+ * This property is read only and trackable.
+ * Since this property makes sense only in context of the moq library
+ * and is not specific for mocked types it is not possible to define an interaction behaviour with Setup API.
+ *
+ * @example
+ * ```typescript
+ *
+ *  const mock = new Mock<() => void>()
+ *  .object();
+ *
+ *  mock[MoqAPI]
+ *  .setup(instance => instance())
+ *  .returns(12);
+ *
+ *  const actual = mock();
+ *
+ *  expect(actual).toBe(12);
+ * ```
+ */
+export const MoqAPI = Symbol("MoqAPI");

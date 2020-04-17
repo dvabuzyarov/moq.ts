@@ -5,12 +5,15 @@ import { SpyFunctionProvider } from "./spy-function.provider";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
+import { Mock } from "../mock";
+import { MoqAPI } from "../moq";
 
 /**
  * @hidden
  */
 export class GetTrap {
     constructor(
+        private mock: Mock<unknown>,
         private tracker: Tracker,
         private propertiesValueStorage: PropertiesValueStorage,
         private interactionPlayer: InteractionPlayer,
@@ -24,6 +27,10 @@ export class GetTrap {
         const interaction = new GetPropertyInteraction(property);
 
         this.tracker.add(interaction);
+
+        if (property === MoqAPI) {
+            return this.mock;
+        }
 
         if (this.propertiesValueStorage.has(property)) {
             return this.propertiesValueStorage.get(property);
