@@ -1,15 +1,21 @@
-﻿import {SetPropertyInteraction} from "../interactions";
-import {SetPropertyExpressionMatcher} from "./set.property-matcher";
-import {ExpectedSetPropertyExpression} from "../expected-expressions/expected-expressions";
-import {ConstantMatcher} from "./constant-matcher";
-import {It} from "../expected-expressions/expression-predicates";
+﻿import { SetPropertyInteraction } from "../interactions";
+import { SetPropertyExpressionMatcher } from "./set.property-matcher";
+import { ExpectedSetPropertyExpression } from "../expected-expressions/expected-expressions";
+import { ConstantMatcher } from "./constant-matcher";
+import { It } from "../expected-expressions/expression-predicates";
+import { resolveBuilder } from "../../tests.components/resolve.builder";
+
 describe("Set property expression matcher", () => {
 
-    function constantMatcherFactory(matched?: (left: any, right: any|It<any>) => boolean): ConstantMatcher {
-        return {
-            matched: matched
-        };
-    }
+    let resolve: ReturnType<typeof resolveBuilder>;
+
+    beforeEach(() => {
+        const constantMatcher = jasmine.createSpyObj<ConstantMatcher>("", ["matched"]);
+        resolve = resolveBuilder([
+            [ConstantMatcher, constantMatcher],
+            [SetPropertyExpressionMatcher, new SetPropertyExpressionMatcher(constantMatcher)]
+        ]);
+    });
 
     it("Returns true when they are equal", () => {
         const name = "name";
@@ -17,13 +23,10 @@ describe("Set property expression matcher", () => {
         const left = new SetPropertyInteraction(name, value);
         const right = new ExpectedSetPropertyExpression(name, value);
 
-        const constantMatcher = constantMatcherFactory((leftArg: any, rightArg: any|It<any>): boolean => {
-            expect(leftArg).toBe(value);
-            expect(rightArg).toBe(value);
-            return true;
-        });
+        resolve(ConstantMatcher)
+            .matched.withArgs(value, value).and.returnValue(true);
 
-        const matcher = new SetPropertyExpressionMatcher(constantMatcher);
+        const matcher = resolve(SetPropertyExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -37,7 +40,7 @@ describe("Set property expression matcher", () => {
             return true;
         });
 
-        const matcher = new SetPropertyExpressionMatcher(undefined);
+        const matcher = resolve(SetPropertyExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -48,13 +51,10 @@ describe("Set property expression matcher", () => {
         const left = new SetPropertyInteraction("left name", value);
         const right = new ExpectedSetPropertyExpression("right name", value);
 
-        const constantMatcher = constantMatcherFactory((leftArg: any, rightArg: any|It<any>): boolean => {
-            expect(leftArg).toBe(value);
-            expect(rightArg).toBe(value);
-            return true;
-        });
+        resolve(ConstantMatcher)
+            .matched.withArgs(left, right).and.returnValue(true);
 
-        const matcher = new SetPropertyExpressionMatcher(constantMatcher);
+        const matcher = resolve(SetPropertyExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -68,13 +68,10 @@ describe("Set property expression matcher", () => {
         const left = new SetPropertyInteraction(name, leftValue);
         const right = new ExpectedSetPropertyExpression(name, rightValue);
 
-        const constantMatcher = constantMatcherFactory((leftArg: any, rightArg: any|It<any>): boolean => {
-            expect(leftArg).toBe(leftValue);
-            expect(rightArg).toBe(rightValue);
-            return false;
-        });
+        resolve(ConstantMatcher)
+            .matched.withArgs(leftValue, rightValue).and.returnValue(false);
 
-        const matcher = new SetPropertyExpressionMatcher(constantMatcher);
+        const matcher = resolve(SetPropertyExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -87,7 +84,7 @@ describe("Set property expression matcher", () => {
             return false;
         });
 
-        const matcher = new SetPropertyExpressionMatcher(undefined);
+        const matcher = resolve(SetPropertyExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);

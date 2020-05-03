@@ -1,38 +1,42 @@
-import {ConstantMatcher} from "./constant-matcher";
-import {It} from "../expected-expressions/expression-predicates";
+import { ConstantMatcher } from "./constant-matcher";
+import { It } from "../expected-expressions/expression-predicates";
+import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { EqualMatcher } from "../equal-matchers/equal.matcher";
 
 describe("Constant matcher", () => {
+    let resolve: ReturnType<typeof resolveBuilder>;
 
-    it("Returns true when both are undefined", () => {
-        const left = undefined;
-        const right = undefined;
+    beforeEach(() => {
+        const equalMatcher = jasmine.createSpyObj<EqualMatcher>("", ["matched"]);
+        resolve = resolveBuilder([
+            [EqualMatcher, equalMatcher],
+            [ConstantMatcher, new ConstantMatcher(equalMatcher)]
+        ]);
+    });
 
-        const matcher = new ConstantMatcher();
+    it("Returns true when equal matcher returns true", () => {
+        const left = {};
+        const right = {};
+        resolve(EqualMatcher)
+            .matched.withArgs(left, right).and.returnValue(true);
+
+        const matcher = resolve(ConstantMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
     });
 
-    it("Returns true when both are null", () => {
-        const left = null;
-        const right = null;
+    it("Returns false when equal matcher returns false", () => {
+        const left = {};
+        const right = {};
+        resolve(EqualMatcher)
+            .matched.withArgs(left, right).and.returnValue(false);
 
-        const matcher = new ConstantMatcher();
+        const matcher = resolve(ConstantMatcher);
         const actual = matcher.matched(left, right);
 
-        expect(actual).toBe(true);
+        expect(actual).toBe(false);
     });
-
-    it("Returns true when both are the same value", () => {
-        const left = 1;
-        const right = 1;
-
-        const matcher = new ConstantMatcher();
-        const actual = matcher.matched(left, right);
-
-        expect(actual).toBe(true);
-    });
-
 
     it("Returns true when right is a predicate that returns true", () => {
         const left = "left";
@@ -41,23 +45,11 @@ describe("Constant matcher", () => {
             return true;
         });
 
-        const matcher = new ConstantMatcher();
+        const matcher = resolve(ConstantMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
     });
-
-
-    it("Returns false when left and right are object", () => {
-        const left = {};
-        const right = {};
-
-        const matcher = new ConstantMatcher();
-        const actual = matcher.matched(left, right);
-
-        expect(actual).toBe(false);
-    });
-
 
     it("Returns false when right is a predicate that returns false", () => {
         const left = "left";
@@ -66,7 +58,7 @@ describe("Constant matcher", () => {
             return false;
         });
 
-        const matcher = new ConstantMatcher();
+        const matcher = resolve(ConstantMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);

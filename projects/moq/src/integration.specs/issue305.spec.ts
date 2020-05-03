@@ -16,17 +16,16 @@ export class FunctionMock<T extends Function> extends Mock<T> {
     }
 }
 
-describe("#305 spike for apply on functions", () => {
+xdescribe("#305 spike for apply on functions", () => {
     it("the bug", () => {
         type IAdd = (a: number, b: number) => number;
-        const add: IAdd = (a, b) => a + b;
 
         const app = (addFn: IAdd) => {
             return addFn.apply(null, [1, 2]);
         };
 
-        const mock = new FunctionMock<IAdd>()
-            .setup(instance => instance(1, 2))
+        const mock = new Mock<IAdd>()
+            .setup(instance => instance.apply(null, [1, 2]))
             .returns(3);
 
         expect(app(mock.object())).toBe(3);

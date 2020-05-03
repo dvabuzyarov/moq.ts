@@ -2,6 +2,7 @@ import { IExpectedExpression } from "./expected-expressions/expected-expression-
 import { Tracker } from "./tracker";
 import { Times } from "./times";
 import { Interaction } from "./interactions";
+import { ConstantMatcher } from "./expression-matchers/constant-matcher";
 
 /**
  * Mock creation options
@@ -18,6 +19,7 @@ export interface IMockOptions<T> {
      * The default value is a function.
      */
     target?: T;
+    matchers?: IMatcher<any>[];
 }
 
 export const enum PlayableUpdateReason {
@@ -284,3 +286,10 @@ export interface ISequenceVerifier {
  * ```
  */
 export const MoqAPI = Symbol("MoqAPI");
+
+
+export interface IMatcher<T> {
+    matched(left: T, right: T): boolean | undefined;
+}
+
+export type IMatcherConstructor<T> = new(matcher: ConstantMatcher) => IMatcher<T>;

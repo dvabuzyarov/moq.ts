@@ -1,15 +1,14 @@
 import { ExpectedSetPropertyExpression } from "../expected-expressions/expected-expressions";
 import { SetPropertyInteraction } from "../interactions";
 import { It } from "../expected-expressions/expression-predicates";
-import { ConstantMatcher } from "./constant-matcher";
+import { ConstantMatcherFactory } from "./constant.matcher.factory";
 
 /**
  * @hidden
  */
 export class SetPropertyExpressionMatcher {
 
-    constructor(private constantMatcher: ConstantMatcher = new ConstantMatcher()) {
-
+    constructor(private constantMatcher = new ConstantMatcherFactory().create()) {
     }
 
     public matched(left: SetPropertyInteraction, right: ExpectedSetPropertyExpression | It<any>): boolean {

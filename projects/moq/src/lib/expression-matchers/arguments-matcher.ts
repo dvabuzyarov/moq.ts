@@ -1,24 +1,26 @@
-import {It} from "../expected-expressions/expression-predicates";
-import {ConstantMatcher} from "./constant-matcher";
+import { It } from "../expected-expressions/expression-predicates";
+import { ConstantMatcher } from "./constant-matcher";
 
 /**
  * @hidden
  */
-export class ArgumentsMatcher  {
-    constructor(private constantMatcher: ConstantMatcher = new ConstantMatcher()) {
+export class ArgumentsMatcher {
+    constructor(private constantMatcher = new ConstantMatcher()) {
 
     }
 
-    public matched(left: any[], right: (any|It<any>)[]): boolean {
+    public matched(left: any[], right: (any | It<any>)[]): boolean {
         if (left === right) return true;
         if (left.length !== right.length) return false;
 
-        let matched = true;
-        left.forEach((lvalue, index) => {
-            const rvalue = right[index];
-            matched = this.constantMatcher.matched(lvalue, rvalue) === true ? matched : false;
-        });
+        for (let i = 0; i < left.length; i++) {
+            const lvalue = left[i];
+            const rvalue = right[i];
+            if (this.constantMatcher.matched(lvalue, rvalue) === false) {
+                return false;
+            }
+        }
 
-        return matched;
+        return true;
     }
 }

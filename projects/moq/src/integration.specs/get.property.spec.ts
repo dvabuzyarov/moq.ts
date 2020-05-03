@@ -26,7 +26,7 @@ describe("Mock: Get property", () => {
         const value = "value";
 
         const object = new Mock<ITestObject>()
-            .setup(instance => It.Is((expression: ExpectedGetPropertyExpression) => expression.name === "property"))
+            .setup(() => It.Is((expression: ExpectedGetPropertyExpression) => expression.name === "property"))
             .returns(value)
             .object();
 
@@ -34,7 +34,6 @@ describe("Mock: Get property", () => {
     });
 
     it("Returns undefined for unset property", () => {
-        const value = "value";
         const object = new Mock<ITestObject>()
             .object();
 

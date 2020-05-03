@@ -1,19 +1,24 @@
-import {ArgumentsMatcher} from "./arguments-matcher";
-import {ConstantMatcher} from "./constant-matcher";
+import { ArgumentsMatcher } from "./arguments-matcher";
+import { ConstantMatcher } from "./constant-matcher";
+import { resolveBuilder } from "../../tests.components/resolve.builder";
 
 describe("Arguments matcher", () => {
 
-    function constantMatcherFactory(matched?: (left, right) => boolean): ConstantMatcher {
-        return {
-            matched: matched
-        };
-    }
+    let resolve: ReturnType<typeof resolveBuilder>;
+
+    beforeEach(() => {
+        const constantMatcher = jasmine.createSpyObj<ConstantMatcher>("", ["matched"]);
+        resolve = resolveBuilder([
+            [ConstantMatcher, constantMatcher],
+            [ArgumentsMatcher, new ArgumentsMatcher(constantMatcher)]
+        ]);
+    });
 
     it("Returns true when both are undefined", () => {
         const left = undefined;
         const right = undefined;
 
-        const matcher = new ArgumentsMatcher(constantMatcherFactory());
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -23,7 +28,7 @@ describe("Arguments matcher", () => {
         const left = null;
         const right = null;
 
-        const matcher = new ArgumentsMatcher(constantMatcherFactory());
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -32,7 +37,7 @@ describe("Arguments matcher", () => {
     it("Returns true when both are same object", () => {
         const value = [];
 
-        const matcher = new ArgumentsMatcher(constantMatcherFactory());
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched(value, value);
 
         expect(actual).toBe(true);
@@ -42,13 +47,10 @@ describe("Arguments matcher", () => {
         const left = "left value";
         const right = "right value";
 
-        const matched = (lvalue, rvalue): boolean => {
-            expect(lvalue).toBe(left);
-            expect(rvalue).toBe(right);
-            return true;
-        };
+        resolve(ConstantMatcher)
+            .matched.withArgs(left, right).and.returnValue(true);
 
-        const matcher = new ArgumentsMatcher(constantMatcherFactory(matched));
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched([left], [right]);
 
         expect(actual).toBe(true);
@@ -59,7 +61,7 @@ describe("Arguments matcher", () => {
         const left = [];
         const right = [1];
 
-        const matcher = new ArgumentsMatcher(constantMatcherFactory());
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -71,11 +73,10 @@ describe("Arguments matcher", () => {
         const left = "left value";
         const right = "right value";
 
-        const matched = (lvalue, rvalue): boolean => {
-            return  lvalue === rvalue;
-        };
+        resolve(ConstantMatcher)
+            .matched.and.returnValue(false);
 
-        const matcher = new ArgumentsMatcher(constantMatcherFactory(matched));
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched([value, left], [value, right]);
 
         expect(actual).toBe(false);
