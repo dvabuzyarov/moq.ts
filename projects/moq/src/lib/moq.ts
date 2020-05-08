@@ -1,7 +1,7 @@
 import { IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
-import { Tracker } from "./tracker";
 import { Times } from "./times";
 import { Interaction } from "./interactions";
+import { Tracker } from "./tracker/tracker";
 
 /**
  * Mock creation options

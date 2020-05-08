@@ -26,11 +26,11 @@ import { InOperatorMatcher } from "./in-operator.matcher";
  */
 export class ExpressionMatcher {
 
-    constructor(private getPropertyExpressionMatcher = new GetPropertyExpressionMatcher(),
-                private setPropertyExpressionMatcher = new SetPropertyExpressionMatcher(),
-                private methodExpressionMatcher = new MethodExpressionMatcher(),
-                private namedMethodExpressionMatcher = new NamedMethodExpressionMatcher(),
-                private inOperatorExpressionMatcher = new InOperatorMatcher()) {
+    constructor(private getPropertyExpressionMatcher: GetPropertyExpressionMatcher,
+                private setPropertyExpressionMatcher: SetPropertyExpressionMatcher,
+                private methodExpressionMatcher: MethodExpressionMatcher,
+                private namedMethodExpressionMatcher: NamedMethodExpressionMatcher,
+                private inOperatorExpressionMatcher: InOperatorMatcher) {
 
     }
 

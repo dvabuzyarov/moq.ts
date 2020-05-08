@@ -1,4 +1,4 @@
-import { IPreset } from "../../presets/preset";
+import { IPreset } from "../../presets/presets/preset";
 import { InOperatorInteraction } from "../../interactions";
 import { ExpectedInOperatorExpression } from "../../expected-expressions/expected-expressions";
 import { It } from "../../expected-expressions/expression-predicates";

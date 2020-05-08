@@ -7,8 +7,8 @@ import { PropertyKeyFormatter } from "./property-key.formatter";
  */
 export class NamedMethodExpressionFormatter {
 
-    constructor(private constantFormatter: ConstantFormatter = new ConstantFormatter(),
-                private propertyKeyFormatter: PropertyKeyFormatter = new PropertyKeyFormatter()) {
+    constructor(private constantFormatter: ConstantFormatter,
+                private propertyKeyFormatter: PropertyKeyFormatter) {
 
     }
 

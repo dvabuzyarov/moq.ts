@@ -1,13 +1,15 @@
 import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
-import { Interceptor } from "./interceptor";
+import { ProxyFactory } from "./interceptors/proxy.factory";
 import { IMock, IMockOptions, IPresetBuilder, ISequenceVerifier } from "./moq";
 import { Times } from "./times";
-import { Tracker } from "./tracker";
-import { Verifier } from "./verifier";
+import { Tracker } from "./tracker/tracker";
+import { Verifier } from "./verification/verifier";
 import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
-import { mockDependenciesFactory } from "./mock-dependencies.factory";
-import { buildMockOptions } from "./build-mock-options";
-import { PrototypeStorage } from "./traps/prototype.storage";
+import { PrototypeStorage } from "./interceptors/prototype.storage";
+import { injectorFactory } from "./injector.factory";
+import { MOCK } from "./moq.injection-token";
+import { MOCK_OPTIONS } from "./mock-options/mock-options.injection-token";
+import { PRESET_BUILDER_FACTORY } from "./presets/preset-builder-factory.injection-token";
 
 /**
  * The default implementation of {@link IMock} interface.
@@ -15,20 +17,20 @@ import { PrototypeStorage } from "./traps/prototype.storage";
 export class Mock<T> implements IMock<T> {
     public readonly tracker: Tracker;
     private expressionReflector: ExpectedExpressionReflector;
-    private interceptor: Interceptor<T>;
+    private interceptor: ProxyFactory<T>;
     private readonly setupFactory: (target: ExpectedExpressions<T>) => IPresetBuilder<T>;
     private verifier: Verifier<T>;
     private prototypeStorage: PrototypeStorage;
 
     constructor(private readonly options: IMockOptions<T> = {}) {
-        this.options = buildMockOptions(options);
-        const dependencies = mockDependenciesFactory<T>(this.options, this);
-        this.tracker = dependencies.tracker;
-        this.expressionReflector = dependencies.expressionReflector;
-        this.interceptor = dependencies.interceptor;
-        this.setupFactory = dependencies.presetBuilderFactory;
-        this.verifier = dependencies.verifier;
-        this.prototypeStorage = dependencies.prototypeStorage;
+        const injector = injectorFactory({provide: MOCK, useValue: this, deps: []}, options);
+        this.options = injector.get(MOCK_OPTIONS);
+        this.tracker = injector.get(Tracker);
+        this.expressionReflector = injector.get(ExpectedExpressionReflector);
+        this.interceptor = injector.get(ProxyFactory);
+        this.setupFactory = injector.get(PRESET_BUILDER_FACTORY);
+        this.verifier = injector.get(Verifier);
+        this.prototypeStorage = injector.get(PrototypeStorage);
     }
 
     public get name() {
@@ -64,4 +66,3 @@ export class Mock<T> implements IMock<T> {
         return this;
     }
 }
-

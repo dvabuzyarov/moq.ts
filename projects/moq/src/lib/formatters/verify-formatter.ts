@@ -9,9 +9,8 @@ import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
 export class VerifyFormatter {
 
     constructor(
-        private expectedExpressionFormatter: ExpectedExpressionFormatter = new ExpectedExpressionFormatter(),
-        private trackedExpressionsFormatter: TrackedExpressionsFormatter = new TrackedExpressionsFormatter()) {
-
+        private expectedExpressionFormatter: ExpectedExpressionFormatter,
+        private trackedExpressionsFormatter: TrackedExpressionsFormatter) {
     }
 
     public format(

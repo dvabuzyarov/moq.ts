@@ -8,7 +8,7 @@ import { ConstantMatcher } from "./constant-matcher";
  */
 export class SetPropertyExpressionMatcher {
 
-    constructor(private constantMatcher: ConstantMatcher = new ConstantMatcher()) {
+    constructor(private constantMatcher: ConstantMatcher) {
 
     }
 

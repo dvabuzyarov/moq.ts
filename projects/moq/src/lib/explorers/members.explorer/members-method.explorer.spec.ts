@@ -1,14 +1,23 @@
-import { resolveBuilder } from "../../../tests.components/resolve.builder";
-import { PrototypeStorage } from "../../traps/prototype.storage";
+import { createInjector, resolve } from "../../../tests.components/resolve.builder";
+import { PrototypeStorage } from "../../interceptors/prototype.storage";
 import { MembersMethodExplorer } from "./members-method.explorer";
+import { PropertyDescriptorProvider } from "./property-descriptor.provider";
+import { REFLECT_HAS } from "../reflect-has.injection-token";
 
 describe("Members method explorer", () => {
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
         const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>(["get"]);
-        resolve = resolveBuilder([
-            [PrototypeStorage, prototypeStorage]
+        const propertyDescriptorProvider = jasmine.createSpyObj<PropertyDescriptorProvider>(["get"]);
+        const reflectHas = jasmine.createSpy<typeof Reflect.has>("Reflect.has");
+        createInjector([
+            {
+                provide: MembersMethodExplorer,
+                useClass: MembersMethodExplorer,
+                deps: [PrototypeStorage, PropertyDescriptorProvider, REFLECT_HAS]
+            },
+            {provide: PrototypeStorage, useValue: prototypeStorage, deps: []},
+            {provide: PropertyDescriptorProvider, useValue: propertyDescriptorProvider, deps: []},
+            {provide: REFLECT_HAS, useValue: reflectHas, deps: []},
         ]);
     });
 
@@ -17,7 +26,7 @@ describe("Members method explorer", () => {
         resolve(PrototypeStorage)
             .get.and.returnValue(null);
 
-        const explorer = new MembersMethodExplorer(resolve(PrototypeStorage));
+        const explorer = resolve(MembersMethodExplorer);
         const actual = explorer.hasMethod(name);
 
         expect(actual).toBe(false);
@@ -28,68 +37,45 @@ describe("Members method explorer", () => {
         resolve(PrototypeStorage)
             .get.and.returnValue(undefined);
 
-        const explorer = new MembersMethodExplorer(resolve(PrototypeStorage));
+        const explorer = resolve(MembersMethodExplorer);
         const actual = explorer.hasMethod(name);
 
         expect(actual).toBe(false);
     });
 
-    it("Returns true when there is a method", () => {
+    it("Returns false when there is no property", () => {
         const name = "name";
+        const prototype = {};
         resolve(PrototypeStorage)
-            .get.and.returnValue({name: () => undefined});
+            .get.and.returnValue(prototype);
+        resolve(REFLECT_HAS)
+            .withArgs(prototype, name)
+            .and.returnValue(false);
 
-        const explorer = new MembersMethodExplorer(resolve(PrototypeStorage));
+        const explorer = resolve(MembersMethodExplorer);
+        const actual = explorer.hasMethod(name);
+
+        expect(actual).toBe(false);
+    });
+
+    it("Returns true when there is a property and it is a function", () => {
+        const name = "name";
+        const prototype = {};
+
+        resolve(PrototypeStorage)
+            .get.and.returnValue(prototype);
+
+        resolve(REFLECT_HAS)
+            .withArgs(prototype, name)
+            .and.returnValue(true);
+
+        resolve(PropertyDescriptorProvider)
+            .get.withArgs(prototype, name)
+            .and.returnValue({value: () => undefined});
+
+        const explorer = resolve(MembersMethodExplorer);
         const actual = explorer.hasMethod(name);
 
         expect(actual).toBe(true);
-    });
-
-    it("Returns true when there is a method in prototype chain", () => {
-        const name = "name";
-        resolve(PrototypeStorage)
-            .get.and.returnValue(Object.create({name: () => undefined}));
-
-        const explorer = new MembersMethodExplorer(resolve(PrototypeStorage));
-        const actual = explorer.hasMethod(name);
-
-        expect(actual).toBe(true);
-    });
-
-    it("Returns false when there is a get property", () => {
-        const name = "name";
-        resolve(PrototypeStorage)
-            .get.and.returnValue({
-            get name() {
-                throw new Error("Not Implemented");
-            }
-        });
-
-        const explorer = new MembersMethodExplorer(resolve(PrototypeStorage));
-        const actual = explorer.hasMethod(name);
-
-        expect(actual).toBe(false);
-    });
-
-    it("Returns false when there is no method with this name", () => {
-        const name = "name";
-        resolve(PrototypeStorage)
-            .get.and.returnValue({name1: () => undefined});
-
-        const explorer = new MembersMethodExplorer(resolve(PrototypeStorage));
-        const actual = explorer.hasMethod(name);
-
-        expect(actual).toBe(false);
-    });
-
-    it("Returns false when there is no method", () => {
-        const name = "name";
-        resolve(PrototypeStorage)
-            .get.and.returnValue({});
-
-        const explorer = new MembersMethodExplorer(resolve(PrototypeStorage));
-        const actual = explorer.hasMethod(name);
-
-        expect(actual).toBe(false);
     });
 });

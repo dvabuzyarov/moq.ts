@@ -1,14 +1,14 @@
-import {ArgumentsMatcher} from "./arguments-matcher";
-import {MethodInteraction} from "../interactions";
-import {ExpectedMethodExpression} from "../expected-expressions/expected-expressions";
-import {It} from "../expected-expressions/expression-predicates";
+import { ArgumentsMatcher } from "./arguments-matcher";
+import { MethodInteraction } from "../interactions";
+import { ExpectedMethodExpression } from "../expected-expressions/expected-expressions";
+import { It } from "../expected-expressions/expression-predicates";
 
 /**
  * @hidden
  */
 export class MethodExpressionMatcher {
 
-    constructor(private argumentsMatcher: ArgumentsMatcher = new ArgumentsMatcher()) {
+    constructor(private argumentsMatcher: ArgumentsMatcher) {
 
     }
 

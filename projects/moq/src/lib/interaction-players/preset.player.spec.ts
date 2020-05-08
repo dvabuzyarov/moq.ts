@@ -1,23 +1,21 @@
 import { Interaction } from "../interactions";
 import { PresetPlayer } from "./preset.player";
-import { ReturnsPreset } from "../presets/returns.preset";
-import { CallbacksPreset } from "../presets/callbacks.preset";
+import { ReturnsPreset } from "../presets/presets/returns.preset";
+import { CallbacksPreset } from "../presets/presets/callbacks.preset";
 import { CallbackPresetPlayer } from "./callback-preset.player";
-import { ThrowsPreset } from "../presets/throws.preset";
-import { MimicsPreset } from "../presets/mimics.preset";
+import { ThrowsPreset } from "../presets/presets/throws.preset";
+import { MimicsPreset } from "../presets/presets/mimics.preset";
 import { MimicsPresetPlayer } from "./mimics-preset.player";
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 
 describe("Preset player", () => {
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
         const callbackPlayer = jasmine.createSpyObj<CallbackPresetPlayer>("", ["play"]);
         const mimicsPlayer = jasmine.createSpyObj<MimicsPresetPlayer>("", ["play"]);
-        resolve = resolveBuilder([
-            [CallbackPresetPlayer, callbackPlayer],
-            [MimicsPresetPlayer, mimicsPlayer],
-            [PresetPlayer, new PresetPlayer(callbackPlayer, mimicsPlayer)]
+        createInjector([
+            {provide: CallbackPresetPlayer, useValue: callbackPlayer, deps: []},
+            {provide: MimicsPresetPlayer, useValue: mimicsPlayer, deps: []},
+            {provide: PresetPlayer, useClass: PresetPlayer, deps: [CallbackPresetPlayer, MimicsPresetPlayer]},
         ]);
     });
 

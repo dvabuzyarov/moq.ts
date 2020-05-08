@@ -1,23 +1,22 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
 import { Interaction } from "../interactions";
-import { Presets } from "../preset/presets";
+import { Presets } from "../presets/presets";
 import { PlayablePresetProvider } from "./playable-preset.provider";
-import { IPreset } from "../presets/preset";
-import { resolveBuilder, SpiedObject } from "../../tests.components/resolve.builder";
+import { IPreset } from "../presets/presets/preset";
+import { createInjector, resolve, SpiedObject } from "../../tests.components/resolve.builder";
 import { IPlayable } from "../moq";
 
 describe("Playable preset provider", () => {
-    let resolve: ReturnType<typeof resolveBuilder>;
 
     beforeEach(() => {
         const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
         const matcher = jasmine.createSpyObj<ExpressionMatcher>(["matched"]);
 
-        resolve = resolveBuilder([
-            [Presets, presets],
-            [ExpressionMatcher, matcher],
-            [PlayablePresetProvider, new PlayablePresetProvider(presets, matcher)]
+        createInjector([
+            {provide: Presets, useValue: presets, deps: []},
+            {provide: ExpressionMatcher, useValue: matcher, deps: []},
+            {provide: PlayablePresetProvider, useClass: PlayablePresetProvider, deps: [Presets, ExpressionMatcher]},
         ]);
     });
 
