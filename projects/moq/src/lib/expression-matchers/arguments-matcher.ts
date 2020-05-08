@@ -4,8 +4,8 @@ import { ConstantMatcher } from "./constant-matcher";
 /**
  * @hidden
  */
-export class ArgumentsMatcher {
-    constructor(private constantMatcher = new ConstantMatcher()) {
+export class ArgumentsMatcher  {
+    constructor(private constantMatcher: ConstantMatcher) {
 
     }
 

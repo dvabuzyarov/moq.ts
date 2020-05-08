@@ -6,7 +6,7 @@ import { ConstantFormatter } from "./constant-formatter";
  */
 export class MethodExpressionFormatter {
 
-    constructor(private constantFormatter: ConstantFormatter = new ConstantFormatter()) {
+    constructor(private constantFormatter: ConstantFormatter) {
 
     }
 

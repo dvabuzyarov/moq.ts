@@ -1,22 +1,24 @@
 import { HasPropertyExplorer } from "./has-property.explorer";
 import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
-import { IPreset } from "../../presets/preset";
-import { Presets } from "../../preset/presets";
-import { resolveBuilder } from "../../../tests.components/resolve.builder";
+import { IPreset } from "../../presets/presets/preset";
+import { Presets } from "../../presets/presets";
+import { createInjector, resolve } from "../../../tests.components/resolve.builder";
 import { MembersPropertyExplorer } from "../members.explorer/members-property.explorer";
 
 describe("Has property explorer", () => {
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
         const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
         const presetExplorer = jasmine.createSpyObj<PresetHasPropertyExplorer>("", ["has"]);
         const membersExplorer = jasmine.createSpyObj<MembersPropertyExplorer>("", ["hasProperty"]);
-        resolve = resolveBuilder([
-            [Presets, presets],
-            [PresetHasPropertyExplorer, presetExplorer],
-            [MembersPropertyExplorer, membersExplorer],
-            [HasPropertyExplorer, new HasPropertyExplorer(presets, membersExplorer, presetExplorer)]
+        createInjector([
+            {provide: Presets, useValue: presets, deps: []},
+            {provide: PresetHasPropertyExplorer, useValue: presetExplorer, deps: []},
+            {provide: MembersPropertyExplorer, useValue: membersExplorer, deps: []},
+            {
+                provide: HasPropertyExplorer,
+                useClass: HasPropertyExplorer,
+                deps: [Presets, MembersPropertyExplorer, PresetHasPropertyExplorer]
+            },
         ]);
     });
 

@@ -1,7 +1,7 @@
-import { IPreset } from "../presets/preset";
+import { IPreset } from "../presets/presets/preset";
 import { Interaction } from "../interactions";
 import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
-import { Presets } from "../preset/presets";
+import { Presets } from "../presets/presets";
 import { PlayableUpdateReason } from "../moq";
 
 /**
@@ -11,7 +11,7 @@ export class PresetPlayablesUpdater {
 
     constructor(
         private presets: Presets<unknown>,
-        private matcher = new ExpressionMatcher()) {
+        private matcher: ExpressionMatcher) {
 
     }
 

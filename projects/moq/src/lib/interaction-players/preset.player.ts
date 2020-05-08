@@ -1,19 +1,19 @@
-import { IPreset } from "../presets/preset";
+import { IPreset } from "../presets/presets/preset";
 import { Interaction } from "../interactions";
-import { ReturnsPreset } from "../presets/returns.preset";
+import { ReturnsPreset } from "../presets/presets/returns.preset";
 import { CallbackPresetPlayer } from "./callback-preset.player";
-import { CallbacksPreset } from "../presets/callbacks.preset";
-import { ThrowsPreset } from "../presets/throws.preset";
+import { CallbacksPreset } from "../presets/presets/callbacks.preset";
+import { ThrowsPreset } from "../presets/presets/throws.preset";
 import { MimicsPresetPlayer } from "./mimics-preset.player";
-import { MimicsPreset } from "../presets/mimics.preset";
+import { MimicsPreset } from "../presets/presets/mimics.preset";
 
 /**
  * @hidden
  */
 export class PresetPlayer {
     constructor(
-        private callbackPresetPlayer = new CallbackPresetPlayer(),
-        private mimicsPresetPlayer = new MimicsPresetPlayer()) {
+        private callbackPresetPlayer: CallbackPresetPlayer,
+        private mimicsPresetPlayer: MimicsPresetPlayer) {
 
     }
 

@@ -1,14 +1,13 @@
-import { Mock } from "../lib/mock";
 import { It } from "../lib/expected-expressions/expression-predicates";
 import { ExpectedGetPropertyExpression } from "../lib/expected-expressions/expected-expressions";
 import { Times } from "../lib/times";
+import { Mock } from "../lib/mock";
 
 interface ITestObject {
     property: string;
 }
 
 describe("Mock: Get property", () => {
-
 
     it("Returns value with a simple setup", () => {
         const value = "value";

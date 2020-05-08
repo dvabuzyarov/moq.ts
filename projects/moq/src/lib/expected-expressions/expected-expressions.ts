@@ -7,6 +7,7 @@ import {
     SetPropertyInteraction
 } from "../interactions";
 
+// todo: check if could be renamed in expressions
 /**
  * See {@link NamedMethodInteraction}
  */

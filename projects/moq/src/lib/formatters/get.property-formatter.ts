@@ -5,7 +5,7 @@ import { PropertyKeyFormatter } from "./property-key.formatter";
  * @hidden
  */
 export class GetPropertyExpressionFormatter {
-    constructor(private propertyKeyFormatter: PropertyKeyFormatter = new PropertyKeyFormatter()) {
+    constructor(private propertyKeyFormatter: PropertyKeyFormatter) {
 
     }
 

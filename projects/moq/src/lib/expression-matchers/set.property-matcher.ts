@@ -8,7 +8,8 @@ import { ConstantMatcherFactory } from "./constant.matcher.factory";
  */
 export class SetPropertyExpressionMatcher {
 
-    constructor(private constantMatcher = new ConstantMatcherFactory().create()) {
+    constructor(private constantMatcher: ConstantMatcher) {
+
     }
 
     public matched(left: SetPropertyInteraction, right: ExpectedSetPropertyExpression | It<any>): boolean {

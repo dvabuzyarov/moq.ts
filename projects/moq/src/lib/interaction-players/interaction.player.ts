@@ -10,7 +10,7 @@ export class InteractionPlayer {
     constructor(
         private playablePresetProvider: PlayablePresetProvider,
         private presetPlayablesUpdater: PresetPlayablesUpdater,
-        private presetPlayer = new PresetPlayer()) {
+        private presetPlayer: PresetPlayer) {
 
     }
 

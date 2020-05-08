@@ -1,19 +1,21 @@
 import { InOperatorInteractionExplorer } from "./in-operator-interaction.explorer";
 import { PresetHasInOperatorExplorer } from "./preset.has-in-operator.explorer";
-import { IPreset } from "../../presets/preset";
-import { Presets } from "../../preset/presets";
-import { resolveBuilder } from "../../../tests.components/resolve.builder";
+import { IPreset } from "../../presets/presets/preset";
+import { Presets } from "../../presets/presets";
+import { createInjector, resolve } from "../../../tests.components/resolve.builder";
 
 describe("In operator interaction explorer", () => {
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
         const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
         const presetExplorer = jasmine.createSpyObj<PresetHasInOperatorExplorer>("", ["has"]);
-        resolve = resolveBuilder([
-            [Presets, presets],
-            [PresetHasInOperatorExplorer, presetExplorer],
-            [InOperatorInteractionExplorer, new InOperatorInteractionExplorer(presets, presetExplorer)]
+        createInjector([
+            {provide: Presets, useValue: presets, deps: []},
+            {provide: PresetHasInOperatorExplorer, useValue: presetExplorer, deps: []},
+            {
+                provide: InOperatorInteractionExplorer,
+                useClass: InOperatorInteractionExplorer,
+                deps: [Presets, PresetHasInOperatorExplorer]
+            },
         ]);
     });
 

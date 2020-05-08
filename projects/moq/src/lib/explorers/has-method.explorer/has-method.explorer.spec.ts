@@ -1,22 +1,25 @@
 import { HasMethodExplorer } from "./has-method.explorer";
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
-import { IPreset } from "../../presets/preset";
-import { Presets } from "../../preset/presets";
-import { resolveBuilder } from "../../../tests.components/resolve.builder";
+import { IPreset } from "../../presets/presets/preset";
+import { Presets } from "../../presets/presets";
+import { createInjector, resolve } from "../../../tests.components/resolve.builder";
 import { MembersMethodExplorer } from "../members.explorer/members-method.explorer";
 
 describe("Has instance method explorer", () => {
-    let resolve: ReturnType<typeof resolveBuilder>;
 
     beforeEach(() => {
         const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
         const presetExplorer = jasmine.createSpyObj<PresetHasMethodExplorer>("", ["has"]);
         const membersExplorer = jasmine.createSpyObj<MembersMethodExplorer>("", ["hasMethod"]);
-        resolve = resolveBuilder([
-            [Presets, presets],
-            [PresetHasMethodExplorer, presetExplorer],
-            [MembersMethodExplorer, membersExplorer],
-            [HasMethodExplorer, new HasMethodExplorer(presets, membersExplorer, presetExplorer)]
+        createInjector([
+            {
+                provide: HasMethodExplorer,
+                useClass: HasMethodExplorer,
+                deps: [Presets, MembersMethodExplorer, PresetHasMethodExplorer]
+            },
+            {provide: Presets, useValue: presets, deps: []},
+            {provide: PresetHasMethodExplorer, useValue: presetExplorer, deps: []},
+            {provide: MembersMethodExplorer, useValue: membersExplorer, deps: []},
         ]);
     });
 

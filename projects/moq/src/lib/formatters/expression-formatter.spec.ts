@@ -13,23 +13,46 @@ import { MethodExpressionFormatter } from "./method-formatter";
 import { It } from "../expected-expressions/expression-predicates";
 import { ConstantFormatter } from "./constant-formatter";
 import { InOperatorFormatter } from "./in-operator.formatter";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 
 describe("Expression formatter", () => {
-    function formatterFactory<T>(): T {
-        const formatter = jasmine.createSpy("formatter");
-        return (<any>{
-            format: formatter
-        } as T);
-    }
+
+    beforeEach(() => {
+        const getPropertyFormatter = jasmine.createSpyObj<GetPropertyExpressionFormatter>(["format"]);
+        const setPropertyFormatter = jasmine.createSpyObj<SetPropertyExpressionFormatter>(["format"]);
+        const methodFormatter = jasmine.createSpyObj<MethodExpressionFormatter>(["format"]);
+        const instanceMethodFormatter = jasmine.createSpyObj<NamedMethodExpressionFormatter>(["format"]);
+        const constantFormatter = jasmine.createSpyObj<ConstantFormatter>(["format"]);
+        const inOperatorFormatter = jasmine.createSpyObj<InOperatorFormatter>(["format"]);
+        createInjector([
+            {
+                provide: ExpressionFormatter,
+                useClass: ExpressionFormatter,
+                deps: [
+                    GetPropertyExpressionFormatter,
+                    SetPropertyExpressionFormatter,
+                    MethodExpressionFormatter,
+                    NamedMethodExpressionFormatter,
+                    ConstantFormatter,
+                    InOperatorFormatter
+                ]
+            },
+            {provide: GetPropertyExpressionFormatter, useValue: getPropertyFormatter, deps: []},
+            {provide: SetPropertyExpressionFormatter, useValue: setPropertyFormatter, deps: []},
+            {provide: MethodExpressionFormatter, useValue: methodFormatter, deps: []},
+            {provide: NamedMethodExpressionFormatter, useValue: instanceMethodFormatter, deps: []},
+            {provide: ConstantFormatter, useValue: constantFormatter, deps: []},
+            {provide: InOperatorFormatter, useValue: inOperatorFormatter, deps: []},
+        ]);
+    });
 
     it("Returns formatted description for GetPropertyExpression", () => {
         const expression = new GetPropertyInteraction("name");
         const expected = "get property description";
 
-        const getPropertyFormatter = formatterFactory<GetPropertyExpressionFormatter>();
-        (<jasmine.Spy>getPropertyFormatter.format).withArgs(expression).and.returnValue(expected);
+        resolve(GetPropertyExpressionFormatter).format.withArgs(expression).and.returnValue(expected);
 
-        const formatter = new ExpressionFormatter(getPropertyFormatter, undefined, undefined, undefined, undefined);
+        const formatter = resolve(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);
@@ -40,10 +63,9 @@ describe("Expression formatter", () => {
         const expression = new SetPropertyInteraction("name", "value");
         const expected = "set property description";
 
-        const setPropertyFormatter = formatterFactory<SetPropertyExpressionFormatter>();
-        (<jasmine.Spy>setPropertyFormatter.format).withArgs(expression).and.returnValue(expected);
+        resolve(SetPropertyExpressionFormatter).format.withArgs(expression).and.returnValue(expected);
 
-        const formatter = new ExpressionFormatter(undefined, setPropertyFormatter, undefined, undefined, undefined);
+        const formatter = resolve(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);
@@ -53,10 +75,9 @@ describe("Expression formatter", () => {
         const expression = new InOperatorInteraction("name");
         const expected = "get property description";
 
-        const inOperatorFormatter = formatterFactory<InOperatorFormatter>();
-        (<jasmine.Spy>inOperatorFormatter.format).withArgs(expression).and.returnValue(expected);
+        resolve(InOperatorFormatter).format.withArgs(expression).and.returnValue(expected);
 
-        const formatter = new ExpressionFormatter(undefined, undefined, undefined, undefined, undefined, inOperatorFormatter);
+        const formatter = resolve(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);
@@ -66,10 +87,9 @@ describe("Expression formatter", () => {
         const expression = new MethodInteraction(["value"]);
         const expected = "method description";
 
-        const methodExpressionFormatter = formatterFactory<MethodExpressionFormatter>();
-        (<jasmine.Spy>methodExpressionFormatter.format).withArgs(expression).and.returnValue(expected);
+        resolve(MethodExpressionFormatter).format.withArgs(expression).and.returnValue(expected);
 
-        const formatter = new ExpressionFormatter(undefined, undefined, methodExpressionFormatter, undefined, undefined);
+        const formatter = resolve(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);
@@ -79,10 +99,9 @@ describe("Expression formatter", () => {
         const expression = new NamedMethodInteraction("name", ["value"]);
         const expected = "named method description";
 
-        const namedMethodExpressionFormatter = formatterFactory<NamedMethodExpressionFormatter>();
-        (<jasmine.Spy>namedMethodExpressionFormatter.format).withArgs(expression).and.returnValue(expected);
+        resolve(NamedMethodExpressionFormatter).format.withArgs(expression).and.returnValue(expected);
 
-        const formatter = new ExpressionFormatter(undefined, undefined, undefined, namedMethodExpressionFormatter, undefined);
+        const formatter = resolve(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);
@@ -92,10 +111,9 @@ describe("Expression formatter", () => {
         const expression = new It(() => undefined);
         const expected = "It description";
 
-        const constantFormatter = formatterFactory<ConstantFormatter>();
-        (<jasmine.Spy>constantFormatter.format).withArgs(expression).and.returnValue(expected);
+        resolve(ConstantFormatter).format.withArgs(expression).and.returnValue(expected);
 
-        const formatter = new ExpressionFormatter(undefined, undefined, undefined, undefined, constantFormatter);
+        const formatter = resolve(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);

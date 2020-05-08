@@ -19,12 +19,12 @@ import { InOperatorFormatter } from "./in-operator.formatter";
  */
 export class ExpressionFormatter {
 
-    constructor(private getPropertyFormatter = new GetPropertyExpressionFormatter(),
-                private setPropertyFormatter = new SetPropertyExpressionFormatter(),
-                private methodFormatter = new MethodExpressionFormatter(),
-                private namedMethodFormatter = new NamedMethodExpressionFormatter(),
-                private constantFormatter = new ConstantFormatter(),
-                private inOperatorFormatter = new InOperatorFormatter()) {
+    constructor(private getPropertyFormatter: GetPropertyExpressionFormatter,
+                private setPropertyFormatter: SetPropertyExpressionFormatter,
+                private methodFormatter: MethodExpressionFormatter,
+                private namedMethodFormatter: NamedMethodExpressionFormatter,
+                private constantFormatter: ConstantFormatter,
+                private inOperatorFormatter: InOperatorFormatter) {
 
     }
 

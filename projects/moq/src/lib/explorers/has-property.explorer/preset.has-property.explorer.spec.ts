@@ -1,9 +1,9 @@
 import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
-import { IPreset } from "../../presets/preset";
+import { IPreset } from "../../presets/presets/preset";
 import { ExpectedExpressions } from "../../expected-expressions/expected-expressions";
 import { ExpressionHasPropertyExplorer } from "./expression-has-property.explorer";
 import { ObjectHasPropertyExplorer } from "./object-has-property.explorer";
-import { MimicsPreset } from "../../presets/mimics.preset";
+import { MimicsPreset } from "../../presets/presets/mimics.preset";
 
 describe("Preset has property explorer", () => {
 

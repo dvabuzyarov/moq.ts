@@ -1,5 +1,7 @@
-import { PrototypeStorage } from "../../traps/prototype.storage";
-import { getPropertyDescriptor } from "./get-property.descriptor";
+import { PrototypeStorage } from "../../interceptors/prototype.storage";
+import { PropertyDescriptorProvider } from "./property-descriptor.provider";
+import { Inject } from "@angular/core";
+import { REFLECT_HAS } from "../reflect-has.injection-token";
 
 /**
  * @hidden
@@ -7,14 +9,15 @@ import { getPropertyDescriptor } from "./get-property.descriptor";
 export class MembersMethodExplorer {
     constructor(
         private storage: PrototypeStorage,
-        private propertyDescriptorProvider: typeof getPropertyDescriptor = getPropertyDescriptor) {
+        private propertyDescriptorProvider: PropertyDescriptorProvider,
+        @Inject(REFLECT_HAS) private has: typeof Reflect.has) {
 
     }
 
     public hasMethod(name: PropertyKey): boolean {
         const prototype = this.storage.get();
-        if (prototype && Reflect.has(prototype, name)) {
-            const descriptor = this.propertyDescriptorProvider(prototype, name);
+        if (prototype && this.has(prototype, name)) {
+            const descriptor = this.propertyDescriptorProvider.get(prototype, name);
             return descriptor.value instanceof Function;
         }
         return false;

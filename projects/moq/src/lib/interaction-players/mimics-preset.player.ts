@@ -6,12 +6,16 @@ import {
     NamedMethodInteraction,
     SetPropertyInteraction
 } from "../interactions";
+import { Inject } from "@angular/core";
+import { REFLECT_APPLY } from "./reflect-apply.injection-token";
 
 /**
  * @hidden
  */
 export class MimicsPresetPlayer {
-    constructor(private apply: typeof Reflect.apply = Reflect.apply) {
+    constructor(
+        @Inject(REFLECT_APPLY)
+        private apply: typeof Reflect.apply) {
 
     }
 
