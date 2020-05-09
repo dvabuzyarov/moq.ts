@@ -7,7 +7,7 @@ import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.e
 import { MoqAPI } from "../moq";
 import { Tracker } from "../tracker/tracker";
 import { typeofInjectionToken } from "../typeof-injection-token";
-import { MOCK } from "../moq.injection-token";
+import { MOCK } from "../injector/moq.injection-token";
 
 /**
  * @hidden

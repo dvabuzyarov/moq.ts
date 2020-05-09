@@ -14,7 +14,7 @@ import { PresetPlayablesUpdater } from "../playables/preset-playables.updater";
 import { SetTrap } from "./set.trap";
 import { SetPrototypeOfTrap } from "./set-prototype-of.trap";
 import { ProxyFactory } from "./proxy.factory";
-import { MOCK } from "../moq.injection-token";
+import { MOCK } from "../injector/moq.injection-token";
 import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
 
 /**
