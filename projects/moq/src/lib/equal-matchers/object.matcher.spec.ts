@@ -1,20 +1,18 @@
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { ObjectMatcher } from "./object.matcher";
 import { IteratorMatcher } from "./iterator.matcher";
 import { POJOMatcher } from "./pojo.matcher";
 
 xdescribe("Object matcher", () => {
-
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
         const iteratorMatcher = jasmine.createSpyObj<IteratorMatcher>("", ["matched"]);
         const pojoMatcher = jasmine.createSpyObj<POJOMatcher>("", ["matched"]);
 
-        resolve = resolveBuilder([
-            [IteratorMatcher, iteratorMatcher],
-            [POJOMatcher, pojoMatcher],
-            // [ObjectMatcher, new ObjectMatcher(iteratorMatcher, pojoMatcher)]
+        createInjector([
+            {provide: IteratorMatcher, useValue: iteratorMatcher, deps: []},
+            {provide: POJOMatcher, useValue: pojoMatcher, deps: []},
+            // {provide: ObjectMatcher, useClass: ObjectMatcher, deps: [IteratorMatcher, POJOMatcher]},
+            {provide: ObjectMatcher, useClass: ObjectMatcher, deps: []},
         ]);
     });
 

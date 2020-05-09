@@ -1,13 +1,10 @@
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { CommonTypeProvider } from "./common-type.provider";
 
 describe("Common type provider", () => {
-
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
-        resolve = resolveBuilder([
-            [CommonTypeProvider, new CommonTypeProvider()]
+        createInjector([
+            {provide: CommonTypeProvider, useClass: CommonTypeProvider, deps: []},
         ]);
     });
 

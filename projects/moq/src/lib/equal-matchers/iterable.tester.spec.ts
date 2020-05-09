@@ -1,13 +1,10 @@
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { IterableTester } from "./iterable.tester";
 
 describe("Iterable tester", () => {
-
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
-        resolve = resolveBuilder([
-            [IterableTester, new IterableTester()]
+        createInjector([
+            {provide: IterableTester, useClass: IterableTester, deps: []},
         ]);
     });
 

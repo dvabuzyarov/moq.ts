@@ -1,17 +1,22 @@
 import { ConstantMatcher } from "./constant-matcher";
 import { It } from "../expected-expressions/expression-predicates";
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { EqualMatcher } from "../equal-matchers/equal.matcher";
 
 describe("Constant matcher", () => {
     beforeEach(() => {
+        const equalMatcher = jasmine.createSpyObj<EqualMatcher>("", ["matched"]);
         createInjector([
-            {provide: ConstantMatcher, useClass: ConstantMatcher, deps: []},
+            {provide: EqualMatcher, useValue: equalMatcher, deps: []},
+            {provide: ConstantMatcher, useClass: ConstantMatcher, deps: [EqualMatcher]},
         ]);
     });
 
-    it("Returns true when compared values are equal", () => {
-        const left = 1;
-        const right = 1;
+    it("Returns true when equal matcher returns true", () => {
+        const left = {};
+        const right = {};
+        resolve(EqualMatcher)
+            .matched.withArgs(left, right).and.returnValue(true);
 
         const matcher = resolve(ConstantMatcher);
         const actual = matcher.matched(left, right);
@@ -19,9 +24,11 @@ describe("Constant matcher", () => {
         expect(actual).toBe(true);
     });
 
-    it("Returns false when compared values are not equal", () => {
-        const left = 1;
-        const right = 2;
+    it("Returns false when equal matcher returns false", () => {
+        const left = {};
+        const right = {};
+        resolve(EqualMatcher)
+            .matched.withArgs(left, right).and.returnValue(false);
 
         const matcher = resolve(ConstantMatcher);
         const actual = matcher.matched(left, right);

@@ -1,5 +1,3 @@
-import { IMatcher } from "../moq";
-
 /**
  * @hidden
  */

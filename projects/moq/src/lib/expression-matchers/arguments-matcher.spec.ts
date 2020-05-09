@@ -1,16 +1,13 @@
 import { ArgumentsMatcher } from "./arguments-matcher";
 import { ConstantMatcher } from "./constant-matcher";
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 
 describe("Arguments matcher", () => {
-
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
         const constantMatcher = jasmine.createSpyObj<ConstantMatcher>("", ["matched"]);
-        resolve = resolveBuilder([
-            [ConstantMatcher, constantMatcher],
-            [ArgumentsMatcher, new ArgumentsMatcher(constantMatcher)]
+        createInjector([
+            {provide: ConstantMatcher, useValue: constantMatcher, deps: []},
+            {provide: ArgumentsMatcher, useClass: ArgumentsMatcher, deps: [ConstantMatcher]},
         ]);
     });
 

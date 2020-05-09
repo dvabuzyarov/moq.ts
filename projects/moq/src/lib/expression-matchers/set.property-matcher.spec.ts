@@ -3,17 +3,14 @@ import { SetPropertyExpressionMatcher } from "./set.property-matcher";
 import { ExpectedSetPropertyExpression } from "../expected-expressions/expected-expressions";
 import { ConstantMatcher } from "./constant-matcher";
 import { It } from "../expected-expressions/expression-predicates";
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 
 describe("Set property expression matcher", () => {
-
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
         const constantMatcher = jasmine.createSpyObj<ConstantMatcher>("", ["matched"]);
-        resolve = resolveBuilder([
-            [ConstantMatcher, constantMatcher],
-            [SetPropertyExpressionMatcher, new SetPropertyExpressionMatcher(constantMatcher)]
+        createInjector([
+            {provide: ConstantMatcher, useValue: constantMatcher, deps: []},
+            {provide: SetPropertyExpressionMatcher, useClass: SetPropertyExpressionMatcher, deps: [ConstantMatcher]},
         ]);
     });
 

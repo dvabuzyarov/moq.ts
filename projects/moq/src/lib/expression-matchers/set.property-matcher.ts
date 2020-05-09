@@ -1,7 +1,7 @@
 import { ExpectedSetPropertyExpression } from "../expected-expressions/expected-expressions";
 import { SetPropertyInteraction } from "../interactions";
 import { It } from "../expected-expressions/expression-predicates";
-import { ConstantMatcherFactory } from "./constant.matcher.factory";
+import { ConstantMatcher } from "./constant-matcher";
 
 /**
  * @hidden

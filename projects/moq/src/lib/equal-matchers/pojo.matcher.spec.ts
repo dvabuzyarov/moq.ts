@@ -1,21 +1,18 @@
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { IteratorMatcher } from "./iterator.matcher";
 import { POJOMatcher } from "./pojo.matcher";
 import { PropertyIterator } from "./property.iterator";
 import { PropertyValue } from "./property.value";
 
 describe("POJO matcher", () => {
-
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
         const iteratorMatcher = jasmine.createSpyObj<IteratorMatcher>("", ["matched"]);
         const propertyIterator = jasmine.createSpyObj<PropertyIterator>("", ["iterate"]);
 
-        resolve = resolveBuilder([
-            [IteratorMatcher, iteratorMatcher],
-            [PropertyIterator, propertyIterator],
-            [POJOMatcher, new POJOMatcher(iteratorMatcher, propertyIterator)]
+        createInjector([
+            {provide: IteratorMatcher, useValue: iteratorMatcher, deps: []},
+            {provide: PropertyIterator, useValue: propertyIterator, deps: []},
+            {provide: POJOMatcher, useClass: POJOMatcher, deps: [IteratorMatcher, PropertyIterator]},
         ]);
     });
 

@@ -1,14 +1,11 @@
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { PropertyIterator } from "./property.iterator";
 import { PropertyValue } from "./property.value";
 
 describe("Property iterator", () => {
-
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
-        resolve = resolveBuilder([
-            [PropertyIterator, new PropertyIterator()]
+        createInjector([
+            {provide: PropertyIterator, useClass: PropertyIterator, deps: []},
         ]);
     });
 
@@ -19,7 +16,7 @@ describe("Property iterator", () => {
         const provider = resolve(PropertyIterator);
         const actual = [...provider.iterate(object)];
 
-        expect(actual).toContain(new PropertyValue("prop" , 1));
+        expect(actual).toContain(new PropertyValue("prop", 1));
     });
 
     it("Returns symbol property", () => {

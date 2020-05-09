@@ -5,8 +5,8 @@ import { PropertyIterator } from "./property.iterator";
  * @hidden
  */
 export class POJOMatcher {
-    constructor(private iteratorMatcher = new IteratorMatcher(),
-                private propertyIterator = new PropertyIterator()) {
+    constructor(private iteratorMatcher: IteratorMatcher,
+                private propertyIterator: PropertyIterator) {
     }
 
     public matched<T extends Object>(left: T, right: T): boolean {

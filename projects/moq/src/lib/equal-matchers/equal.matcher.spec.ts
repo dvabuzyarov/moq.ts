@@ -1,4 +1,4 @@
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { CommonTypeProvider } from "./common-type.provider";
 import { TypesMatcher } from "./types.matcher";
 import { PrimitiveMatcher } from "./primitive.matcher";
@@ -8,8 +8,6 @@ import { EqualMatcher } from "./equal.matcher";
 
 xdescribe("Equal matcher", () => {
 
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
         const typesMatcher = jasmine.createSpyObj<TypesMatcher>("", ["matched"]);
         const commonTypeProvider = jasmine.createSpyObj<CommonTypeProvider>("", ["ofType"]);
@@ -17,13 +15,17 @@ xdescribe("Equal matcher", () => {
         const objectMatcher = jasmine.createSpyObj<ObjectMatcher>("", ["matched"]);
         const functionMatcher = jasmine.createSpyObj<FunctionMatcher>("", ["matched"]);
 
-        resolve = resolveBuilder([
-            [TypesMatcher, typesMatcher],
-            [PrimitiveMatcher, primitiveMatcher],
-            [CommonTypeProvider, commonTypeProvider],
-            [ObjectMatcher, objectMatcher],
-            [FunctionMatcher, functionMatcher],
-            [EqualMatcher, new EqualMatcher(typesMatcher, commonTypeProvider, primitiveMatcher, objectMatcher, functionMatcher)]
+        createInjector([
+            {provide: TypesMatcher, useValue: typesMatcher, deps: []},
+            {provide: PrimitiveMatcher, useValue: primitiveMatcher, deps: []},
+            {provide: CommonTypeProvider, useValue: commonTypeProvider, deps: []},
+            {provide: ObjectMatcher, useValue: objectMatcher, deps: []},
+            {provide: FunctionMatcher, useValue: functionMatcher, deps: []},
+            {
+                provide: EqualMatcher,
+                useClass: EqualMatcher,
+                deps: [TypesMatcher, CommonTypeProvider, PrimitiveMatcher, ObjectMatcher, functionMatcher]
+            },
         ]);
     });
 

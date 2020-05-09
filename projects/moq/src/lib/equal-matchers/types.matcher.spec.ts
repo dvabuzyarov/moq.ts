@@ -1,13 +1,11 @@
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { TypesMatcher } from "./types.matcher";
 
 describe("Types matcher", () => {
 
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
-        resolve = resolveBuilder([
-            [TypesMatcher, new TypesMatcher()]
+        createInjector([
+            {provide: TypesMatcher, useClass: TypesMatcher, deps: []},
         ]);
     });
 

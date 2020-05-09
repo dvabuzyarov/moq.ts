@@ -1,13 +1,10 @@
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { FunctionMatcher } from "./function.matcher";
 
 describe("Function matcher", () => {
-
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
-        resolve = resolveBuilder([
-            [FunctionMatcher, new FunctionMatcher()]
+        createInjector([
+            {provide: FunctionMatcher, useClass: FunctionMatcher, deps: []},
         ]);
     });
 

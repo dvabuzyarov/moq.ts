@@ -12,7 +12,7 @@ export class ConstantMatcher {
         if (right instanceof It) {
             return (right as It<any>).test(left);
         }
-        return left === right;
+        return this.equalMatcher.matched(left, right);
     }
 }
 

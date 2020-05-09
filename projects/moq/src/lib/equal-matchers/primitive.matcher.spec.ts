@@ -1,13 +1,10 @@
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { PrimitiveMatcher } from "./primitive.matcher";
 
 describe("Primitive matcher", () => {
-
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
-        resolve = resolveBuilder([
-            [PrimitiveMatcher, new PrimitiveMatcher()]
+        createInjector([
+            {provide: PrimitiveMatcher, useClass: PrimitiveMatcher, deps: []},
         ]);
     });
 
