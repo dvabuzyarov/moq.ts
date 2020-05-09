@@ -6,15 +6,17 @@ import { Tracker } from "./tracker/tracker";
 import { Verifier } from "./verification/verifier";
 import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
 import { PrototypeStorage } from "./interceptors/prototype.storage";
-import { injectorFactory } from "./injector.factory";
-import { MOCK } from "./moq.injection-token";
+import { injectorFactory } from "./injector/injector.factory";
+import { MOCK } from "./injector/moq.injection-token";
 import { MOCK_OPTIONS } from "./mock-options/mock-options.injection-token";
 import { PRESET_BUILDER_FACTORY } from "./presets/preset-builder-factory.injection-token";
+import { DefaultInjectorConfig } from "./injector/default-injector.config";
 
 /**
  * The default implementation of {@link IMock} interface.
  */
 export class Mock<T> implements IMock<T> {
+    private static Options: IMockOptions<unknown> = undefined;
     public readonly tracker: Tracker;
     private expressionReflector: ExpectedExpressionReflector;
     private interceptor: ProxyFactory<T>;
@@ -22,8 +24,13 @@ export class Mock<T> implements IMock<T> {
     private verifier: Verifier<T>;
     private prototypeStorage: PrototypeStorage;
 
-    constructor(private readonly options: IMockOptions<T> = {}) {
-        const injector = injectorFactory({provide: MOCK, useValue: this, deps: []}, options);
+    constructor(public readonly options: IMockOptions<T> = {}) {
+
+        const preOptions = {...Mock.options, ...options} as IMockOptions<T>;
+        const provider = {provide: MOCK, useValue: this, deps: []};
+
+        const injector = injectorFactory(preOptions, provider);
+
         this.options = injector.get(MOCK_OPTIONS);
         this.tracker = injector.get(Tracker);
         this.expressionReflector = injector.get(ExpectedExpressionReflector);
@@ -31,6 +38,30 @@ export class Mock<T> implements IMock<T> {
         this.setupFactory = injector.get(PRESET_BUILDER_FACTORY);
         this.verifier = injector.get(Verifier);
         this.prototypeStorage = injector.get(PrototypeStorage);
+    }
+
+    /**
+     * The default mock options that would applied to all instantiating Mock objects.
+     * By default it sets {@link IMockOptions.target} as a function, {@link IMockOptions.injectorConfig} as
+     * instance of {@link DefaultInjectorConfig} and {@link IMockOptions.name} as undefined.
+     * If an options are passed as constructor parameter {@link Mock.constructor} they will override the default options.
+     */
+    static get options() {
+        if (Mock.Options === undefined) {
+            Mock.Options = {
+                target: () => undefined,
+                injectorConfig: new DefaultInjectorConfig()
+            };
+        }
+        return Mock.Options;
+    }
+
+    /**
+     * The default mock options that would applied to all instantiating Mock objects.
+     * If an options are passed as constructor parameter they will override the default options.
+     */
+    static set options(options: IMockOptions<unknown>) {
+        Mock.Options = options;
     }
 
     public get name() {

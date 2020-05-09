@@ -1,7 +1,7 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { PresetBuilder } from "./preset-builder";
 import { Presets } from "./presets";
-import { MOCK } from "../moq.injection-token";
+import { MOCK } from "../injector/moq.injection-token";
 import { PRESET_BUILDER_FACTORY } from "./preset-builder-factory.injection-token";
 
 /**

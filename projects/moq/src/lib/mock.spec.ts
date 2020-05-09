@@ -1,4 +1,4 @@
-import { IPresetBuilder, ISequenceVerifier } from "./moq";
+import { IInjectorConfig, IPresetBuilder, ISequenceVerifier } from "./moq";
 import { Times } from "./times";
 import { nameof } from "../tests.components/nameof";
 import { ExpectedExpressionReflector } from "./expected-expressions/expected-expression-reflector";
@@ -6,13 +6,15 @@ import { Tracker } from "./tracker/tracker";
 import { ProxyFactory } from "./interceptors/proxy.factory";
 import { Verifier } from "./verification/verifier";
 import { Mock } from "./mock";
-import * as injectorFactory from "./injector.factory";
 import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
 import { PrototypeStorage } from "./interceptors/prototype.storage";
 import { createInjector, resolve } from "../tests.components/resolve.builder";
 import { MethodInteraction } from "./interactions";
 import { MOCK_OPTIONS } from "./mock-options/mock-options.injection-token";
 import { PRESET_BUILDER_FACTORY } from "./presets/preset-builder-factory.injection-token";
+import { MOCK } from "./injector/moq.injection-token";
+import { DefaultInjectorConfig } from "./injector/default-injector.config";
+import * as injectorFactory from "./injector/injector.factory";
 
 describe("Mock", () => {
     beforeEach(() => {
@@ -22,6 +24,7 @@ describe("Mock", () => {
         const setupFactory = jasmine.createSpy();
         const verifier = jasmine.createSpyObj<Verifier<unknown>>(["test"]);
         const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>("", ["set"]);
+
         const injector = createInjector([
             {provide: ExpectedExpressionReflector, useValue: expressionReflector, deps: []},
             {provide: Tracker, useValue: tracker, deps: []},
@@ -31,6 +34,7 @@ describe("Mock", () => {
             {provide: PRESET_BUILDER_FACTORY, useValue: setupFactory, deps: []},
             {provide: MOCK_OPTIONS, useValue: {}, deps: []},
         ]);
+
         spyOn(injectorFactory, "injectorFactory").and.returnValue(injector);
     });
 
@@ -44,6 +48,11 @@ describe("Mock", () => {
         const actual = mock.name;
 
         expect(actual).toBe(name);
+    });
+
+    it("Exposes mock options", () => {
+        const mock = new Mock();
+        expect(mock.options).toBe(resolve(MOCK_OPTIONS));
     });
 
     it("Returns object", () => {
@@ -127,5 +136,54 @@ describe("Mock", () => {
 
         expect(actual).toBe(mock);
         expect(sequenceVerifier.add).toHaveBeenCalledWith(mock, expression);
+    });
+
+    it("Returns default static Mock options", () => {
+        const {target, injectorConfig, name} = Mock.options;
+
+        expect(injectorConfig).toEqual(new DefaultInjectorConfig());
+        expect(typeof target === "function").toBe(true);
+        expect(name).toBe(undefined);
+    });
+
+    it("Invokes injectorFactory with static provider of self", () => {
+        const mock = new Mock();
+        expect(injectorFactory.injectorFactory).toHaveBeenCalledWith(Mock.options, {
+            provide: MOCK,
+            useValue: mock,
+            deps: []
+        });
+    });
+
+    it("Invokes injectorFactory with overridden static options", () => {
+        const name = "name";
+        const target = () => undefined;
+        const injectorConfig = jasmine.createSpyObj<IInjectorConfig>(["get"]);
+        Mock.options = {name, target, injectorConfig};
+
+        const mock = new Mock();
+
+        // Since this one is a static singleton we have to restore it
+        Mock.options = undefined;
+
+        expect(injectorFactory.injectorFactory).toHaveBeenCalledWith({
+            name,
+            target,
+            injectorConfig
+        }, {provide: MOCK, useValue: mock, deps: []});
+    });
+
+    it("Invokes injectorFactory with overridden instance options", () => {
+        const name = "name";
+        const target = () => undefined;
+        const injectorConfig = jasmine.createSpyObj<IInjectorConfig>(["get"]);
+
+        const mock = new Mock({name, target, injectorConfig});
+
+        expect(injectorFactory.injectorFactory).toHaveBeenCalledWith({
+            name,
+            target,
+            injectorConfig
+        }, {provide: MOCK, useValue: mock, deps: []});
     });
 });

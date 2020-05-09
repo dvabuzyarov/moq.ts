@@ -8,7 +8,7 @@ import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.e
 import { SpyFunctionProvider } from "./spy-function.provider";
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { MoqAPI } from "../moq";
-import { MOCK } from "../moq.injection-token";
+import { MOCK } from "../injector/moq.injection-token";
 import { Mock } from "../mock";
 
 describe("Get trap", () => {
