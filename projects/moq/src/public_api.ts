@@ -16,6 +16,7 @@ export { PlayableOnce } from "./lib/playables/playable-once";
 export { PlayableNever } from "./lib/playables/playable-never";
 export { PlayableSequence } from "./lib/playables/playable-sequence";
 export * from "./lib/injector/default-injector.config";
+export * from "./lib/injector/equal-matching-injector.config";
 export * from "./lib/injector/injector.factory";
 export * from "./lib/injector/moq.injection-token";
 export * from "./lib/mock-options/mock-options.injection-token";

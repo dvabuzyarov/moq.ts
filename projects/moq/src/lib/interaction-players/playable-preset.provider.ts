@@ -1,6 +1,6 @@
 import { IPreset } from "../presets/presets/preset";
 import { Interaction } from "../interactions";
-import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
+import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 import { Presets } from "../presets/presets";
 
 /**

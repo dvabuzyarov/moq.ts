@@ -1,4 +1,4 @@
-import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
+import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 import { CallCounter } from "./call-counter";
 import { ExpectedGetPropertyExpression } from "../expected-expressions/expected-expressions";
 import { GetPropertyInteraction } from "../interactions";

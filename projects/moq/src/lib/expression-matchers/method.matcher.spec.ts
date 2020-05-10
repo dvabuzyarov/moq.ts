@@ -1,8 +1,8 @@
 import {It} from "../expected-expressions/expression-predicates";
-import {ArgumentsMatcher} from "./arguments-matcher";
+import {ArgumentsMatcher} from "./arguments.matcher";
 import {MethodInteraction} from "../interactions";
 import {ExpectedMethodExpression} from "../expected-expressions/expected-expressions";
-import {MethodExpressionMatcher} from "./method-matcher";
+import {MethodExpressionMatcher} from "./method.matcher";
 
 describe("Method expression matcher", () => {
 

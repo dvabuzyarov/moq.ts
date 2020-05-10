@@ -3,7 +3,7 @@ import { CallbackPresetPlayer } from "./callback-preset.player";
 import { MimicsPresetPlayer } from "./mimics-preset.player";
 import { PlayablePresetProvider } from "./playable-preset.provider";
 import { Presets } from "../presets/presets";
-import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
+import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 import { InteractionPlayer } from "./interaction.player";
 import { PresetPlayablesUpdater } from "../playables/preset-playables.updater";
 import { REFLECT_APPLY } from "./reflect-apply.injection-token";

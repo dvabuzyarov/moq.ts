@@ -1,6 +1,6 @@
 import { PresetPlayablesUpdater } from "./preset-playables.updater";
 import { Presets } from "../presets/presets";
-import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
+import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 
 /**
  * @hidden

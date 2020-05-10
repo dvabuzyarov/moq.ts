@@ -1,7 +1,7 @@
-import {ArgumentsMatcher} from "./arguments-matcher";
+import {ArgumentsMatcher} from "./arguments.matcher";
 import {It} from "../expected-expressions/expression-predicates";
 import {NamedMethodInteraction} from "../interactions";
-import {NamedMethodExpressionMatcher} from "./named.method-matcher";
+import {NamedMethodExpressionMatcher} from "./instance-method.matcher";
 import {ExpectedNamedMethodExpression} from "../expected-expressions/expected-expressions";
 
 describe("Named method expression matcher", () => {

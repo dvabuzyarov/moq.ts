@@ -314,6 +314,7 @@ export interface IMockOptions<T> {
      * The Mock internally based on angular injector to construct its dependencies.
      * An instance of {@link IInjectorConfig} implementation could be passed as parameter in order to
      * changed the mock behaviour. The default value is an instance of {@link DefaultInjectorConfig}.
+     * There is also {@link EqualMatchingInjectorConfig} that would setup Mock to use equal logic for comparing values.
      */
     injectorConfig?: IInjectorConfig;
 }

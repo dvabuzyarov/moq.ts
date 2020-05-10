@@ -1,5 +1,5 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
-import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
+import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 import { Interaction } from "../interactions";
 import { Presets } from "../presets/presets";
 import { PlayablePresetProvider } from "./playable-preset.provider";

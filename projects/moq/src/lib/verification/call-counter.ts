@@ -1,6 +1,6 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { Interaction } from "../interactions";
-import { ExpressionMatcher } from "../expression-matchers/expression-matcher";
+import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 
 /**
  * @hidden

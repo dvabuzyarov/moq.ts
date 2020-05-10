@@ -1,11 +1,11 @@
 import { It } from "../expected-expressions/expression-predicates";
-import { EqualMatcher } from "../equal-matchers/equal.matcher";
+import { EqualMatcher } from "./equal.matcher";
 
 /**
  * @hidden
  */
-export class ConstantMatcher {
-    constructor(private equalMatcher = new EqualMatcher()) {
+export class EqualConstantMatcher {
+    constructor(private equalMatcher: EqualMatcher) {
     }
 
     public matched(left: any, right: any | It<any>): boolean {

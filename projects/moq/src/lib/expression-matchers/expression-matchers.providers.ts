@@ -1,11 +1,11 @@
-import { SetPropertyExpressionMatcher } from "./set.property-matcher";
-import { ConstantMatcher } from "./constant-matcher";
-import { NamedMethodExpressionMatcher } from "./named.method-matcher";
-import { ArgumentsMatcher } from "./arguments-matcher";
-import { MethodExpressionMatcher } from "./method-matcher";
+import { SetPropertyExpressionMatcher } from "./set-property.matcher";
+import { ConstantMatcher } from "./constant.matcher";
+import { NamedMethodExpressionMatcher } from "./instance-method.matcher";
+import { ArgumentsMatcher } from "./arguments.matcher";
+import { MethodExpressionMatcher } from "./method.matcher";
 import { InOperatorMatcher } from "./in-operator.matcher";
-import { GetPropertyExpressionMatcher } from "./get.property-matcher";
-import { ExpressionMatcher } from "./expression-matcher";
+import { GetPropertyExpressionMatcher } from "./get-property.matcher";
+import { ExpressionMatcher } from "./expression.matcher";
 
 /**
  * @hidden

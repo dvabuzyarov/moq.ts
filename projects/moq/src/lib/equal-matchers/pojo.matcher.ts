@@ -1,15 +1,19 @@
-import { IteratorMatcher } from "./iterator.matcher";
-import { PropertyIterator } from "./property.iterator";
+import { ObjectMapProvider } from "./object-map.provider";
+import { IObjectMatcher } from "./object-matcher.type";
+import { MapMatcher } from "./map.matcher";
 
 /**
  * @hidden
  */
-export class POJOMatcher {
-    constructor(private iteratorMatcher: IteratorMatcher,
-                private propertyIterator: PropertyIterator) {
+export class POJOMatcher implements IObjectMatcher {
+    constructor(
+        private mapMatcher: MapMatcher,
+        private objectMapProvider: ObjectMapProvider) {
     }
 
     public matched<T extends Object>(left: T, right: T): boolean {
-        return this.iteratorMatcher.matched(this.propertyIterator.iterate(left), this.propertyIterator.iterate(right));
+        const leftProps = this.objectMapProvider.get(left);
+        const rightProps = this.objectMapProvider.get(right);
+        return this.mapMatcher.matched(leftProps, rightProps);
     }
 }

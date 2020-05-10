@@ -1,7 +1,7 @@
-import { GetPropertyExpressionMatcher } from "./get.property-matcher";
-import { SetPropertyExpressionMatcher } from "./set.property-matcher";
-import { MethodExpressionMatcher } from "./method-matcher";
-import { NamedMethodExpressionMatcher } from "./named.method-matcher";
+import { GetPropertyExpressionMatcher } from "./get-property.matcher";
+import { SetPropertyExpressionMatcher } from "./set-property.matcher";
+import { MethodExpressionMatcher } from "./method.matcher";
+import { NamedMethodExpressionMatcher } from "./instance-method.matcher";
 import {
     GetPropertyInteraction,
     InOperatorInteraction,

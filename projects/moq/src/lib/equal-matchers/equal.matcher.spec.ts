@@ -6,7 +6,7 @@ import { ObjectMatcher } from "./object.matcher";
 import { FunctionMatcher } from "./function.matcher";
 import { EqualMatcher } from "./equal.matcher";
 
-xdescribe("Equal matcher", () => {
+describe("Equal matcher", () => {
 
     beforeEach(() => {
         const typesMatcher = jasmine.createSpyObj<TypesMatcher>("", ["matched"]);
@@ -24,7 +24,7 @@ xdescribe("Equal matcher", () => {
             {
                 provide: EqualMatcher,
                 useClass: EqualMatcher,
-                deps: [TypesMatcher, CommonTypeProvider, PrimitiveMatcher, ObjectMatcher, functionMatcher]
+                deps: [TypesMatcher, CommonTypeProvider, PrimitiveMatcher, ObjectMatcher, FunctionMatcher]
             },
         ]);
     });

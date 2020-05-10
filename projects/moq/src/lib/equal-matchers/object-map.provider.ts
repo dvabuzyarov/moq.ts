@@ -1,17 +1,19 @@
-import { PropertyValue } from "./property.value";
-
 /**
  * @hidden
  */
-export class PropertyIterator {
-    * iterate(object: object) {
-        const keys = [...new Set<PropertyKey>(this.getProps(object, []))];
+export class ObjectMapProvider {
+    get(object: object) {
+        const props = this.getProps(object, []);
+        const keys = [...new Set<PropertyKey>(props)];
+        const map = new Map<PropertyKey, any>();
         for (const key of keys) {
-            yield new PropertyValue(key, object[key]);
+            map.set(key, object[key]);
         }
+
+        return map;
     }
 
-    private getProps(object, props: PropertyKey[]) {
+    private getProps(object, props: PropertyKey[]): PropertyKey[] {
         if (object === null) return props;
         if (object === Object.prototype) return props;
         props = [...props, ...Object.getOwnPropertyNames(object), ...Object.getOwnPropertySymbols(object)];

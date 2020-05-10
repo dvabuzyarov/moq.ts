@@ -1,9 +1,10 @@
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { IteratorMatcher } from "./iterator.matcher";
-import { ConstantMatcher } from "../expression-matchers/constant-matcher";
 import { IterableTester } from "./iterable.tester";
+import { Injector } from "@angular/core";
+import { ConstantMatcher } from "../expression-matchers/constant.matcher";
 
-xdescribe("Iterator matcher", () => {
+describe("Iterator matcher", () => {
 
     beforeEach(() => {
         const constantMatcher = jasmine.createSpyObj<ConstantMatcher>("", ["matched"]);
@@ -12,7 +13,11 @@ xdescribe("Iterator matcher", () => {
         createInjector([
             {provide: ConstantMatcher, useValue: constantMatcher, deps: []},
             {provide: IterableTester, useValue: iterableTester, deps: []},
-            {provide: IteratorMatcher, useClass: IteratorMatcher, deps: [ConstantMatcher, IterableTester]}
+            {
+                provide: IteratorMatcher,
+                useClass: IteratorMatcher,
+                deps: [Injector, IterableTester]
+            }
         ]);
     });
 
@@ -32,7 +37,7 @@ xdescribe("Iterator matcher", () => {
         expect(actual).toBe(true);
     });
 
-    it("Returns false when compared values do not pass iterable condition", () => {
+    it("Returns undefined when compared values do not pass iterable condition", () => {
         const left = [];
         const right = {};
 
@@ -42,7 +47,7 @@ xdescribe("Iterator matcher", () => {
         const provider = resolve(IteratorMatcher);
         const actual = provider.matched(left, right);
 
-        expect(actual).toBe(false);
+        expect(actual).toBe(undefined);
     });
 
     it("Returns false when compared values have different length", () => {

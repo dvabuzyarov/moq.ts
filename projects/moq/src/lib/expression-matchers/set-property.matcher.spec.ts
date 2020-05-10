@@ -1,7 +1,7 @@
 ﻿import { SetPropertyInteraction } from "../interactions";
-import { SetPropertyExpressionMatcher } from "./set.property-matcher";
+import { SetPropertyExpressionMatcher } from "./set-property.matcher";
 import { ExpectedSetPropertyExpression } from "../expected-expressions/expected-expressions";
-import { ConstantMatcher } from "./constant-matcher";
+import { ConstantMatcher } from "./constant.matcher";
 import { It } from "../expected-expressions/expression-predicates";
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
 

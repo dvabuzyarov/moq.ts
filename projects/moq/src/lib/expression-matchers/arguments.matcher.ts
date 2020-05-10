@@ -1,5 +1,5 @@
 import { It } from "../expected-expressions/expression-predicates";
-import { ConstantMatcher } from "./constant-matcher";
+import { ConstantMatcher } from "./constant.matcher";
 
 /**
  * @hidden

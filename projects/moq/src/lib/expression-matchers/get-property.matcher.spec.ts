@@ -1,5 +1,5 @@
 import {GetPropertyInteraction} from "../interactions";
-import {GetPropertyExpressionMatcher} from "./get.property-matcher";
+import {GetPropertyExpressionMatcher} from "./get-property.matcher";
 import {It} from "../expected-expressions/expression-predicates";
 import {ExpectedGetPropertyExpression} from "../expected-expressions/expected-expressions";
 

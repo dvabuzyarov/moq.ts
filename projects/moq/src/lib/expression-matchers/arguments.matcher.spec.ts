@@ -1,5 +1,5 @@
-import { ArgumentsMatcher } from "./arguments-matcher";
-import { ConstantMatcher } from "./constant-matcher";
+import { ArgumentsMatcher } from "./arguments.matcher";
+import { ConstantMatcher } from "./constant.matcher";
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
 
 describe("Arguments matcher", () => {
