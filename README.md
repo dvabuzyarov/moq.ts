@@ -13,27 +13,26 @@
 # moq.ts | [Documentation](https://dvabuzyarov.github.io/moq.ts/)
 Moq for Typescript. Inspired by c# [Moq library](https://github.com/moq/moq4).
 
-#### Important
-This implementation depends on [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object.
-So if your production code is not compatible with this I would recommend you separate you production code and testing code into dedicated projects.
-If you need help with this then ask me.
-
 #### Install
 npm install moq.ts --save-dev
 
 #### Quick start
 
 moq.ts as the original [Moq library](https://github.com/moq/moq4) is intended to be simple to use, strongly typed (no magic strings!, and therefore full compiler-verified and refactoring-friendly) and minimalistic (while still fully functional!).
+Every each mock is an instance of [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object.
 
 You can find a pretty full set of usages in the integration tests. Check out [tests.integration](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/) folder.
 * * *
 
-- [Mocking property of objects](#mocking-property-of-objects)
-- [Mocking property setting](#mocking-property-setting)
+- [Mocking reading properties](#mocking-reading-properties)
+- [Mocking writing property setting](#mocking-writing-property)
 - [Mocking functions](#mocking-functions)
 - [Mocking functions of objects](#mocking-functions-of-objects)
 - [Type Discovering](#type-discovering)
 - [Mock behavior](#mock-behavior)
+    - [Injector config](#injector-config)
+        - [DefaultInjectorConfig](#defaultinjectorconfig)
+        - [EqualMatchingInjectorConfig and custom matchers](#equalmatchinginjectorconfig)
 - [Mock prototype](#mock-prototype)
 - [Mimics](#mimics)
 - [typeof operator](#typeof-operator)
@@ -42,7 +41,7 @@ You can find a pretty full set of usages in the integration tests. Check out [te
 * * *
 
 <!-- toc -->
-Mocking property of objects
+Mocking reading properties
 -
 [get.property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/get.property.spec.ts)
 ```typescript
@@ -82,7 +81,7 @@ object.method();
 
 mock.verify(instance=> instance.property1, Times.Never());
 ```
-Mocking property setting
+Mocking writing properties
 -
 [The documentation on returned value from 'set hook' on Proxy object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set)
 
@@ -189,18 +188,18 @@ implement correct behaviour of mocked object.
 Consider this case:
 
 ```typescript
-    class Prototype {
-        method(): void {
-            throw new Error("Not Implemented");
-        }
+class Prototype {
+    method(): void {
+        throw new Error("Not Implemented");
     }
+}
 
-    const object = new Mock<Prototype>()
-        .object();
+const object = new Mock<Prototype>()
+    .object();
 
-    const actual = object.method(); // throws TypeError: object.method is not a function
+const actual = object.method(); // throws TypeError: object.method is not a function
 
-    expect(actual).toBe(undefined);
+expect(actual).toBe(undefined);
 ```
 It happens because at runtime the mock does not know that method is a part of the mocked type. 
 So at the moment there are 3 ways how type could be discovered at runtime.
@@ -210,82 +209,198 @@ It is possible to provide a target object instance when a new instance of mock i
 It will fix typeof operator. The prototype of the target will be used for type discovering and fixing 
 instanceof operator.
 
-By default a mock is instantiated as Function object, so at runtime the mock "knows" about Function inherited 
+By default, a mock is instantiated as Function object, so at runtime the mock "knows" about Function inherited 
 properties and methods. 
 
 ```typescript
-    class Prototype {
-        method(): void {
-            throw new Error("Not Implemented");
-        }
+class Prototype {
+    method(): void {
+        throw new Error("Not Implemented");
     }
+}
 
-    const object = new Mock<Prototype>({target: new Prototype()})
-        .object();
+const object = new Mock<Prototype>({target: new Prototype()})
+    .object();
 
-    const actual = object.method();
+const actual = object.method();
 
-    expect(actual).toBe(undefined);
-    expect(typeof object).toBe("object");
-    expect(object instanceof Prototype).toBe(true);
+expect(actual).toBe(undefined);
+expect(typeof object).toBe("object");
+expect(object instanceof Prototype).toBe(true);
 ```
 
 #### Prototype
 Another way to deal with type discovering is to provide a prototype object.
 ```typescript
-    class Prototype {
-        method(): void {
-            throw new Error("Not Implemented");
-        }
+class Prototype {
+    method(): void {
+        throw new Error("Not Implemented");
     }
+}
 
-    const object = new Mock<Prototype>()
-        .prototypeof(Prototype.prototype)
-        .object();
+const object = new Mock<Prototype>()
+    .prototypeof(Prototype.prototype)
+    .object();
 
-    const actual = object.method();
+const actual = object.method();
 
-    expect(actual).toBe(undefined);
-    expect(typeof object).toBe("function");
-    expect(object instanceof Prototype).toBe(true);
+expect(actual).toBe(undefined);
+expect(typeof object).toBe("function");
+expect(object instanceof Prototype).toBe(true);
 ```
 
 #### Setup examination
 In some cases Moq library can discover type information from provided setup information.
 ```typescript
-        class Prototype {
-            method(): number {
-                throw new Error("Not Implemented");
-            }
-        }
+class Prototype {
+    method(): number {
+        throw new Error("Not Implemented");
+    }
+}
 
-        const object = new Mock<Prototype>()
-            .setup(instance => instance.method()) // this would be used for type discovering
-            .returns(2)
-            .object();
+const object = new Mock<Prototype>()
+    .setup(instance => instance.method()) // this would be used for type discovering
+    .returns(2)
+    .object();
 
-        const actual = object.method();
+const actual = object.method();
 
-        expect(actual).toBe(2);
-        expect(typeof object).toBe("function");
+expect(actual).toBe(2);
+expect(typeof object).toBe("function");
 ```
 
 ## Mock behavior
 A mocked object is a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy), 
 that configured to track any read and write operations on properties. If you write a value to an arbitrary property the mocked object
-will keep it and you can read it later on. By default the prototype of mocked object is Function.
+will keep it and you can read it later on. By default, the prototype of mocked object is Function.
 
-Accessing to an unset property or a method will return undefined or a pointer to a spy function if it exists on prototype;
-You can call this function and it will be tracked.
+Accessing to an unset property or a method will return undefined, or a pointer to a spy function if it exists on prototype;
+You can call this function, and it will be tracked.
 
 The default behaviour has the lowest precedence.
 The latest setup has the highest precedence. 
 
 You can control mock behavior when accessing to a property without a corresponding setup. 
 ```typescript
-    mock = new Mock<ITestObject>();
-    mock.setup(() => It.IsAny())
-      .throws(new Error("setup is missed"));
+const mock = new Mock<ITestObject>();
+mock.setup(() => It.IsAny())
+  .throws(new Error("setup is missed"));
+```
+
+#### Injector config
+Internally the library is using [Angular injector](https://angular.io/guide/dependency-injection-providers) to create and configure every each Mock object that is created with its constructor.
+```typescript
+new Mock() // <-- calls angular injector internally to create all dependencies 
+``` 
+The library provides an extension point to change the way how mocks are configured internally. It is available through IMockOptions.injectorConfig
+that could be applied globally or per mock instance at the instancing phase.  
+```typescript
+import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
+
+// The global configuration that would be overridden with instance options 
+Mock.options = {injectorConfig: new EqualMatchingInjectorConfig()};
+// or per instance
+new Mock({injectorConfig: new EqualMatchingInjectorConfig()})
+```
+
+Out of the box there are 2 available configurations that change the way how a mock compares expressions.
+
+#### DefaultInjectorConfig
+This is a default configuration that provides the standard mock behaviours. 
+
+#### EqualMatchingInjectorConfig
+By default, all values are matched with [Equality comparisons and sameness](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness) that
+is limited in matching objects. On the other hand developers are using so called "deep equal comparison" approach, where objects are matched by its properties and values.
+This configuration changes the way how expressions are matched and introduce deep equal comparison logic as well as an extension point for custom matchers.
+```typescript
+import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
+
+const mock = new Mock<(args: number[]) => number>()
+    .setup(instance => instance([2, 1]))
+    .returns(2);
+
+const object = mock.object();
+
+const actual = object([2, 1]);
+
+// since the default comparisons logic sees [2, 1] and [2, 1] as different objects the provided setup would not work
+expect(actual).toBe(undefined);
+```
+and compare with
+```typescript
+import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
+
+const mock = new Mock<(args: number[]) => number>({injectorConfig: new EqualMatchingInjectorConfig()})
+    .setup(instance => instance([2, 1]))
+    .returns(2);
+
+const object = mock.object();
+
+const actual = object([2, 1]);
+
+expect(actual).toBe(2);
+```
+Internally the equal comparision logic implemented as a collection of object matchers that implement IObjectMatcher interface.
+
+Matchers with the most specific logic should come first in the collection and if they are not able to match the objects 
+then more general matchers would be invoked.
+
+The library comes with the following matchers:
+0. Custom matchers
+1. DateMatcher - matches [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) objects
+2. MapMatcher - matches [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) objects
+3. IteratorMatcher - matches objects that supports [Iterator protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)
+4. POJOMatcher - as the last resort matches objects as [POJO](https://en.wikipedia.org/wiki/Plain_old_Java_object) objects.
+
+if you need a custom matcher it will come at index 1. Here is an example of a custom matcher that matches Moment and Date objects.
+```typescript
+import { EqualMatchingInjectorConfig, IObjectMatcher, Mock, OBJECT_MATCHERS } from "moq.ts";
+import { isMoment, utc } from "moment";
+
+class MomentDateMatcher implements IObjectMatcher {
+    matched<T extends object>(left: T, right: T): boolean | undefined {
+        if (left instanceof Date && isMoment(right)) {
+            return left.valueOf() === right.valueOf();
+        }
+        return undefined;
+    }
+}
+
+const moment = utc(1);
+const injectorConfig = new EqualMatchingInjectorConfig([{
+    provide: OBJECT_MATCHERS,
+    useClass: MomentDateMatcher,
+    multi: true,
+    deps: []
+}]);
+
+const mock = new Mock<(args: any) => number>({injectorConfig})
+    .setup(instance => instance(moment))
+    .returns(2);
+
+const object = mock.object();
+
+const actual = object(new Date(1));
+
+expect(actual).toBe(2);
+```
+The matching logic of EqualMatchingInjectorConfig supports [It notation](https://raw.githubusercontent.com/dvabuzyarov/moq.ts/master/projects/moq/src/lib/expected-expressions/expression-predicates.ts).
+So you can do a partial comparision.
+```typescript
+import { EqualMatchingInjectorConfig, It, Mock } from "moq.ts";
+
+const func = () => undefined;
+
+const injectorConfig = new EqualMatchingInjectorConfig();
+const mock = new Mock<(args: any) => number>({injectorConfig})
+    .setup(instance => instance({func: It.IsAny()})) // <-- func property will be matched with It delegate
+    .returns(2);
+
+const object = mock.object();
+
+const actual = object({func});
+
+expect(actual).toBe(2);
 ```
 
 ## Mock prototype
@@ -353,49 +468,48 @@ The library supports [in operator](https://developer.mozilla.org/en-US/docs/Web/
 More examples could be found [here](https://raw.githubusercontent.com/dvabuzyarov/moq.ts/master/projects/moq/src/integration.specs/in-operator.spec.ts)
 
 ```typescript
-        const name = "arbitrary name";
-        const object = new Mock<{}>()
-            .setup(instance => name in instance)
-            .returns(true)
-            .object();
+const name = "arbitrary name";
+const object = new Mock<{}>()
+    .setup(instance => name in instance)
+    .returns(true)
+    .object();
 
-        expect(name in object).toBe(true);
+expect(name in object).toBe(true);
 ```
 
 ```typescript
-        interface ITestObject {
-             property: string;
-         
-             method(): void;
-         }
-         
-         class TestObject implements ITestObject {
-             property: string;
-         
-             method(): void {
-                 return undefined;
-             }
-         }
+interface ITestObject {
+     property: string;
+ 
+     method(): void;
+ }
+ 
+ class TestObject implements ITestObject {
+     property: string;
+ 
+     method(): void {
+         return undefined;
+     }
+ }
 
-        const object = new Mock<ITestObject>()
-            .prototypeof(TestObject.prototype)
-            .object();
-        
-        // because "property" in new TestObject() === false
-        expect("property" in object).toBe(false);
-        expect("method" in object).toBe(true);
+const object = new Mock<ITestObject>()
+    .prototypeof(TestObject.prototype)
+    .object();
+
+// because "property" in new TestObject() === false
+expect("property" in object).toBe(false);
+expect("method" in object).toBe(true);
 ```
 
 ```typescript
+const mock = new Mock<{}>();
+const object = mock.object();
 
-        const mock = new Mock<{}>();
-        const object = mock.object();
+const actual1 = "property" in object;
+const actual2 = "method" in object;
 
-        const actual1 = "property" in object;
-        const actual2 = "method" in object;
-
-        mock.verify(instance => "property" in instance, Times.Once());
-        mock.verify(instance => "method" in instance, Times.Once());
+mock.verify(instance => "property" in instance, Times.Once());
+mock.verify(instance => "method" in instance, Times.Once());
 ```
 
 ## MoqAPI symbol
@@ -410,35 +524,35 @@ with Setup API.
 
 The property is read only and trackabel, so it possible to use for verification.
 ```typescript
-   const func = new Mock<() => void>()
-   .object();
- 
-   func[MoqAPI]
-   .setup(instance => instance())
-   .returns(12);
- 
-   const actual = func();
- 
-   expect(actual).toBe(12);
+const func = new Mock<() => void>()
+.object();
+
+func[MoqAPI]
+.setup(instance => instance())
+.returns(12);
+
+const actual = func();
+
+expect(actual).toBe(12);
 ```
 
 In operator does not sees this property until it is used in setups.
 ```typescript
-        const object = new Mock<{}>()
-            .object();
+const object = new Mock<{}>()
+    .object();
 
-        expect(MoqAPI in object).toBe(false);
+expect(MoqAPI in object).toBe(false);
 ```
 BUT
 ```typescript
-        const mock = new Mock<ITestObject>();
-        const object = mock
-            .setup(instance => instance[MoqAPI])
-            .returns(undefined)
-            .object();
+const mock = new Mock<ITestObject>();
+const object = mock
+    .setup(instance => instance[MoqAPI])
+    .returns(undefined)
+    .object();
 
-        expect(MoqAPI in object).toBe(true);
-        expect(object[MoqAPI]).toBe(mock);
+expect(MoqAPI in object).toBe(true);
+expect(object[MoqAPI]).toBe(mock);
 ```
 
 Sponsored by [2BIT](https://www.2bit.ch)

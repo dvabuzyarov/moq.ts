@@ -1,10 +1,10 @@
-/**
- * @hidden
- */
 import { Inject } from "@angular/core";
 import { typeofInjectionToken } from "../typeof-injection-token";
 import { OBJECT_MATCHERS } from "./object-matchers.injection-token";
 
+/**
+ * @hidden
+ */
 export class ObjectMatcher {
 
     constructor(

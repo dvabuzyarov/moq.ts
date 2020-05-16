@@ -3,7 +3,7 @@ import { Injector } from "@angular/core";
 import { ConstantMatcher } from "../expression-matchers/constant.matcher";
 
 /**
- * @hidden
+ * Matches Map objects
  */
 export class MapMatcher implements IObjectMatcher {
     constructor(private injector: Injector) {

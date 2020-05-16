@@ -1,11 +1,12 @@
 import { IterableTester } from "./iterable.tester";
 import { Injector } from "@angular/core";
 import { ConstantMatcher } from "../expression-matchers/constant.matcher";
+import { IObjectMatcher } from "./object-matcher.type";
 
 /**
- * @hidden
+ * Matches objects that support Iterable protocol
  */
-export class IteratorMatcher {
+export class IteratorMatcher implements IObjectMatcher {
 
     constructor(
         private injector: Injector,

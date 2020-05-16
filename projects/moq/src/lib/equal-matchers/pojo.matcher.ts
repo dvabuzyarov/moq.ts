@@ -3,7 +3,7 @@ import { IObjectMatcher } from "./object-matcher.type";
 import { MapMatcher } from "./map.matcher";
 
 /**
- * @hidden
+ * Matches objects as POJO
  */
 export class POJOMatcher implements IObjectMatcher {
     constructor(

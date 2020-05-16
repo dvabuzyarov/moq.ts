@@ -282,7 +282,7 @@ export interface IInjectorConfig {
     /**
      * Returns array of StaticProviders to construct an angular injector.
      * @param options The final version of mock options. Options that passed to Mock constructor are merged with
-     * the global mock options ({@link Mock.Options}). Some components depend on the options and the injector
+     * the global mock options ({@link Mock.options}). Some components depend on the options and the injector
      * should be able to resolve it. To configure the injector property the implementation could do the following:
      * ``` typescript
      * return [
