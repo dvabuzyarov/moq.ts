@@ -20,19 +20,19 @@
   },
   "private": true,
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.901.4",
-    "@angular-devkit/build-ng-packagr": "0.901.4",
-    "@angular/cli": "9.1.4",
-    "@angular/compiler": "9.1.5",
-    "@angular/compiler-cli": "9.1.5",
-    "@angular/core": "9.1.5",
-    "@angular/language-service": "9.1.5",
+    "@angular-devkit/build-angular": "0.901.6",
+    "@angular-devkit/build-ng-packagr": "0.901.6",
+    "@angular/cli": "9.1.6",
+    "@angular/compiler": "9.1.7",
+    "@angular/compiler-cli": "9.1.7",
+    "@angular/core": "9.1.7",
+    "@angular/language-service": "9.1.7",
     "@commitlint/cli": "8.3.5",
     "@commitlint/config-conventional": "8.3.4",
     "@qiwi/semantic-release-gh-pages-plugin": "1.16.0",
     "@semantic-release/changelog": "5.0.1",
     "@types/jasmine": "3.5.10",
-    "@types/node": "12.12.38",
+    "@types/node": "12.12.39",
     "codelyzer": "5.2.2",
     "cpx": "1.5.0",
     "cz-conventional-changelog": "3.2.0",
@@ -48,7 +48,7 @@
     "typedoc": "0.16.11",
     "typescript": "3.7.5",
     "zone.js": "0.10.3",
-    "tslib": "1.11.2"
+    "tslib": "1.13.0"
   },
   "release": {
     "branches": [
