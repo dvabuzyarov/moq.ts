@@ -1,23 +1,25 @@
 import { Interaction } from "../interactions";
 import { InteractionPlayer } from "./interaction.player";
 import { PlayablePresetProvider } from "./playable-preset.provider";
-import { IPreset } from "../presets/preset";
+import { IPreset } from "../presets/presets/preset";
 import { PresetPlayer } from "./preset.player";
-import { resolveBuilder } from "../../tests.components/resolve.builder";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { PresetPlayablesUpdater } from "../playables/preset-playables.updater";
 
 describe("Interaction player", () => {
-    let resolve: ReturnType<typeof resolveBuilder>;
-
     beforeEach(() => {
         const presetProvider = jasmine.createSpyObj<PlayablePresetProvider>("", ["get"]);
         const playablesUpdater = jasmine.createSpyObj<PresetPlayablesUpdater>("", ["update"]);
         const presetPlayer = jasmine.createSpyObj<PresetPlayer>("", ["play"]);
-        resolve = resolveBuilder([
-            [PlayablePresetProvider, presetProvider],
-            [PresetPlayer, presetPlayer],
-            [PresetPlayablesUpdater, playablesUpdater],
-            [InteractionPlayer, new InteractionPlayer(presetProvider, playablesUpdater, presetPlayer)]
+        createInjector([
+            {provide: PlayablePresetProvider, useValue: presetProvider, deps: []},
+            {provide: PresetPlayer, useValue: presetPlayer, deps: []},
+            {provide: PresetPlayablesUpdater, useValue: playablesUpdater, deps: []},
+            {
+                provide: InteractionPlayer,
+                useClass: InteractionPlayer,
+                deps: [PlayablePresetProvider, PresetPlayablesUpdater, PresetPlayer]
+            },
         ]);
     });
 

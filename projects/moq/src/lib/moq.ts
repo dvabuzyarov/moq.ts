@@ -1,24 +1,8 @@
 import { IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
-import { Tracker } from "./tracker";
 import { Times } from "./times";
 import { Interaction } from "./interactions";
-
-/**
- * Mock creation options
- */
-export interface IMockOptions<T> {
-    /**
-     * You can name the mock. The name will be displayed with any relative output, so you can easily distinct
-     * output of several mocks. On the mocked object you can find this name at 'mockName' property of the [[Handler]].
-     */
-    name?: string;
-    /**
-     * The target object for Proxy that is used under the hood.
-     * typeof operation is applied to this target.
-     * The default value is a function.
-     */
-    target?: T;
-}
+import { Tracker } from "./tracker/tracker";
+import { StaticProvider } from "@angular/core";
 
 export const enum PlayableUpdateReason {
     /**
@@ -186,6 +170,11 @@ export interface IMock<T> {
     readonly tracker: Tracker;
 
     /**
+     * Returns options object
+     */
+    readonly options: IMockOptions<T>;
+
+    /**
      * Returns instance of mocked object
      */
     object(): T;
@@ -284,3 +273,48 @@ export interface ISequenceVerifier {
  * ```
  */
 export const MoqAPI = Symbol("MoqAPI");
+
+
+/**
+ * The Mock internally depends on angular injector to construct its dependencies.
+ */
+export interface IInjectorConfig {
+    /**
+     * Returns array of StaticProviders to construct an angular injector.
+     * @param options The final version of mock options. Options that passed to Mock constructor are merged with
+     * the global mock options ({@link Mock.options}). Some components depend on the options and the injector
+     * should be able to resolve it. To configure the injector property the implementation could do the following:
+     * ``` typescript
+     * return [
+     *  {provide: MOCK_OPTIONS, useValue: options, deps: []},
+     * ];
+     * ```
+     * @param providers An array of additional providers that could be added to the final configuration.
+     */
+    get(options: IMockOptions<unknown>, ...providers: StaticProvider[]): StaticProvider[];
+}
+
+/**
+ * Mock instance options.
+ * Could be passed as parameter on mock instantiating or could be set globally on {@link Mock.options}.
+ */
+export interface IMockOptions<T> {
+    /**
+     * You can name the mock. The name will be displayed with any relative output, so you can easily distinct
+     * output of several mocks. On the mocked object you can find this name at 'mockName' property of the [[Handler]].
+     */
+    name?: string;
+    /**
+     * The target object for Proxy that is used under the hood.
+     * typeof operation is applied to this target.
+     * The default value is a function.
+     */
+    target?: T;
+    /**
+     * The Mock internally based on angular injector to construct its dependencies.
+     * An instance of {@link IInjectorConfig} implementation could be passed as parameter in order to
+     * changed the mock behaviour. The default value is an instance of {@link DefaultInjectorConfig}.
+     * There is also {@link EqualMatchingInjectorConfig} that would setup Mock to use equal logic for comparing values.
+     */
+    injectorConfig?: IInjectorConfig;
+}

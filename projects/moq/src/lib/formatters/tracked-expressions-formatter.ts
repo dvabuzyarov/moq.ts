@@ -6,7 +6,7 @@ import { Interaction } from "../interactions";
  */
 export class TrackedExpressionsFormatter {
 
-    constructor(private expressionFormatter: ExpressionFormatter = new ExpressionFormatter()) {
+    constructor(private expressionFormatter: ExpressionFormatter) {
 
     }
 

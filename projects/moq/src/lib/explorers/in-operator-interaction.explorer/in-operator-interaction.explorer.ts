@@ -1,5 +1,5 @@
 import { PresetHasInOperatorExplorer } from "./preset.has-in-operator.explorer";
-import { Presets } from "../../preset/presets";
+import { Presets } from "../../presets/presets";
 
 /**
  * @hidden
@@ -7,7 +7,7 @@ import { Presets } from "../../preset/presets";
 export class InOperatorInteractionExplorer {
     constructor(
         private presets: Presets<unknown>,
-        private explorer = new PresetHasInOperatorExplorer()) {
+        private explorer: PresetHasInOperatorExplorer) {
 
     }
 

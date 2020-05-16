@@ -1,34 +1,67 @@
 import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
-import { Interceptor } from "./interceptor";
+import { ProxyFactory } from "./interceptors/proxy.factory";
 import { IMock, IMockOptions, IPresetBuilder, ISequenceVerifier } from "./moq";
 import { Times } from "./times";
-import { Tracker } from "./tracker";
-import { Verifier } from "./verifier";
+import { Tracker } from "./tracker/tracker";
+import { Verifier } from "./verification/verifier";
 import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
-import { mockDependenciesFactory } from "./mock-dependencies.factory";
-import { buildMockOptions } from "./build-mock-options";
-import { PrototypeStorage } from "./traps/prototype.storage";
+import { PrototypeStorage } from "./interceptors/prototype.storage";
+import { injectorFactory } from "./injector/injector.factory";
+import { MOCK } from "./injector/moq.injection-token";
+import { MOCK_OPTIONS } from "./mock-options/mock-options.injection-token";
+import { PRESET_BUILDER_FACTORY } from "./presets/preset-builder-factory.injection-token";
+import { DefaultInjectorConfig } from "./injector/default-injector.config";
 
 /**
  * The default implementation of {@link IMock} interface.
  */
 export class Mock<T> implements IMock<T> {
+    private static Options: IMockOptions<unknown> = undefined;
     public readonly tracker: Tracker;
     private expressionReflector: ExpectedExpressionReflector;
-    private interceptor: Interceptor<T>;
+    private interceptor: ProxyFactory<T>;
     private readonly setupFactory: (target: ExpectedExpressions<T>) => IPresetBuilder<T>;
     private verifier: Verifier<T>;
     private prototypeStorage: PrototypeStorage;
 
-    constructor(private readonly options: IMockOptions<T> = {}) {
-        this.options = buildMockOptions(options);
-        const dependencies = mockDependenciesFactory<T>(this.options, this);
-        this.tracker = dependencies.tracker;
-        this.expressionReflector = dependencies.expressionReflector;
-        this.interceptor = dependencies.interceptor;
-        this.setupFactory = dependencies.presetBuilderFactory;
-        this.verifier = dependencies.verifier;
-        this.prototypeStorage = dependencies.prototypeStorage;
+    constructor(public readonly options: IMockOptions<T> = {}) {
+
+        const preOptions = {...Mock.options, ...options} as IMockOptions<T>;
+        const provider = {provide: MOCK, useValue: this, deps: []};
+
+        const injector = injectorFactory(preOptions, provider);
+
+        this.options = injector.get(MOCK_OPTIONS);
+        this.tracker = injector.get(Tracker);
+        this.expressionReflector = injector.get(ExpectedExpressionReflector);
+        this.interceptor = injector.get(ProxyFactory);
+        this.setupFactory = injector.get(PRESET_BUILDER_FACTORY);
+        this.verifier = injector.get(Verifier);
+        this.prototypeStorage = injector.get(PrototypeStorage);
+    }
+
+    /**
+     * The default mock options that would applied to all instantiating Mock objects.
+     * By default it sets {@link IMockOptions.target} as a function, {@link IMockOptions.injectorConfig} as
+     * instance of {@link DefaultInjectorConfig} and {@link IMockOptions.name} as undefined.
+     * If an options are passed as constructor parameter {@link Mock.constructor} they will override the default options.
+     */
+    static get options() {
+        if (Mock.Options === undefined) {
+            Mock.Options = {
+                target: () => undefined,
+                injectorConfig: new DefaultInjectorConfig()
+            };
+        }
+        return Mock.Options;
+    }
+
+    /**
+     * The default mock options that would applied to all instantiating Mock objects.
+     * If an options are passed as constructor parameter they will override the default options.
+     */
+    static set options(options: IMockOptions<unknown>) {
+        Mock.Options = options;
     }
 
     public get name() {
@@ -64,4 +97,3 @@ export class Mock<T> implements IMock<T> {
         return this;
     }
 }
-

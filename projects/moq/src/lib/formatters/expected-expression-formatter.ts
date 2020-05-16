@@ -6,7 +6,7 @@ import { ExpressionFormatter } from "./expression-formatter";
  */
 export class ExpectedExpressionFormatter {
 
-    constructor(private expressionFormatter: ExpressionFormatter = new ExpressionFormatter()) {
+    constructor(private expressionFormatter: ExpressionFormatter) {
 
     }
 

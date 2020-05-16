@@ -15,6 +15,7 @@ application.bootstrap({
     preserveConstEnums: true,
     stripInternal: true,
     disableOutputCheck: false,
+    experimentalDecorators: true,
     version: true
 });
 

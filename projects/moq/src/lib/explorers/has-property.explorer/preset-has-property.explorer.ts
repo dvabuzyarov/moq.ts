@@ -1,14 +1,14 @@
-import { IPreset } from "../../presets/preset";
+import { IPreset } from "../../presets/presets/preset";
 import { ExpressionHasPropertyExplorer } from "./expression-has-property.explorer";
 import { ObjectHasPropertyExplorer } from "./object-has-property.explorer";
-import { MimicsPreset } from "../../presets/mimics.preset";
+import { MimicsPreset } from "../../presets/presets/mimics.preset";
 
 /**
  * @hidden
  */
 export class PresetHasPropertyExplorer {
-    constructor(private expressionHasPropertyExplorer = new ExpressionHasPropertyExplorer(),
-                private objectHasPropertyExplorer = new ObjectHasPropertyExplorer()) {
+    constructor(private expressionHasPropertyExplorer: ExpressionHasPropertyExplorer,
+                private objectHasPropertyExplorer: ObjectHasPropertyExplorer) {
 
     }
 

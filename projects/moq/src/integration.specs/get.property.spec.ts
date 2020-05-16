@@ -1,14 +1,13 @@
-import { Mock } from "../lib/mock";
 import { It } from "../lib/expected-expressions/expression-predicates";
 import { ExpectedGetPropertyExpression } from "../lib/expected-expressions/expected-expressions";
 import { Times } from "../lib/times";
+import { Mock } from "../lib/mock";
 
 interface ITestObject {
     property: string;
 }
 
 describe("Mock: Get property", () => {
-
 
     it("Returns value with a simple setup", () => {
         const value = "value";
@@ -26,7 +25,7 @@ describe("Mock: Get property", () => {
         const value = "value";
 
         const object = new Mock<ITestObject>()
-            .setup(instance => It.Is((expression: ExpectedGetPropertyExpression) => expression.name === "property"))
+            .setup(() => It.Is((expression: ExpectedGetPropertyExpression) => expression.name === "property"))
             .returns(value)
             .object();
 
@@ -34,7 +33,6 @@ describe("Mock: Get property", () => {
     });
 
     it("Returns undefined for unset property", () => {
-        const value = "value";
         const object = new Mock<ITestObject>()
             .object();
 

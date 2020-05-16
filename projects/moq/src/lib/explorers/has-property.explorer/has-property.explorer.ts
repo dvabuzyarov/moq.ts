@@ -1,5 +1,5 @@
 import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
-import { Presets } from "../../preset/presets";
+import { Presets } from "../../presets/presets";
 import { MembersPropertyExplorer } from "../members.explorer/members-property.explorer";
 
 /**
@@ -9,7 +9,7 @@ export class HasPropertyExplorer {
     constructor(
         private presets: Presets<unknown>,
         private membersExplorer: MembersPropertyExplorer,
-        private explorer = new PresetHasPropertyExplorer()) {
+        private explorer: PresetHasPropertyExplorer) {
 
     }
 
