@@ -346,13 +346,15 @@ Matchers with the most specific logic should come first in the collection and if
 then more general matchers would be invoked.
 
 The library comes with the following matchers:
+
 0. Custom matchers
 1. DateMatcher - matches [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) objects
 2. MapMatcher - matches [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) objects
 3. IteratorMatcher - matches objects that supports [Iterator protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)
 4. POJOMatcher - as the last resort matches objects as [POJO](https://en.wikipedia.org/wiki/Plain_old_Java_object) objects.
 
-if you need a custom matcher it will come at index 1. Here is an example of a custom matcher that matches Moment and Date objects.
+Here is an example of a custom matcher that matches Moment and Date objects.
+
 ```typescript
 import { EqualMatchingInjectorConfig, IObjectMatcher, Mock, OBJECT_MATCHERS } from "moq.ts";
 import { isMoment, utc } from "moment";
