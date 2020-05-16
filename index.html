@@ -76,12 +76,6 @@
 					<h1>moq.ts | <a href="https://dvabuzyarov.github.io/moq.ts/">Documentation</a></h1>
 				</a>
 				<p>Moq for Typescript. Inspired by c# <a href="https://github.com/moq/moq4">Moq library</a>.</p>
-				<a href="#important" id="important" style="color: inherit; text-decoration: none;">
-					<h4>Important</h4>
-				</a>
-				<p>This implementation depends on <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy">Proxy</a> object.
-					So if your production code is not compatible with this I would recommend you separate you production code and testing code into dedicated projects.
-				If you need help with this then ask me.</p>
 				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
 					<h4>Install</h4>
 				</a>
@@ -89,16 +83,24 @@
 				<a href="#quick-start" id="quick-start" style="color: inherit; text-decoration: none;">
 					<h4>Quick start</h4>
 				</a>
-				<p>moq.ts as the original <a href="https://github.com/moq/moq4">Moq library</a> is intended to be simple to use, strongly typed (no magic strings!, and therefore full compiler-verified and refactoring-friendly) and minimalistic (while still fully functional!).</p>
+				<p>moq.ts as the original <a href="https://github.com/moq/moq4">Moq library</a> is intended to be simple to use, strongly typed (no magic strings!, and therefore full compiler-verified and refactoring-friendly) and minimalistic (while still fully functional!).
+				Every each mock is an instance of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy">Proxy</a> object.</p>
 				<p>You can find a pretty full set of usages in the integration tests. Check out <a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/">tests.integration</a> folder.</p>
 				<hr>
 				<ul>
-					<li><a href="#mocking-property-of-objects">Mocking property of objects</a></li>
-					<li><a href="#mocking-property-setting">Mocking property setting</a></li>
+					<li><a href="#mocking-reading-properties">Mocking reading properties</a></li>
+					<li><a href="#mocking-writing-property">Mocking writing property setting</a></li>
 					<li><a href="#mocking-functions">Mocking functions</a></li>
 					<li><a href="#mocking-functions-of-objects">Mocking functions of objects</a></li>
 					<li><a href="#type-discovering">Type Discovering</a></li>
-					<li><a href="#mock-behavior">Mock behavior</a></li>
+					<li><a href="#mock-behavior">Mock behavior</a><ul>
+							<li><a href="#injector-config">Injector config</a><ul>
+									<li><a href="#defaultinjectorconfig">DefaultInjectorConfig</a></li>
+									<li><a href="#equalmatchinginjectorconfig">EqualMatchingInjectorConfig and custom matchers</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
 					<li><a href="#mock-prototype">Mock prototype</a></li>
 					<li><a href="#mimics">Mimics</a></li>
 					<li><a href="#typeof-operator">typeof operator</a></li>
@@ -107,8 +109,8 @@
 				</ul>
 				<hr>
 				<!-- toc -->
-				<a href="#mocking-property-of-objects" id="mocking-property-of-objects" style="color: inherit; text-decoration: none;">
-					<h2>Mocking property of objects</h2>
+				<a href="#mocking-reading-properties" id="mocking-reading-properties" style="color: inherit; text-decoration: none;">
+					<h2>Mocking reading properties</h2>
 				</a>
 				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/get.property.spec.ts">get.property.spec.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {Mock, It, Times, ExpectedGetPropertyExpression} <span class="hljs-keyword">from</span> <span class="hljs-string">'moq.ts'</span>;
@@ -146,8 +148,8 @@
 object.method();
 
 mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span>=&gt;</span> instance.property1, Times.Never());</code></pre>
-				<a href="#mocking-property-setting" id="mocking-property-setting" style="color: inherit; text-decoration: none;">
-					<h2>Mocking property setting</h2>
+				<a href="#mocking-writing-properties" id="mocking-writing-properties" style="color: inherit; text-decoration: none;">
+					<h2>Mocking writing properties</h2>
 				</a>
 				<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set">The documentation on returned value from &#39;set hook&#39; on Proxy object</a></p>
 				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/set.property.spec.ts">set-property.spec.ts</a></p>
@@ -243,18 +245,18 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 					and Moq library relays on other ways to discover the type information. It is required to
 				implement correct behaviour of mocked object.</p>
 				<p>Consider this case:</p>
-				<pre><code class="language-typescript">    <span class="hljs-keyword">class</span> Prototype {
-        method(): <span class="hljs-built_in">void</span> {
-            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Not Implemented"</span>);
-        }
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Prototype {
+    method(): <span class="hljs-built_in">void</span> {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Not Implemented"</span>);
     }
+}
 
-    <span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;()
-        .object();
+<span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;()
+    .object();
 
-    <span class="hljs-keyword">const</span> actual = object.method(); <span class="hljs-comment">// throws TypeError: object.method is not a function</span>
+<span class="hljs-keyword">const</span> actual = object.method(); <span class="hljs-comment">// throws TypeError: object.method is not a function</span>
 
-    expect(actual).toBe(<span class="hljs-literal">undefined</span>);</code></pre>
+expect(actual).toBe(<span class="hljs-literal">undefined</span>);</code></pre>
 				<p>It happens because at runtime the mock does not know that method is a part of the mocked type.
 				So at the moment there are 3 ways how type could be discovered at runtime.</p>
 				<a href="#target" id="target" style="color: inherit; text-decoration: none;">
@@ -263,74 +265,179 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 				<p>It is possible to provide a target object instance when a new instance of mock is being created.
 					It will fix typeof operator. The prototype of the target will be used for type discovering and fixing
 				instanceof operator.</p>
-				<p>By default a mock is instantiated as Function object, so at runtime the mock &quot;knows&quot; about Function inherited
+				<p>By default, a mock is instantiated as Function object, so at runtime the mock &quot;knows&quot; about Function inherited
 				properties and methods. </p>
-				<pre><code class="language-typescript">    <span class="hljs-keyword">class</span> Prototype {
-        method(): <span class="hljs-built_in">void</span> {
-            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Not Implemented"</span>);
-        }
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Prototype {
+    method(): <span class="hljs-built_in">void</span> {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Not Implemented"</span>);
     }
+}
 
-    <span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;({target: <span class="hljs-keyword">new</span> Prototype()})
-        .object();
+<span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;({target: <span class="hljs-keyword">new</span> Prototype()})
+    .object();
 
-    <span class="hljs-keyword">const</span> actual = object.method();
+<span class="hljs-keyword">const</span> actual = object.method();
 
-    expect(actual).toBe(<span class="hljs-literal">undefined</span>);
-    expect(<span class="hljs-keyword">typeof</span> object).toBe(<span class="hljs-string">"object"</span>);
-    expect(object <span class="hljs-keyword">instanceof</span> Prototype).toBe(<span class="hljs-literal">true</span>);</code></pre>
+expect(actual).toBe(<span class="hljs-literal">undefined</span>);
+expect(<span class="hljs-keyword">typeof</span> object).toBe(<span class="hljs-string">"object"</span>);
+expect(object <span class="hljs-keyword">instanceof</span> Prototype).toBe(<span class="hljs-literal">true</span>);</code></pre>
 				<a href="#prototype" id="prototype" style="color: inherit; text-decoration: none;">
 					<h4>Prototype</h4>
 				</a>
 				<p>Another way to deal with type discovering is to provide a prototype object.</p>
-				<pre><code class="language-typescript">    <span class="hljs-keyword">class</span> Prototype {
-        method(): <span class="hljs-built_in">void</span> {
-            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Not Implemented"</span>);
-        }
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Prototype {
+    method(): <span class="hljs-built_in">void</span> {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Not Implemented"</span>);
     }
+}
 
-    <span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;()
-        .prototypeof(Prototype.prototype)
-        .object();
+<span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;()
+    .prototypeof(Prototype.prototype)
+    .object();
 
-    <span class="hljs-keyword">const</span> actual = object.method();
+<span class="hljs-keyword">const</span> actual = object.method();
 
-    expect(actual).toBe(<span class="hljs-literal">undefined</span>);
-    expect(<span class="hljs-keyword">typeof</span> object).toBe(<span class="hljs-string">"function"</span>);
-    expect(object <span class="hljs-keyword">instanceof</span> Prototype).toBe(<span class="hljs-literal">true</span>);</code></pre>
+expect(actual).toBe(<span class="hljs-literal">undefined</span>);
+expect(<span class="hljs-keyword">typeof</span> object).toBe(<span class="hljs-string">"function"</span>);
+expect(object <span class="hljs-keyword">instanceof</span> Prototype).toBe(<span class="hljs-literal">true</span>);</code></pre>
 				<a href="#setup-examination" id="setup-examination" style="color: inherit; text-decoration: none;">
 					<h4>Setup examination</h4>
 				</a>
 				<p>In some cases Moq library can discover type information from provided setup information.</p>
-				<pre><code class="language-typescript">        <span class="hljs-keyword">class</span> Prototype {
-            method(): <span class="hljs-built_in">number</span> {
-                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Not Implemented"</span>);
-            }
-        }
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Prototype {
+    method(): <span class="hljs-built_in">number</span> {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Not Implemented"</span>);
+    }
+}
 
-        <span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;()
-            .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method()) <span class="hljs-comment">// this would be used for type discovering</span>
-            .returns(<span class="hljs-number">2</span>)
-            .object();
+<span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;()
+    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method()) <span class="hljs-comment">// this would be used for type discovering</span>
+    .returns(<span class="hljs-number">2</span>)
+    .object();
 
-        <span class="hljs-keyword">const</span> actual = object.method();
+<span class="hljs-keyword">const</span> actual = object.method();
 
-        expect(actual).toBe(<span class="hljs-number">2</span>);
-        expect(<span class="hljs-keyword">typeof</span> object).toBe(<span class="hljs-string">"function"</span>);</code></pre>
+expect(actual).toBe(<span class="hljs-number">2</span>);
+expect(<span class="hljs-keyword">typeof</span> object).toBe(<span class="hljs-string">"function"</span>);</code></pre>
 				<a href="#mock-behavior" id="mock-behavior" style="color: inherit; text-decoration: none;">
 					<h2>Mock behavior</h2>
 				</a>
 				<p>A mocked object is a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy">Proxy</a>,
 					that configured to track any read and write operations on properties. If you write a value to an arbitrary property the mocked object
-				will keep it and you can read it later on. By default the prototype of mocked object is Function.</p>
-				<p>Accessing to an unset property or a method will return undefined or a pointer to a spy function if it exists on prototype;
-				You can call this function and it will be tracked.</p>
+				will keep it and you can read it later on. By default, the prototype of mocked object is Function.</p>
+				<p>Accessing to an unset property or a method will return undefined, or a pointer to a spy function if it exists on prototype;
+				You can call this function, and it will be tracked.</p>
 				<p>The default behaviour has the lowest precedence.
 				The latest setup has the highest precedence. </p>
 				<p>You can control mock behavior when accessing to a property without a corresponding setup. </p>
-				<pre><code class="language-typescript">    mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;();
-    mock.setup(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> It.IsAny())
-      .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"setup is missed"</span>));</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;();
+mock.setup(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> It.IsAny())
+  .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"setup is missed"</span>));</code></pre>
+				<a href="#injector-config" id="injector-config" style="color: inherit; text-decoration: none;">
+					<h4>Injector config</h4>
+				</a>
+				<p>Internally the library is using <a href="https://angular.io/guide/dependency-injection-providers">Angular injector</a> to create and configure every each Mock object that is created with its constructor.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">new</span> Mock() <span class="hljs-comment">// &lt;-- calls angular injector internally to create all dependencies </span></code></pre>
+				<p>The library provides an extension point to change the way how mocks are configured internally. It is available through IMockOptions.injectorConfig
+				that could be applied globally or per mock instance at the instancing phase.  </p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">"moq.ts"</span>;
+
+<span class="hljs-comment">// The global configuration that would be overridden with instance options </span>
+Mock.options = {injectorConfig: <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig()};
+<span class="hljs-comment">// or per instance</span>
+<span class="hljs-keyword">new</span> Mock({injectorConfig: <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig()})</code></pre>
+				<p>Out of the box there are 2 available configurations that change the way how a mock compares expressions.</p>
+				<a href="#defaultinjectorconfig" id="defaultinjectorconfig" style="color: inherit; text-decoration: none;">
+					<h4>DefaultInjectorConfig</h4>
+				</a>
+				<p>This is a default configuration that provides the standard mock behaviours. </p>
+				<a href="#equalmatchinginjectorconfig" id="equalmatchinginjectorconfig" style="color: inherit; text-decoration: none;">
+					<h4>EqualMatchingInjectorConfig</h4>
+				</a>
+				<p>By default, all values are matched with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness">Equality comparisons and sameness</a> that
+					is limited in matching objects. On the other hand developers are using so called &quot;deep equal comparison&quot; approach, where objects are matched by its properties and values.
+				This configuration changes the way how expressions are matched and introduce deep equal comparison logic as well as an extension point for custom matchers.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">"moq.ts"</span>;
+
+<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function">(<span class="hljs-params">args: <span class="hljs-built_in">number</span>[]</span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt;()
+    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance([<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]))
+    .returns(<span class="hljs-number">2</span>);
+
+<span class="hljs-keyword">const</span> object = mock.object();
+
+<span class="hljs-keyword">const</span> actual = object([<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
+
+<span class="hljs-comment">// since the default comparisons logic sees [2, 1] and [2, 1] as different objects the provided setup would not work</span>
+expect(actual).toBe(<span class="hljs-literal">undefined</span>);</code></pre>
+				<p>and compare with</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">"moq.ts"</span>;
+
+<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function">(<span class="hljs-params">args: <span class="hljs-built_in">number</span>[]</span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt;({injectorConfig: <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig()})
+    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance([<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]))
+    .returns(<span class="hljs-number">2</span>);
+
+<span class="hljs-keyword">const</span> object = mock.object();
+
+<span class="hljs-keyword">const</span> actual = object([<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
+
+expect(actual).toBe(<span class="hljs-number">2</span>);</code></pre>
+				<p>Internally the equal comparision logic implemented as a collection of object matchers that implement IObjectMatcher interface.</p>
+				<p>Matchers with the most specific logic should come first in the collection and if they are not able to match the objects
+				then more general matchers would be invoked.</p>
+				<p>The library comes with the following matchers:
+				0. Custom matchers</p>
+				<ol>
+					<li>DateMatcher - matches <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a> objects</li>
+					<li>MapMatcher - matches <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> objects</li>
+					<li>IteratorMatcher - matches objects that supports <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterator protocol</a></li>
+					<li>POJOMatcher - as the last resort matches objects as <a href="https://en.wikipedia.org/wiki/Plain_old_Java_object">POJO</a> objects.</li>
+				</ol>
+				<p>if you need a custom matcher it will come at index 1. Here is an example of a custom matcher that matches Moment and Date objects.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, IObjectMatcher, Mock, OBJECT_MATCHERS } <span class="hljs-keyword">from</span> <span class="hljs-string">"moq.ts"</span>;
+<span class="hljs-keyword">import</span> { isMoment, utc } <span class="hljs-keyword">from</span> <span class="hljs-string">"moment"</span>;
+
+<span class="hljs-keyword">class</span> MomentDateMatcher <span class="hljs-keyword">implements</span> IObjectMatcher {
+    matched&lt;T <span class="hljs-keyword">extends</span> object&gt;(left: T, right: T): <span class="hljs-built_in">boolean</span> | <span class="hljs-literal">undefined</span> {
+        <span class="hljs-keyword">if</span> (left <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Date</span> &amp;&amp; isMoment(right)) {
+            <span class="hljs-keyword">return</span> left.valueOf() === right.valueOf();
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>;
+    }
+}
+
+<span class="hljs-keyword">const</span> moment = utc(<span class="hljs-number">1</span>);
+<span class="hljs-keyword">const</span> injectorConfig = <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig([{
+    provide: OBJECT_MATCHERS,
+    useClass: MomentDateMatcher,
+    multi: <span class="hljs-literal">true</span>,
+    deps: []
+}]);
+
+<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function">(<span class="hljs-params">args: <span class="hljs-built_in">any</span></span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt;({injectorConfig})
+    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(moment))
+    .returns(<span class="hljs-number">2</span>);
+
+<span class="hljs-keyword">const</span> object = mock.object();
+
+<span class="hljs-keyword">const</span> actual = object(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">1</span>));
+
+expect(actual).toBe(<span class="hljs-number">2</span>);</code></pre>
+				<p>The matching logic of EqualMatchingInjectorConfig supports <a href="https://raw.githubusercontent.com/dvabuzyarov/moq.ts/master/projects/moq/src/lib/expected-expressions/expression-predicates.ts">It notation</a>.
+				So you can do a partial comparision.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, It, Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">"moq.ts"</span>;
+
+<span class="hljs-keyword">const</span> func = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-literal">undefined</span>;
+
+<span class="hljs-keyword">const</span> injectorConfig = <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig();
+<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function">(<span class="hljs-params">args: <span class="hljs-built_in">any</span></span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt;({injectorConfig})
+    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance({func: It.IsAny()})) <span class="hljs-comment">// &lt;-- func property will be matched with It delegate</span>
+    .returns(<span class="hljs-number">2</span>);
+
+<span class="hljs-keyword">const</span> object = mock.object();
+
+<span class="hljs-keyword">const</span> actual = object({func});
+
+expect(actual).toBe(<span class="hljs-number">2</span>);</code></pre>
 				<a href="#mock-prototype" id="mock-prototype" style="color: inherit; text-decoration: none;">
 					<h2>Mock prototype</h2>
 				</a>
@@ -389,43 +496,42 @@ expect(<span class="hljs-keyword">typeof</span> mock.object()).toBe(<span class=
 				</a>
 				<p>The library supports <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in">in operator</a>.
 				More examples could be found <a href="https://raw.githubusercontent.com/dvabuzyarov/moq.ts/master/projects/moq/src/integration.specs/in-operator.spec.ts">here</a></p>
-				<pre><code class="language-typescript">        <span class="hljs-keyword">const</span> name = <span class="hljs-string">"arbitrary name"</span>;
-        <span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;{}&gt;()
-            .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> name <span class="hljs-keyword">in</span> instance)
-            .returns(<span class="hljs-literal">true</span>)
-            .object();
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> name = <span class="hljs-string">"arbitrary name"</span>;
+<span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;{}&gt;()
+    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> name <span class="hljs-keyword">in</span> instance)
+    .returns(<span class="hljs-literal">true</span>)
+    .object();
 
-        expect(name <span class="hljs-keyword">in</span> object).toBe(<span class="hljs-literal">true</span>);</code></pre>
-				<pre><code class="language-typescript">        <span class="hljs-keyword">interface</span> ITestObject {
-             property: <span class="hljs-built_in">string</span>;
+expect(name <span class="hljs-keyword">in</span> object).toBe(<span class="hljs-literal">true</span>);</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-keyword">interface</span> ITestObject {
+     property: <span class="hljs-built_in">string</span>;
 
-             method(): <span class="hljs-built_in">void</span>;
-         }
+     method(): <span class="hljs-built_in">void</span>;
+ }
 
-         <span class="hljs-keyword">class</span> TestObject <span class="hljs-keyword">implements</span> ITestObject {
-             property: <span class="hljs-built_in">string</span>;
+ <span class="hljs-keyword">class</span> TestObject <span class="hljs-keyword">implements</span> ITestObject {
+     property: <span class="hljs-built_in">string</span>;
 
-             method(): <span class="hljs-built_in">void</span> {
-                 <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>;
-             }
-         }
+     method(): <span class="hljs-built_in">void</span> {
+         <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>;
+     }
+ }
 
-        <span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
-            .prototypeof(TestObject.prototype)
-            .object();
+<span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
+    .prototypeof(TestObject.prototype)
+    .object();
 
-        <span class="hljs-comment">// because "property" in new TestObject() === false</span>
-        expect(<span class="hljs-string">"property"</span> <span class="hljs-keyword">in</span> object).toBe(<span class="hljs-literal">false</span>);
-        expect(<span class="hljs-string">"method"</span> <span class="hljs-keyword">in</span> object).toBe(<span class="hljs-literal">true</span>);</code></pre>
-				<pre><code class="language-typescript">
-        <span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;{}&gt;();
-        <span class="hljs-keyword">const</span> object = mock.object();
+<span class="hljs-comment">// because "property" in new TestObject() === false</span>
+expect(<span class="hljs-string">"property"</span> <span class="hljs-keyword">in</span> object).toBe(<span class="hljs-literal">false</span>);
+expect(<span class="hljs-string">"method"</span> <span class="hljs-keyword">in</span> object).toBe(<span class="hljs-literal">true</span>);</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;{}&gt;();
+<span class="hljs-keyword">const</span> object = mock.object();
 
-        <span class="hljs-keyword">const</span> actual1 = <span class="hljs-string">"property"</span> <span class="hljs-keyword">in</span> object;
-        <span class="hljs-keyword">const</span> actual2 = <span class="hljs-string">"method"</span> <span class="hljs-keyword">in</span> object;
+<span class="hljs-keyword">const</span> actual1 = <span class="hljs-string">"property"</span> <span class="hljs-keyword">in</span> object;
+<span class="hljs-keyword">const</span> actual2 = <span class="hljs-string">"method"</span> <span class="hljs-keyword">in</span> object;
 
-        mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> <span class="hljs-string">"property"</span> <span class="hljs-keyword">in</span> instance, Times.Once());
-        mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> <span class="hljs-string">"method"</span> <span class="hljs-keyword">in</span> instance, Times.Once());</code></pre>
+mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> <span class="hljs-string">"property"</span> <span class="hljs-keyword">in</span> instance, Times.Once());
+mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> <span class="hljs-string">"method"</span> <span class="hljs-keyword">in</span> instance, Times.Once());</code></pre>
 				<a href="#moqapi-symbol" id="moqapi-symbol" style="color: inherit; text-decoration: none;">
 					<h2>MoqAPI symbol</h2>
 				</a>
@@ -436,30 +542,30 @@ expect(<span class="hljs-keyword">typeof</span> mock.object()).toBe(<span class=
 					and is not specific for mocked types it is not possible to define an interaction behaviour
 				with Setup API.</p>
 				<p>The property is read only and trackabel, so it possible to use for verification.</p>
-				<pre><code class="language-typescript">   <span class="hljs-keyword">const</span> func = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">void</span>&gt;()
-   .object();
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> func = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">void</span>&gt;()
+.object();
 
-   func[MoqAPI]
-   .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance())
-   .returns(<span class="hljs-number">12</span>);
+func[MoqAPI]
+.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance())
+.returns(<span class="hljs-number">12</span>);
 
-   <span class="hljs-keyword">const</span> actual = func();
+<span class="hljs-keyword">const</span> actual = func();
 
-   expect(actual).toBe(<span class="hljs-number">12</span>);</code></pre>
+expect(actual).toBe(<span class="hljs-number">12</span>);</code></pre>
 				<p>In operator does not sees this property until it is used in setups.</p>
-				<pre><code class="language-typescript">        <span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;{}&gt;()
-            .object();
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> object = <span class="hljs-keyword">new</span> Mock&lt;{}&gt;()
+    .object();
 
-        expect(MoqAPI <span class="hljs-keyword">in</span> object).toBe(<span class="hljs-literal">false</span>);</code></pre>
+expect(MoqAPI <span class="hljs-keyword">in</span> object).toBe(<span class="hljs-literal">false</span>);</code></pre>
 				<p>BUT</p>
-				<pre><code class="language-typescript">        <span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;();
-        <span class="hljs-keyword">const</span> object = mock
-            .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance[MoqAPI])
-            .returns(<span class="hljs-literal">undefined</span>)
-            .object();
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;();
+<span class="hljs-keyword">const</span> object = mock
+    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance[MoqAPI])
+    .returns(<span class="hljs-literal">undefined</span>)
+    .object();
 
-        expect(MoqAPI <span class="hljs-keyword">in</span> object).toBe(<span class="hljs-literal">true</span>);
-        expect(object[MoqAPI]).toBe(mock);</code></pre>
+expect(MoqAPI <span class="hljs-keyword">in</span> object).toBe(<span class="hljs-literal">true</span>);
+expect(object[MoqAPI]).toBe(mock);</code></pre>
 				<p>Sponsored by <a href="https://www.2bit.ch">2BIT</a></p>
 			</div>
 		</div>
