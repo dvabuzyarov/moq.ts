@@ -384,15 +384,15 @@ expect(actual).toBe(<span class="hljs-number">2</span>);</code></pre>
 				<p>Internally the equal comparision logic implemented as a collection of object matchers that implement IObjectMatcher interface.</p>
 				<p>Matchers with the most specific logic should come first in the collection and if they are not able to match the objects
 				then more general matchers would be invoked.</p>
-				<p>The library comes with the following matchers:
-				0. Custom matchers</p>
-				<ol>
+				<p>The library comes with the following matchers:</p>
+				<ol start="0">
+					<li>Custom matchers</li>
 					<li>DateMatcher - matches <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a> objects</li>
 					<li>MapMatcher - matches <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> objects</li>
 					<li>IteratorMatcher - matches objects that supports <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterator protocol</a></li>
 					<li>POJOMatcher - as the last resort matches objects as <a href="https://en.wikipedia.org/wiki/Plain_old_Java_object">POJO</a> objects.</li>
 				</ol>
-				<p>if you need a custom matcher it will come at index 1. Here is an example of a custom matcher that matches Moment and Date objects.</p>
+				<p>Here is an example of a custom matcher that matches Moment and Date objects.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, IObjectMatcher, Mock, OBJECT_MATCHERS } <span class="hljs-keyword">from</span> <span class="hljs-string">"moq.ts"</span>;
 <span class="hljs-keyword">import</span> { isMoment, utc } <span class="hljs-keyword">from</span> <span class="hljs-string">"moment"</span>;
 
