@@ -32,5 +32,8 @@
   "devDependencies": {
     "@angular/core": "*",
     "jasmine": "*"
-  }
+  },
+  "bundledDependencies": [
+    "@angular/core"
+  ]
 }
