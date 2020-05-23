@@ -336,8 +336,8 @@ mock.setup(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;
 				<a href="#injector-config" id="injector-config" style="color: inherit; text-decoration: none;">
 					<h4>Injector config</h4>
 				</a>
-				<p>Internally the library is using <a href="https://angular.io/guide/dependency-injection-providers">Angular injector</a> to create and configure every each Mock object that is created with its constructor.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">new</span> Mock() <span class="hljs-comment">// &lt;-- calls angular injector internally to create all dependencies </span></code></pre>
+				<p>Internally the library is using an injector that implementation is based on <a href="https://angular.io/guide/dependency-injection-providers">Angular injector</a> to create and configure every each Mock object that is created with its constructor.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">new</span> Mock() <span class="hljs-comment">// &lt;-- calls angular based injector internally to create all dependencies </span></code></pre>
 				<p>The library provides an extension point to change the way how mocks are configured internally. It is available through IMockOptions.injectorConfig
 				that could be applied globally or per mock instance at the instancing phase.  </p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">"moq.ts"</span>;
