@@ -1,6 +1,6 @@
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { PresetBuilder } from "./preset-builder";
-import { InjectionToken } from "../static.injector";
+import { InjectionToken } from "../static.injector/injection_token";
 
 /**
  * @hidden

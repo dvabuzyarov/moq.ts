@@ -12,7 +12,7 @@ import { POJOMatcher } from "./pojo.matcher";
 import { ObjectMapProvider } from "./object-map.provider";
 import { MapMatcher } from "./map.matcher";
 import { ConstantMatcher } from "../expression-matchers/constant.matcher";
-import { Injector } from "../static.injector";
+import { Injector } from "../static.injector/injector";
 
 /**
  * @hidden

@@ -2,7 +2,7 @@ import { IExpectedExpression } from "./expected-expressions/expected-expression-
 import { Times } from "./times";
 import { Interaction } from "./interactions";
 import { Tracker } from "./tracker/tracker";
-import { StaticProvider } from "./static.injector";
+import { StaticProvider } from "./static.injector/interface/provider";
 
 export const enum PlayableUpdateReason {
     /**

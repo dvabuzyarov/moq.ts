@@ -1,6 +1,6 @@
 import { IObjectMatcher } from "./object-matcher.type";
 import { ConstantMatcher } from "../expression-matchers/constant.matcher";
-import { Injector } from "../static.injector";
+import { Injector } from "../static.injector/injector";
 
 /**
  * Matches Map objects

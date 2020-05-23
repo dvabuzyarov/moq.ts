@@ -6,7 +6,7 @@ import { MapMatcher } from "../equal-matchers/map.matcher";
 import { IteratorMatcher } from "../equal-matchers/iterator.matcher";
 import { POJOMatcher } from "../equal-matchers/pojo.matcher";
 import { DefaultInjectorConfig } from "./default-injector.config";
-import { StaticProvider } from "../static.injector";
+import { StaticProvider } from "../static.injector/interface/provider";
 
 /**
  * Provides the configuration for Angular based injector that would use equal logic for matching values.

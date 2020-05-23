@@ -8,7 +8,7 @@ import { CallbacksPreset } from "./presets/callbacks.preset";
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { IPreset } from "./presets/preset";
 import { PlayTimes } from "../playables/play-times";
-import { InjectionToken } from "../static.injector";
+import { InjectionToken } from "../static.injector/injection_token";
 
 describe("Preset builder", () => {
     const Mock = new InjectionToken<IMock<unknown>>("mock");

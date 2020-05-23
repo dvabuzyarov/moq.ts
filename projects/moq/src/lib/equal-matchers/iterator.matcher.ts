@@ -1,7 +1,7 @@
 import { IterableTester } from "./iterable.tester";
 import { ConstantMatcher } from "../expression-matchers/constant.matcher";
 import { IObjectMatcher } from "./object-matcher.type";
-import { Injector } from "../static.injector";
+import { Injector } from "../static.injector/injector";
 
 /**
  * Matches objects that support Iterable protocol

@@ -1,5 +1,5 @@
 import { IMockOptions } from "../moq";
-import { InjectionToken } from "../static.injector";
+import { InjectionToken } from "../static.injector/injection_token";
 
 /**
  * @hidden

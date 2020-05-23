@@ -12,7 +12,7 @@ import {
     catchInjectorError,
     formatError,
     INJECTOR,
-    NG_TEMP_TOKEN_PATH,
+    NG_TEMP_TOKEN_PATH, NO_NEW_LINE,
     NullInjector,
     THROW_IF_NOT_FOUND,
     USE_VALUE
@@ -118,8 +118,6 @@ const enum OptionFlags {
     // tslint:disable-next-line:no-bitwise
     Default = CheckSelf | CheckParent
 }
-
-const NO_NEW_LINE = "ɵ";
 
 export class StaticInjector implements Injector {
     readonly parent: Injector;

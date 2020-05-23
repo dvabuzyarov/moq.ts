@@ -1,5 +1,6 @@
 import { IMockOptions } from "../moq";
-import { Injector, StaticProvider } from "../static.injector";
+import { StaticProvider } from "../static.injector/interface/provider";
+import { Injector } from "../static.injector/injector";
 
 /**
  * Creates an angular based injector
