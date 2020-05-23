@@ -1,6 +1,6 @@
-import { InjectionToken } from "@angular/core";
 import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
 import { PresetBuilder } from "./preset-builder";
+import { InjectionToken } from "../static.injector";
 
 /**
  * @hidden

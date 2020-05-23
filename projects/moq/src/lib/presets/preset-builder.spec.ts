@@ -6,9 +6,9 @@ import { ReturnsPreset } from "./presets/returns.preset";
 import { ThrowsPreset } from "./presets/throws.preset";
 import { CallbacksPreset } from "./presets/callbacks.preset";
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
-import { InjectionToken } from "@angular/core";
 import { IPreset } from "./presets/preset";
 import { PlayTimes } from "../playables/play-times";
+import { InjectionToken } from "../static.injector";
 
 describe("Preset builder", () => {
     const Mock = new InjectionToken<IMock<unknown>>("mock");

@@ -1,4 +1,3 @@
-import { StaticProvider } from "@angular/core";
 import { IMockOptions } from "../moq";
 import { equalMatchersProviders } from "../equal-matchers/equal-matchers.providers";
 import { OBJECT_MATCHERS } from "../equal-matchers/object-matchers.injection-token";
@@ -7,9 +6,10 @@ import { MapMatcher } from "../equal-matchers/map.matcher";
 import { IteratorMatcher } from "../equal-matchers/iterator.matcher";
 import { POJOMatcher } from "../equal-matchers/pojo.matcher";
 import { DefaultInjectorConfig } from "./default-injector.config";
+import { StaticProvider } from "../static.injector";
 
 /**
- * Provides the configuration for Angular injector that would use equal logic for matching values.
+ * Provides the configuration for Angular based injector that would use equal logic for matching values.
  * By default, all values are matched with
  * [Equality comparisons and sameness](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness)
  * that is limited in matching objects. On the other hand developers are using so called "deep equal comparison" approach,

@@ -2,7 +2,7 @@ import { createInjector, resolve } from "../../tests.components/resolve.builder"
 import { ObjectMatcher } from "./object.matcher";
 import { IObjectMatcher } from "./object-matcher.type";
 import { OBJECT_MATCHERS } from "./object-matchers.injection-token";
-import { InjectionToken } from "@angular/core";
+import { InjectionToken } from "../static.injector";
 
 describe("Object matcher", () => {
     const FIRST_MATCHER = new InjectionToken<IObjectMatcher>("First Matcher");

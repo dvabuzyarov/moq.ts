@@ -22,3 +22,4 @@ export * from "./lib/injector/moq.injection-token";
 export * from "./lib/mock-options/mock-options.injection-token";
 export * from "./lib/equal-matchers/object-matchers.injection-token";
 export * from "./lib/equal-matchers/object-matcher.type";
+export * from "./lib/static.injector/index";

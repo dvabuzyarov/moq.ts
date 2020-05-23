@@ -288,9 +288,9 @@ mock.setup(() => It.IsAny())
 ```
 
 #### Injector config
-Internally the library is using [Angular injector](https://angular.io/guide/dependency-injection-providers) to create and configure every each Mock object that is created with its constructor.
+Internally the library is using an injector that implementation is based on [Angular injector](https://angular.io/guide/dependency-injection-providers) to create and configure every each Mock object that is created with its constructor.
 ```typescript
-new Mock() // <-- calls angular injector internally to create all dependencies 
+new Mock() // <-- calls angular based injector internally to create all dependencies 
 ``` 
 The library provides an extension point to change the way how mocks are configured internally. It is available through IMockOptions.injectorConfig
 that could be applied globally or per mock instance at the instancing phase.  

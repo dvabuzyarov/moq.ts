@@ -10,9 +10,9 @@ import { IteratorMatcher } from "./iterator.matcher";
 import { OBJECT_MATCHERS } from "./object-matchers.injection-token";
 import { POJOMatcher } from "./pojo.matcher";
 import { ObjectMapProvider } from "./object-map.provider";
-import { Injector } from "@angular/core";
 import { MapMatcher } from "./map.matcher";
 import { ConstantMatcher } from "../expression-matchers/constant.matcher";
+import { Injector } from "../static.injector";
 
 /**
  * @hidden

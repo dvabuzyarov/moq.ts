@@ -2,7 +2,8 @@
 import SpyObj = jasmine.SpyObj;
 // @ts-ignore
 import Spy = jasmine.Spy;
-import { InjectionToken, Injector, StaticProvider, Type } from "@angular/core";
+import { Type } from "../lib/static.injector/type";
+import { InjectionToken, Injector, StaticProvider } from "../lib/static.injector";
 
 export type SpiedObject<T> = T & {
     [K in keyof T]: T[K] extends Function ? T[K] & SpiedObject<T> & Spy : SpiedObject<T[K]>;
