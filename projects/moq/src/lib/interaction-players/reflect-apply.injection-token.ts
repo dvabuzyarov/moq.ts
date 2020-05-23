@@ -1,4 +1,4 @@
-import { InjectionToken } from "@angular/core";
+import { InjectionToken } from "../static.injector/injection_token";
 
 /**
  * @hidden

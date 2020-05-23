@@ -1,8 +1,8 @@
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { IteratorMatcher } from "./iterator.matcher";
 import { IterableTester } from "./iterable.tester";
-import { Injector } from "@angular/core";
 import { ConstantMatcher } from "../expression-matchers/constant.matcher";
+import { Injector } from "../static.injector/injector";
 
 describe("Iterator matcher", () => {
 

@@ -1,4 +1,3 @@
-import { Inject } from "@angular/core";
 import { typeofInjectionToken } from "../typeof-injection-token";
 import { OBJECT_MATCHERS } from "./object-matchers.injection-token";
 
@@ -8,7 +7,6 @@ import { OBJECT_MATCHERS } from "./object-matchers.injection-token";
 export class ObjectMatcher {
 
     constructor(
-        @Inject(OBJECT_MATCHERS)
         private matchers: typeofInjectionToken<typeof OBJECT_MATCHERS>) {
     }
 

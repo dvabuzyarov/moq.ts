@@ -1,6 +1,6 @@
 import { IObjectMatcher } from "./object-matcher.type";
-import { Injector } from "@angular/core";
 import { ConstantMatcher } from "../expression-matchers/constant.matcher";
+import { Injector } from "../static.injector/injector";
 
 /**
  * Matches Map objects

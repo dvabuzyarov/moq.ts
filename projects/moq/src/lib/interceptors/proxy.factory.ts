@@ -4,9 +4,8 @@ import { ApplyTrap } from "./apply.trap";
 import { GetPrototypeOfTrap } from "./get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./set-prototype-of.trap";
 import { HasTrap } from "./has.trap";
-import { Inject } from "@angular/core";
-import { IMockOptions } from "../moq";
 import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
+import { typeofInjectionToken } from "../typeof-injection-token";
 
 /**
  * @hidden
@@ -14,8 +13,7 @@ import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
 export class ProxyFactory<T> {
     private _proxy: T;
 
-    constructor(@Inject(MOCK_OPTIONS)
-                private options: IMockOptions<T>,
+    constructor(private options: typeofInjectionToken<typeof MOCK_OPTIONS>,
                 private getTrap: GetTrap,
                 private setTrap: SetTrap,
                 private hasTrap: HasTrap,

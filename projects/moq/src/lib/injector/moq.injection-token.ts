@@ -1,5 +1,5 @@
-import { InjectionToken } from "@angular/core";
 import { IMock } from "../moq";
+import { InjectionToken } from "../static.injector/injection_token";
 
 /**
  * @Hidden

@@ -1,7 +1,7 @@
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { MapMatcher } from "./map.matcher";
-import { Injector } from "@angular/core";
 import { ConstantMatcher } from "../expression-matchers/constant.matcher";
+import { Injector } from "../static.injector/injector";
 
 describe("Map matcher", () => {
     beforeEach(() => {
