@@ -98,7 +98,7 @@ const value = {field: new Date()};
 const mock = new Mock<ITestObject>()
     .setup(instance => {instance.property = 1})
     //true - allows the write operation
-    .returns(true)
+    .returns(true as any)
     
     .setup(instance => It.Is((expression: ExpectedSetPropertyExpression) => expression.name === 'property' && expression.value === 2))
     //false - denies the write operation
@@ -313,7 +313,7 @@ By default, all values are matched with [Equality comparisons and sameness](http
 is limited in matching objects. On the other hand developers are using so called "deep equal comparison" approach, where objects are matched by its properties and values.
 This configuration changes the way how expressions are matched and introduce deep equal comparison logic as well as an extension point for custom matchers.
 ```typescript
-import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
+import { Mock } from "moq.ts";
 
 const mock = new Mock<(args: number[]) => number>()
     .setup(instance => instance([2, 1]))

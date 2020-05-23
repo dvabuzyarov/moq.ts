@@ -14,10 +14,8 @@ describe("Set property", () => {
     it("Allows write", () => {
         const value = "value";
         const object = new Mock<ITestObject>()
-            .setup(instance => {
-                instance.property = "a";
-            })
-            .returns(true)
+            .setup(instance => instance.property = "a")
+            .returns(true as any)
             .object();
 
         const action = () => object.property = "a";
@@ -31,7 +29,7 @@ describe("Set property", () => {
             .setup(instance => {
                 instance.property = "a";
             })
-            .returns(false)
+            .returns(false as any)
             .object();
 
         const action = () => object.property = "a";
@@ -71,7 +69,7 @@ describe("Set property", () => {
     it("Verifies", () => {
         const mock = new Mock<ITestObject>()
             .setup(instance => instance.property = "a")
-            .returns(false);
+            .returns(false as any);
 
         const object = mock.object();
         const action = () => object.property = "a";
