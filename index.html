@@ -163,7 +163,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 <span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
     .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> {instance.property = <span class="hljs-number">1</span>})
     <span class="hljs-comment">//true - allows the write operation</span>
-    .returns(<span class="hljs-literal">true</span>)
+    .returns(<span class="hljs-literal">true</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">any</span>)
 
     .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function">(<span class="hljs-params">expression: ExpectedSetPropertyExpression</span>) =&gt;</span> expression.name === <span class="hljs-string">'property'</span> &amp;&amp; expression.value === <span class="hljs-number">2</span>))
     <span class="hljs-comment">//false - denies the write operation</span>
@@ -357,7 +357,7 @@ Mock.options = {injectorConfig: <span class="hljs-keyword">new</span> EqualMatch
 				<p>By default, all values are matched with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness">Equality comparisons and sameness</a> that
 					is limited in matching objects. On the other hand developers are using so called &quot;deep equal comparison&quot; approach, where objects are matched by its properties and values.
 				This configuration changes the way how expressions are matched and introduce deep equal comparison logic as well as an extension point for custom matchers.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">"moq.ts"</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">"moq.ts"</span>;
 
 <span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function">(<span class="hljs-params">args: <span class="hljs-built_in">number</span>[]</span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt;()
     .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance([<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]))
