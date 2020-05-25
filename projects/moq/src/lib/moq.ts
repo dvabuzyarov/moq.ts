@@ -204,11 +204,11 @@ export interface IMock<T> {
      * @param expression A function that accepts a
      * [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
      * and either plays expected interaction or returns a predicate function.
-     * Refer {@link It} class for parameter placeholders or redicate functions.
+     * Refer {@link It} class for parameter placeholders or predicate functions.
      * Refer the integration tests for more examples.
      * @returns PresetBuilder config interface for the provided expression.
      */
-    setup(expression: IExpectedExpression<T>): IPresetBuilder<T>;
+    setup<TReturn = any>(expression: IExpectedExpression<T>): IPresetBuilder<T, TReturn>;
 
     /**
      * Asserts expected interactions with the mocked object.
