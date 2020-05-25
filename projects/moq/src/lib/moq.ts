@@ -208,7 +208,8 @@ export interface IMock<T> {
      * Refer the integration tests for more examples.
      * @returns PresetBuilder config interface for the provided expression.
      */
-    setup<TReturn = any>(expression: IExpectedExpression<T>): IPresetBuilder<T, TReturn>;
+    setup<E extends IExpectedExpression<T>,
+        R = E extends (...args: any[]) => infer M ? M : any>(expression: E): IPresetBuilder<T, R>;
 
     /**
      * Asserts expected interactions with the mocked object.

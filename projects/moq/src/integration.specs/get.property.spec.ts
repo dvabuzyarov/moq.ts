@@ -67,7 +67,7 @@ describe("Mock: Get property", () => {
             .setup(instance => {
                 instance.property = It.IsAny();
             })
-            .returns(false)
+            .returns(false as any)
             .object();
 
         try {
