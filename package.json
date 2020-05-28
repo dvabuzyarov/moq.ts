@@ -43,7 +43,7 @@
     "rxjs": "6.5.4",
     "semantic-release": "17.0.8",
     "serve": "11.3.1",
-    "ts-node": "8.10.1",
+    "ts-node": "8.10.2",
     "tslint": "6.1.2",
     "typedoc": "0.16.11",
     "typescript": "3.7.5",
