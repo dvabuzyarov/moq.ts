@@ -32,5 +32,8 @@
   "devDependencies": {
     "@angular/core": "*",
     "jasmine": "*"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
   }
 }

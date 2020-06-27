@@ -4,5 +4,8 @@
   "peerDependencies": {
     "typedoc": "*",
     "typescript": "*"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
   }
 }
