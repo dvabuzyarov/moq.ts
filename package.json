@@ -38,8 +38,8 @@
     "cz-conventional-changelog": "3.2.0",
     "husky": "4.2.5",
     "jasmine": "3.5.0",
-    "jasmine-core": "~3.5.0",
-    "ng-packagr": "^10.0.0",
+    "jasmine-core": "3.5.0",
+    "ng-packagr": "10.0.0",
     "rxjs": "6.5.5",
     "semantic-release": "17.1.1",
     "serve": "11.3.2",
@@ -48,7 +48,7 @@
     "typedoc": "0.17.7",
     "typescript": "3.9.5",
     "zone.js": "0.10.3",
-    "tslib": "^2.0.0"
+    "tslib": "2.0.0"
   },
   "release": {
     "branches": [
