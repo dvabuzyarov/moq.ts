@@ -3,6 +3,7 @@ import { SetPropertyInteraction } from "../interactions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { MoqAPI } from "../moq";
+import { PropertyIsReadOnlyTester } from "../explorers/has-property.explorer/property-is-read-only.tester";
 
 /**
  * @hidden
@@ -11,7 +12,8 @@ export class SetTrap {
     constructor(
         private tracker: Tracker,
         private propertiesValueStorage: PropertiesValueStorage,
-        private interactionPlayer: InteractionPlayer) {
+        private interactionPlayer: InteractionPlayer,
+        private propertyIsReadOnlyTester: PropertyIsReadOnlyTester) {
 
     }
 
@@ -21,6 +23,10 @@ export class SetTrap {
         this.tracker.add(expression);
 
         if (property === MoqAPI) {
+            return false;
+        }
+
+        if (this.propertyIsReadOnlyTester.isReadOnly(property) === true) {
             return false;
         }
 
