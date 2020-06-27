@@ -1,117 +1,92 @@
-import { It } from "../lib/expected-expressions/expression-predicates";
-import { ExpectedGetPropertyExpression } from "../lib/expected-expressions/expected-expressions";
-import { Times } from "../lib/times";
 import { Mock } from "../lib/mock";
+import { It } from "../lib/expected-expressions/expression-predicates";
 
-interface ITestObject {
-    property: string;
-}
+describe("Read only properties", () => {
 
-describe("Mock: Get property", () => {
-
-    it("Returns value with a simple setup", () => {
-        const value = "value";
-        const object = new Mock<ITestObject>()
-            .setup(instance => instance.property)
-            .returns(value)
-            .object();
-
-        const actual = object.property;
-
-        expect(actual).toBe(value);
-    });
-
-    it("Returns value with a predicated setup", () => {
-        const value = "value";
-
-        const object = new Mock<ITestObject>()
-            .setup(() => It.Is((expression: ExpectedGetPropertyExpression) => expression.name === "property"))
-            .returns(value)
-            .object();
-
-        expect(object.property).toBe(value);
-    });
-
-    it("Returns undefined for unset property", () => {
-        const object = new Mock<ITestObject>()
-            .object();
-
-        const actual = object.property;
-
-        expect(actual).toBeUndefined();
-    });
-
-    it("Returns last written value", () => {
-        const value = "value";
-        const newValue = "new value";
-
-        const object = new Mock<ITestObject>()
-            .setup(instance => instance.property)
-            .returns(value)
-            .object();
-
-        object.property = newValue;
-        const actual = object.property;
-
-        expect(actual).toBe(newValue);
-    });
-
-    it("Returns the initial value", () => {
-        const value = "value";
-        const newValue = "new value";
-
-        const object = new Mock<ITestObject>()
-            .setup(instance => instance.property)
-            .returns(value)
-            // let's deny any write operation on the property
-            .setup(instance => {
-                instance.property = It.IsAny();
-            })
-            .returns(false as any)
-            .object();
-
-        try {
-            object.property = newValue;
-        } catch (e) {
-            const actual = object.property;
-            expect(actual).toBe(value);
+    it("Throws error for accessor descriptor of a class with prototype API", () => {
+        class TestObject {
+            get name() {
+                return undefined;
+            }
         }
-    });
 
-    it("Calls callback", () => {
-        const value = "value";
-        const callback = jasmine.createSpy("callback").and.returnValue(value);
-        const object = new Mock<ITestObject>()
-            .setup(instance => instance.property)
-            .callback(callback)
+        const object = new Mock<TestObject>()
+            .prototypeof(TestObject.prototype)
+            .setup(instance => (instance as any).name = It.IsAny())
+            .returns(true as any)
             .object();
 
-        const actual = object.property;
-
-        expect(actual).toBe(value);
-        expect(callback).toHaveBeenCalled();
+        expect(() => (object as any).name = "").toThrowMatching(error => error instanceof TypeError);
     });
 
-    it("Throws an exception", () => {
-        const error = new Error("exception");
-        const object = new Mock<ITestObject>()
-            .setup(instance => instance.property)
-            .throws(error)
+    it("Throws error for accessor descriptor of a class with target", () => {
+        class TestObject {
+            get name() {
+                return undefined;
+            }
+        }
+
+        const object = new Mock<TestObject>({target: new TestObject()})
+            .setup(instance => (instance as any).name = It.IsAny())
+            .returns(true as any)
             .object();
 
-        expect(() => object.property).toThrow(error);
+        expect(() => (object as any).name = "").toThrowMatching(error => error instanceof TypeError);
     });
 
-    it("Verifies", () => {
+    it("Throws error for frozen object with prototype API", () => {
+        const testObject = Object.freeze({name: ""});
 
-        const name = "mock name";
-        const mock = new Mock<ITestObject>({name});
-        const object = mock.object();
+        const object = new Mock<typeof testObject>()
+            .prototypeof(testObject)
+            .setup(instance => (instance as any).name = It.IsAny())
+            .returns(true as any)
+            .object();
 
-        const value = object.property;
+        expect(() => (object as any).name = "").toThrowMatching(error => error instanceof TypeError);
+    });
 
-        const action = () => mock.verify(instance => instance.property, Times.AtLeast(2));
+    it("Throws error for frozen object with target", () => {
+        const testObject = Object.freeze({name: ""});
 
-        expect(action).toThrow();
+        const object = new Mock<typeof testObject>({target: testObject})
+            .setup(instance => (instance as any).name = It.IsAny())
+            .returns(true as any)
+            .object();
+
+        expect(() => (object as any).name = "").toThrowMatching(error => error instanceof TypeError);
+    });
+
+    it("Throws error for object with overwritten property description with target", () => {
+        class TestObject {
+            name: string;
+        }
+
+        const test = new TestObject();
+        Object.defineProperty(test, "name", {value: "", writable: false, configurable: true});
+
+        const object = new Mock<typeof test>({target: test})
+            .setup(instance => (instance as any).name = It.IsAny())
+            .returns(true as any)
+            .object();
+
+        expect(() => (object as any).name = "").toThrowMatching(error => error instanceof TypeError);
+    });
+
+    it("Throws error for object with overwritten property description with prototype API", () => {
+        class TestObject {
+            name: string;
+        }
+
+        const test = new TestObject();
+        Object.defineProperty(test, "name", {value: "", writable: false, configurable: true});
+
+        const object = new Mock<typeof test>()
+            .prototypeof(test)
+            .setup(instance => (instance as any).name = It.IsAny())
+            .returns(true as any)
+            .object();
+
+        expect(() => (object as any).name = "").toThrowMatching(error => error instanceof TypeError);
     });
 });

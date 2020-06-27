@@ -14,6 +14,7 @@ import { PresetHasInOperatorExplorer } from "./in-operator-interaction.explorer/
 import { PrototypeStorage } from "../interceptors/prototype.storage";
 import { PropertyDescriptorProvider } from "./members.explorer/property-descriptor.provider";
 import { REFLECT_HAS } from "./reflect-has.injection-token";
+import { PropertyIsReadOnlyTester } from "./has-property.explorer/property-is-read-only.tester";
 
 /**
  * @hidden
@@ -52,6 +53,11 @@ export const typeExplorersProviders = [
     {
         provide: MembersMethodExplorer,
         useClass: MembersMethodExplorer,
+        deps: [PrototypeStorage, PropertyDescriptorProvider, REFLECT_HAS]
+    },
+    {
+        provide: PropertyIsReadOnlyTester,
+        useClass: PropertyIsReadOnlyTester,
         deps: [PrototypeStorage, PropertyDescriptorProvider, REFLECT_HAS]
     },
     {
