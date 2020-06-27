@@ -24,8 +24,7 @@ export class MoqPlugin extends ConverterComponent {
     }
 
     private onDeclaration(context: Context, reflection: Reflection, node?) {
-        // if (reflection.kindOf(ReflectionKind.Module)) { // for "typedoc": "0.17.3"
-        if (reflection.kindOf(ReflectionKind.ExternalModule)) {
+        if (reflection.kindOf(ReflectionKind.Module)) {
             this.moduleRenames.push(<ContainerReflection>reflection);
         }
     }

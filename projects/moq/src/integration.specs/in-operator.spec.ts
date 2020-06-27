@@ -27,7 +27,7 @@ describe("Mock: In operator", () => {
             .setup(instance => instance.property)
             .returns(value)
             .setup(instance => instance.method())
-            .returns(value)
+            .returns(undefined)
             .object();
 
         expect(nameof<ITestObject>("property") in object).toBe(true);

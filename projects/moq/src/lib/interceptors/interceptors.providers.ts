@@ -16,6 +16,7 @@ import { SetPrototypeOfTrap } from "./set-prototype-of.trap";
 import { ProxyFactory } from "./proxy.factory";
 import { MOCK } from "../injector/moq.injection-token";
 import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
+import { PropertyIsReadOnlyTester } from "../explorers/has-property.explorer/property-is-read-only.tester";
 
 /**
  * @hidden
@@ -58,7 +59,7 @@ export const interceptorsProviders = [
     },
     {provide: PropertiesValueStorage, useClass: PropertiesValueStorage, deps: []},
     {provide: PrototypeStorage, useFactory: ({target}) => new PrototypeStorage(target), deps: [MOCK_OPTIONS]},
-    {provide: SetTrap, useClass: SetTrap, deps: [Tracker, PropertiesValueStorage, InteractionPlayer]},
+    {provide: SetTrap, useClass: SetTrap, deps: [Tracker, PropertiesValueStorage, InteractionPlayer, PropertyIsReadOnlyTester]},
     {provide: SetPrototypeOfTrap, useClass: SetPrototypeOfTrap, deps: [PrototypeStorage]},
     {provide: SpyFunctionProvider, useClass: SpyFunctionProvider, deps: [Tracker, InteractionPlayer]},
 ];

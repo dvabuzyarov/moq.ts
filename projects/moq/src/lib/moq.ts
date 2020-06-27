@@ -56,7 +56,7 @@ export interface IPlayable {
  * Sets a behaviour rule for a particular use case
  * @param T The type of mocked object.
  */
-export interface IPresetBuilder<T> {
+export interface IPresetBuilder<T, TValue = any> {
     /**
      * Returns the provided value as a result of interaction in case of
      * - get property value
@@ -66,7 +66,7 @@ export interface IPresetBuilder<T> {
      * - property assignment (true - the assignment is allowed, false - the assignment is not allowed)
      * @param value The value
      */
-    returns<TValue>(value: TValue): IMock<T>;
+    returns(value: TValue): IMock<T>;
 
     /**
      * Throws the provided exception.
@@ -84,13 +84,13 @@ export interface IPresetBuilder<T> {
      *     .callback(({args: [channel, listener]}) => listener(undefined, response));
      * ```
      */
-    callback<TValue>(callback: (interaction: Interaction) => TValue): IMock<T>;
+    callback(callback: (interaction: Interaction) => TValue): IMock<T>;
 
     /**
      * Plays the setup on target invocation when predicate returns true otherwise the setup will be ignored.
      * As predicate {@link PlayTimes} could be used.
      */
-    play(predicate: IPlayable): IPresetBuilder<T>;
+    play(predicate: IPlayable): IPresetBuilder<T, TValue>;
 
     /**
      * Replicates interactions with original object.
@@ -204,11 +204,12 @@ export interface IMock<T> {
      * @param expression A function that accepts a
      * [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
      * and either plays expected interaction or returns a predicate function.
-     * Refer {@link It} class for parameter placeholders or redicate functions.
+     * Refer {@link It} class for parameter placeholders or predicate functions.
      * Refer the integration tests for more examples.
      * @returns PresetBuilder config interface for the provided expression.
      */
-    setup(expression: IExpectedExpression<T>): IPresetBuilder<T>;
+    setup<E extends IExpectedExpression<T>,
+        R = E extends (...args: any[]) => infer M ? M : any>(expression: E): IPresetBuilder<T, R>;
 
     /**
      * Asserts expected interactions with the mocked object.

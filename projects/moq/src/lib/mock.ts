@@ -68,7 +68,9 @@ export class Mock<T> implements IMock<T> {
         return this.options.name;
     }
 
-    public setup(expression: IExpectedExpression<T>): IPresetBuilder<T> {
+    public setup<
+        E extends IExpectedExpression<T>,
+        R = E extends (...args: any[]) => infer M ? M : any>(expression: E): IPresetBuilder<T, R> {
         const expectedExpression = this.expressionReflector.reflect(expression);
         return this.setupFactory(expectedExpression);
     }

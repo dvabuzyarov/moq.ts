@@ -1,7 +1,6 @@
 // @ts-ignore
-import SpyObj = jasmine.SpyObj;
+import {SpyObj, Spy} from "jasmine";
 // @ts-ignore
-import Spy = jasmine.Spy;
 import { Type } from "../lib/static.injector/type";
 import { StaticProvider } from "../lib/static.injector/interface/provider";
 import { Injector } from "../lib/static.injector/injector";

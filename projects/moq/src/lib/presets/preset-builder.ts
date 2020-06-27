@@ -13,7 +13,7 @@ import { PlayTimes } from "../playables/play-times";
  * Is it not intended to be used outside of the moq library.
  * @hidden
  */
-export class PresetBuilder<T> implements IPresetBuilder<T> {
+export class PresetBuilder<T, TValue = any> implements IPresetBuilder<T> {
 
     constructor(
         private mock: IMock<T>,
@@ -29,7 +29,7 @@ export class PresetBuilder<T> implements IPresetBuilder<T> {
         return this.mock;
     }
 
-    public returns<TValue>(value: TValue): IMock<T> {
+    public returns(value: TValue): IMock<T> {
         const preset = new ReturnsPreset(this.playable, this.target, value);
         this.set(preset);
         return this.mock;
@@ -41,7 +41,7 @@ export class PresetBuilder<T> implements IPresetBuilder<T> {
         return this.mock;
     }
 
-    public callback<TValue>(callback: (interaction: Interaction) => TValue): IMock<T> {
+    public callback(callback: (interaction: Interaction) => TValue): IMock<T> {
         const preset = new CallbacksPreset(this.playable, this.target, callback);
         this.set(preset);
         return this.mock;
