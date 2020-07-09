@@ -29,3 +29,4 @@ export { Injector } from "./lib/static.injector/injector";
 export { INJECTOR } from "./lib/static.injector/injector_compatibility";
 export { StaticProvider } from "./lib/static.injector/interface/provider";
 export { InjectionToken } from "./lib/static.injector/injection_token";
+export { FunctionMatcher } from "./lib/equal-matchers/function.matcher";
