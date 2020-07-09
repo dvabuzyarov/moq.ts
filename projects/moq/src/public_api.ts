@@ -22,6 +22,8 @@ export * from "./lib/injector/moq.injection-token";
 export * from "./lib/mock-options/mock-options.injection-token";
 export * from "./lib/equal-matchers/object-matchers.injection-token";
 export * from "./lib/equal-matchers/object-matcher.type";
+export { ConstantMatcher } from "./lib/expression-matchers/constant.matcher";
+export { FunctionMatcher } from "./lib/equal-matchers/function.matcher";
 export * from "./lib/static.injector/metadata";
 export { InjectFlags } from "./lib/static.injector/interface/injector";
 export { forwardRef, isForwardRef } from "./lib/static.injector/forward_ref";
@@ -29,4 +31,4 @@ export { Injector } from "./lib/static.injector/injector";
 export { INJECTOR } from "./lib/static.injector/injector_compatibility";
 export { StaticProvider } from "./lib/static.injector/interface/provider";
 export { InjectionToken } from "./lib/static.injector/injection_token";
-export { FunctionMatcher } from "./lib/equal-matchers/function.matcher";
+
