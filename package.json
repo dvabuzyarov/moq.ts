@@ -39,7 +39,7 @@
     "husky": "4.2.5",
     "jasmine": "3.6.1",
     "jasmine-core": "3.6.0",
-    "ng-packagr": "10.0.3",
+    "ng-packagr": "10.0.4",
     "rxjs": "6.6.2",
     "semantic-release": "17.1.1",
     "serve": "11.3.2",
