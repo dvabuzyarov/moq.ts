@@ -218,20 +218,20 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/instance-method.spec.ts">instance-method.spec.ts</a></p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {Mock, It, Times} <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;moq.ts&#x27;</span>;
 <span class="hljs-keyword">interface</span> ITestObject {
-    method(arg1: <span class="hljs-built_in">number</span>, arg2: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">Date</span>;
+   method(arg1: <span class="hljs-built_in">number</span>, arg2: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">Date</span>;
 }
 
 <span class="hljs-keyword">const</span> values = [<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>];
 
 <span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(<span class="hljs-number">1</span>, values[<span class="hljs-number">0</span>]))
-    .returns(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2016</span>))
+   .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(<span class="hljs-number">1</span>, values[<span class="hljs-number">0</span>]))
+   .returns(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2016</span>))
 
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(It.Is(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === <span class="hljs-number">2</span>), values[<span class="hljs-number">1</span>]))
-    .callback(<span class="hljs-function">(<span class="hljs-params">{args: [arg1, arg2]}</span>)=&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2017</span> + arg1))
+   .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(It.Is(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === <span class="hljs-number">2</span>), values[<span class="hljs-number">1</span>]))
+   .callback(<span class="hljs-function">(<span class="hljs-params">{args: [arg1, arg2]}</span>)=&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2017</span> + arg1))
 
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(<span class="hljs-number">3</span>, It.Is(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === values[<span class="hljs-number">2</span>])))
-    .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;Invoking method with 3 and c&#x27;</span>));
+   .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(<span class="hljs-number">3</span>, It.Is(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === values[<span class="hljs-number">2</span>])))
+   .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;Invoking method with 3 and c&#x27;</span>));
 
 <span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock.object();
 <span class="hljs-keyword">const</span> actual = <span class="hljs-built_in">object</span>.method(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;a&#x27;</span>);
