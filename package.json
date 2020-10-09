@@ -48,7 +48,7 @@
     "typedoc": "0.18.0",
     "typescript": "3.9.7",
     "zone.js": "0.11.1",
-    "tslib": "2.0.2"
+    "tslib": "2.0.3"
   },
   "release": {
     "branches": [
