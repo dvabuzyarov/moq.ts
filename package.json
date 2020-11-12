@@ -33,7 +33,7 @@
     "@semantic-release/changelog": "5.0.1",
     "@types/jasmine": "3.6.1",
     "@types/node": "12.19.4",
-    "codelyzer": "5.2.2",
+    "codelyzer": "6.0.1",
     "cpx": "1.5.0",
     "cz-conventional-changelog": "3.3.0",
     "husky": "4.3.0",
