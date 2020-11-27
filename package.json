@@ -31,7 +31,7 @@
     "@commitlint/config-conventional": "11.0.0",
     "@qiwi/semantic-release-gh-pages-plugin": "5.0.2",
     "@semantic-release/changelog": "5.0.1",
-    "@types/jasmine": "3.6.1",
+    "@types/jasmine": "3.6.2",
     "@types/node": "12.19.4",
     "codelyzer": "6.0.1",
     "cpx": "1.5.0",
