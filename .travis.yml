@@ -13,7 +13,10 @@ cache:
 script:
   - npm run lint
   - npm run test
-  - npm run build-docs
+  - npm run schematics:test
+  - npm run schematics:build
+  - npm run schematics:private-api:run
+  - npm run build:docs
   - npm run build
   - npm run typedoc
 

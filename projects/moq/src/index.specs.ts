@@ -7,19 +7,20 @@ const Jasmine = require("jasmine");
 const jsm = new Jasmine({}) as any;
 
 jsm.configureDefaultReporter({
-  print: arg => {
-    if (arg !== "[32m.[0m") {
-      process.stdout.write(arg);
-    }
-  },
-  showColors: true
+    print: arg => {
+        if (arg !== "[32m.[0m") {
+            // @ts-ignore
+            process.stdout.write(arg);
+        }
+    },
+    showColors: true
 });
 
 jsm.loadConfig({
-  spec_dir: "./out-tsc",
-  spec_files: [
-    "**/*.[sS]pec.js"
-  ]
+    spec_dir: "./specs/moq/",
+    spec_files: [
+        "**/*.[sS]pec.js"
+    ]
 });
 
 jsm.execute();

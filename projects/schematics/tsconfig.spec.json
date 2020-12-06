@@ -1,7 +1,8 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../specs/moq",
+    "outDir": "../../specs/schematics",
     "module": "commonjs",
     "types": [
       "jasmine",
@@ -9,6 +10,7 @@
     ]
   },
   "include": [
+    "src/**/*.ts",
     "src/index.specs.ts",
     "**/*.spec.ts"
   ]

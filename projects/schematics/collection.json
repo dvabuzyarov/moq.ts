@@ -1,0 +1,11 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "private-api": {
+      "description": "Exposes the private units of moq.ts via private_api.ts",
+      "factory": "./private-api/index",
+      "schema": "./private-api/schema.json"
+    }
+  }
+}
+

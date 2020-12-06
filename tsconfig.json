@@ -18,6 +18,12 @@
     },
     {
       "path": "./projects/docs/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/schematics/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/schematics/tsconfig.spec.json"
     }
   ]
 }

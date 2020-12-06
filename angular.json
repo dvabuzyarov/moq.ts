@@ -82,6 +82,62 @@
           }
         }
       }
+    },
+    "schematics": {
+      "projectType": "library",
+      "root": "projects/schematics",
+      "sourceRoot": "projects/schematics/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@testdozer/ng-cmd-builder:build",
+          "options": {
+            "command": "tsc",
+            "args": [
+              "-p ./projects/schematics/tsconfig.lib.prod.json"
+            ],
+            "assets": [
+              {
+                "source": "./projects/schematics/package.json",
+                "dest": "./dist/schematics"
+              },
+              {
+                "source": "./projects/schematics/collection.json",
+                "dest": "./dist/schematics"
+              },
+              {
+                "source": "./projects/schematics/src/private-api/schema.d.ts",
+                "dest": "./dist/schematics/private-api"
+              },
+              {
+                "source": "./projects/schematics/src/private-api/schema.json",
+                "dest": "./dist/schematics/private-api"
+              }
+            ]
+          }
+        },
+        "test": {
+          "builder": "@testdozer/ng-cmd-builder:build",
+          "options": {
+            "command": "tsc",
+            "args": [
+              "-p ./projects/schematics/tsconfig.spec.json"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/schematics/tsconfig.lib.json",
+              "projects/schematics/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "moq",

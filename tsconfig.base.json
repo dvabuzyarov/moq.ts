@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "downlevelIteration": true,
-    "outDir": "./dist/out-tsc",
+    "outDir": "./dist/",
     "sourceMap": true,
     "declaration": false,
     "module": "esnext",
@@ -31,12 +31,6 @@
       ],
       "docs/*": [
         "dist/docs/*"
-      ],
-      "releaser": [
-        "dist/releaser"
-      ],
-      "releaser/*": [
-        "dist/releaser/*"
       ]
     }
   }

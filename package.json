@@ -7,10 +7,14 @@
   },
   "scripts": {
     "start": "ng serve",
-    "build": "ng build moq --prod && cpx README.md ./dist/moq/",
-    "build-docs": "tsc -p ./projects/docs/tsconfig.lib.json",
-    "build-tests": "tsc -p ./projects/moq/tsconfig.spec.json ",
-    "test": "npm run build-tests && node ./out-tsc/**/index.specs.js",
+    "build": "ng build moq --prod && cpx README.md dist/moq/",
+    "build:docs": "tsc -p ./projects/docs/tsconfig.lib.json",
+    "build:tests": "tsc -p ./projects/moq/tsconfig.spec.json",
+    "test": "npm run build:tests && node ./specs/moq/index.specs.js",
+    "schematics:private-api:run": "schematics ./dist/schematics:private-api  --dry-run false",
+    "schematics:build": "ng build schematics",
+    "schematics:build:tests": "ng test schematics",
+    "schematics:test": "npm run schematics:build:tests && node ./specs/schematics/**/index.specs.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "commit": "git-cz",
@@ -22,6 +26,8 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "0.1000.4",
     "@angular-devkit/build-ng-packagr": "0.1000.4",
+    "@angular-devkit/core": "10.0.4",
+    "@angular-devkit/schematics": "10.0.4",
     "@angular/cli": "10.0.4",
     "@angular/compiler": "10.0.5",
     "@angular/compiler-cli": "10.0.5",
@@ -31,6 +37,7 @@
     "@commitlint/config-conventional": "8.3.4",
     "@qiwi/semantic-release-gh-pages-plugin": "1.16.0",
     "@semantic-release/changelog": "5.0.1",
+    "@testdozer/ng-cmd-builder": "1.2.1",
     "@types/jasmine": "3.5.11",
     "@types/node": "12.12.53",
     "codelyzer": "5.2.2",
@@ -44,11 +51,14 @@
     "semantic-release": "17.1.1",
     "serve": "11.3.2",
     "ts-node": "8.10.2",
+    "tslib": "2.0.0",
     "tslint": "6.1.2",
     "typedoc": "0.17.8",
     "typescript": "3.9.7",
     "zone.js": "0.10.3",
-    "tslib": "2.0.0"
+    "@ngrx/store": "10.0.1",
+    "moq.ts": "6.4.0",
+    "ng-auto-moq": "4.0.2"
   },
   "release": {
     "branches": [
@@ -98,8 +108,11 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run test",
+      "pre-commit": "npm run lint && npm run test && npm run schematics:test",
       "commit-msg": "commitlint --edit"
     }
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
   }
 }
