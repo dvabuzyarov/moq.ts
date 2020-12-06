@@ -28,7 +28,7 @@ describe("Options", () => {
     });
 
     it("Returns options", async () => {
-        const privateApiPath = "private api path";
+        const internalApiPath = "internal api path";
         const publicApiPath = "public api path";
         const libPath = "lib path";
         const sourceRoot = "source root";
@@ -48,8 +48,8 @@ describe("Options", () => {
             .setup(instance => instance.project)
             .returns(projectName);
         resolve(PATH_JOIN)
-            .setup(instance => instance(sourceRoot, "private_api.ts"))
-            .returns(privateApiPath)
+            .setup(instance => instance(sourceRoot, "internal_api.ts"))
+            .returns(internalApiPath)
             .setup(instance => instance(sourceRoot, "public_api.ts"))
             .returns(publicApiPath)
             .setup(instance => instance(sourceRoot, "/lib"))
@@ -59,7 +59,7 @@ describe("Options", () => {
         const actual = await get<Options>();
 
         const expected = {
-            privateApiPath,
+            internalApiPath,
             publicApiPath,
             libPath,
             sourceRoot: `/${sourceRoot}`

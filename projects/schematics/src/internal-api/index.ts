@@ -4,7 +4,7 @@ import { JsonObject } from "@angular-devkit/core";
 import { HOST } from "./injection-tokens/host.injection-token";
 import { OPTIONS } from "./injection-tokens/options.injection-token";
 import { CONTEXT } from "./injection-tokens/context.injection-token";
-import { PrivateApiRule } from "./private-api.rule";
+import { InternalApiRule } from "./internal-api.rule";
 import { Injector } from "@angular/core";
 import { PublicFilesProvider } from "./public-files.provider";
 import selectors from "./selectors";
@@ -53,8 +53,8 @@ export default function (options: JsonObject & ISchema) {
                     deps: [HOST, Options, SourceFileCreator, ModuleSpecifierTextSetSelector]
                 },
                 {
-                    provide: PrivateApiRule,
-                    useClass: PrivateApiRule,
+                    provide: InternalApiRule,
+                    useClass: InternalApiRule,
                     deps: [
                         HOST,
                         PrivateFilesProvider,
@@ -69,7 +69,7 @@ export default function (options: JsonObject & ISchema) {
                 },
             ]
         });
-        const rule = injector.get(PrivateApiRule);
+        const rule = injector.get(InternalApiRule);
         return rule.apply();
     };
 }

@@ -11,7 +11,7 @@ import { AddCommentOperator } from "./operators/add-comment.operator";
 import { CreateSourceFileOperator } from "./operators/create-source-file.operator";
 import { PrintSourceFileOperator } from "./operators/print-source-file.operator";
 
-export class PrivateApiRule {
+export class InternalApiRule {
     constructor(
         @Inject(HOST)
         private readonly tree: typeofInjectionToken<typeof HOST>,
@@ -33,20 +33,20 @@ export class PrivateApiRule {
     }
 
     async apply() {
-        const {privateApiPath} = await this.options;
+        const {internalApiPath} = await this.options;
         const projectFiles = await this.privateFilesProvider.get();
 
         const privateApiFile = this.from(
             projectFiles,
             this.pipe(
                 this.createExportDeclarations,
-                this.addComment("\n * Private API Surface of moq.ts \n"),
+                this.addComment("\n * Internal API Surface of moq.ts \n"),
                 this.createSourceFile,
                 this.printSourceFile
             )
         );
 
-        this.tree.overwrite(privateApiPath, privateApiFile);
+        this.tree.overwrite(internalApiPath, privateApiFile);
         return this.tree;
     }
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
   "lib": {
-    "entryFile": "../src/private_api.ts"
+    "entryFile": "../src/internal_api.ts"
   }
 }

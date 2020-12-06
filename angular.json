@@ -106,12 +106,12 @@
                 "dest": "./dist/schematics"
               },
               {
-                "source": "./projects/schematics/src/private-api/schema.d.ts",
-                "dest": "./dist/schematics/private-api"
+                "source": "./projects/schematics/src/internal-api/schema.d.ts",
+                "dest": "./dist/schematics/internal-api"
               },
               {
-                "source": "./projects/schematics/src/private-api/schema.json",
-                "dest": "./dist/schematics/private-api"
+                "source": "./projects/schematics/src/internal-api/schema.json",
+                "dest": "./dist/schematics/internal-api"
               }
             ]
           }
