@@ -8,6 +8,7 @@ import { typeOfInjectionFactory } from "../L0/L0.injection-factory/injection-fac
 import { AsyncReturnType } from "../L0/L0.promise/async-return-type";
 import { OPTIONS } from "./injection-tokens/options.injection-token";
 import { PATH_JOIN } from "./injection-tokens/join.injection-token";
+import { AngularWorkspace } from "@angular/cli/utilities/config";
 
 describe("Options", () => {
     beforeEach(() => {
@@ -16,7 +17,7 @@ describe("Options", () => {
 
     beforeEach(() => {
         const project = dataMock<WorkspaceProject>({});
-        const workspace = dataMock<Workspace>({getProject: () => project});
+        const workspace = dataMock<AngularWorkspace>({getProjectCli: () => project});
         resolve(GETWORKSPACE)
             .setup(instance => instance(It.IsAny()))
             .returns(Promise.resolve(workspace));
@@ -36,8 +37,8 @@ describe("Options", () => {
 
         const project = dataMock<WorkspaceProject>({sourceRoot});
 
-        const workspace = new Mock<Workspace>()
-            .setup(instance => instance.getProject(projectName))
+        const workspace = new Mock<AngularWorkspace>()
+            .setup(instance => instance.getProjectCli(projectName))
             .returns(project)
             .object();
 
