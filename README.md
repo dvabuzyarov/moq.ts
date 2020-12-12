@@ -406,22 +406,21 @@ const actual = object({func});
 expect(actual).toBe(2);
 ```
 #### Internal API
-**moq.ts** library is comprised of small units that follow [SOLID principles](https://en.wikipedia.org/wiki/SOLID). 
-Some of that units are included in the public API, the others are part of the **internal API**.
+The **moq.ts** library is comprised of small units that follow [SOLID principles](https://en.wikipedia.org/wiki/SOLID). 
+Some of those units are included in the public API. The others are part of the **internal API**.
 
+All of the units are composed together by an IoC container and make the library run. The IoC container's
+config is part of the public API, and developers can use it to change the behavior of any aspect of the library. 
+In order to do this, developers need access to all public and internal units as well. 
 
-All the units are composed together by an IoC container and make the library running. The IoC container's
-config is a part of the public API and thought it developers could change behaviour of any aspect of the library. For that 
-purposes developers need access to all public and internal units as well. 
-
-The core unites are public and are available directly from moq.ts package.
-Changes in those units follow [Semantic Versioning](https://semver.org). In contrast with that changes in the internal 
-units do not follow [Semantic Versioning](https://semver.org) and could produce all types of version increment.
+The core units are public and are available directly from the moq.ts package.
+Changes in those units follow [Semantic Versioning](https://semver.org), while changes in the internal 
+units do not follow [Semantic Versioning](https://semver.org) and could produce all types of version increments.
 ```typescript
 import * from "moq.ts/internal";
 ```
->The internal API access opens a wide opportunities to customize the library behaviour on one hand, 
-> and the user code that is based on the internal API **could be easily broken** by a new release on the other hand.
+> Internal API access provides wide opportunities to customize the library behavior. However, 
+> the user code that is based on the internal API **could easily be broken** by a new release.
 
 
 ## Mock prototype
