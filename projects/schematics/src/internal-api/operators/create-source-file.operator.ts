@@ -1,6 +1,6 @@
 import { InjectionFactory, typeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { Injectable } from "@angular/core";
-import { ExportDeclaration, updateSourceFileNode } from "typescript";
+import { ExportDeclaration, factory } from "typescript";
 import { SourceFileCreator } from "../source-file.creator";
 
 @Injectable()
@@ -12,7 +12,7 @@ export class CreateSourceFileOperator implements InjectionFactory {
     factory() {
         return (declarations: ExportDeclaration[]) => {
             const file = this.sourceFileCreator("");
-            return updateSourceFileNode(file, [...file.statements, ...declarations]);
+            return factory.updateSourceFile(file, [...file.statements, ...declarations]);
         };
     }
 }
