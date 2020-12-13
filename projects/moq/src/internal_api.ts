@@ -1,3 +1,3 @@
 /*
- * Internal API Surface of moq.ts (Auto generated)
+ * Internal API Surface of moq.ts
 */

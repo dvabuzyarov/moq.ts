@@ -3,11 +3,12 @@ import { Options } from "./options";
 import { GETWORKSPACE } from "./injection-tokens/get-workspace.injection-token";
 import { It, Mock } from "moq.ts";
 import { dataMock } from "../L1.unit-test.components/data-mock";
-import { Workspace, WorkspaceProject } from "@angular-devkit/core/src/experimental/workspace";
 import { typeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
 import { AsyncReturnType } from "../L0/L0.promise/async-return-type";
 import { OPTIONS } from "./injection-tokens/options.injection-token";
 import { PATH_JOIN } from "./injection-tokens/join.injection-token";
+import { AngularWorkspace } from "@angular/cli/utilities/config";
+import { ProjectDefinition, ProjectDefinitionCollection } from "@angular-devkit/core/src/workspace/definitions";
 
 describe("Options", () => {
     beforeEach(() => {
@@ -15,8 +16,12 @@ describe("Options", () => {
     });
 
     beforeEach(() => {
-        const project = dataMock<WorkspaceProject>({});
-        const workspace = dataMock<Workspace>({getProjectCli: () => project});
+        const project = dataMock<ProjectDefinition>({});
+        const projects = new Mock<ProjectDefinitionCollection>()
+            .setup(instance => instance.get(It.IsAny()))
+            .returns(project)
+            .object();
+        const workspace = dataMock<AngularWorkspace>({projects});
         resolve(GETWORKSPACE)
             .setup(instance => instance(It.IsAny()))
             .returns(Promise.resolve(workspace));
@@ -34,11 +39,14 @@ describe("Options", () => {
         const sourceRoot = "source root";
         const projectName = "project name";
 
-        const project = dataMock<WorkspaceProject>({sourceRoot});
-
-        const workspace = new Mock<Workspace>()
-            .setup(instance => instance.getProjectCli(projectName))
+        const project = dataMock<ProjectDefinition>({sourceRoot});
+        const projects = new Mock<ProjectDefinitionCollection>()
+            .setup(instance => instance.get(projectName))
             .returns(project)
+            .object();
+        const workspace = new Mock<AngularWorkspace>()
+            .setup(instance => instance.projects)
+            .returns(projects)
             .object();
 
         resolve(GETWORKSPACE)
