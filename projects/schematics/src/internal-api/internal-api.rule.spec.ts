@@ -1,7 +1,7 @@
 import { createMoqInjector, get, resolve } from "../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
-import { typeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
+import { TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
 import { AsyncReturnType } from "../L0/L0.promise/async-return-type";
 import { HOST } from "./injection-tokens/host.injection-token";
 import { Path } from "@angular-devkit/core";
@@ -30,11 +30,11 @@ describe("Internal api rule", () => {
         const privateFilesPath = [];
         const fileContent = "";
 
-        const options = new Mock<AsyncReturnType<typeOfInjectionFactory<Options>>>()
+        const options = new Mock<AsyncReturnType<TypeOfInjectionFactory<Options>>>()
             .setup(instance => instance.internalApiPath)
             .returns(internalApiPath)
             .object();
-        const addCommentOperator = new Mock<ReturnType<typeOfInjectionFactory<AddCommentOperator>>>()
+        const addCommentOperator = new Mock<ReturnType<TypeOfInjectionFactory<AddCommentOperator>>>()
             .object();
         const finalOperator = new Mock<UnaryFunction<string[], string>>()
             .object();

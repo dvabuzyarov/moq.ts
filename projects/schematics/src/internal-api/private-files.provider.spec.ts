@@ -2,7 +2,7 @@ import { createMoqInjector, get, resolve } from "../L1.unit-test.components/crea
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
 import { dataMock } from "../L1.unit-test.components/data-mock";
-import { typeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
+import { TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
 import { AsyncReturnType } from "../L0/L0.promise/async-return-type";
 import { HOST } from "./injection-tokens/host.injection-token";
 import { Path } from "@angular-devkit/core";
@@ -27,7 +27,7 @@ describe("Private files provider", () => {
         const libPath = "projects/moq/src/lib";
         const dirEntry = dataMock<DirEntry>({});
 
-        const options = new Mock<AsyncReturnType<typeOfInjectionFactory<Options>>>()
+        const options = new Mock<AsyncReturnType<TypeOfInjectionFactory<Options>>>()
             .setup(instance => instance.libPath)
             .returns(libPath)
             .setup(instance => instance.sourceRoot)
@@ -60,7 +60,7 @@ describe("Private files provider", () => {
         const libPath = "projects/moq/src/lib";
         const dirEntry = dataMock<DirEntry>({});
 
-        const options = new Mock<AsyncReturnType<typeOfInjectionFactory<Options>>>()
+        const options = new Mock<AsyncReturnType<TypeOfInjectionFactory<Options>>>()
             .setup(instance => instance.libPath)
             .returns(libPath)
             .setup(instance => instance.sourceRoot)
@@ -92,7 +92,7 @@ describe("Private files provider", () => {
         const libPath = "projects/moq/src/lib";
         const dirEntry = dataMock<DirEntry>({});
 
-        const options = new Mock<AsyncReturnType<typeOfInjectionFactory<Options>>>()
+        const options = new Mock<AsyncReturnType<TypeOfInjectionFactory<Options>>>()
             .setup(instance => instance.libPath)
             .returns(libPath)
             .setup(instance => instance.sourceRoot)

@@ -1,6 +1,6 @@
 import { HOST } from "./injection-tokens/host.injection-token";
-import { typeofInjectionToken } from "../injector/typeof-injection-token";
-import { typeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
+import { TypeofInjectionToken } from "../injector/typeof-injection-token";
+import { TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
 import { Options } from "./options";
 import { Inject } from "@angular/core";
 import { DirEntryPathsSelector } from "./selectors/dir-entry-paths.selector";
@@ -10,11 +10,11 @@ import { PublicFilesProvider } from "./public-files.provider";
 export class PrivateFilesProvider {
     constructor(
         @Inject(HOST)
-        private readonly tree: typeofInjectionToken<typeof HOST>,
+        private readonly tree: TypeofInjectionToken<typeof HOST>,
         @Inject(Options)
-        private readonly options: typeOfInjectionFactory<Options>,
+        private readonly options: TypeOfInjectionFactory<Options>,
         @Inject(DirEntryPathsSelector)
-        private readonly dirEntryPathsSelector: typeOfInjectionFactory<DirEntryPathsSelector>,
+        private readonly dirEntryPathsSelector: TypeOfInjectionFactory<DirEntryPathsSelector>,
         private readonly publicFilesProvider: PublicFilesProvider) {
     }
 

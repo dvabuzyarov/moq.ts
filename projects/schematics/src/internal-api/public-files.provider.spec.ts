@@ -2,7 +2,7 @@ import { createMoqInjector, get, resolve } from "../L1.unit-test.components/crea
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
 import { dataMock } from "../L1.unit-test.components/data-mock";
-import { typeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
+import { TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
 import { AsyncReturnType } from "../L0/L0.promise/async-return-type";
 import { PublicFilesProvider } from "./public-files.provider";
 import { HOST } from "./injection-tokens/host.injection-token";
@@ -27,7 +27,7 @@ describe("Public files provider", () => {
         const sourceFile = dataMock<SourceFile>({});
         const buffer = dataMock<Buffer>({});
 
-        const options = new Mock<AsyncReturnType<typeOfInjectionFactory<Options>>>()
+        const options = new Mock<AsyncReturnType<TypeOfInjectionFactory<Options>>>()
             .setup(instance => instance.publicApiPath)
             .returns(publicApiPath)
             .object();

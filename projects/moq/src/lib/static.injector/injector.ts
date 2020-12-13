@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-
+/* eslint-disabled */
 import { resolveForwardRef } from "./forward_ref";
 import { InjectionToken } from "./injection_token";
 import {
@@ -115,7 +115,7 @@ const enum OptionFlags {
     Optional = 1,
     CheckSelf = 2,
     CheckParent = 4,
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     Default = CheckSelf | CheckParent
 }
 
@@ -279,7 +279,7 @@ function resolveToken(
     token: any, record: Record | undefined | null, records: Map<any, Record | null>, parent: Injector,
     notFoundValue: any, flags: InjectFlags): any {
     let value;
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     if (record && !(flags & InjectFlags.SkipSelf)) {
         // If we don't have a record, this implies that we don't own the provider hence don't know how
         // to resolve it.
@@ -295,7 +295,7 @@ function resolveToken(
                 for (let i = 0; i < depRecords.length; i++) {
                     const depRecord: DependencyRecord = depRecords[i];
                     const options = depRecord.options;
-                    // tslint:disable-next-line:no-bitwise
+                    // eslint-disable-next-line no-bitwise
                     const childRecord = options & OptionFlags.CheckSelf ? records.get(depRecord.token) : undefined;
                     deps.push(tryResolveToken(
                         // Current Token to resolve
@@ -307,19 +307,19 @@ function resolveToken(
                         records,
                         // If we don't know how to resolve dependency and we should not check parent for it,
                         // than pass in Null injector.
-                        // tslint:disable-next-line:no-bitwise
+                        // eslint-disable-next-line no-bitwise
                         !childRecord && !(options & OptionFlags.CheckParent) ? Injector.NULL : parent,
-                        // tslint:disable-next-line:no-bitwise
+                        // eslint-disable-next-line no-bitwise
                         options & OptionFlags.Optional ? null : Injector.THROW_IF_NOT_FOUND,
                         InjectFlags.Default));
                 }
             }
             record.value = value = useNew ? new (fn as any)(...deps) : fn.apply(undefined, deps);
         }
-        // tslint:disable-next-line:no-bitwise
+        // eslint-disable-next-line no-bitwise
     } else if (!(flags & InjectFlags.Self)) {
         value = parent.get(token, notFoundValue, InjectFlags.Default);
-        // tslint:disable-next-line:no-bitwise
+        // eslint-disable-next-line no-bitwise
     } else if (!(flags & InjectFlags.Optional)) {
         value = Injector.NULL.get(token, notFoundValue);
     } else {
@@ -341,13 +341,13 @@ function computeDeps(provider: StaticProvider): DependencyRecord[] {
                 for (let j = 0, annotations = token; j < annotations.length; j++) {
                     const annotation = annotations[j];
                     if (annotation instanceof Optional || annotation === Optional) {
-                        // tslint:disable-next-line:no-bitwise
+                        // eslint-disable-next-line no-bitwise
                         options = options | OptionFlags.Optional;
                     } else if (annotation instanceof SkipSelf || annotation === SkipSelf) {
-                        // tslint:disable-next-line:no-bitwise
+                        // eslint-disable-next-line no-bitwise
                         options = options & ~OptionFlags.CheckSelf;
                     } else if (annotation instanceof Self || annotation === Self) {
-                        // tslint:disable-next-line:no-bitwise
+                        // eslint-disable-next-line no-bitwise
                         options = options & ~OptionFlags.CheckParent;
                     } else {
                         token = resolveForwardRef(annotation);

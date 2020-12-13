@@ -1,10 +1,11 @@
 import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
 import "reflect-metadata";
-/* tslint:disable:no-var-requires */
-/* tslint:disable: no-require-imports */
+/* eslint @typescript-eslint/naming-convention: "off" */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
 const Jasmine = require("jasmine");
-/* tslint:enable: no-require-imports */
-/* tslint:enable:no-var-requires */
+/* eslint-enable @typescript-eslint/no-require-imports */
+/* eslint-enable @typescript-eslint/no-var-requires */
 
 const jsm = new Jasmine({}) as any;
 

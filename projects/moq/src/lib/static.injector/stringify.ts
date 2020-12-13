@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-
+/* eslint-disabled */
 export function stringify(token: any): string {
     if (typeof token === "string") {
         return token;

@@ -1,3 +1,4 @@
+/*eslint @typescript-eslint/naming-convention: "off"*/
 export type IPredicate<T> = (instance: T) => boolean;
 
 /**
@@ -48,8 +49,8 @@ export type IPredicate<T> = (instance: T) => boolean;
  * mock.verify(instance => instance.method(It.Is(a => a === 2)));
  * ```
  */
-export class It<T> {
-    constructor(public predicate: IPredicate<T>) {
+export class It<P> {
+    constructor(public predicate: IPredicate<P>) {
 
     }
 
@@ -97,7 +98,7 @@ export class It<T> {
     /**
      * @hidden
      */
-    public test(instance?: T): boolean {
+    public test(instance?: P): boolean {
         try {
             const result = this.predicate(instance);
             return result === true || result === undefined;

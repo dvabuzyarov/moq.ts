@@ -1,0 +1,88 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json",
+          "e2e/tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/ng-cli-compat",
+        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "@angular-eslint/component-class-suffix": "off",
+        "@typescript-eslint/array-type": [
+          "error",
+          {
+            "default": "array"
+          }
+        ],
+        "@typescript-eslint/consistent-type-definitions": "error",
+        "@typescript-eslint/dot-notation": "off",
+        "@typescript-eslint/explicit-member-accessibility": [
+          "off",
+          {
+            "accessibility": "explicit"
+          }
+        ],
+        "@typescript-eslint/no-empty-function": "error",
+        "@typescript-eslint/no-extraneous-class": "error",
+        "@typescript-eslint/no-require-imports": "error",
+        "@typescript-eslint/quotes": [
+          "error",
+          "double"
+        ],
+        "brace-style": [
+          "error",
+          "1tbs"
+        ],
+        "complexity": "error",
+        "curly": [
+          "error",
+          "multi-line"
+        ],
+        "id-blacklist": "off",
+        "id-match": "off",
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": [
+              "**/createMoqInjector.ts",
+              "**/*.spec.ts",
+              "**/index.specs.ts",
+              "**/resolve.builder.ts"
+            ]
+          }
+        ],
+        "max-classes-per-file": "error",
+        "no-duplicate-imports": "off",
+        "no-empty": "error",
+        "no-underscore-dangle": "off",
+        "prefer-object-spread": "error",
+        "prefer-template": "error",
+        "space-before-function-paren": "off",
+        "prefer-arrow/prefer-arrow-functions": "off"
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {}
+    }
+  ]
+}

@@ -24,8 +24,7 @@ import { PrintSourceFileOperator } from "./operators/print-source-file.operator"
 import { From } from "../L2/L2.hof/from";
 import { Pipe } from "../L2/L2.hof/pipe";
 
-export default function (options: JsonObject & ISchema) {
-    return (host: Tree, context: SchematicContext) => {
+export default (options: JsonObject & ISchema) => (host: Tree, context: SchematicContext) => {
         const injector = Injector.create({
             providers: [
                 ...selectors,
@@ -72,4 +71,3 @@ export default function (options: JsonObject & ISchema) {
         const rule = injector.get(InternalApiRule);
         return rule.apply();
     };
-}

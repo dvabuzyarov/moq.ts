@@ -1,7 +1,7 @@
 import { Inject } from "@angular/core";
 import { HOST } from "./injection-tokens/host.injection-token";
-import { typeofInjectionToken } from "../injector/typeof-injection-token";
-import { typeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
+import { TypeofInjectionToken } from "../injector/typeof-injection-token";
+import { TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
 import { Options } from "./options";
 import { PrivateFilesProvider } from "./private-files.provider";
 import { From } from "../L2/L2.hof/from";
@@ -14,22 +14,22 @@ import { PrintSourceFileOperator } from "./operators/print-source-file.operator"
 export class InternalApiRule {
     constructor(
         @Inject(HOST)
-        private readonly tree: typeofInjectionToken<typeof HOST>,
+        private readonly tree: TypeofInjectionToken<typeof HOST>,
         private readonly privateFilesProvider: PrivateFilesProvider,
         @Inject(Options)
-        private readonly options: typeOfInjectionFactory<Options>,
+        private readonly options: TypeOfInjectionFactory<Options>,
         @Inject(From)
-        private readonly from: typeOfInjectionFactory<From>,
+        private readonly from: TypeOfInjectionFactory<From>,
         @Inject(Pipe)
-        private readonly pipe: typeOfInjectionFactory<Pipe>,
+        private readonly pipe: TypeOfInjectionFactory<Pipe>,
         @Inject(CreateExportDeclarationOperator)
-        private readonly createExportDeclarations: typeOfInjectionFactory<CreateExportDeclarationOperator>,
+        private readonly createExportDeclarations: TypeOfInjectionFactory<CreateExportDeclarationOperator>,
         @Inject(AddCommentOperator)
-        private readonly addComment: typeOfInjectionFactory<AddCommentOperator>,
+        private readonly addComment: TypeOfInjectionFactory<AddCommentOperator>,
         @Inject(CreateSourceFileOperator)
-        private readonly createSourceFile: typeOfInjectionFactory<CreateSourceFileOperator>,
+        private readonly createSourceFile: TypeOfInjectionFactory<CreateSourceFileOperator>,
         @Inject(PrintSourceFileOperator)
-        private readonly printSourceFile: typeOfInjectionFactory<PrintSourceFileOperator>) {
+        private readonly printSourceFile: TypeOfInjectionFactory<PrintSourceFileOperator>) {
     }
 
     async apply() {

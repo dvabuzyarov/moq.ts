@@ -1,10 +1,11 @@
-import { Verifier, VerifyError } from "./verifier";
+import { Verifier} from "./verifier";
 import { ExpectedExpressionReflector } from "../expected-expressions/expected-expression-reflector";
 import { Times } from "../times";
 import { CallCounter } from "./call-counter";
 import { ExpectedGetPropertyExpression } from "../expected-expressions/expected-expressions";
 import { VerifyFormatter } from "../formatters/verify-formatter";
 import { nameof } from "../../tests.components/nameof";
+import { VerifyError } from "./verify-error";
 
 describe("Verifier", () => {
 

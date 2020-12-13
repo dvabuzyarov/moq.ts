@@ -3,7 +3,7 @@ import { Options } from "./options";
 import { GETWORKSPACE } from "./injection-tokens/get-workspace.injection-token";
 import { It, Mock } from "moq.ts";
 import { dataMock } from "../L1.unit-test.components/data-mock";
-import { typeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
+import { TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
 import { AsyncReturnType } from "../L0/L0.promise/async-return-type";
 import { OPTIONS } from "./injection-tokens/options.injection-token";
 import { PATH_JOIN } from "./injection-tokens/join.injection-token";
@@ -71,7 +71,7 @@ describe("Options", () => {
             publicApiPath,
             libPath,
             sourceRoot: `/${sourceRoot}`
-        } as AsyncReturnType<typeOfInjectionFactory<Options>>;
+        } as AsyncReturnType<TypeOfInjectionFactory<Options>>;
         expect(actual).toEqual(expected);
     });
 });

@@ -1,7 +1,7 @@
 import { InjectionToken, Injector, StaticProvider, Type } from "@angular/core";
 import { IMock, Mock, MoqAPI } from "moq.ts";
 import { IOptions, IParameter, moqInjectorProviders } from "ng-auto-moq";
-import { InjectionFactory, typeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
+import { InjectionFactory, TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
 
 export let injector: Injector;
 export let testedToken: Type<any>;
@@ -19,13 +19,13 @@ export function createMoqInjector<T>(constructor: Type<T>, options: IMoqInjector
     return injector;
 }
 
-export function resolve<T, R = T extends InjectionFactory ? typeOfInjectionFactory<T> : T>(token: Type<T> | InjectionToken<T>): IMock<R> {
+export function resolve<T, R = T extends InjectionFactory ? TypeOfInjectionFactory<T> : T>(token: Type<T> | InjectionToken<T>): IMock<R> {
     const object = injector.get(token) as unknown;
     return object[MoqAPI];
 }
 
 export function get<T,
-    R = T extends InjectionFactory ? typeOfInjectionFactory<T> : T>(token: Type<T> | InjectionToken<T> = testedToken): R {
+    R = T extends InjectionFactory ? TypeOfInjectionFactory<T> : T>(token: Type<T> | InjectionToken<T> = testedToken): R {
     return injector.get(token) as any;
 }
 

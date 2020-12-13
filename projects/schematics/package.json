@@ -4,6 +4,7 @@
     "@angular/core": "*",
     "@angular-devkit/core": "*",
     "@angular-devkit/schematics": "*",
+    "@angular/cli": "*",
     "rxjs": "*",
     "@ngrx/store": "*",
     "typescript": "*",
@@ -13,7 +14,6 @@
     "moq.ts": "*",
     "ng-auto-moq": "*",
     "reflect-metadata": "*",
-    "@angular/cli": "*",
     "jasmine": "*"
   },
   "private": true,

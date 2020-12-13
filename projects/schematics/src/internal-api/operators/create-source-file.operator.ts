@@ -1,11 +1,11 @@
-import { InjectionFactory, typeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
+import { InjectionFactory, TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { Injectable } from "@angular/core";
 import { ExportDeclaration, factory } from "typescript";
 import { SourceFileCreator } from "../source-file.creator";
 
 @Injectable()
 export class CreateSourceFileOperator implements InjectionFactory {
-    constructor(private readonly sourceFileCreator: typeOfInjectionFactory<SourceFileCreator>) {
+    constructor(private readonly sourceFileCreator: TypeOfInjectionFactory<SourceFileCreator>) {
         return this.factory() as any;
     }
 

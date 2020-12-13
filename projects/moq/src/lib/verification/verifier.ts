@@ -6,12 +6,7 @@ import {
 } from "../expected-expressions/expected-expression-reflector";
 import { CallCounter } from "./call-counter";
 import { VerifyFormatter } from "../formatters/verify-formatter";
-
-export class VerifyError extends Error {
-    constructor(message: string) {
-        super(message);
-    }
-}
+import { VerifyError } from "./verify-error";
 
 /**
  * @hidden

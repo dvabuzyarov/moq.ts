@@ -11,7 +11,7 @@ export class FunctionMock<T extends Function> extends Mock<T> {
                 const values = (params as any[]).reduce((acc, value) => {
                     return `${acc}${value}, `;
                 }, "");
-                /* tslint:disable:no-eval */
+                /* eslint-disable no-eval */
                 return eval(`this.object()(${values})`);
             });
     }

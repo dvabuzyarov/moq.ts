@@ -6,9 +6,10 @@ import {
     SelectorWithProps
 } from "@ngrx/store";
 
-export type InjectableSelector<S, R, P = unknown> = { factory(): (s: S) => R; } | Selector<S, R>;
-export type InjectableSelectorWithProps<S, P, R> = { factory(): (s: S, p: P) => R; } | SelectorWithProps<S, P, R>;
+export type InjectableSelector<S, R, P = unknown> = { factory(): (s: S) => R } | Selector<S, R>;
+export type InjectableSelectorWithProps<S, P, R> = { factory(): (s: S, p: P) => R } | SelectorWithProps<S, P, R>;
 
+/*eslint no-shadow: ["error", { "allow": ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"] }]*/
 export function createSelector<State, S1, Result>(
     s1: InjectableSelector<State, S1>,
     projector: (s1: S1) => Result
