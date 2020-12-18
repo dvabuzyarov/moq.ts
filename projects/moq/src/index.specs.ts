@@ -1,3 +1,4 @@
+import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
 /* eslint @typescript-eslint/naming-convention: "off" */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-require-imports */
@@ -23,5 +24,5 @@ jsm.loadConfig({
         "**/*.[sS]pec.js"
     ]
 });
-
+Mock.options = {injectorConfig: new EqualMatchingInjectorConfig()};
 jsm.execute();

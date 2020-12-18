@@ -1,3 +1,4 @@
+/*eslint-disable max-classes-per-file*/
 export abstract class Interaction {
     protected constructor(
         public readonly name: PropertyKey,

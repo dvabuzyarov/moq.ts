@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -5,7 +6,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/* eslint-disabled */
+
 import { resolveForwardRef } from "./forward_ref";
 import { InjectionToken } from "./injection_token";
 import {
@@ -31,9 +32,7 @@ import { AbstractType, Type } from "./type";
 import { stringify } from "./stringify";
 
 export const INJECTOR_IMPL = (
-    providers: StaticProvider[], parent: Injector | undefined, name: string) => {
-    return new StaticInjector(providers, parent, name);
-};
+    providers: StaticProvider[], parent: Injector | undefined, name: string) => new StaticInjector(providers, parent, name);
 
 /**
  * Concrete injectors implement this interface. Injectors are configured
@@ -80,10 +79,10 @@ export abstract class Injector {
      * @returns The new injector instance.
      *
      */
-    static create(options: { providers: StaticProvider[], parent?: Injector, name?: string }): Injector;
+    static create(options: { providers: StaticProvider[]; parent?: Injector; name?: string }): Injector;
 
     static create(
-        options: StaticProvider[] | { providers: StaticProvider[], parent?: Injector, name?: string },
+        options: StaticProvider[] | { providers: StaticProvider[]; parent?: Injector; name?: string },
         parent?: Injector): Injector {
         if (Array.isArray(options)) {
             return INJECTOR_IMPL(options, parent, "");
@@ -94,6 +93,7 @@ export abstract class Injector {
 
     /**
      * Retrieves an instance from the injector based on the provided token.
+     *
      * @returns The instance from the injector if defined, otherwise the `notFoundValue`.
      * @throws When the `notFoundValue` is `undefined` or `Injector.THROW_IF_NOT_FOUND`.
      */
@@ -152,7 +152,7 @@ export class StaticInjector implements Injector {
     }
 
     toString() {
-        const tokens = <string[]>[], records = this._records;
+        const tokens = <string[]>[]; const records = this._records;
         records.forEach((v, token) => tokens.push(stringify(token)));
         return `StaticInjector[${tokens.join(", ")}]`;
     }
@@ -285,7 +285,7 @@ function resolveToken(
         // to resolve it.
         value = record.value;
         if (value === CIRCULAR) {
-            throw Error(NO_NEW_LINE + "Circular dependency");
+            throw Error(`${NO_NEW_LINE  }Circular dependency`);
         } else if (value === EMPTY) {
             record.value = CIRCULAR;
             const {useNew, fn, deps: depRecords} = record;

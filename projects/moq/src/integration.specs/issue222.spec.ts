@@ -1,3 +1,4 @@
+/*eslint-disable max-classes-per-file*/
 import { Mock } from "../lib/mock";
 
 describe("#222 type discovering does not respect the full prototype chain", () => {

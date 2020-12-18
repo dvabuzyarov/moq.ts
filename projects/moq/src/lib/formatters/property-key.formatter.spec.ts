@@ -7,7 +7,7 @@ describe("Property key formatter", () => {
         const formatter = new PropertyKeyFormatter();
         const actual = formatter.format(name);
 
-        expect(actual).toBe(`name`);
+        expect(actual).toBe("name");
     });
 
     it("Returns description when name is Symbol", () => {
@@ -15,7 +15,7 @@ describe("Property key formatter", () => {
         const formatter = new PropertyKeyFormatter();
         const actual = formatter.format(name);
 
-        expect(actual).toBe(`Symbol(name)`);
+        expect(actual).toBe("Symbol(name)");
     });
 
     it("Returns description when name is number", () => {
@@ -23,7 +23,7 @@ describe("Property key formatter", () => {
         const formatter = new PropertyKeyFormatter();
         const actual = formatter.format(name);
 
-        expect(actual).toBe(`0`);
+        expect(actual).toBe("0");
     });
 
 });

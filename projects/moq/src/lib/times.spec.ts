@@ -17,7 +17,7 @@ describe("Times", () => {
 
         expect(times.test(0)).toBe(false);
         expect(times.test(1)).toBe(true);
-        expect(times.message).toEqual(`Should be called at least once`);
+        expect(times.message).toEqual("Should be called at least once");
     });
 
     it("Verifies AtMost call count", () => {
@@ -36,7 +36,7 @@ describe("Times", () => {
         expect(times.test(0)).toBe(true);
         expect(times.test(1)).toBe(true);
         expect(times.test(2)).toBe(false);
-        expect(times.message).toEqual(`Should be called at most once`);
+        expect(times.message).toEqual("Should be called at most once");
     });
 
     it("Verifies Between call count with Exclusive range", () => {
@@ -79,7 +79,7 @@ describe("Times", () => {
 
         expect(times.test(0)).toBe(true);
         expect(times.test(1)).toBe(false);
-        expect(times.message).toEqual(`Should be called never`);
+        expect(times.message).toEqual("Should be called never");
     });
 
     it("Verifies Once call count", () => {
@@ -88,7 +88,7 @@ describe("Times", () => {
         expect(times.test(0)).toBe(false);
         expect(times.test(1)).toBe(true);
         expect(times.test(2)).toBe(false);
-        expect(times.message).toEqual(`Should be called once`);
+        expect(times.message).toEqual("Should be called once");
     });
 
 });

@@ -45,6 +45,7 @@ describe("Properties value storage", () => {
     });
 
     it("Returns false for toString", () => {
+        /*eslint-disable-next-line @typescript-eslint/ban-types*/
         const propertyName = nameof<Object>("toString");
 
         const storage = new PropertiesValueStorage();

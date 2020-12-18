@@ -57,6 +57,7 @@ export class PlayTimes {
 
     /**
      * The configured setup will be applied or not accordingly to the value in the sequence.
+     *
      * @example
      * ```typescript
      *

@@ -1,4 +1,4 @@
-import { typeofInjectionToken } from "../typeof-injection-token";
+import { TypeofInjectionToken } from "../typeof-injection-token";
 import { OBJECT_MATCHERS } from "./object-matchers.injection-token";
 
 /**
@@ -7,10 +7,10 @@ import { OBJECT_MATCHERS } from "./object-matchers.injection-token";
 export class ObjectMatcher {
 
     constructor(
-        private matchers: typeofInjectionToken<typeof OBJECT_MATCHERS>) {
+        private matchers: TypeofInjectionToken<typeof OBJECT_MATCHERS>) {
     }
 
-    public matched<T extends Object>(left: T, right: T): boolean {
+    public matched<T extends Record<string, unknown>>(left: T, right: T): boolean {
         if (left === null && right === null) return true;
         if (left === right) return true;
         for (const matcher of this.matchers) {

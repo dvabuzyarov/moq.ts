@@ -40,19 +40,19 @@ export class ExpressionMatcher {
         if (right === undefined) return true;
 
         if (left instanceof GetPropertyInteraction && (right instanceof ExpectedGetPropertyExpression || right instanceof It)) {
-            return this.getPropertyExpressionMatcher.matched(left, <ExpectedGetPropertyExpression | It<any>>right);
+            return this.getPropertyExpressionMatcher.matched(left, right);
         }
         if (left instanceof SetPropertyInteraction && (right instanceof ExpectedSetPropertyExpression || right instanceof It)) {
-            return this.setPropertyExpressionMatcher.matched(left, <ExpectedSetPropertyExpression | It<any>>right);
+            return this.setPropertyExpressionMatcher.matched(left, right);
         }
         if (left instanceof InOperatorInteraction && (right instanceof ExpectedInOperatorExpression || right instanceof It)) {
-            return this.inOperatorExpressionMatcher.matched(left, <ExpectedInOperatorExpression | It<any>>right);
+            return this.inOperatorExpressionMatcher.matched(left, right);
         }
         if (left instanceof MethodInteraction && (right instanceof ExpectedMethodExpression || right instanceof It)) {
-            return this.methodExpressionMatcher.matched(left, <ExpectedMethodExpression | It<any>>right);
+            return this.methodExpressionMatcher.matched(left, right);
         }
         if (left instanceof NamedMethodInteraction && (right instanceof ExpectedNamedMethodExpression || right instanceof It)) {
-            return this.namedMethodExpressionMatcher.matched(left, <ExpectedNamedMethodExpression | It<any>>right);
+            return this.namedMethodExpressionMatcher.matched(left, right);
         }
 
         return false;

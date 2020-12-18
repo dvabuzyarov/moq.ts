@@ -1,3 +1,4 @@
+/*eslint-disable max-classes-per-file*/
 import { Mock } from "../lib/mock";
 import { It } from "../lib/expected-expressions/expression-predicates";
 import { Interaction } from "../lib/interactions";
@@ -22,7 +23,7 @@ describe("#76 Prototypeof & mimics do not respect each other", () => {
                 }
                 return false;
             }))
-            .mimics(<any>new SimpleMimic());
+            .mimics(new SimpleMimic() as any);
 
         const actual = mock.object().func(2);
         expect(actual).toEqual(undefined);

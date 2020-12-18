@@ -1,25 +1,18 @@
-import { Verifier} from "./verifier";
+import { Verifier } from "./verifier";
 import { ExpectedExpressionReflector } from "../expected-expressions/expected-expression-reflector";
 import { Times } from "../times";
 import { CallCounter } from "./call-counter";
 import { ExpectedGetPropertyExpression } from "../expected-expressions/expected-expressions";
 import { VerifyFormatter } from "../formatters/verify-formatter";
-import { nameof } from "../../tests.components/nameof";
 import { VerifyError } from "./verify-error";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { It } from "moq.ts";
 
 describe("Verifier", () => {
 
-    function reflectorFactory(): ExpectedExpressionReflector {
-        return jasmine.createSpyObj("reflect", [nameof<ExpectedExpressionReflector>("reflect")]);
-    }
-
-    function callCounterFactory(): CallCounter {
-        return jasmine.createSpyObj("count", [nameof<CallCounter>("count")]);
-    }
-
-    function verifyFormatterFactory(): VerifyFormatter {
-        return jasmine.createSpyObj("formatter", [nameof<VerifyFormatter>("format")]);
-    }
+    beforeEach(() => {
+        createInjector2(Verifier, [ExpectedExpressionReflector, CallCounter, VerifyFormatter]);
+    });
 
     it("Throws VerifyException when the expected expression has not been called expected times", () => {
         const mockName = "mock name";
@@ -31,46 +24,51 @@ describe("Verifier", () => {
         const expectedExpression = new ExpectedGetPropertyExpression("property");
         const expected = () => undefined;
 
-        const reflector = reflectorFactory();
-        (<jasmine.Spy>reflector.reflect).and.returnValue(expectedExpression);
+        resolveMock(ExpectedExpressionReflector)
+            .setup(instance => instance.reflect(expected))
+            .returns(expectedExpression);
 
-        const callCounter = callCounterFactory();
+        resolveMock(CallCounter)
+            .setup(instance => instance.count(expectedExpression, expressions))
+            .returns(haveBeenCalled);
 
-        (<jasmine.Spy>callCounter.count).and.returnValue(haveBeenCalled);
-        const verifyFormatter = verifyFormatterFactory();
+        resolveMock(VerifyFormatter)
+            .setup(instance => instance.format(expectedExpression, timesMessage, haveBeenCalled, expressions, mockName))
+            .returns(message);
 
-        (<jasmine.Spy>verifyFormatter.format).and.returnValue(message);
         const evaluator = value => value === 1;
 
         const times = new Times(evaluator, timesMessage);
-        const verify = new Verifier(reflector, callCounter, verifyFormatter);
+        const verify = resolve2(Verifier);
         const action = () => verify.test(expected, times, expressions, mockName);
 
         expect(action).toThrow(new VerifyError(message));
-        expect(reflector.reflect).toHaveBeenCalledWith(expected);
-        expect(callCounter.count).toHaveBeenCalledWith(expectedExpression, expressions);
-        expect(verifyFormatter.format).toHaveBeenCalledWith(expectedExpression, timesMessage, haveBeenCalled, expressions, mockName);
     });
 
     it("Does not throws VerifyException when the expected expression has been called expected times", () => {
         const message = "message";
 
         const expected = () => undefined;
-        const reflector = reflectorFactory();
         const expectedExpression = new ExpectedGetPropertyExpression("property");
-        (<jasmine.Spy>reflector.reflect).and.returnValue(expectedExpression);
 
-        const callCounter = callCounterFactory();
-        (<jasmine.Spy>callCounter.count).and.returnValue(1);
+        resolveMock(ExpectedExpressionReflector)
+            .setup(instance => instance.reflect(expected))
+            .returns(expectedExpression);
+
+        resolveMock(CallCounter)
+            .setup(instance => instance.count(expectedExpression, []))
+            .returns(1);
+
+        resolveMock(VerifyFormatter)
+            .setup(instance => instance.format(expectedExpression, It.IsAny(), 1, [], It.IsAny()))
+            .returns(message);
 
         const evaluator = value => value === 1;
         const times = new Times(evaluator, message);
 
-        const verify = new Verifier(reflector, callCounter, undefined);
+        const verify = resolve2(Verifier);
         const action = () => verify.test(expected, times, []);
 
         expect(action).not.toThrow(new VerifyError(message));
-        expect(reflector.reflect).toHaveBeenCalledWith(expected);
-        expect(callCounter.count).toHaveBeenCalledWith(expectedExpression, []);
     });
 });

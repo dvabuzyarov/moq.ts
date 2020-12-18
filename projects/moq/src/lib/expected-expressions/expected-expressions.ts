@@ -1,3 +1,4 @@
+/*eslint-disable max-classes-per-file*/
 import { It } from "./expression-predicates";
 import {
     GetPropertyInteraction,

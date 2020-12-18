@@ -1,12 +1,12 @@
 import { GetPropertyInteraction, NamedMethodInteraction } from "../interactions";
 import { ExpressionFormatter } from "./expression-formatter";
 import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
-import { nameof } from "../../tests.components/nameof";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("Tracked expression message formatter", () => {
-    function expressionFormatterFactory(): ExpressionFormatter {
-        return jasmine.createSpyObj("expression formatter", [nameof<ExpressionFormatter>("format")]);
-    }
+    beforeEach(() => {
+        createInjector2(TrackedExpressionsFormatter, [ExpressionFormatter]);
+    });
 
     it("Returns formatted description of tracked expressions", () => {
         const getPropertyExpressionDescription = "GetProperty Name";
@@ -14,22 +14,15 @@ describe("Tracked expression message formatter", () => {
         const getPropertyExpression = new GetPropertyInteraction("name");
         const namedMethodExpression = new NamedMethodInteraction("name", []);
 
-        const expressionFormatter = expressionFormatterFactory();
+        resolveMock(ExpressionFormatter)
+            .setup(instance => instance.format(getPropertyExpression))
+            .returns(getPropertyExpressionDescription)
+            .setup(instance => instance.format(namedMethodExpression))
+            .returns(namedMethodExpressionDescription);
 
-        (<jasmine.Spy>expressionFormatter.format).and.callFake(value => {
-            if (value === getPropertyExpression) {
-                return getPropertyExpressionDescription;
-            }
-            if (value === namedMethodExpression) {
-                return namedMethodExpressionDescription;
-            }
-        });
-
-        const formatter = new TrackedExpressionsFormatter(expressionFormatter);
+        const formatter = resolve2(TrackedExpressionsFormatter);
         const actual = formatter.format([getPropertyExpression, namedMethodExpression]);
 
         expect(actual).toBe(`${getPropertyExpressionDescription}\n${namedMethodExpressionDescription}`);
-        expect(expressionFormatter.format).toHaveBeenCalledWith(getPropertyExpression);
-        expect(expressionFormatter.format).toHaveBeenCalledWith(namedMethodExpression);
     });
 });

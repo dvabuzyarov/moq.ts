@@ -1,7 +1,7 @@
 import { PrototypeStorage } from "../../interceptors/prototype.storage";
 import { PropertyDescriptorProvider } from "./property-descriptor.provider";
 import { REFLECT_HAS } from "../reflect-has.injection-token";
-import { typeofInjectionToken } from "../../typeof-injection-token";
+import { TypeofInjectionToken } from "../../typeof-injection-token";
 
 /**
  * @hidden
@@ -10,7 +10,7 @@ export class MembersPropertyExplorer {
     constructor(
         private storage: PrototypeStorage,
         private propertyDescriptorProvider: PropertyDescriptorProvider,
-        private has: typeofInjectionToken<typeof REFLECT_HAS>) {
+        private has: TypeofInjectionToken<typeof REFLECT_HAS>) {
 
     }
 

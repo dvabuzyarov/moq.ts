@@ -2,6 +2,7 @@
  * @hidden
  */
 export class ObjectMapProvider {
+    /*eslint-disable-next-line @typescript-eslint/ban-types*/
     get(object: object) {
         const props = this.getProps(object, []);
         const keys = [...new Set<PropertyKey>(props)];

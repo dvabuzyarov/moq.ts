@@ -1,6 +1,7 @@
 /**
  *  A custom matcher should implement this interface and be registered with EqualMatchingInjectorConfig.
  *  The parameters are always are not null or undefined and they are always not equal (!==).
+ *
  *  @return undefined if the matcher is not intended to compare objects of such type, otherwise result of comparision.
  *
  *  ``` typescript
@@ -37,5 +38,6 @@
  *  ```
  */
 export interface IObjectMatcher {
+    /*eslint-disable-next-line @typescript-eslint/ban-types*/
     matched<T extends object>(left: T, right: T): boolean | undefined;
 }

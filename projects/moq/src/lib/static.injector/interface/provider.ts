@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -6,7 +7,6 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-/* eslint-disabled */
 import { Type } from "../type";
 
 /**
@@ -16,14 +16,15 @@ import { Type } from "../type";
  * @publicApi
  */
 export interface ValueSansProvider {
-  /**
-   * The value to inject.
-   */
-  useValue: any;
+    /**
+     * The value to inject.
+     */
+    useValue: any;
 }
 
 /**
  * Configures the `Injector` to return a value for a token.
+ *
  * @see ["Dependency Injection Guide"](guide/dependency-injection).
  *
  * @usageNotes
@@ -39,16 +40,16 @@ export interface ValueSansProvider {
  * @publicApi
  */
 export interface ValueProvider extends ValueSansProvider {
-  /**
-   * An injection token. Typically an instance of `Type` or `InjectionToken`, but can be `any`.
-   */
-  provide: any;
+    /**
+     * An injection token. Typically an instance of `Type` or `InjectionToken`, but can be `any`.
+     */
+    provide: any;
 
-  /**
-   * When true, injector returns an array of instances. This is useful to allow multiple
-   * providers spread across many files to provide configuration information to a common token.
-   */
-  multi?: boolean;
+    /**
+     * When true, injector returns an array of instances. This is useful to allow multiple
+     * providers spread across many files to provide configuration information to a common token.
+     */
+    multi?: boolean;
 }
 
 /**
@@ -58,21 +59,22 @@ export interface ValueProvider extends ValueSansProvider {
  * @publicApi
  */
 export interface StaticClassSansProvider {
-  /**
-   * An optional class to instantiate for the `token`. By default, the `provide`
-   * class is instantiated.
-   */
-  useClass: Type<any>;
+    /**
+     * An optional class to instantiate for the `token`. By default, the `provide`
+     * class is instantiated.
+     */
+    useClass: Type<any>;
 
-  /**
-   * A list of `token`s to be resolved by the injector. The list of values is then
-   * used as arguments to the `useClass` constructor.
-   */
-  deps: any[];
+    /**
+     * A list of `token`s to be resolved by the injector. The list of values is then
+     * used as arguments to the `useClass` constructor.
+     */
+    deps: any[];
 }
 
 /**
  * Configures the `Injector` to return an instance of `useClass` for a token.
+ *
  * @see ["Dependency Injection Guide"](guide/dependency-injection).
  *
  * @usageNotes
@@ -90,16 +92,16 @@ export interface StaticClassSansProvider {
  * @publicApi
  */
 export interface StaticClassProvider extends StaticClassSansProvider {
-  /**
-   * An injection token. Typically an instance of `Type` or `InjectionToken`, but can be `any`.
-   */
-  provide: any;
+    /**
+     * An injection token. Typically an instance of `Type` or `InjectionToken`, but can be `any`.
+     */
+    provide: any;
 
-  /**
-   * When true, injector returns an array of instances. This is useful to allow multiple
-   * providers spread across many files to provide configuration information to a common token.
-   */
-  multi?: boolean;
+    /**
+     * When true, injector returns an array of instances. This is useful to allow multiple
+     * providers spread across many files to provide configuration information to a common token.
+     */
+    multi?: boolean;
 }
 
 /**
@@ -117,10 +119,10 @@ export interface StaticClassProvider extends StaticClassSansProvider {
  * @publicApi
  */
 export interface ConstructorSansProvider {
-  /**
-   * A list of `token`s to be resolved by the injector.
-   */
-  deps?: any[];
+    /**
+     * A list of `token`s to be resolved by the injector.
+     */
+    deps?: any[];
 }
 
 /**
@@ -139,16 +141,16 @@ export interface ConstructorSansProvider {
  * @publicApi
  */
 export interface ConstructorProvider extends ConstructorSansProvider {
-  /**
-   * An injection token. Typically an instance of `Type` or `InjectionToken`, but can be `any`.
-   */
-  provide: Type<any>;
+    /**
+     * An injection token. Typically an instance of `Type` or `InjectionToken`, but can be `any`.
+     */
+    provide: Type<any>;
 
-  /**
-   * When true, injector returns an array of instances. This is useful to allow multiple
-   * providers spread across many files to provide configuration information to a common token.
-   */
-  multi?: boolean;
+    /**
+     * When true, injector returns an array of instances. This is useful to allow multiple
+     * providers spread across many files to provide configuration information to a common token.
+     */
+    multi?: boolean;
 }
 
 /**
@@ -160,10 +162,10 @@ export interface ConstructorProvider extends ConstructorSansProvider {
  * @publicApi
  */
 export interface ExistingSansProvider {
-  /**
-   * Existing `token` to return. (Equivalent to `injector.get(useExisting)`)
-   */
-  useExisting: any;
+    /**
+     * Existing `token` to return. (Equivalent to `injector.get(useExisting)`)
+     */
+    useExisting: any;
 }
 
 /**
@@ -182,16 +184,16 @@ export interface ExistingSansProvider {
  * @publicApi
  */
 export interface ExistingProvider extends ExistingSansProvider {
-  /**
-   * An injection token. Typically an instance of `Type` or `InjectionToken`, but can be `any`.
-   */
-  provide: any;
+    /**
+     * An injection token. Typically an instance of `Type` or `InjectionToken`, but can be `any`.
+     */
+    provide: any;
 
-  /**
-   * When true, injector returns an array of instances. This is useful to allow multiple
-   * providers spread across many files to provide configuration information to a common token.
-   */
-  multi?: boolean;
+    /**
+     * When true, injector returns an array of instances. This is useful to allow multiple
+     * providers spread across many files to provide configuration information to a common token.
+     */
+    multi?: boolean;
 }
 
 /**
@@ -203,21 +205,22 @@ export interface ExistingProvider extends ExistingSansProvider {
  * @publicApi
  */
 export interface FactorySansProvider {
-  /**
-   * A function to invoke to create a value for this `token`. The function is invoked with
-   * resolved values of `token`s in the `deps` field.
-   */
-  useFactory: Function;
+    /**
+     * A function to invoke to create a value for this `token`. The function is invoked with
+     * resolved values of `token`s in the `deps` field.
+     */
+    useFactory: Function;
 
-  /**
-   * A list of `token`s to be resolved by the injector. The list of values is then
-   * used as arguments to the `useFactory` function.
-   */
-  deps?: any[];
+    /**
+     * A list of `token`s to be resolved by the injector. The list of values is then
+     * used as arguments to the `useFactory` function.
+     */
+    deps?: any[];
 }
 
 /**
  * Configures the `Injector` to return a value by invoking a `useFactory` function.
+ *
  * @see ["Dependency Injection Guide"](guide/dependency-injection).
  *
  * @usageNotes
@@ -235,16 +238,16 @@ export interface FactorySansProvider {
  * @publicApi
  */
 export interface FactoryProvider extends FactorySansProvider {
-  /**
-   * An injection token. (Typically an instance of `Type` or `InjectionToken`, but can be `any`).
-   */
-  provide: any;
+    /**
+     * An injection token. (Typically an instance of `Type` or `InjectionToken`, but can be `any`).
+     */
+    provide: any;
 
-  /**
-   * When true, injector returns an array of instances. This is useful to allow multiple
-   * providers spread across many files to provide configuration information to a common token.
-   */
-  multi?: boolean;
+    /**
+     * When true, injector returns an array of instances. This is useful to allow multiple
+     * providers spread across many files to provide configuration information to a common token.
+     */
+    multi?: boolean;
 }
 
 /**
@@ -257,7 +260,7 @@ export interface FactoryProvider extends FactorySansProvider {
  * @publicApi
  */
 export type StaticProvider =
-    ValueProvider|ExistingProvider|StaticClassProvider|ConstructorProvider|FactoryProvider|any[];
+    ValueProvider | ExistingProvider | StaticClassProvider | ConstructorProvider | FactoryProvider | any[];
 
 
 /**
@@ -274,7 +277,7 @@ export type StaticProvider =
  *
  * @publicApi
  */
-export interface TypeProvider extends Type<any> {}
+export type TypeProvider = Type<any>;
 
 /**
  * Configures the `Injector` to return a value by invoking a `useClass` function.
@@ -285,14 +288,15 @@ export interface TypeProvider extends Type<any> {}
  * @publicApi
  */
 export interface ClassSansProvider {
-  /**
-   * Class to instantiate for the `token`.
-   */
-  useClass: Type<any>;
+    /**
+     * Class to instantiate for the `token`.
+     */
+    useClass: Type<any>;
 }
 
 /**
  * Configures the `Injector` to return an instance of `useClass` for a token.
+ *
  * @see ["Dependency Injection Guide"](guide/dependency-injection).
  *
  * @usageNotes
@@ -310,25 +314,26 @@ export interface ClassSansProvider {
  * @publicApi
  */
 export interface ClassProvider extends ClassSansProvider {
-  /**
-   * An injection token. (Typically an instance of `Type` or `InjectionToken`, but can be `any`).
-   */
-  provide: any;
+    /**
+     * An injection token. (Typically an instance of `Type` or `InjectionToken`, but can be `any`).
+     */
+    provide: any;
 
-  /**
-   * When true, injector returns an array of instances. This is useful to allow multiple
-   * providers spread across many files to provide configuration information to a common token.
-   */
-  multi?: boolean;
+    /**
+     * When true, injector returns an array of instances. This is useful to allow multiple
+     * providers spread across many files to provide configuration information to a common token.
+     */
+    multi?: boolean;
 }
 
 /**
  * Describes how the `Injector` should be configured.
+ *
  * @see ["Dependency Injection Guide"](guide/dependency-injection).
  *
  * @see `StaticProvider`
  *
  * @publicApi
  */
-export type Provider = TypeProvider|ValueProvider|ClassProvider|ConstructorProvider|
-    ExistingProvider|FactoryProvider|any[];
+export type Provider = TypeProvider | ValueProvider | ClassProvider | ConstructorProvider |
+    ExistingProvider | FactoryProvider | any[];

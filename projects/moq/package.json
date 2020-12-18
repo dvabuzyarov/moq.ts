@@ -31,7 +31,8 @@
   ],
   "devDependencies": {
     "@angular/core": "*",
-    "jasmine": "*"
+    "jasmine": "*",
+    "moq.ts": "*"
   },
   "dependencies": {
     "tslib": "2.0.3"

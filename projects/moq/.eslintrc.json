@@ -15,7 +15,39 @@
         ],
         "createDefaultProgram": true
       },
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": [
+              "classMethod"
+            ],
+            "modifiers": [
+              "public",
+              "static"
+            ],
+            "format": [
+              "PascalCase"
+            ]
+          }
+        ],
+        "@typescript-eslint/no-extraneous-class": [
+          "error",
+          {
+            "allowStaticOnly": true,
+            "allowEmpty": true
+          }
+        ],
+        "no-shadow": [
+          "error",
+          {
+            "allow": [
+              "Range",
+              "PlayableUpdateReason"
+            ]
+          }
+        ]
+      }
     },
     {
       "files": [

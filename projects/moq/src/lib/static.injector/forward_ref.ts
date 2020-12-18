@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -6,7 +8,6 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-/* eslint-disabled */
 import { Type } from "./type";
 import { stringify } from "./stringify";
 import { getClosureSafeProperty } from "./property";

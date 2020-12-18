@@ -4,6 +4,7 @@ export type IPredicate<T> = (instance: T) => boolean;
 /**
  * This class allows to express wide range of cases in an expression.
  * You can use it with setups or verifies methods.
+ *
  * @example
  * ```typescript
  *
@@ -77,6 +78,7 @@ export class It<P> {
 
     /**
      * This factory method returns a wildcat expression that matches any value.
+     *
      * @example
      * ```typescript
      *

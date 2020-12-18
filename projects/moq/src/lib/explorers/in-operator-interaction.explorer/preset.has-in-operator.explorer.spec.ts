@@ -3,8 +3,13 @@ import { IPreset } from "../../presets/presets/preset";
 import { ExpectedExpressions, ExpectedInOperatorExpression } from "../../expected-expressions/expected-expressions";
 import { It } from "../../expected-expressions/expression-predicates";
 import { IPlayable } from "../../moq";
+import { createInjector2, resolve2 } from "../../../tests.components/resolve.builder";
 
 describe("Preset has in operator explorer", () => {
+
+    beforeEach(() => {
+        createInjector2(PresetHasInOperatorExplorer, []);
+    });
 
     class Preset implements IPreset<unknown> {
         constructor(
@@ -15,10 +20,10 @@ describe("Preset has in operator explorer", () => {
 
     it("Returns false when preset is not playable", () => {
         const name = "name";
-        const target = <ExpectedExpressions<unknown>>{};
-        const preset = <IPreset<unknown>>{target, playable: {isPlayable: () => false}};
+        const target = {} as ExpectedExpressions<unknown>;
+        const preset = {target, playable: {isPlayable: () => false}} as IPreset<unknown>;
 
-        const explorer = new PresetHasInOperatorExplorer();
+        const explorer = resolve2(PresetHasInOperatorExplorer);
         const actual = explorer.has(name, preset);
 
         expect(actual).toBe(false);
@@ -29,7 +34,7 @@ describe("Preset has in operator explorer", () => {
         const expression = new ExpectedInOperatorExpression(name);
         const preset = new Preset({isPlayable: () => true, update: undefined}, expression);
 
-        const explorer = new PresetHasInOperatorExplorer();
+        const explorer = resolve2(PresetHasInOperatorExplorer);
         const actual = explorer.has(name, preset);
 
         expect(actual).toBe(true);
@@ -40,7 +45,7 @@ describe("Preset has in operator explorer", () => {
         const expression = new ExpectedInOperatorExpression("other name");
         const preset = new Preset({isPlayable: () => true, update: undefined}, expression);
 
-        const explorer = new PresetHasInOperatorExplorer();
+        const explorer = resolve2(PresetHasInOperatorExplorer);
         const actual = explorer.has(name, preset);
 
         expect(actual).toBe(false);
@@ -50,7 +55,7 @@ describe("Preset has in operator explorer", () => {
         const name = "name";
         const preset = new Preset({isPlayable: () => true, update: undefined}, It.IsAny());
 
-        const explorer = new PresetHasInOperatorExplorer();
+        const explorer = resolve2(PresetHasInOperatorExplorer);
         const actual = explorer.has(name, preset);
 
         expect(actual).toBe(true);
@@ -60,7 +65,7 @@ describe("Preset has in operator explorer", () => {
         const name = "name";
         const preset = new Preset({isPlayable: () => true, update: undefined}, It.Is(() => false));
 
-        const explorer = new PresetHasInOperatorExplorer();
+        const explorer = resolve2(PresetHasInOperatorExplorer);
         const actual = explorer.has(name, preset);
 
         expect(actual).toBe(false);

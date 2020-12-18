@@ -9,7 +9,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`undefined`);
+        expect(actual).toBe("undefined");
     });
 
     it("Returns formatted description for null", () => {
@@ -18,7 +18,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`null`);
+        expect(actual).toBe("null");
     });
 
     it("Returns formatted description for boolean", () => {
@@ -27,7 +27,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`true`);
+        expect(actual).toBe("true");
     });
 
     it("Returns formatted description for string", () => {
@@ -36,7 +36,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`'string value'`);
+        expect(actual).toBe("'string value'");
     });
 
     it("Returns formatted description for date", () => {
@@ -54,7 +54,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`2016.12`);
+        expect(actual).toBe("2016.12");
     });
 
     it("Returns formatted description for Regex", () => {
@@ -63,7 +63,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`/^$/`);
+        expect(actual).toBe("/^$/");
     });
 
     it("Returns formatted description for object", () => {
@@ -72,7 +72,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`[object Object]`);
+        expect(actual).toBe("[object Object]");
     });
 
     it("Returns formatted description for array", () => {
@@ -81,7 +81,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`[1,'string value',true,It.Is(() => undefined),[0,3]]`);
+        expect(actual).toBe("[1,'string value',true,It.Is(() => undefined),[0,3]]");
     });
 
     it("Returns formatted description for It", () => {
@@ -91,7 +91,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`It.Is(() => undefined)`);
+        expect(actual).toBe("It.Is(() => undefined)");
     });
 
     it("Returns formatted description for function", () => {
@@ -111,7 +111,7 @@ describe("Constant formatter", () => {
         const matcher = new ConstantFormatter();
         const actual = matcher.format(value);
 
-        expect(actual).toBe(`() => 1`);
+        expect(actual).toBe("() => 1");
     });
 
 });

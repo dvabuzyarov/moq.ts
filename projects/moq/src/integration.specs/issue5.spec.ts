@@ -15,7 +15,7 @@ class MyClass {
     public method(value: number): void {
         const field1 = this.myService.findSomething(value);
         this.myService.doSomething({
-            field1: field1
+            field1
         });
     }
 }
@@ -39,14 +39,14 @@ describe("dumps all interactions into console.log", () => {
         myClass.method(value);
 
         const log = jasmine.createSpy("console.log");
-        const writer = (<any>{log} as Console);
+        const writer = ({log} as any as Console);
 
         dump(myServiceMock, writer);
 
         const delimiter = "-------------------------------";
-        expect(log).toHaveBeenCalledWith(`Dump of noname mock`);
+        expect(log).toHaveBeenCalledWith("Dump of noname mock");
         expect(log).toHaveBeenCalledWith(delimiter);
-        const interactions = `\nGetter of 'findSomething'\nfindSomething(4)\nGetter of 'doSomething'\ndoSomething([object Object])`;
+        const interactions = "\nGetter of 'findSomething'\nfindSomething(4)\nGetter of 'doSomething'\ndoSomething([object Object])";
         expect(log).toHaveBeenCalledWith(interactions);
         expect(log).toHaveBeenCalledWith(delimiter);
     });

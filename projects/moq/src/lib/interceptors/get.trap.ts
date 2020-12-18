@@ -6,7 +6,7 @@ import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-prop
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
 import { MoqAPI } from "../moq";
 import { Tracker } from "../tracker/tracker";
-import { typeofInjectionToken } from "../typeof-injection-token";
+import { TypeofInjectionToken } from "../typeof-injection-token";
 import { MOCK } from "../injector/moq.injection-token";
 
 /**
@@ -14,7 +14,7 @@ import { MOCK } from "../injector/moq.injection-token";
  */
 export class GetTrap {
     constructor(
-        private mock: typeofInjectionToken<typeof MOCK>,
+        private mock: TypeofInjectionToken<typeof MOCK>,
         private tracker: Tracker,
         private propertiesValueStorage: PropertiesValueStorage,
         private interactionPlayer: InteractionPlayer,
