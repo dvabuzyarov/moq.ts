@@ -114,7 +114,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/36e6099/projects/moq/src/lib/moq.ts#L295">projects/moq/src/lib/moq.ts:295</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/moq.ts#L302">projects/moq/src/lib/moq.ts:302</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -131,7 +131,7 @@
 											the global mock options (<a href="../classes/moq_ts.mock-1.html#options">Mock.options</a>). Some components depend on the options and the injector
 										should be able to resolve it. To configure the injector property the implementation could do the following:</p>
 										<pre><code class="language-typescript"><span class="hljs-keyword">return</span> [
- {provide: MOCK_OPTIONS, useValue: options, deps: []},
+ {<span class="hljs-attr">provide</span>: MOCK_OPTIONS, <span class="hljs-attr">useValue</span>: options, <span class="hljs-attr">deps</span>: []},
 ];</code></pre>
 									</div>
 								</li>
