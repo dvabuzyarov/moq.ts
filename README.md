@@ -33,7 +33,7 @@ You can find a pretty full set of usages in the integration tests. Check out [te
     - [Injector config](#injector-config)
         - [DefaultInjectorConfig](#defaultinjectorconfig)
         - [EqualMatchingInjectorConfig and custom matchers](#equalmatchinginjectorconfig)
-        - [Internal API](#internalapi)
+        - [Internal API](#internal-api)
 - [Mock prototype](#mock-prototype)
 - [Mimics](#mimics)
 - [typeof operator](#typeof-operator)
