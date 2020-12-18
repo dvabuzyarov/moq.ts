@@ -1,12 +1,12 @@
 import { InOperatorInteraction } from "../interactions";
 import { PropertyKeyFormatter } from "./property-key.formatter";
 import { InOperatorFormatter } from "./in-operator.formatter";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("In operator expression formatter", () => {
-    function propertyKeyFormatterFactory(): PropertyKeyFormatter {
-        const format = jasmine.createSpy("property key format");
-        return {format};
-    }
+    beforeEach(() => {
+        createInjector2(InOperatorFormatter, [PropertyKeyFormatter]);
+    });
 
     it("Returns formatted description for in operator expression", () => {
         const name = "name";
@@ -14,10 +14,11 @@ describe("In operator expression formatter", () => {
 
         const expression = new InOperatorInteraction(name);
 
-        const propertyKeyFormatter = propertyKeyFormatterFactory();
-        (<jasmine.Spy>propertyKeyFormatter.format).withArgs(name).and.returnValue(nameDescription);
+        resolveMock(PropertyKeyFormatter)
+            .setup(instance => instance.format(name))
+            .returns(nameDescription);
 
-        const formatter = new InOperatorFormatter(propertyKeyFormatter);
+        const formatter = resolve2(InOperatorFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(`In operator for \'${nameDescription}\'`);

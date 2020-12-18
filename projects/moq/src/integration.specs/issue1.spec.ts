@@ -36,9 +36,9 @@ describe("#1 Verify context of a named function expression is incorrect", () => 
         const myClass = new MyClass(myServiceMock.object());
         myClass.method(value);
 
-        myServiceMock.verify(instance => instance.doSomething(It.Is<IData>(data => {
+        myServiceMock.verify(instance => instance.doSomething(It.Is<IData>(data =>
             // data: expected {field1: 2}, actual: 4;
-            return data.field1 === field1;
-        })), Times.Once());
+             data.field1 === field1
+        )), Times.Once());
     });
 });

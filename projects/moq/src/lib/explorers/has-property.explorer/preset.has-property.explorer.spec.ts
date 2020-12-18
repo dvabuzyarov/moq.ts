@@ -4,21 +4,28 @@ import { ExpectedExpressions } from "../../expected-expressions/expected-express
 import { ExpressionHasPropertyExplorer } from "./expression-has-property.explorer";
 import { ObjectHasPropertyExplorer } from "./object-has-property.explorer";
 import { MimicsPreset } from "../../presets/presets/mimics.preset";
+import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
+import { It } from "moq.ts";
 
 describe("Preset has property explorer", () => {
 
+    beforeEach(() => {
+        createInjector2(PresetHasPropertyExplorer, [ExpressionHasPropertyExplorer, ObjectHasPropertyExplorer]);
+    });
+
     it("Returns true when preset expression has property", () => {
         const name = "name";
-        const target = <ExpectedExpressions<unknown>>{};
-        const preset = <IPreset<unknown>>{target};
+        const target = {} as ExpectedExpressions<unknown>;
+        const preset = {target} as IPreset<unknown>;
 
-        const expressionExplorer = jasmine.createSpyObj<ExpressionHasPropertyExplorer>("", ["has"]);
-        expressionExplorer.has.withArgs(name, target).and.returnValue(true);
+        resolveMock(ExpressionHasPropertyExplorer)
+            .setup(instance => instance.has(name, target))
+            .returns(true);
+        resolveMock(ObjectHasPropertyExplorer)
+            .setup(instance => instance.has(It.IsAny(), It.IsAny()))
+            .returns(false);
 
-        const objectExplorer = jasmine.createSpyObj<ObjectHasPropertyExplorer>("", ["has"]);
-        objectExplorer.has.and.returnValue(false);
-
-        const explorer = new PresetHasPropertyExplorer(expressionExplorer, objectExplorer);
+        const explorer = resolve2(PresetHasPropertyExplorer);
         const actual = explorer.has(name, preset);
 
         expect(actual).toBe(true);
@@ -29,13 +36,14 @@ describe("Preset has property explorer", () => {
         const target = {};
         const preset = new MimicsPreset(undefined, undefined, target);
 
-        const expressionExplorer = jasmine.createSpyObj<ExpressionHasPropertyExplorer>("", ["has"]);
-        expressionExplorer.has.and.returnValue(false);
+        resolveMock(ExpressionHasPropertyExplorer)
+            .setup(instance => instance.has(It.IsAny(), It.IsAny()))
+            .returns(false);
+        resolveMock(ObjectHasPropertyExplorer)
+            .setup(instance => instance.has(name, target))
+            .returns(true);
 
-        const objectExplorer = jasmine.createSpyObj<ObjectHasPropertyExplorer>("", ["has"]);
-        objectExplorer.has.withArgs(name, target).and.returnValue(true);
-
-        const explorer = new PresetHasPropertyExplorer(expressionExplorer, objectExplorer);
+        const explorer = resolve2(PresetHasPropertyExplorer);
         const actual = explorer.has(name, preset);
 
         expect(actual).toBe(true);
@@ -45,13 +53,14 @@ describe("Preset has property explorer", () => {
         const name = "name";
         const preset = new MimicsPreset(undefined, undefined, undefined);
 
-        const expressionExplorer = jasmine.createSpyObj<ExpressionHasPropertyExplorer>("", ["has"]);
-        expressionExplorer.has.and.returnValue(false);
+        resolveMock(ExpressionHasPropertyExplorer)
+            .setup(instance => instance.has(It.IsAny(), It.IsAny()))
+            .returns(false);
+        resolveMock(ObjectHasPropertyExplorer)
+            .setup(instance => instance.has(It.IsAny(), It.IsAny()))
+            .returns(false);
 
-        const objectExplorer = jasmine.createSpyObj<ObjectHasPropertyExplorer>("", ["has"]);
-        objectExplorer.has.and.returnValue(false);
-
-        const explorer = new PresetHasPropertyExplorer(expressionExplorer, objectExplorer);
+        const explorer = resolve2(PresetHasPropertyExplorer);
         const actual = explorer.has(name, preset);
 
         expect(actual).toBe(false);

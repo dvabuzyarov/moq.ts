@@ -1,16 +1,16 @@
-import {ArgumentsMatcher} from "./arguments.matcher";
-import {It} from "../expected-expressions/expression-predicates";
-import {NamedMethodInteraction} from "../interactions";
-import {NamedMethodExpressionMatcher} from "./instance-method.matcher";
-import {ExpectedNamedMethodExpression} from "../expected-expressions/expected-expressions";
+import { ArgumentsMatcher } from "./arguments.matcher";
+import { It } from "../expected-expressions/expression-predicates";
+import { NamedMethodInteraction } from "../interactions";
+import { NamedMethodExpressionMatcher } from "./instance-method.matcher";
+import { ExpectedNamedMethodExpression } from "../expected-expressions/expected-expressions";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { Mock, Times } from "moq.ts";
 
 describe("Named method expression matcher", () => {
 
-    function argumentsMatcherFactory(matched?: (left: any[], right: (any|It<any>)[]) => boolean): ArgumentsMatcher {
-        return (<any>{
-            matched: matched
-        } as ArgumentsMatcher);
-    }
+    beforeEach(() => {
+        createInjector2(NamedMethodExpressionMatcher, [ArgumentsMatcher]);
+    });
 
     it("Returns true when they are equal", () => {
         const arguments1 = [];
@@ -20,13 +20,11 @@ describe("Named method expression matcher", () => {
         const left = new NamedMethodInteraction(name, arguments1);
         const right = new ExpectedNamedMethodExpression(name, arguments2);
 
-        const matched = (lvalue, rvalue): boolean => {
-            expect(lvalue).toBe(arguments1);
-            expect(rvalue).toBe(arguments2);
-            return true;
-        };
+        resolveMock(ArgumentsMatcher)
+            .setup(instance => instance.matched(arguments1, arguments2))
+            .returns(true);
 
-        const matcher = new NamedMethodExpressionMatcher(argumentsMatcherFactory(matched));
+        const matcher = resolve2(NamedMethodExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -34,13 +32,12 @@ describe("Named method expression matcher", () => {
 
     it("Returns true when right is predicate that returns true", () => {
         const left = new NamedMethodInteraction("name", []);
+        const right = new Mock<It<any>>({target: It.prototype})
+            .setup(instance => instance.test(left))
+            .returns(true)
+            .object();
 
-        const right = It.Is((value) => {
-            expect(value).toBe(left);
-            return true;
-        });
-
-        const matcher = new NamedMethodExpressionMatcher(argumentsMatcherFactory(undefined));
+        const matcher = resolve2(NamedMethodExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -54,13 +51,11 @@ describe("Named method expression matcher", () => {
         const left = new NamedMethodInteraction(name, arguments1);
         const right = new ExpectedNamedMethodExpression(name, arguments2);
 
-        const matched = (lvalue, rvalue): boolean => {
-            expect(lvalue).toBe(arguments1);
-            expect(rvalue).toBe(arguments2);
-            return false;
-        };
+        resolveMock(ArgumentsMatcher)
+            .setup(instance => instance.matched(arguments1, arguments2))
+            .returns(false);
 
-        const matcher = new NamedMethodExpressionMatcher(argumentsMatcherFactory(matched));
+        const matcher = resolve2(NamedMethodExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -72,13 +67,11 @@ describe("Named method expression matcher", () => {
         const left = new NamedMethodInteraction("left name", args);
         const right = new ExpectedNamedMethodExpression("right name", args);
 
-        const matched = (lvalue, rvalue): boolean => {
-            expect(lvalue).toBe(args);
-            expect(rvalue).toBe(args);
-            return true;
-        };
+        resolveMock(ArgumentsMatcher)
+            .setup(instance => instance.matched(args, args))
+            .returns(true);
 
-        const matcher = new NamedMethodExpressionMatcher(argumentsMatcherFactory(matched));
+        const matcher = resolve2(NamedMethodExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -86,12 +79,12 @@ describe("Named method expression matcher", () => {
 
     it("Returns false when right is predicate that returns false", () => {
         const left = new NamedMethodInteraction("name", []);
-        const right = It.Is((value) => {
-            expect(value).toBe(left);
-            return false;
-        });
+        const right = new Mock<It<any>>({target: It.prototype})
+            .setup(instance => instance.test(left))
+            .returns(false)
+            .object();
 
-        const matcher = new NamedMethodExpressionMatcher(argumentsMatcherFactory(undefined));
+        const matcher = resolve2(NamedMethodExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -103,15 +96,12 @@ describe("Named method expression matcher", () => {
         const left = new NamedMethodInteraction("left name", args);
         const right = new ExpectedNamedMethodExpression("right name", args);
 
-        const matched = (lvalue, rvalue): boolean => {
-            fail("Should not be called");
-            return false;
-        };
-
-        const matcher = new NamedMethodExpressionMatcher(argumentsMatcherFactory(matched));
+        const matcher = resolve2(NamedMethodExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
+        resolveMock(ArgumentsMatcher)
+            .verify(instance => instance.matched(It.IsAny(), It.IsAny()), Times.Never());
     });
 
 });

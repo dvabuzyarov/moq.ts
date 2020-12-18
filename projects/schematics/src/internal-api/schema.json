@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "moq.ts/schematics/internal-api",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "default": "moq",
+      "description": "The name of the project.",
+      "aliases": [
+        "p"
+      ]
+    }
+  },
+  "required": []
+}

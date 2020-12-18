@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -5,7 +6,6 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-
 export function stringify(token: any): string {
     if (typeof token === "string") {
         return token;
@@ -16,7 +16,7 @@ export function stringify(token: any): string {
     }
 
     if (token == null) {
-        return "" + token;
+        return `${  token}`;
     }
 
     if (token.overriddenName) {
@@ -30,7 +30,7 @@ export function stringify(token: any): string {
     const res = token.toString();
 
     if (res == null) {
-        return "" + res;
+        return `${  res}`;
     }
 
     const newLineIndex = res.indexOf("\n");

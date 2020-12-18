@@ -13,7 +13,8 @@ export class IteratorMatcher implements IObjectMatcher {
         private iterableTester: IterableTester) {
     }
 
-    public matched<T extends Object>(left: T, right: T): boolean {
+    /*eslint-disable-next-line @typescript-eslint/ban-types*/
+    public matched<T extends object>(left: T, right: T): boolean {
         if (this.iterableTester.verify(left, right) === true) {
             const leftIterator = [...left[Symbol.iterator]()];
             const rightIterator = [...right[Symbol.iterator]()];

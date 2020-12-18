@@ -1,3 +1,4 @@
+/*eslint-disable max-classes-per-file*/
 import { Mock } from "../lib/mock";
 
 describe("Mock: typeof", () => {

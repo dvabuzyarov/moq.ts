@@ -1,3 +1,4 @@
+/*eslint-disable max-classes-per-file*/
 import { PrototypeStorage } from "./prototype.storage";
 
 describe("Prototype storage", () => {

@@ -1,6 +1,7 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "declarationMap": true,
     "outDir": "../../dist/docs",
     "target": "es2015",
     "moduleResolution": "node",

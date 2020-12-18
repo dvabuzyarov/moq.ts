@@ -31,9 +31,8 @@ describe("Instance method", () => {
         Object.defineProperty(target, name, {value: () => undefined});
 
         const object = new Mock<ITestObject>({target: Object.create(target)})
-            .setup(instance => It.Is((expression: ExpectedNamedMethodExpression) => {
-                return expression.name === "method" && expression.args[0] === 1;
-            }))
+            .setup(() => It.Is((expression: ExpectedNamedMethodExpression) =>
+                expression.name === "method" && expression.args[0] === 1))
             .returns(value)
             .object();
 
@@ -51,9 +50,8 @@ describe("Instance method", () => {
 
         const object = new Mock<ITestObject>()
             .prototypeof(prototype)
-            .setup(instance => It.Is((expression: ExpectedNamedMethodExpression) => {
-                return expression.name === methodName && expression.args[0] === 1;
-            }))
+            .setup(() => It.Is((expression: ExpectedNamedMethodExpression) =>
+                expression.name === methodName && expression.args[0] === 1))
             .returns(value)
             .object();
 

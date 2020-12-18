@@ -2,16 +2,12 @@ import { GetPropertyInteraction } from "../interactions";
 import { VerifyFormatter } from "./verify-formatter";
 import { ExpectedExpressionFormatter } from "./expected-expression-formatter";
 import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
-import { nameof } from "../../tests.components/nameof";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("Verify message formatter", () => {
-    function expectedExpressionFormatterFactory(): ExpectedExpressionFormatter {
-        return jasmine.createSpyObj("expected expression formatter", [nameof<ExpectedExpressionFormatter>("format")]);
-    }
-
-    function trackedExpressionsFormatterFactory(): TrackedExpressionsFormatter {
-        return jasmine.createSpyObj("tracked expressions formatter", [nameof<TrackedExpressionsFormatter>("format")]);
-    }
+    beforeEach(() => {
+        createInjector2(VerifyFormatter, [ExpectedExpressionFormatter, TrackedExpressionsFormatter]);
+    });
 
     it("Returns formatted description for a verify assertion", () => {
         const mockName = "mockName";
@@ -20,22 +16,22 @@ describe("Verify message formatter", () => {
         const expressionDescription = "expression description";
         const trackedExpressionsDescription = "tracked expressions description";
         const trackedExpressions = [];
-
         const expression = new GetPropertyInteraction("name");
-        const expectedExpressionFormatter = expectedExpressionFormatterFactory();
 
-        (<jasmine.Spy>expectedExpressionFormatter.format).and.returnValue(expressionDescription);
-        const trackedExpressionsFormatter = trackedExpressionsFormatterFactory();
+        resolveMock(ExpectedExpressionFormatter)
+            .setup(instance => instance.format(expression, timesMessage, haveBeenCalledTimes, mockName))
+            .returns(expressionDescription);
+        resolveMock(TrackedExpressionsFormatter)
+            .setup(instance => instance.format(trackedExpressions))
+            .returns(trackedExpressionsDescription);
 
-        (<jasmine.Spy>trackedExpressionsFormatter.format).and.returnValue(trackedExpressionsDescription);
-        const formatter = new VerifyFormatter(expectedExpressionFormatter, trackedExpressionsFormatter);
+        const formatter = resolve2(VerifyFormatter);
         const actual = formatter.format(expression, timesMessage, haveBeenCalledTimes, trackedExpressions, mockName);
 
-        const delimiter = `-------------------------------------`;
-        const title = `Tracked calls:`;
-        expect(actual).toBe(`${expressionDescription}\n${delimiter}\n${title}\n${trackedExpressionsDescription}\n${delimiter}\n`);
-        expect(expectedExpressionFormatter.format).toHaveBeenCalledWith(expression, timesMessage, haveBeenCalledTimes, mockName);
-        expect(trackedExpressionsFormatter.format).toHaveBeenCalledWith(trackedExpressions);
+        const delimiter = "-------------------------------------";
+        const title = "Tracked calls:";
+        const expected = `${expressionDescription}\n${delimiter}\n${title}\n${trackedExpressionsDescription}\n${delimiter}\n`;
+        expect(actual).toBe(expected);
     });
 
 });

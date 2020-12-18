@@ -2,33 +2,22 @@ import { HasPropertyExplorer } from "./has-property.explorer";
 import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
 import { IPreset } from "../../presets/presets/preset";
 import { Presets } from "../../presets/presets";
-import { createInjector, resolve } from "../../../tests.components/resolve.builder";
+import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import { MembersPropertyExplorer } from "../members.explorer/members-property.explorer";
 
 describe("Has property explorer", () => {
     beforeEach(() => {
-        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
-        const presetExplorer = jasmine.createSpyObj<PresetHasPropertyExplorer>("", ["has"]);
-        const membersExplorer = jasmine.createSpyObj<MembersPropertyExplorer>("", ["hasProperty"]);
-        createInjector([
-            {provide: Presets, useValue: presets, deps: []},
-            {provide: PresetHasPropertyExplorer, useValue: presetExplorer, deps: []},
-            {provide: MembersPropertyExplorer, useValue: membersExplorer, deps: []},
-            {
-                provide: HasPropertyExplorer,
-                useClass: HasPropertyExplorer,
-                deps: [Presets, MembersPropertyExplorer, PresetHasPropertyExplorer]
-            },
-        ]);
+        createInjector2(HasPropertyExplorer, [Presets, MembersPropertyExplorer, PresetHasPropertyExplorer]);
     });
 
     it("Returns true when there is a member", () => {
         const name = "name";
 
-        resolve(MembersPropertyExplorer)
-            .hasProperty.withArgs(name).and.returnValue(true);
+        resolveMock(MembersPropertyExplorer)
+            .setup(instance => instance.hasProperty(name))
+            .returns(true);
 
-        const explorer = resolve(HasPropertyExplorer);
+        const explorer = resolve2(HasPropertyExplorer);
         const actual = explorer.has(name);
 
         expect(actual).toBe(true);
@@ -36,17 +25,19 @@ describe("Has property explorer", () => {
 
     it("Returns true when there is a property", () => {
         const name = "name";
-        const preset = <IPreset<unknown>>{};
-        resolve(MembersPropertyExplorer)
-            .hasProperty.and.returnValue(false);
+        const preset = {} as IPreset<unknown>;
 
-        resolve(Presets)
-            .get.and.returnValue([preset]);
+        resolveMock(MembersPropertyExplorer)
+            .setup(instance => instance.hasProperty(name))
+            .returns(false);
+        resolveMock(Presets)
+            .setup(instance => instance.get())
+            .returns([preset]);
+        resolveMock(PresetHasPropertyExplorer)
+            .setup(instance => instance.has(name, preset))
+            .returns(true);
 
-        resolve(PresetHasPropertyExplorer)
-            .has.withArgs(name, preset).and.returnValue(true);
-
-        const explorer = resolve(HasPropertyExplorer);
+        const explorer = resolve2(HasPropertyExplorer);
         const actual = explorer.has(name);
 
         expect(actual).toBe(true);
@@ -54,18 +45,19 @@ describe("Has property explorer", () => {
 
     it("Returns false when there is no property", () => {
         const name = "name";
-        const preset = <IPreset<unknown>>{};
+        const preset = {} as IPreset<unknown>;
 
-        resolve(MembersPropertyExplorer)
-            .hasProperty.and.returnValue(false);
+        resolveMock(MembersPropertyExplorer)
+            .setup(instance => instance.hasProperty(name))
+            .returns(false);
+        resolveMock(Presets)
+            .setup(instance => instance.get())
+            .returns([preset]);
+        resolveMock(PresetHasPropertyExplorer)
+            .setup(instance => instance.has(name, preset))
+            .returns(false);
 
-        resolve(Presets)
-            .get.and.returnValue([preset]);
-
-        resolve(PresetHasPropertyExplorer)
-            .has.withArgs(name, preset).and.returnValue(false);
-
-        const explorer = resolve(HasPropertyExplorer);
+        const explorer = resolve2(HasPropertyExplorer);
         const actual = explorer.has(name);
 
         expect(actual).toBe(false);

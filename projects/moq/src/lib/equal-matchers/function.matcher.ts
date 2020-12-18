@@ -3,7 +3,7 @@
  */
 export class FunctionMatcher {
 
-    public matched<T extends Function>(left: T, right: T): boolean {
+    public matched<T extends (...args) => unknown>(left: T, right: T): boolean {
         return left === right;
     }
 }

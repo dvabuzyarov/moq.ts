@@ -1,0 +1,59 @@
+{
+  "extends": "../../.eslintrc.json",
+  "ignorePatterns": [
+    "!**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "projects/moq/tsconfig.lib.json",
+          "projects/moq/tsconfig.spec.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "rules": {
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": [
+              "classMethod"
+            ],
+            "modifiers": [
+              "public",
+              "static"
+            ],
+            "format": [
+              "PascalCase"
+            ]
+          }
+        ],
+        "@typescript-eslint/no-extraneous-class": [
+          "error",
+          {
+            "allowStaticOnly": true,
+            "allowEmpty": true
+          }
+        ],
+        "no-shadow": [
+          "error",
+          {
+            "allow": [
+              "Range",
+              "PlayableUpdateReason"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "rules": {}
+    }
+  ]
+}

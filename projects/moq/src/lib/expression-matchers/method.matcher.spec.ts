@@ -1,16 +1,16 @@
-import {It} from "../expected-expressions/expression-predicates";
-import {ArgumentsMatcher} from "./arguments.matcher";
-import {MethodInteraction} from "../interactions";
-import {ExpectedMethodExpression} from "../expected-expressions/expected-expressions";
-import {MethodExpressionMatcher} from "./method.matcher";
+import { It } from "../expected-expressions/expression-predicates";
+import { ArgumentsMatcher } from "./arguments.matcher";
+import { MethodInteraction } from "../interactions";
+import { ExpectedMethodExpression } from "../expected-expressions/expected-expressions";
+import { MethodExpressionMatcher } from "./method.matcher";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { Mock } from "moq.ts";
 
 describe("Method expression matcher", () => {
 
-    function argumentsMatcherFactory(matched?: (left: any[], right: (any|It<any>)[]) => boolean): ArgumentsMatcher {
-        return (<any>{
-            matched: matched
-        } as ArgumentsMatcher);
-    }
+    beforeEach(() => {
+        createInjector2(MethodExpressionMatcher, [ArgumentsMatcher]);
+    });
 
     it("Returns true when they are equal", () => {
         const arguments1 = [];
@@ -19,13 +19,11 @@ describe("Method expression matcher", () => {
         const left = new MethodInteraction(arguments1);
         const right = new ExpectedMethodExpression(arguments2);
 
-        const matched = (lvalue, rvalue): boolean => {
-            expect(lvalue).toBe(arguments1);
-            expect(rvalue).toBe(arguments2);
-            return true;
-        };
+        resolveMock(ArgumentsMatcher)
+            .setup(instance => instance.matched(arguments1, arguments2))
+            .returns(true);
 
-        const matcher = new MethodExpressionMatcher(argumentsMatcherFactory(matched));
+        const matcher = resolve2(MethodExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -33,13 +31,12 @@ describe("Method expression matcher", () => {
 
     it("Returns true when right is predicate that returns true", () => {
         const left = new MethodInteraction([]);
+        const right = new Mock<It<any>>({target: It.prototype})
+            .setup(instance => instance.test(left))
+            .returns(true)
+            .object();
 
-        const right = It.Is((value) => {
-            expect(value).toBe(left);
-            return true;
-        });
-
-        const matcher = new MethodExpressionMatcher(argumentsMatcherFactory(undefined));
+        const matcher = resolve2(MethodExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -52,13 +49,11 @@ describe("Method expression matcher", () => {
         const left = new MethodInteraction(arguments1);
         const right = new ExpectedMethodExpression(arguments2);
 
-        const matched = (lvalue, rvalue): boolean => {
-            expect(lvalue).toBe(arguments1);
-            expect(rvalue).toBe(arguments2);
-            return false;
-        };
+        resolveMock(ArgumentsMatcher)
+            .setup(instance => instance.matched(arguments1, arguments2))
+            .returns(false);
 
-        const matcher = new MethodExpressionMatcher(argumentsMatcherFactory(matched));
+        const matcher = resolve2(MethodExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -66,12 +61,12 @@ describe("Method expression matcher", () => {
 
     it("Returns false when right is predicate that returns false", () => {
         const left = new MethodInteraction([]);
-        const right = It.Is((value) => {
-            expect(value).toBe(left);
-            return false;
-        });
+        const right = new Mock<It<any>>({target: It.prototype})
+            .setup(instance => instance.test(left))
+            .returns(false)
+            .object();
 
-        const matcher = new MethodExpressionMatcher(argumentsMatcherFactory(undefined));
+        const matcher = resolve2(MethodExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);

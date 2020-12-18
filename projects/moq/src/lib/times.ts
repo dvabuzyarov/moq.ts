@@ -9,6 +9,7 @@ export enum Range {
 
 /**
  * This class expresses the expectation about amount of invocations.
+ *
  * @example
  * ```typescript
  *
@@ -33,10 +34,10 @@ export enum Range {
  * ```
  */
 export class Times {
-    private static _once: Times = new Times(expected => expected === 1, `Should be called once`);
-    private static _never: Times = new Times(expected => expected === 0, `Should be called never`);
-    private static _atMostOnce: Times = new Times(expected => expected <= 1, `Should be called at most once`);
-    private static _atLeastOnce: Times = new Times(expected => expected >= 1, `Should be called at least once`);
+    private static _once: Times = new Times(expected => expected === 1, "Should be called once");
+    private static _never: Times = new Times(expected => expected === 0, "Should be called never");
+    private static _atMostOnce: Times = new Times(expected => expected <= 1, "Should be called at most once");
+    private static _atLeastOnce: Times = new Times(expected => expected >= 1, "Should be called at least once");
 
     /**
      *
@@ -51,6 +52,7 @@ export class Times {
 
     /**
      * It expects that the actual would be equal or bigger then the expected value.
+     *
      * @param callCount The expected value.
      */
     public static AtLeast(callCount: number): Times {
@@ -66,6 +68,7 @@ export class Times {
 
     /**
      * It expects that the actual would be equal or smaller then the expected value.
+     *
      * @param callCount The expected value.
      */
     public static AtMost(callCount: number): Times {
@@ -81,6 +84,7 @@ export class Times {
 
     /**
      * It expects that the actual would be in the expected range of values.
+     *
      * @param callCountFrom The lowest bound of the range.
      * @param callCountTo The highest bound of the range.
      * @param range  Sets the rules where bounds of a range are included or excluded from the range.
@@ -99,6 +103,7 @@ export class Times {
 
     /**
      * It expects that the actual is equal to the expected value.
+     *
      * @param callCount The expected value.
      */
     public static Exactly(callCount: number): Times {
@@ -123,6 +128,7 @@ export class Times {
 
     /**
      * Evaluates the expectation against the actual value.
+     *
      * @param callCount The actual value.
      */
     public test(callCount: number): boolean {

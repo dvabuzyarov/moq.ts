@@ -5,7 +5,7 @@ import { MoqAPI } from "../lib/moq";
 describe("MoqAPI", () => {
 
     it("Returns moq API", () => {
-        const mock = new Mock<{}>();
+        const mock = new Mock<unknown>();
         const object = mock.object();
 
         const actual = object[MoqAPI];
@@ -16,7 +16,7 @@ describe("MoqAPI", () => {
 
     it("Raises an exception on set interaction", () => {
 
-        const object = new Mock<{}>()
+        const object = new Mock<unknown>()
             .object();
 
         expect(() => object[MoqAPI] = undefined).toThrow();
@@ -25,7 +25,7 @@ describe("MoqAPI", () => {
     it("Does not affect with a setup", () => {
         const value = "value";
 
-        const mock = new Mock<{}>();
+        const mock = new Mock<unknown>();
         const object = mock
             .setup(instance => instance[MoqAPI])
             .returns(value)
@@ -37,7 +37,7 @@ describe("MoqAPI", () => {
     });
 
     it("Verifies", () => {
-        const mock = new Mock<{}>();
+        const mock = new Mock<unknown>();
         const object = mock.object();
 
         const value = object[MoqAPI];

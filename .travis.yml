@@ -13,7 +13,11 @@ cache:
 script:
   - npm run lint
   - npm run test
-  - npm run build-docs
+  - npm run schematics:test
+  - npm run schematics:build
+  - npm install -g @angular-devkit/schematics-cli
+  - npm run schematics:internal-api:run
+  - npm run build:docs
   - npm run build
   - npm run typedoc
 

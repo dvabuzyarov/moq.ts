@@ -2,6 +2,7 @@ import { IPlayable } from "../moq";
 
 /**
  * The configured setup will be applied or not accordingly to the value in the sequence.
+ *
  * @example
  * ```typescript
  *
@@ -25,10 +26,10 @@ export class PlayableSequence implements IPlayable {
 
     readonly update = () => {
         this.index++;
-    }
+    };
 
     readonly isPlayable = () => {
         if (this.index >= this.sequence.length) return false;
         return this.sequence[this.index];
-    }
+    };
 }

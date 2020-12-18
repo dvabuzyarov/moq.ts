@@ -7,14 +7,14 @@ import {
     SetPropertyInteraction
 } from "../interactions";
 import { REFLECT_APPLY } from "./reflect-apply.injection-token";
-import { typeofInjectionToken } from "../typeof-injection-token";
+import { TypeofInjectionToken } from "../typeof-injection-token";
 
 /**
  * @hidden
  */
 export class MimicsPresetPlayer {
     constructor(
-        private apply: typeofInjectionToken<typeof REFLECT_APPLY>) {
+        private apply: TypeofInjectionToken<typeof REFLECT_APPLY>) {
 
     }
 

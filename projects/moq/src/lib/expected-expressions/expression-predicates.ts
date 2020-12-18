@@ -1,8 +1,10 @@
+/*eslint @typescript-eslint/naming-convention: "off"*/
 export type IPredicate<T> = (instance: T) => boolean;
 
 /**
  * This class allows to express wide range of cases in an expression.
  * You can use it with setups or verifies methods.
+ *
  * @example
  * ```typescript
  *
@@ -48,8 +50,8 @@ export type IPredicate<T> = (instance: T) => boolean;
  * mock.verify(instance => instance.method(It.Is(a => a === 2)));
  * ```
  */
-export class It<T> {
-    constructor(public predicate: IPredicate<T>) {
+export class It<P> {
+    constructor(public predicate: IPredicate<P>) {
 
     }
 
@@ -76,6 +78,7 @@ export class It<T> {
 
     /**
      * This factory method returns a wildcat expression that matches any value.
+     *
      * @example
      * ```typescript
      *
@@ -97,7 +100,7 @@ export class It<T> {
     /**
      * @hidden
      */
-    public test(instance?: T): boolean {
+    public test(instance?: P): boolean {
         try {
             const result = this.predicate(instance);
             return result === true || result === undefined;

@@ -96,7 +96,7 @@ describe("Mock", () => {
     });
 
     it("Setups mock", () => {
-        const setup = <IPresetBuilder<any>>{};
+        const setup = {} as IPresetBuilder<any>;
         const expression = instance => instance["property"];
         const expectedExpression = {} as ExpectedExpressions<unknown>;
         resolve(ExpectedExpressionReflector).reflect.withArgs(expression).and.returnValue(expectedExpression);
@@ -126,9 +126,9 @@ describe("Mock", () => {
     });
 
     it("Adds verified expression into sequence verifier", () => {
-        const sequenceVerifier = <ISequenceVerifier>jasmine.createSpyObj("sequence verifier", [
+        const sequenceVerifier = jasmine.createSpyObj("sequence verifier", [
             nameof<ISequenceVerifier>("add")
-        ]);
+        ]) as ISequenceVerifier;
         const expression = instance => instance["property"];
 
         const mock = new Mock();

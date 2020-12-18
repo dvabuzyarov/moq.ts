@@ -2,34 +2,25 @@ import { InOperatorInteractionExplorer } from "./in-operator-interaction.explore
 import { PresetHasInOperatorExplorer } from "./preset.has-in-operator.explorer";
 import { IPreset } from "../../presets/presets/preset";
 import { Presets } from "../../presets/presets";
-import { createInjector, resolve } from "../../../tests.components/resolve.builder";
+import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 
 describe("In operator interaction explorer", () => {
     beforeEach(() => {
-        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
-        const presetExplorer = jasmine.createSpyObj<PresetHasInOperatorExplorer>("", ["has"]);
-        createInjector([
-            {provide: Presets, useValue: presets, deps: []},
-            {provide: PresetHasInOperatorExplorer, useValue: presetExplorer, deps: []},
-            {
-                provide: InOperatorInteractionExplorer,
-                useClass: InOperatorInteractionExplorer,
-                deps: [Presets, PresetHasInOperatorExplorer]
-            },
-        ]);
+        createInjector2(InOperatorInteractionExplorer, [Presets, PresetHasInOperatorExplorer]);
     });
 
     it("Returns true when there is a playable preset", () => {
         const name = "name";
-        const preset = <IPreset<unknown>>{};
+        const preset = {} as IPreset<unknown>;
 
-        resolve(Presets)
-            .get.and.returnValue([preset]);
+        resolveMock(Presets)
+            .setup(instance => instance.get())
+            .returns([preset]);
+        resolveMock(PresetHasInOperatorExplorer)
+            .setup(instance => instance.has(name, preset))
+            .returns(true);
 
-        resolve(PresetHasInOperatorExplorer)
-            .has.withArgs(name, preset).and.returnValue(true);
-
-        const explorer = resolve(InOperatorInteractionExplorer);
+        const explorer = resolve2(InOperatorInteractionExplorer);
         const actual = explorer.has(name);
 
         expect(actual).toBe(true);
@@ -37,15 +28,16 @@ describe("In operator interaction explorer", () => {
 
     it("Returns false when there is no playable preset", () => {
         const name = "name";
-        const preset = <IPreset<unknown>>{};
+        const preset = {} as IPreset<unknown>;
 
-        resolve(Presets)
-            .get.and.returnValue([preset]);
+        resolveMock(Presets)
+            .setup(instance => instance.get())
+            .returns([preset]);
+        resolveMock(PresetHasInOperatorExplorer)
+            .setup(instance => instance.has(name, preset))
+            .returns(false);
 
-        resolve(PresetHasInOperatorExplorer)
-            .has.withArgs(name, preset).and.returnValue(false);
-
-        const explorer = resolve(InOperatorInteractionExplorer);
+        const explorer = resolve2(InOperatorInteractionExplorer);
         const actual = explorer.has(name);
 
         expect(actual).toBe(false);

@@ -1,5 +1,6 @@
+/*eslint-disable max-classes-per-file*/
 import { ProxyFactory } from "./proxy.factory";
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { GetTrap } from "./get.trap";
 import { SetTrap } from "./set.trap";
 import { ApplyTrap } from "./apply.trap";
@@ -11,48 +12,34 @@ import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
 describe("Proxy factory", () => {
 
     beforeEach(() => {
-        const getTrap = jasmine.createSpyObj<GetTrap>("", ["intercept"]);
-        const setTrap = jasmine.createSpyObj<SetTrap>("", ["intercept"]);
-        const hasTrap = jasmine.createSpyObj<HasTrap>("", ["intercept"]);
-        const applyTrap = jasmine.createSpyObj<ApplyTrap>("", ["intercept"]);
-        const getPrototypeOfTrap = jasmine.createSpyObj<GetPrototypeOfTrap>("", ["intercept"]);
-        const setPrototypeOfTrap = jasmine.createSpyObj<SetPrototypeOfTrap>("", ["intercept"]);
-
-        createInjector([
-            {
-                provide: ProxyFactory, useClass: ProxyFactory, deps: [
-                    MOCK_OPTIONS,
-                    GetTrap,
-                    SetTrap,
-                    HasTrap,
-                    ApplyTrap,
-                    GetPrototypeOfTrap,
-                    SetPrototypeOfTrap
-                ]
-            },
-            {provide: GetTrap, useValue: getTrap, deps: []},
-            {provide: SetTrap, useValue: setTrap, deps: []},
-            {provide: HasTrap, useValue: hasTrap, deps: []},
-            {provide: ApplyTrap, useValue: applyTrap, deps: []},
-            {provide: GetPrototypeOfTrap, useValue: getPrototypeOfTrap, deps: []},
-            {provide: SetPrototypeOfTrap, useValue: setPrototypeOfTrap, deps: []},
-            {provide: MOCK_OPTIONS, useValue: {}, deps: []},
+        createInjector2(ProxyFactory, [
+            MOCK_OPTIONS,
+            GetTrap,
+            SetTrap,
+            HasTrap,
+            ApplyTrap,
+            GetPrototypeOfTrap,
+            SetPrototypeOfTrap
         ]);
     });
 
     it("Returns proxy object", () => {
-        Object.defineProperty(resolve(MOCK_OPTIONS), "target", {value: () => undefined});
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(() => undefined);
 
-        const interceptor = resolve(ProxyFactory);
+        const interceptor = resolve2(ProxyFactory);
         const actual = interceptor.object();
 
         expect(actual).not.toBeUndefined();
     });
 
     it("Returns the same proxy object", () => {
-        Object.defineProperty(resolve(MOCK_OPTIONS), "target", {value: () => undefined});
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(() => undefined);
 
-        const interceptor = resolve(ProxyFactory);
+        const interceptor = resolve2(ProxyFactory);
         const first = interceptor.object();
         const second = interceptor.object();
 
@@ -64,12 +51,15 @@ describe("Proxy factory", () => {
         const value = {};
         const target = () => undefined;
 
-        Object.defineProperty(resolve(MOCK_OPTIONS), "target", {value: target});
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(target);
 
-        resolve(GetTrap)
-            .intercept.withArgs(name).and.returnValue(value);
+        resolveMock(GetTrap)
+            .setup(instance => instance.intercept(name))
+            .returns(value);
 
-        const interceptor = resolve(ProxyFactory);
+        const interceptor = resolve2(ProxyFactory);
         const object = interceptor.object();
         const actual = object[name];
 
@@ -81,11 +71,14 @@ describe("Proxy factory", () => {
         const value = {};
         const target = () => undefined;
 
-        Object.defineProperty(resolve(MOCK_OPTIONS), "target", {value: target});
-        resolve(SetTrap)
-            .intercept.withArgs(target, name, value).and.returnValue(true);
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(target);
+        resolveMock(SetTrap)
+            .setup(instance => instance.intercept(target, name, value))
+            .returns(true);
 
-        const interceptor = resolve(ProxyFactory);
+        const interceptor = resolve2(ProxyFactory);
         const object = interceptor.object();
         const actual = object[name] = value;
 
@@ -96,12 +89,16 @@ describe("Proxy factory", () => {
         const name = "some_property_name";
         const value = {};
         const target = () => undefined;
-        Object.defineProperty(resolve(MOCK_OPTIONS), "target", {value: target});
 
-        resolve(SetTrap)
-            .intercept.withArgs(target, name, value).and.returnValue(false);
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(target);
 
-        const interceptor = resolve(ProxyFactory);
+        resolveMock(SetTrap)
+            .setup(instance => instance.intercept(target, name, value))
+            .returns(false);
+
+        const interceptor = resolve2(ProxyFactory);
         const object = interceptor.object();
         expect(() => {
             object[name] = value;
@@ -113,11 +110,14 @@ describe("Proxy factory", () => {
         const value = true;
         const target = () => undefined;
 
-        Object.defineProperty(resolve(MOCK_OPTIONS), "target", {value: target});
-        resolve(HasTrap)
-            .intercept.withArgs(name).and.returnValue(value);
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(target);
+        resolveMock(HasTrap)
+            .setup(instance => instance.intercept(name))
+            .returns(value);
 
-        const interceptor = resolve(ProxyFactory) as ProxyFactory<Function>;
+        const interceptor = resolve2<ProxyFactory<() => void>>(ProxyFactory);
         const object = interceptor.object();
         const actual = name in object;
 
@@ -129,12 +129,15 @@ describe("Proxy factory", () => {
         const value = {};
         const target = () => undefined;
 
-        Object.defineProperty(resolve(MOCK_OPTIONS), "target", {value: target});
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(target);
 
-        resolve(ApplyTrap)
-            .intercept.withArgs(target, undefined, [arg]).and.returnValue(value);
+        resolveMock(ApplyTrap)
+            .setup(instance => instance.intercept(target, undefined, [arg]))
+            .returns(value);
 
-        const interceptor = resolve(ProxyFactory) as ProxyFactory<Function>;
+        const interceptor = resolve2<ProxyFactory<(...args) => undefined>>(ProxyFactory);
         const object = interceptor.object();
 
         const actual = object(arg);
@@ -146,11 +149,14 @@ describe("Proxy factory", () => {
         class Prototype {
         }
 
-        Object.defineProperty(resolve(MOCK_OPTIONS), "target", {value: () => undefined});
-        resolve(GetPrototypeOfTrap)
-            .intercept.withArgs().and.returnValue(Prototype.prototype);
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(() => undefined);
+        resolveMock(GetPrototypeOfTrap)
+            .setup(instance => instance.intercept())
+            .returns(Prototype.prototype);
 
-        const interceptor = resolve(ProxyFactory);
+        const interceptor = resolve2(ProxyFactory);
         const object = interceptor.object();
 
         expect(object instanceof Prototype).toBe(true);
@@ -160,26 +166,33 @@ describe("Proxy factory", () => {
         class Prototype {
         }
 
-        Object.defineProperty(resolve(MOCK_OPTIONS), "target", {value: () => undefined});
-        resolve(SetPrototypeOfTrap)
-            .intercept.withArgs(Prototype.prototype).and.returnValue(true);
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(() => undefined);
+        resolveMock(SetPrototypeOfTrap)
+            .setup(instance => instance.intercept(Prototype.prototype))
+            .returns(true);
 
-        const interceptor = resolve(ProxyFactory);
+        const interceptor = resolve2(ProxyFactory);
         const object = interceptor.object();
         Object.setPrototypeOf(object, Prototype.prototype);
 
-        expect(resolve(SetPrototypeOfTrap).intercept).toHaveBeenCalledWith(Prototype.prototype);
+        resolveMock(SetPrototypeOfTrap)
+            .verify(instance => instance.intercept(Prototype.prototype));
     });
 
     it("Traps set prototype of with false", () => {
         class Prototype {
         }
 
-        Object.defineProperty(resolve(MOCK_OPTIONS), "target", {value: () => undefined});
-        resolve(SetPrototypeOfTrap)
-            .intercept.withArgs(Prototype.prototype).and.returnValue(false);
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(() => undefined);
+        resolveMock(SetPrototypeOfTrap)
+            .setup(instance => instance.intercept(Prototype.prototype))
+            .returns(false);
 
-        const interceptor = resolve(ProxyFactory);
+        const interceptor = resolve2(ProxyFactory);
         const object = interceptor.object();
 
         expect(() => {
@@ -191,12 +204,14 @@ describe("Proxy factory", () => {
         class Prototype {
         }
 
-        Object.defineProperty(resolve(MOCK_OPTIONS), "target", {value: Prototype});
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(Prototype);
+        resolveMock(GetPrototypeOfTrap)
+            .setup(instance => instance.intercept())
+            .returns(Prototype.prototype);
 
-        resolve(GetPrototypeOfTrap)
-            .intercept.and.returnValue(Prototype.prototype);
-
-        const interceptor = resolve(ProxyFactory);
+        const interceptor = resolve2(ProxyFactory);
         const object = interceptor.object();
 
         expect(typeof object).toBe(typeof Prototype);

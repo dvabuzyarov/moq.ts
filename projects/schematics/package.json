@@ -1,0 +1,24 @@
+{
+  "name": "@moq.ts/schematics",
+  "peerDependencies": {
+    "@angular/core": "*",
+    "@angular-devkit/core": "*",
+    "@angular-devkit/schematics": "*",
+    "@angular/cli": "*",
+    "rxjs": "*",
+    "@ngrx/store": "*",
+    "typescript": "*",
+    "tslib": "*"
+  },
+  "devDependencies": {
+    "moq.ts": "*",
+    "ng-auto-moq": "*",
+    "reflect-metadata": "*",
+    "jasmine": "*"
+  },
+  "private": true,
+  "main": "schematics/index.js",
+  "author": "dvabuzyarov(at)gmail.com",
+  "license": "Apache-2.0",
+  "schematics": "./collection.json"
+}

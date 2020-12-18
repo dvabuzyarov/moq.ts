@@ -10,7 +10,7 @@ export class PlayableOnce implements IPlayable {
         if (reason === PlayableUpdateReason.OwnSetupWouldBePlayed) {
             this.played = true;
         }
-    }
+    };
 
     readonly isPlayable = () => this.played === false;
 }

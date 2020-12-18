@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -17,6 +18,7 @@
  * @publicApi
  */
 export const Type = Function;
+
 /**
  * @description
  *
@@ -26,7 +28,7 @@ export const Type = Function;
  * @publicApi
  */
 export interface AbstractType<T> extends Function {
-  prototype: T;
+    prototype: T;
 }
 
 export type Type<T> = new(...args: any[]) => T;

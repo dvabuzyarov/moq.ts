@@ -11,6 +11,7 @@ import { PlayTimes } from "../playables/play-times";
 /**
  * The default implementation of {@link IPresetBuilder} interface.
  * Is it not intended to be used outside of the moq library.
+ *
  * @hidden
  */
 export class PresetBuilder<T, TValue = any> implements IPresetBuilder<T> {

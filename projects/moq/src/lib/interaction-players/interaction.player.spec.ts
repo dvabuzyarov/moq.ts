@@ -3,24 +3,17 @@ import { InteractionPlayer } from "./interaction.player";
 import { PlayablePresetProvider } from "./playable-preset.provider";
 import { IPreset } from "../presets/presets/preset";
 import { PresetPlayer } from "./preset.player";
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { PresetPlayablesUpdater } from "../playables/preset-playables.updater";
+import { It, Times } from "moq.ts";
 
 describe("Interaction player", () => {
     beforeEach(() => {
-        const presetProvider = jasmine.createSpyObj<PlayablePresetProvider>("", ["get"]);
-        const playablesUpdater = jasmine.createSpyObj<PresetPlayablesUpdater>("", ["update"]);
-        const presetPlayer = jasmine.createSpyObj<PresetPlayer>("", ["play"]);
-        createInjector([
-            {provide: PlayablePresetProvider, useValue: presetProvider, deps: []},
-            {provide: PresetPlayer, useValue: presetPlayer, deps: []},
-            {provide: PresetPlayablesUpdater, useValue: playablesUpdater, deps: []},
-            {
-                provide: InteractionPlayer,
-                useClass: InteractionPlayer,
-                deps: [PlayablePresetProvider, PresetPlayablesUpdater, PresetPlayer]
-            },
-        ]);
+        createInjector2(InteractionPlayer, [PlayablePresetProvider, PresetPlayablesUpdater, PresetPlayer]);
+    });
+    beforeEach(() => {
+        resolveMock(PresetPlayablesUpdater)
+            .prototypeof(PresetPlayablesUpdater.prototype);
     });
 
     class TestInteraction extends Interaction {
@@ -31,16 +24,18 @@ describe("Interaction player", () => {
 
     it("Plays interaction on appropriate preset and returns result", () => {
         const expression = new TestInteraction();
-        const preset = <IPreset<unknown>>{};
+        const preset = {} as IPreset<unknown>;
         const result = {};
 
-        resolve(PlayablePresetProvider)
-            .get.withArgs(expression).and.returnValue(preset);
+        resolveMock(PlayablePresetProvider)
+            .setup(instance => instance.get(expression))
+            .returns(preset);
 
-        resolve(PresetPlayer)
-            .play.withArgs(preset, expression).and.returnValue(result);
+        resolveMock(PresetPlayer)
+            .setup(instance => instance.play(preset, expression))
+            .returns(result);
 
-        const player = resolve(InteractionPlayer);
+        const player = resolve2(InteractionPlayer);
         const actual = player.play(expression);
 
         expect(actual).toBe(result);
@@ -48,32 +43,36 @@ describe("Interaction player", () => {
 
     it("Updates playables of presets", () => {
         const expression = new TestInteraction();
-        const preset = <IPreset<unknown>>{};
+        const preset = {} as IPreset<unknown>;
         const result = {};
 
-        resolve(PlayablePresetProvider)
-            .get.withArgs(expression).and.returnValue(preset);
+        resolveMock(PlayablePresetProvider)
+            .setup(instance => instance.get(expression))
+            .returns(preset);
+        resolveMock(PresetPlayer)
+            .setup(instance => instance.play(preset, expression))
+            .returns(result);
 
-        resolve(PresetPlayer)
-            .play.withArgs(preset, expression).and.returnValue(result);
-
-        const player = resolve(InteractionPlayer);
+        const player = resolve2(InteractionPlayer);
         const actual = player.play(expression);
 
-        expect(resolve(PresetPlayablesUpdater).update).toHaveBeenCalledWith(expression, preset);
+        resolveMock(PresetPlayablesUpdater)
+            .verify(instance => instance.update(expression, preset));
         expect(actual).toBe(result);
     });
 
     it("Does not play interaction when there is no appropriate preset and returns undefined", () => {
         const expression = new TestInteraction();
 
-        resolve(PlayablePresetProvider)
-            .get.and.returnValue(undefined);
+        resolveMock(PlayablePresetProvider)
+            .setup(instance => instance.get(expression))
+            .returns(undefined);
 
-        const player = resolve(InteractionPlayer);
+        const player = resolve2(InteractionPlayer);
         const actual = player.play(expression);
 
-        expect(resolve(PresetPlayer).play).not.toHaveBeenCalled();
+        resolveMock(PresetPlayer)
+            .verify(instance => instance.play(It.IsAny(), It.IsAny()), Times.Never());
         expect(actual).toBeUndefined();
     });
 });

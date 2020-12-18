@@ -26,6 +26,7 @@ export interface IPlayable {
 
     /**
      * Invokes as the setup is about to be played, so the playable logic can change it's state.
+     *
      * @param reason The reason why this update is called {@link PlayableUpdateReason}
      * @example
      * ```typescript
@@ -54,6 +55,7 @@ export interface IPlayable {
 
 /**
  * Sets a behaviour rule for a particular use case
+ *
  * @param T The type of mocked object.
  */
 export interface IPresetBuilder<T, TValue = any> {
@@ -64,6 +66,7 @@ export interface IPresetBuilder<T, TValue = any> {
      *
      * Controls write operation in case of
      * - property assignment (true - the assignment is allowed, false - the assignment is not allowed)
+     *
      * @param value The value
      */
     returns(value: TValue): IMock<T>;
@@ -181,6 +184,7 @@ export interface IMock<T> {
 
     /**
      * Defines a configuration for particular interaction with the mocked object.
+     *
      * @example
      * ```typescript
      *
@@ -213,6 +217,7 @@ export interface IMock<T> {
 
     /**
      * Asserts expected interactions with the mocked object.
+     *
      * @param expression Expected expression
      * @param times The default value is {@link Times.Once}
      */
@@ -220,6 +225,7 @@ export interface IMock<T> {
 
     /**
      * Set the prototype of the mocked object.
+     *
      * @example
      * ```typescript
      *
@@ -282,6 +288,7 @@ export const MoqAPI = Symbol("MoqAPI");
 export interface IInjectorConfig {
     /**
      * Returns array of StaticProviders to construct an angular based injector.
+     *
      * @param options The final version of mock options. Options that passed to Mock constructor are merged with
      * the global mock options ({@link Mock.options}). Some components depend on the options and the injector
      * should be able to resolve it. To configure the injector property the implementation could do the following:

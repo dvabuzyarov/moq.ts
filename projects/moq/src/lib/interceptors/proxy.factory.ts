@@ -5,7 +5,7 @@ import { GetPrototypeOfTrap } from "./get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./set-prototype-of.trap";
 import { HasTrap } from "./has.trap";
 import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
-import { typeofInjectionToken } from "../typeof-injection-token";
+import { TypeofInjectionToken } from "../typeof-injection-token";
 
 /**
  * @hidden
@@ -13,7 +13,7 @@ import { typeofInjectionToken } from "../typeof-injection-token";
 export class ProxyFactory<T> {
     private _proxy: T;
 
-    constructor(private options: typeofInjectionToken<typeof MOCK_OPTIONS>,
+    constructor(private options: TypeofInjectionToken<typeof MOCK_OPTIONS>,
                 private getTrap: GetTrap,
                 private setTrap: SetTrap,
                 private hasTrap: HasTrap,

@@ -4,6 +4,7 @@ import { Converter } from "typedoc/dist/lib/converter/converter";
 import { Context } from "typedoc/dist/lib/converter/context";
 import { ContainerReflection } from "typedoc/dist/lib/models/reflections/container";
 import { CommentPlugin } from "typedoc/dist/lib/converter/plugins";
+import { DeclarationReflection } from "typedoc";
 
 const moduleName = "moq.ts";
 
@@ -25,7 +26,7 @@ export class MoqPlugin extends ConverterComponent {
 
     private onDeclaration(context: Context, reflection: Reflection, node?) {
         if (reflection.kindOf(ReflectionKind.Module)) {
-            this.moduleRenames.push(<ContainerReflection>reflection);
+            this.moduleRenames.push(reflection as ContainerReflection);
         }
     }
 
@@ -42,11 +43,11 @@ export class MoqPlugin extends ConverterComponent {
 
         // Process each rename
         this.moduleRenames.forEach(item => {
-            const renaming = <ContainerReflection>item;
+            const renaming = item as ContainerReflection;
             // Find an existing module that already has the "rename to" name.  Use it as the merge target.
-            const mergeTarget = <ContainerReflection>refsArray.filter(
+            const mergeTarget = refsArray.find(
                 ref => ref.name === moduleName,
-            )[0];
+            ) as ContainerReflection;
 
             // If there wasn't a merge target, just change the name of the current module and exit.
             if (!mergeTarget) {
@@ -64,7 +65,7 @@ export class MoqPlugin extends ConverterComponent {
             childrenOfRenamed.forEach((ref: Reflection) => {
                 // update links in both directions
                 ref.parent = mergeTarget;
-                mergeTarget.children.push(<any>ref);
+                mergeTarget.children.push(ref as DeclarationReflection);
             });
 
             // Now that all the children have been relocated to the mergeTarget, delete the empty module

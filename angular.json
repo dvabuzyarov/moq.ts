@@ -10,7 +10,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/moq/tsconfig.lib.json",
             "project": "projects/moq/ng-package.json"
@@ -30,14 +30,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/moq/tsconfig.lib.json",
-              "projects/moq/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/moq/**/*.ts",
+              "projects/moq/**/*.html"
             ]
           }
         }
@@ -50,7 +47,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/docs/tsconfig.lib.json",
             "project": "projects/docs/ng-package.json"
@@ -70,14 +67,64 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/docs/tsconfig.lib.json",
-              "projects/docs/tsconfig.spec.json"
+            "lintFilePatterns": [
+              "projects/docs/**/*.ts",
+              "projects/docs/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "schematics": {
+      "projectType": "library",
+      "root": "projects/schematics",
+      "sourceRoot": "projects/schematics/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@testdozer/ng-cmd-builder:build",
+          "options": {
+            "command": "tsc",
+            "args": [
+              "-p ./projects/schematics/tsconfig.lib.prod.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
+            "assets": [
+              {
+                "source": "./projects/schematics/package.json",
+                "dest": "./dist/schematics"
+              },
+              {
+                "source": "./projects/schematics/collection.json",
+                "dest": "./dist/schematics"
+              },
+              {
+                "source": "./projects/schematics/src/internal-api/schema.d.ts",
+                "dest": "./dist/schematics/internal-api"
+              },
+              {
+                "source": "./projects/schematics/src/internal-api/schema.json",
+                "dest": "./dist/schematics/internal-api"
+              }
+            ]
+          }
+        },
+        "test": {
+          "builder": "@testdozer/ng-cmd-builder:build",
+          "options": {
+            "command": "tsc",
+            "args": [
+              "-p ./projects/schematics/tsconfig.spec.json"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/schematics/**/*.ts",
+              "projects/schematics/**/*.html"
             ]
           }
         }

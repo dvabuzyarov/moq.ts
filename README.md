@@ -33,6 +33,7 @@ You can find a pretty full set of usages in the integration tests. Check out [te
     - [Injector config](#injector-config)
         - [DefaultInjectorConfig](#defaultinjectorconfig)
         - [EqualMatchingInjectorConfig and custom matchers](#equalmatchinginjectorconfig)
+        - [Internal API](#internal-api)
 - [Mock prototype](#mock-prototype)
 - [Mimics](#mimics)
 - [typeof operator](#typeof-operator)
@@ -404,6 +405,23 @@ const actual = object({func});
 
 expect(actual).toBe(2);
 ```
+#### Internal API
+The **moq.ts** library is comprised of small units that follow [SOLID principles](https://en.wikipedia.org/wiki/SOLID). 
+Some of those units are included in the public API. The others are part of the **internal API**.
+
+All of the units are composed together by an IoC container and make the library run. The IoC container's
+config is part of the public API, and developers can use it to change the behavior of any aspect of the library. 
+In order to do this, developers need access to all public and internal units as well. 
+
+The core units are public and are available directly from the moq.ts package.
+Changes in those units follow [Semantic Versioning](https://semver.org), while changes in the internal 
+units do not follow [Semantic Versioning](https://semver.org) and could produce all types of version increments.
+```typescript
+import * from "moq.ts/internal";
+```
+> Internal API access provides wide opportunities to customize the library behavior. However, 
+> the user code that is based on the internal API **could easily be broken** by a new release.
+
 
 ## Mock prototype
 If you need to make work instanceof operator or you need to deal with prototype of the mock object you can 

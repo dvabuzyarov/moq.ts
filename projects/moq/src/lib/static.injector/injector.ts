@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -31,9 +32,7 @@ import { AbstractType, Type } from "./type";
 import { stringify } from "./stringify";
 
 export const INJECTOR_IMPL = (
-    providers: StaticProvider[], parent: Injector | undefined, name: string) => {
-    return new StaticInjector(providers, parent, name);
-};
+    providers: StaticProvider[], parent: Injector | undefined, name: string) => new StaticInjector(providers, parent, name);
 
 /**
  * Concrete injectors implement this interface. Injectors are configured
@@ -80,10 +79,10 @@ export abstract class Injector {
      * @returns The new injector instance.
      *
      */
-    static create(options: { providers: StaticProvider[], parent?: Injector, name?: string }): Injector;
+    static create(options: { providers: StaticProvider[]; parent?: Injector; name?: string }): Injector;
 
     static create(
-        options: StaticProvider[] | { providers: StaticProvider[], parent?: Injector, name?: string },
+        options: StaticProvider[] | { providers: StaticProvider[]; parent?: Injector; name?: string },
         parent?: Injector): Injector {
         if (Array.isArray(options)) {
             return INJECTOR_IMPL(options, parent, "");
@@ -94,6 +93,7 @@ export abstract class Injector {
 
     /**
      * Retrieves an instance from the injector based on the provided token.
+     *
      * @returns The instance from the injector if defined, otherwise the `notFoundValue`.
      * @throws When the `notFoundValue` is `undefined` or `Injector.THROW_IF_NOT_FOUND`.
      */
@@ -115,7 +115,7 @@ const enum OptionFlags {
     Optional = 1,
     CheckSelf = 2,
     CheckParent = 4,
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     Default = CheckSelf | CheckParent
 }
 
@@ -152,7 +152,7 @@ export class StaticInjector implements Injector {
     }
 
     toString() {
-        const tokens = <string[]>[], records = this._records;
+        const tokens = <string[]>[]; const records = this._records;
         records.forEach((v, token) => tokens.push(stringify(token)));
         return `StaticInjector[${tokens.join(", ")}]`;
     }
@@ -279,13 +279,13 @@ function resolveToken(
     token: any, record: Record | undefined | null, records: Map<any, Record | null>, parent: Injector,
     notFoundValue: any, flags: InjectFlags): any {
     let value;
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     if (record && !(flags & InjectFlags.SkipSelf)) {
         // If we don't have a record, this implies that we don't own the provider hence don't know how
         // to resolve it.
         value = record.value;
         if (value === CIRCULAR) {
-            throw Error(NO_NEW_LINE + "Circular dependency");
+            throw Error(`${NO_NEW_LINE  }Circular dependency`);
         } else if (value === EMPTY) {
             record.value = CIRCULAR;
             const {useNew, fn, deps: depRecords} = record;
@@ -295,7 +295,7 @@ function resolveToken(
                 for (let i = 0; i < depRecords.length; i++) {
                     const depRecord: DependencyRecord = depRecords[i];
                     const options = depRecord.options;
-                    // tslint:disable-next-line:no-bitwise
+                    // eslint-disable-next-line no-bitwise
                     const childRecord = options & OptionFlags.CheckSelf ? records.get(depRecord.token) : undefined;
                     deps.push(tryResolveToken(
                         // Current Token to resolve
@@ -307,19 +307,19 @@ function resolveToken(
                         records,
                         // If we don't know how to resolve dependency and we should not check parent for it,
                         // than pass in Null injector.
-                        // tslint:disable-next-line:no-bitwise
+                        // eslint-disable-next-line no-bitwise
                         !childRecord && !(options & OptionFlags.CheckParent) ? Injector.NULL : parent,
-                        // tslint:disable-next-line:no-bitwise
+                        // eslint-disable-next-line no-bitwise
                         options & OptionFlags.Optional ? null : Injector.THROW_IF_NOT_FOUND,
                         InjectFlags.Default));
                 }
             }
             record.value = value = useNew ? new (fn as any)(...deps) : fn.apply(undefined, deps);
         }
-        // tslint:disable-next-line:no-bitwise
+        // eslint-disable-next-line no-bitwise
     } else if (!(flags & InjectFlags.Self)) {
         value = parent.get(token, notFoundValue, InjectFlags.Default);
-        // tslint:disable-next-line:no-bitwise
+        // eslint-disable-next-line no-bitwise
     } else if (!(flags & InjectFlags.Optional)) {
         value = Injector.NULL.get(token, notFoundValue);
     } else {
@@ -341,13 +341,13 @@ function computeDeps(provider: StaticProvider): DependencyRecord[] {
                 for (let j = 0, annotations = token; j < annotations.length; j++) {
                     const annotation = annotations[j];
                     if (annotation instanceof Optional || annotation === Optional) {
-                        // tslint:disable-next-line:no-bitwise
+                        // eslint-disable-next-line no-bitwise
                         options = options | OptionFlags.Optional;
                     } else if (annotation instanceof SkipSelf || annotation === SkipSelf) {
-                        // tslint:disable-next-line:no-bitwise
+                        // eslint-disable-next-line no-bitwise
                         options = options & ~OptionFlags.CheckSelf;
                     } else if (annotation instanceof Self || annotation === Self) {
-                        // tslint:disable-next-line:no-bitwise
+                        // eslint-disable-next-line no-bitwise
                         options = options & ~OptionFlags.CheckParent;
                     } else {
                         token = resolveForwardRef(annotation);

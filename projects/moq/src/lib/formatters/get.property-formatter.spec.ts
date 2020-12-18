@@ -1,12 +1,12 @@
-import {GetPropertyInteraction} from "../interactions";
-import {GetPropertyExpressionFormatter} from "./get.property-formatter";
+import { GetPropertyInteraction } from "../interactions";
+import { GetPropertyExpressionFormatter } from "./get.property-formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("Get property expression formatter", () => {
-    function propertyKeyFormatterFactory(): PropertyKeyFormatter {
-        const format = jasmine.createSpy("property key format");
-        return {format};
-    }
+    beforeEach(() => {
+        createInjector2(GetPropertyExpressionFormatter, [PropertyKeyFormatter]);
+    });
 
     it("Returns formatted description for get property expression", () => {
         const name = "name";
@@ -14,14 +14,14 @@ describe("Get property expression formatter", () => {
 
         const expression = new GetPropertyInteraction(name);
 
-        const propertyKeyFormatter = propertyKeyFormatterFactory();
-        (<jasmine.Spy>propertyKeyFormatter.format).and.returnValue(nameDescription);
+        resolveMock(PropertyKeyFormatter)
+            .setup(instance => instance.format(name))
+            .returns(nameDescription);
 
-        const formatter = new GetPropertyExpressionFormatter(propertyKeyFormatter);
+        const formatter = resolve2(GetPropertyExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(`Getter of \'${nameDescription}\'`);
-        expect(propertyKeyFormatter.format).toHaveBeenCalledWith(name);
     });
 
 });

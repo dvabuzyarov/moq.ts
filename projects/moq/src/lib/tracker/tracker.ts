@@ -1,5 +1,5 @@
 import { GetPropertyInteraction, MethodInteraction, SetPropertyInteraction } from "../interactions";
-import { SequenceId, sequenceIdFactory } from "./sequence-id";
+import { SequenceId } from "./sequence-id";
 
 /**
  * This class represents a recorded interaction with the a mocked object.
@@ -15,7 +15,7 @@ export interface TrackedAction {
 export class Tracker {
     private log: TrackedAction[] = [];
 
-    constructor(private sequenceId: SequenceId = sequenceIdFactory()) {
+    constructor(private sequenceId: SequenceId) {
 
     }
 

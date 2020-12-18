@@ -2,34 +2,23 @@ import { HasMethodExplorer } from "./has-method.explorer";
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
 import { IPreset } from "../../presets/presets/preset";
 import { Presets } from "../../presets/presets";
-import { createInjector, resolve } from "../../../tests.components/resolve.builder";
+import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import { MembersMethodExplorer } from "../members.explorer/members-method.explorer";
 
 describe("Has instance method explorer", () => {
 
     beforeEach(() => {
-        const presets = jasmine.createSpyObj<Presets<unknown>>(["get"]);
-        const presetExplorer = jasmine.createSpyObj<PresetHasMethodExplorer>("", ["has"]);
-        const membersExplorer = jasmine.createSpyObj<MembersMethodExplorer>("", ["hasMethod"]);
-        createInjector([
-            {
-                provide: HasMethodExplorer,
-                useClass: HasMethodExplorer,
-                deps: [Presets, MembersMethodExplorer, PresetHasMethodExplorer]
-            },
-            {provide: Presets, useValue: presets, deps: []},
-            {provide: PresetHasMethodExplorer, useValue: presetExplorer, deps: []},
-            {provide: MembersMethodExplorer, useValue: membersExplorer, deps: []},
-        ]);
+        createInjector2(HasMethodExplorer, [Presets, MembersMethodExplorer, PresetHasMethodExplorer]);
     });
 
     it("Returns true when there is a member", () => {
         const name = "name";
 
-        resolve(MembersMethodExplorer)
-            .hasMethod.withArgs(name).and.returnValue(true);
+        resolveMock(MembersMethodExplorer)
+            .setup(instance => instance.hasMethod(name))
+            .returns(true);
 
-        const explorer = resolve(HasMethodExplorer);
+        const explorer = resolve2(HasMethodExplorer);
         const actual = explorer.has(name);
 
         expect(actual).toBe(true);
@@ -37,17 +26,20 @@ describe("Has instance method explorer", () => {
 
     it("Returns true when there is an instance method", () => {
         const name = "name";
-        const preset = <IPreset<unknown>>{};
-        resolve(MembersMethodExplorer)
-            .hasMethod.and.returnValue(false);
+        const preset = {} as IPreset<unknown>;
+        resolveMock(MembersMethodExplorer)
+            .setup(instance => instance.hasMethod(name))
+            .returns(false);
 
-        resolve(Presets)
-            .get.and.returnValue([preset]);
+        resolveMock(Presets)
+            .setup(instance => instance.get())
+            .returns([preset]);
 
-        resolve(PresetHasMethodExplorer)
-            .has.withArgs(name, preset).and.returnValue(true);
+        resolveMock(PresetHasMethodExplorer)
+            .setup(instance => instance.has(name, preset))
+            .returns(true);
 
-        const explorer = resolve(HasMethodExplorer);
+        const explorer = resolve2(HasMethodExplorer);
         const actual = explorer.has(name);
 
         expect(actual).toBe(true);
@@ -55,18 +47,21 @@ describe("Has instance method explorer", () => {
 
     it("Returns false when there is no instance method", () => {
         const name = "name";
-        const preset = <IPreset<unknown>>{};
+        const preset = {} as IPreset<unknown>;
 
-        resolve(MembersMethodExplorer)
-            .hasMethod.and.returnValue(false);
+        resolveMock(MembersMethodExplorer)
+            .setup(instance => instance.hasMethod(name))
+            .returns(false);
 
-        resolve(Presets)
-            .get.and.returnValue([preset]);
+        resolveMock(Presets)
+            .setup(instance => instance.get())
+            .returns([preset]);
 
-        resolve(PresetHasMethodExplorer)
-            .has.withArgs(name, preset).and.returnValue(false);
+        resolveMock(PresetHasMethodExplorer)
+            .setup(instance => instance.has(name, preset))
+            .returns(false);
 
-        const explorer = resolve(HasMethodExplorer);
+        const explorer = resolve2(HasMethodExplorer);
         const actual = explorer.has(name);
 
         expect(actual).toBe(false);

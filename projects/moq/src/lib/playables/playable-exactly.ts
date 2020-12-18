@@ -13,7 +13,7 @@ export class PlayableExactly implements IPlayable {
         if (reason === PlayableUpdateReason.OwnSetupWouldBePlayed) {
             this.invoked++;
         }
-    }
+    };
 
     readonly isPlayable = () => this.invoked <= this.count;
 }

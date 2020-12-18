@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -5,7 +6,6 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-
 import { InjectionToken } from "./injection_token";
 import { Injector } from "./injector";
 import { ValueProvider } from "./interface/provider";
@@ -55,7 +55,7 @@ export function catchInjectorError(
     if (token[SOURCE]) {
         tokenPath.unshift(token[SOURCE]);
     }
-    e.message = formatError("\n" + e.message, tokenPath, injectorErrorName, source);
+    e.message = formatError(`\n${e.message}`, tokenPath, injectorErrorName, source);
     e[NG_TOKEN_PATH] = tokenPath;
     e[NG_TEMP_TOKEN_PATH] = null;
     throw e;

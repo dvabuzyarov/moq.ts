@@ -1,12 +1,12 @@
 import { GetPropertyInteraction } from "../interactions";
 import { ExpressionFormatter } from "./expression-formatter";
 import { ExpectedExpressionFormatter } from "./expected-expression-formatter";
-import { nameof } from "../../tests.components/nameof";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("Expected expression message formatter", () => {
-    function expressionFormatterFactory(): ExpressionFormatter {
-        return jasmine.createSpyObj("expression formatter", [nameof<ExpressionFormatter>("format")]);
-    }
+    beforeEach(() => {
+        createInjector2(ExpectedExpressionFormatter, [ExpressionFormatter]);
+    });
 
     it("Returns formatted description for verify message with mock name", () => {
         const mockName = "mockName";
@@ -15,34 +15,33 @@ describe("Expected expression message formatter", () => {
         const expressionDescription = "expression description";
 
         const expression = new GetPropertyInteraction("name");
-        const expressionFormatter = expressionFormatterFactory();
 
-        (<jasmine.Spy>expressionFormatter.format).and.returnValue(expressionDescription);
+        resolveMock(ExpressionFormatter)
+            .setup(instance => instance.format(expression))
+            .returns(expressionDescription);
 
-        const formatter = new ExpectedExpressionFormatter(expressionFormatter);
+        const formatter = resolve2(ExpectedExpressionFormatter);
         const actual = formatter.format(expression, timesMessage, haveBeenCalledTimes, mockName);
 
         const but = `, but was called ${haveBeenCalledTimes} time(s)`;
         const expected = `${expressionDescription} of ${mockName} ${timesMessage.toLowerCase()}${but}`;
         expect(actual).toBe(expected);
-        expect(expressionFormatter.format).toHaveBeenCalledWith(expression);
     });
 
     it("Returns formatted description for verify message without mock name", () => {
         const timesMessage = "Should be called once";
         const haveBeenCalledTimes = 2;
         const expressionDescription = "expression description";
-
         const expression = new GetPropertyInteraction("name");
-        const expressionFormatter = expressionFormatterFactory();
 
-        (<jasmine.Spy>expressionFormatter.format).and.returnValue(expressionDescription);
+        resolveMock(ExpressionFormatter)
+            .setup(instance => instance.format(expression))
+            .returns(expressionDescription);
 
-        const formatter = new ExpectedExpressionFormatter(expressionFormatter);
+        const formatter = resolve2(ExpectedExpressionFormatter);
         const actual = formatter.format(expression, timesMessage, haveBeenCalledTimes);
 
         expect(actual).toBe(`${expressionDescription} ${timesMessage.toLowerCase()}, but was called ${haveBeenCalledTimes} time(s)`);
-        expect(expressionFormatter.format).toHaveBeenCalledWith(expression);
     });
 
 });

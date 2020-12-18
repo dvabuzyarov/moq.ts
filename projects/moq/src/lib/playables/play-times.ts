@@ -1,4 +1,12 @@
-﻿/**
+﻿import { IPlayable } from "../moq";
+import { PlayableExactly } from "./playable-exactly";
+import { PlayableNever } from "./playable-never";
+import { PlayableOnce } from "./playable-once";
+import { PlayableAlways } from "./playable-always";
+import { PlayableSequence } from "./playable-sequence";
+
+
+/**
  * This class sets rules when a configured setup should be applied to the target invocation or not.
  *
  * @example
@@ -15,13 +23,6 @@
  * expect(object(1).toBe(undefined);
  * ```
  */
-import { IPlayable } from "../moq";
-import { PlayableExactly } from "./playable-exactly";
-import { PlayableNever } from "./playable-never";
-import { PlayableOnce } from "./playable-once";
-import { PlayableSequence } from "./playable-sequence";
-import { PlayableAlways } from "./playable-always";
-
 export class PlayTimes {
     private static readonly always = new PlayableAlways();
     private static readonly never = new PlayableNever();
@@ -56,6 +57,7 @@ export class PlayTimes {
 
     /**
      * The configured setup will be applied or not accordingly to the value in the sequence.
+     *
      * @example
      * ```typescript
      *

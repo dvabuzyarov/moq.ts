@@ -5,7 +5,7 @@ import { MimicsPreset } from "./presets/mimics.preset";
 import { ReturnsPreset } from "./presets/returns.preset";
 import { ThrowsPreset } from "./presets/throws.preset";
 import { CallbacksPreset } from "./presets/callbacks.preset";
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { IPreset } from "./presets/preset";
 import { PlayTimes } from "../playables/play-times";
 import { InjectionToken } from "../static.injector/injection_token";
@@ -16,76 +16,67 @@ describe("Preset builder", () => {
     const Target = new InjectionToken<ExpectedExpressions<any>>("target");
 
     beforeEach(() => {
-        const mock = <IMock<unknown>>{};
-        const set = jasmine.createSpy("set");
-        const target = <ExpectedExpressions<any>>{};
-
-        createInjector([
-            {provide: Mock, useValue: mock, deps: []},
-            {provide: Set, useValue: set, deps: []},
-            {provide: Target, useValue: target, deps: []},
-            {provide: PresetBuilder, useFactory: (m, s, t) => new PresetBuilder(m, s, t), deps: [Mock, Set, Target]},
-        ]);
+        createInjector2(PresetBuilder, [Mock, Set, Target]);
     });
 
     it("Defines a mimics preset", () => {
         const origin = {};
 
-        const builder = resolve(PresetBuilder);
+        const builder = resolve2(PresetBuilder);
         const actual = builder.mimics(origin);
 
-        const expected = new MimicsPreset(PlayTimes.Always(), resolve(Target), origin);
-        expect(resolve(Set)).toHaveBeenCalledWith(expected);
-        expect(actual).toBe(resolve(Mock));
+        const expected = new MimicsPreset(PlayTimes.Always(), resolve2(Target), origin);
+        resolveMock(Set).verify(instance => instance(expected));
+        expect(actual).toBe(resolve2(Mock));
     });
 
     it("Defines a returns preset", () => {
         const value = "value";
 
-        const builder = resolve(PresetBuilder);
+        const builder = resolve2(PresetBuilder);
         const actual = builder.returns(value);
 
-        const expected = new ReturnsPreset(PlayTimes.Always(), resolve(Target), value);
-        expect(resolve(Set)).toHaveBeenCalledWith(expected);
-        expect(actual).toBe(resolve(Mock));
+        const expected = new ReturnsPreset(PlayTimes.Always(), resolve2(Target), value);
+        resolveMock(Set).verify(instance => instance(expected));
+        expect(actual).toBe(resolve2(Mock));
     });
 
     it("Defines a throws preset", () => {
         const exception = new Error();
 
-        const builder = resolve(PresetBuilder);
+        const builder = resolve2(PresetBuilder);
         const actual = builder.throws(exception);
 
-        const expected = new ThrowsPreset(PlayTimes.Always(), resolve(Target), exception);
-        expect(resolve(Set)).toHaveBeenCalledWith(expected);
-        expect(actual).toBe(resolve(Mock));
+        const expected = new ThrowsPreset(PlayTimes.Always(), resolve2(Target), exception);
+        resolveMock(Set).verify(instance => instance(expected));
+        expect(actual).toBe(resolve2(Mock));
     });
 
     it("Defines a callbacks preset", () => {
         const callback = () => undefined;
 
-        const builder = resolve(PresetBuilder);
+        const builder = resolve2(PresetBuilder);
         const actual = builder.callback(callback);
 
-        const expected = new CallbacksPreset(PlayTimes.Always(), resolve(Target), callback);
-        expect(resolve(Set)).toHaveBeenCalledWith(expected);
-        expect(actual).toBe(resolve(Mock));
+        const expected = new CallbacksPreset(PlayTimes.Always(), resolve2(Target), callback);
+        resolveMock(Set).verify(instance => instance(expected));
+        expect(actual).toBe(resolve2(Mock));
     });
 
     it("Sets playable", () => {
-        const playable = <IPlayable>{};
+        const playable = {} as IPlayable;
 
-        const builder = new PresetBuilder(resolve(Mock), resolve(Set), resolve(Target));
+        const builder = resolve2(PresetBuilder);
         const actual = builder.play(playable);
         builder.callback(undefined);
         builder.returns(undefined);
         builder.mimics(undefined);
         builder.throws(undefined);
 
-        expect(resolve(Set)).toHaveBeenCalledWith(new CallbacksPreset(playable, resolve(Target), undefined));
-        expect(resolve(Set)).toHaveBeenCalledWith(new ReturnsPreset(playable, resolve(Target), undefined));
-        expect(resolve(Set)).toHaveBeenCalledWith(new MimicsPreset(playable, resolve(Target), undefined));
-        expect(resolve(Set)).toHaveBeenCalledWith(new ThrowsPreset(playable, resolve(Target), undefined));
+        resolveMock(Set).verify(instance => instance(new CallbacksPreset(playable, resolve2(Target), undefined)));
+        resolveMock(Set).verify(instance => instance(new ReturnsPreset(playable, resolve2(Target), undefined)));
+        resolveMock(Set).verify(instance => instance(new MimicsPreset(playable, resolve2(Target), undefined)));
+        resolveMock(Set).verify(instance => instance(new ThrowsPreset(playable, resolve2(Target), undefined)));
         expect(actual).toBe(builder);
     });
 });
