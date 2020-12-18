@@ -15,7 +15,7 @@ script:
   - npm run test
   - npm run schematics:test
   - npm run schematics:build
-  - npm run schematics:private-api:run
+  - npm run schematics:internal-api:run
   - npm run build:docs
   - npm run build
   - npm run typedoc
