@@ -1,6 +1,6 @@
 import { ExpressionReflector } from "./expression-reflector";
 import {
-    ConstructOperatorExpression,
+    NewOperatorExpression,
     GetPropertyExpression,
     InOperatorExpression,
     MethodExpression,
@@ -129,9 +129,9 @@ describe("Expression Reflector", () => {
     it("Resolves construct operator", () => {
         const arg = "value";
         const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect<(arg: string) => void>(instance => new instance(arg));
+        const actual = reflector.reflect<(name: string) => void>(instance => new instance(arg));
 
-        const expected = new ConstructOperatorExpression([arg]);
+        const expected = new NewOperatorExpression([arg]);
         expect(actual).toEqual(expected);
     });
 });

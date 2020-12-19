@@ -1,7 +1,7 @@
 /*eslint-disable max-classes-per-file*/
 import { It } from "./expression-predicates";
 import {
-    ConstructOperatorInteraction,
+    NewOperatorInteraction,
     GetPropertyInteraction,
     InOperatorInteraction,
     MethodInteraction,
@@ -45,9 +45,9 @@ export class InOperatorExpression extends InOperatorInteraction {
 }
 
 /**
- * See {@link ConstructOperatorInteraction}
+ * See {@link NewOperatorInteraction}
  */
-export class ConstructOperatorExpression extends ConstructOperatorInteraction {
+export class NewOperatorExpression extends NewOperatorInteraction {
 
 }
 
@@ -60,5 +60,5 @@ export type Expressions<T> =
     | SetPropertyExpression
     | InOperatorExpression
     | NamedMethodExpression
-    | ConstructOperatorExpression
+    | NewOperatorExpression
     | It<T>;

@@ -5,7 +5,7 @@ import { InOperatorExpression } from "../reflector/expressions";
 /**
  * @hidden
  */
-export class InOperatorMatcher {
+export class InOperatorExpressionMatcher {
 
     public matched(left: InOperatorInteraction, right: InOperatorExpression | It<any>): boolean {
         if (right instanceof It) {

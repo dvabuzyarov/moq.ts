@@ -1,6 +1,6 @@
 ﻿import { It } from "./expression-predicates";
 import {
-    ConstructOperatorExpression,
+    NewOperatorExpression,
     Expressions,
     GetPropertyExpression,
     InOperatorExpression,
@@ -75,12 +75,15 @@ export class ExpressionReflector {
                 return true;
             },
 
+            /*eslint-disable-next-line @typescript-eslint/ban-types*/
             construct: (target: any, args: any, newTarget?: any): object => {
-                this.reflectedInfo = new ConstructOperatorExpression(args);
+                this.reflectedInfo = new NewOperatorExpression(args);
                 return new target(args);
             }
         };
 
-        return new Proxy(function () {}, options);
+        /*eslint-disable-next-line @typescript-eslint/no-empty-function*/
+        return new Proxy(function () {
+        }, options);
     }
 }

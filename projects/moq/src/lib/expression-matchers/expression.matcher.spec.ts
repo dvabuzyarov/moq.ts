@@ -4,12 +4,13 @@ import { GetPropertyExpressionMatcher } from "./get-property.matcher";
 import { SetPropertyExpressionMatcher } from "./set-property.matcher";
 import { MethodExpressionMatcher } from "./method.matcher";
 import { NamedMethodExpressionMatcher } from "./instance-method.matcher";
-import { InOperatorMatcher } from "./in-operator.matcher";
+import { InOperatorExpressionMatcher } from "./in-operator.matcher";
 import {
     GetPropertyInteraction,
     InOperatorInteraction,
     MethodInteraction,
     NamedMethodInteraction,
+    NewOperatorInteraction,
     SetPropertyInteraction
 } from "../interactions";
 import {
@@ -17,9 +18,11 @@ import {
     InOperatorExpression,
     MethodExpression,
     NamedMethodExpression,
+    NewOperatorExpression,
     SetPropertyExpression
 } from "../reflector/expressions";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { NewOperatorExpressionMatcher } from "./new-operator.matcher";
 
 describe("Expression matcher", () => {
     beforeEach(() => {
@@ -28,7 +31,8 @@ describe("Expression matcher", () => {
             SetPropertyExpressionMatcher,
             MethodExpressionMatcher,
             NamedMethodExpressionMatcher,
-            InOperatorMatcher
+            InOperatorExpressionMatcher,
+            NewOperatorExpressionMatcher
         ]);
     });
 
@@ -128,7 +132,7 @@ describe("Expression matcher", () => {
         const right = new InOperatorExpression("right name");
         const expected = true;
 
-        resolveMock(InOperatorMatcher)
+        resolveMock(InOperatorExpressionMatcher)
             .setup(instance => instance.matched(left, right))
             .returns(expected);
 
@@ -143,7 +147,7 @@ describe("Expression matcher", () => {
         const right = It.Is(() => undefined);
         const expected = true;
 
-        resolveMock(InOperatorMatcher)
+        resolveMock(InOperatorExpressionMatcher)
             .setup(instance => instance.matched(left, right))
             .returns(expected);
 
@@ -204,6 +208,36 @@ describe("Expression matcher", () => {
         const expected = true;
 
         resolveMock(NamedMethodExpressionMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(expected);
+
+        const matcher = resolve2(ExpressionMatcher);
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(expected);
+    });
+
+    it("Returns value from NewOperatorExpressionMatcher when left and right are NewOperator expressions", () => {
+        const left = new NewOperatorInteraction(["left name"]);
+        const right = new NewOperatorExpression(["right name"]);
+        const expected = true;
+
+        resolveMock(NewOperatorExpressionMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(expected);
+
+        const matcher = resolve2(ExpressionMatcher);
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(expected);
+    });
+
+    it("Returns value from NewOperatorExpressionMatcher when left is NewOperator and right is It", () => {
+        const left = new NewOperatorInteraction(["name"]);
+        const right = It.Is(() => undefined);
+        const expected = true;
+
+        resolveMock(NewOperatorExpressionMatcher)
             .setup(instance => instance.matched(left, right))
             .returns(expected);
 

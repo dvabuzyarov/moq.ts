@@ -7,7 +7,7 @@ import {
     InOperatorInteraction,
     Interaction,
     MethodInteraction,
-    NamedMethodInteraction,
+    NamedMethodInteraction, NewOperatorInteraction,
     SetPropertyInteraction
 } from "../interactions";
 import {
@@ -15,25 +15,28 @@ import {
     GetPropertyExpression,
     InOperatorExpression,
     MethodExpression,
-    NamedMethodExpression,
+    NamedMethodExpression, NewOperatorExpression,
     SetPropertyExpression
 } from "../reflector/expressions";
 import { It } from "../reflector/expression-predicates";
-import { InOperatorMatcher } from "./in-operator.matcher";
+import { InOperatorExpressionMatcher } from "./in-operator.matcher";
+import { NewOperatorExpressionMatcher } from "./new-operator.matcher";
 
 /**
  * @hidden
  */
 export class ExpressionMatcher {
 
-    constructor(private getPropertyExpressionMatcher: GetPropertyExpressionMatcher,
-                private setPropertyExpressionMatcher: SetPropertyExpressionMatcher,
-                private methodExpressionMatcher: MethodExpressionMatcher,
-                private namedMethodExpressionMatcher: NamedMethodExpressionMatcher,
-                private inOperatorExpressionMatcher: InOperatorMatcher) {
+    constructor(private readonly getPropertyExpressionMatcher: GetPropertyExpressionMatcher,
+                private readonly setPropertyExpressionMatcher: SetPropertyExpressionMatcher,
+                private readonly methodExpressionMatcher: MethodExpressionMatcher,
+                private readonly namedMethodExpressionMatcher: NamedMethodExpressionMatcher,
+                private readonly inOperatorExpressionMatcher: InOperatorExpressionMatcher,
+                private readonly newOperatorExpressionMatcher: NewOperatorExpressionMatcher) {
 
     }
 
+    /*eslint-disable-next-line complexity*/
     public matched(left: Interaction, right: Expressions<any>): boolean {
 
         if (left === right) return true;
@@ -53,6 +56,9 @@ export class ExpressionMatcher {
         }
         if (left instanceof NamedMethodInteraction && (right instanceof NamedMethodExpression || right instanceof It)) {
             return this.namedMethodExpressionMatcher.matched(left, right);
+        }
+        if (left instanceof NewOperatorInteraction && (right instanceof NewOperatorExpression || right instanceof It)) {
+            return this.newOperatorExpressionMatcher.matched(left, right);
         }
 
         return false;

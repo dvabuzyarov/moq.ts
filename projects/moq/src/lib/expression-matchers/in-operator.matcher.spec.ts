@@ -1,7 +1,7 @@
 import { InOperatorInteraction } from "../interactions";
 import { It } from "../reflector/expression-predicates";
 import { InOperatorExpression } from "../reflector/expressions";
-import { InOperatorMatcher } from "./in-operator.matcher";
+import { InOperatorExpressionMatcher } from "./in-operator.matcher";
 
 describe("In operator expression matcher", () => {
 
@@ -10,7 +10,7 @@ describe("In operator expression matcher", () => {
         const left = new InOperatorInteraction(name);
         const right = new InOperatorExpression(name);
 
-        const matcher = new InOperatorMatcher();
+        const matcher = new InOperatorExpressionMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -25,7 +25,7 @@ describe("In operator expression matcher", () => {
             return true;
         });
 
-        const matcher = new InOperatorMatcher();
+        const matcher = new InOperatorExpressionMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -35,7 +35,7 @@ describe("In operator expression matcher", () => {
         const left = new InOperatorInteraction("left name");
         const right = new InOperatorExpression("right name");
 
-        const matcher = new InOperatorMatcher();
+        const matcher = new InOperatorExpressionMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -49,7 +49,7 @@ describe("In operator expression matcher", () => {
             return false;
         });
 
-        const matcher = new InOperatorMatcher();
+        const matcher = new InOperatorExpressionMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
