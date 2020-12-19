@@ -1,8 +1,8 @@
 import {Mock} from "../lib/mock";
-import {It} from "../lib/expected-expressions/expression-predicates";
+import {It} from "../lib/reflector/expression-predicates";
 import {
-    ExpectedMethodExpression
-} from "../lib/expected-expressions/expected-expressions";
+    MethodExpression
+} from "../lib/reflector/expressions";
 import {Times} from "../lib/times";
 
 type ITestFunction = (arg: number) => string;
@@ -27,7 +27,7 @@ describe("Method", () => {
         const value = "value";
 
         const object = new Mock<ITestFunction>()
-            .setup(instance => It.Is((expression: ExpectedMethodExpression) => expression.args[0] === 1))
+            .setup(instance => It.Is((expression: MethodExpression) => expression.args[0] === 1))
             .returns(value)
             .object();
 

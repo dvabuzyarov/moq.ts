@@ -1,4 +1,4 @@
-import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
+import { Expressions } from "../reflector/expressions";
 import { Interaction } from "../interactions";
 import { ExpectedExpressionFormatter } from "./expected-expression-formatter";
 import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
@@ -14,7 +14,7 @@ export class VerifyFormatter {
     }
 
     public format(
-        expected: ExpectedExpressions<any>,
+        expected: Expressions<any>,
         timesMessage: string,
         haveBeenCalledTimes: number,
         trackedExpressions: Interaction[],

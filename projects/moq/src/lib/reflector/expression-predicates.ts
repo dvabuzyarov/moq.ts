@@ -30,7 +30,7 @@ export type IPredicate<T> = (instance: T) => boolean;
  *
  * const object = new Mock<ITestObject>()
  * // the expression dynamically checks the property name that is being read
- * .setup(instance => It.Is((expression: ExpectedGetPropertyExpression) => expression.name === 'property'))
+ * .setup(instance => It.Is((expression: GetPropertyExpression) => expression.name === 'property'))
  * .returns(value)
  * .object();
  *
@@ -42,7 +42,7 @@ export type IPredicate<T> = (instance: T) => boolean;
  * .object();
  *
  * const object = new Mock<ITestObject>()
- * .setup(instance => It.Is((expression: ExpectedNamedMethodExpression) => expression.name === 'methodName' && expression.args[0] === 1))
+ * .setup(instance => It.Is((expression: NamedMethodExpression) => expression.name === 'methodName' && expression.args[0] === 1))
  * .returns(value)
  * .object();
  *

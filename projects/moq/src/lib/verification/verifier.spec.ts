@@ -1,8 +1,8 @@
 import { Verifier } from "./verifier";
-import { ExpectedExpressionReflector } from "../expected-expressions/expected-expression-reflector";
+import { ExpressionReflector } from "../reflector/expression-reflector";
 import { Times } from "../times";
 import { CallCounter } from "./call-counter";
-import { ExpectedGetPropertyExpression } from "../expected-expressions/expected-expressions";
+import { GetPropertyExpression } from "../reflector/expressions";
 import { VerifyFormatter } from "../formatters/verify-formatter";
 import { VerifyError } from "./verify-error";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
@@ -11,7 +11,7 @@ import { It } from "moq.ts";
 describe("Verifier", () => {
 
     beforeEach(() => {
-        createInjector2(Verifier, [ExpectedExpressionReflector, CallCounter, VerifyFormatter]);
+        createInjector2(Verifier, [ExpressionReflector, CallCounter, VerifyFormatter]);
     });
 
     it("Throws VerifyException when the expected expression has not been called expected times", () => {
@@ -21,10 +21,10 @@ describe("Verifier", () => {
         const haveBeenCalled = 0;
         const expressions = [];
 
-        const expectedExpression = new ExpectedGetPropertyExpression("property");
+        const expectedExpression = new GetPropertyExpression("property");
         const expected = () => undefined;
 
-        resolveMock(ExpectedExpressionReflector)
+        resolveMock(ExpressionReflector)
             .setup(instance => instance.reflect(expected))
             .returns(expectedExpression);
 
@@ -49,9 +49,9 @@ describe("Verifier", () => {
         const message = "message";
 
         const expected = () => undefined;
-        const expectedExpression = new ExpectedGetPropertyExpression("property");
+        const expectedExpression = new GetPropertyExpression("property");
 
-        resolveMock(ExpectedExpressionReflector)
+        resolveMock(ExpressionReflector)
             .setup(instance => instance.reflect(expected))
             .returns(expectedExpression);
 

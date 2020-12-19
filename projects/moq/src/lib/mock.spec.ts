@@ -1,12 +1,12 @@
 import { IInjectorConfig, IPresetBuilder, ISequenceVerifier } from "./moq";
 import { Times } from "./times";
 import { nameof } from "../tests.components/nameof";
-import { ExpectedExpressionReflector } from "./expected-expressions/expected-expression-reflector";
+import { ExpressionReflector } from "./reflector/expression-reflector";
 import { Tracker } from "./tracker/tracker";
 import { ProxyFactory } from "./interceptors/proxy.factory";
 import { Verifier } from "./verification/verifier";
 import { Mock } from "./mock";
-import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
+import { Expressions } from "./reflector/expressions";
 import { PrototypeStorage } from "./interceptors/prototype.storage";
 import { createInjector, resolve } from "../tests.components/resolve.builder";
 import { MethodInteraction } from "./interactions";
@@ -18,7 +18,7 @@ import * as injectorFactory from "./injector/injector.factory";
 
 describe("Mock", () => {
     beforeEach(() => {
-        const expressionReflector = jasmine.createSpyObj<ExpectedExpressionReflector>(["reflect"]);
+        const expressionReflector = jasmine.createSpyObj<ExpressionReflector>(["reflect"]);
         const tracker = jasmine.createSpyObj<Tracker>(["get"]);
         const proxyFactory = jasmine.createSpyObj<ProxyFactory<unknown>>(["object"]);
         const setupFactory = jasmine.createSpy();
@@ -26,7 +26,7 @@ describe("Mock", () => {
         const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>("", ["set"]);
 
         const injector = createInjector([
-            {provide: ExpectedExpressionReflector, useValue: expressionReflector, deps: []},
+            {provide: ExpressionReflector, useValue: expressionReflector, deps: []},
             {provide: Tracker, useValue: tracker, deps: []},
             {provide: ProxyFactory, useValue: proxyFactory, deps: []},
             {provide: Verifier, useValue: verifier, deps: []},
@@ -98,8 +98,8 @@ describe("Mock", () => {
     it("Setups mock", () => {
         const setup = {} as IPresetBuilder<any>;
         const expression = instance => instance["property"];
-        const expectedExpression = {} as ExpectedExpressions<unknown>;
-        resolve(ExpectedExpressionReflector).reflect.withArgs(expression).and.returnValue(expectedExpression);
+        const expectedExpression = {} as Expressions<unknown>;
+        resolve(ExpressionReflector).reflect.withArgs(expression).and.returnValue(expectedExpression);
         resolve(PRESET_BUILDER_FACTORY).withArgs(expectedExpression).and.returnValue(setup);
 
         const mock = new Mock();

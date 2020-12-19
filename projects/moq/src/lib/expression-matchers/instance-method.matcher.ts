@@ -1,7 +1,7 @@
 import { ArgumentsMatcher } from "./arguments.matcher";
 import { NamedMethodInteraction } from "../interactions";
-import { ExpectedNamedMethodExpression } from "../expected-expressions/expected-expressions";
-import { It } from "../expected-expressions/expression-predicates";
+import { NamedMethodExpression } from "../reflector/expressions";
+import { It } from "../reflector/expression-predicates";
 
 /**
  * @hidden
@@ -12,12 +12,12 @@ export class NamedMethodExpressionMatcher {
 
     }
 
-    public matched(left: NamedMethodInteraction, right: ExpectedNamedMethodExpression | It<any>): boolean {
+    public matched(left: NamedMethodInteraction, right: NamedMethodExpression | It<any>): boolean {
         if (right instanceof It) {
             return (right as It<any>).test(left);
         }
 
-        const rightExpression = right as ExpectedNamedMethodExpression;
+        const rightExpression = right as NamedMethodExpression;
         if (left.name === rightExpression.name) {
             return this.argumentsMatcher.matched(left.args, rightExpression.args);
         }

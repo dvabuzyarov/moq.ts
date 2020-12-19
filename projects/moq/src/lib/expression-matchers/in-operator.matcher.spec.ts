@@ -1,6 +1,6 @@
 import { InOperatorInteraction } from "../interactions";
-import { It } from "../expected-expressions/expression-predicates";
-import { ExpectedInOperatorExpression } from "../expected-expressions/expected-expressions";
+import { It } from "../reflector/expression-predicates";
+import { InOperatorExpression } from "../reflector/expressions";
 import { InOperatorMatcher } from "./in-operator.matcher";
 
 describe("In operator expression matcher", () => {
@@ -8,7 +8,7 @@ describe("In operator expression matcher", () => {
     it("Returns true when they are equal", () => {
         const name = "name";
         const left = new InOperatorInteraction(name);
-        const right = new ExpectedInOperatorExpression(name);
+        const right = new InOperatorExpression(name);
 
         const matcher = new InOperatorMatcher();
         const actual = matcher.matched(left, right);
@@ -33,7 +33,7 @@ describe("In operator expression matcher", () => {
 
     it("Returns false when left does not equal to right", () => {
         const left = new InOperatorInteraction("left name");
-        const right = new ExpectedInOperatorExpression("right name");
+        const right = new InOperatorExpression("right name");
 
         const matcher = new InOperatorMatcher();
         const actual = matcher.matched(left, right);

@@ -1,6 +1,6 @@
 import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 import { CallCounter } from "./call-counter";
-import { ExpectedGetPropertyExpression } from "../expected-expressions/expected-expressions";
+import { GetPropertyExpression } from "../reflector/expressions";
 import { GetPropertyInteraction } from "../interactions";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
@@ -11,7 +11,7 @@ describe("Call counter", () => {
     });
 
     it("Returns one as count of called expressions", () => {
-        const expectedExpression = new ExpectedGetPropertyExpression("property");
+        const expectedExpression = new GetPropertyExpression("property");
         const expression = new GetPropertyInteraction("property");
 
         resolveMock(ExpressionMatcher)
@@ -25,7 +25,7 @@ describe("Call counter", () => {
     });
 
     it("Returns 0  as count of called expressions", () => {
-        const expectedExpression = new ExpectedGetPropertyExpression("property");
+        const expectedExpression = new GetPropertyExpression("property");
         const expression = new GetPropertyInteraction("property");
 
         resolveMock(ExpressionMatcher)

@@ -1,9 +1,9 @@
 import { Times } from "../times";
 import { Interaction } from "../interactions";
 import {
-    ExpectedExpressionReflector,
+    ExpressionReflector,
     IExpectedExpression
-} from "../expected-expressions/expected-expression-reflector";
+} from "../reflector/expression-reflector";
 import { CallCounter } from "./call-counter";
 import { VerifyFormatter } from "../formatters/verify-formatter";
 import { VerifyError } from "./verify-error";
@@ -14,7 +14,7 @@ import { VerifyError } from "./verify-error";
 export class Verifier<T> {
 
     constructor(
-        private reflector: ExpectedExpressionReflector,
+        private reflector: ExpressionReflector,
         private callCounter: CallCounter,
         private verifyFormatter: VerifyFormatter) {
 

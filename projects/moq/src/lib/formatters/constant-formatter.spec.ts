@@ -1,5 +1,5 @@
 import {ConstantFormatter} from "./constant-formatter";
-import {It} from "../expected-expressions/expression-predicates";
+import {It} from "../reflector/expression-predicates";
 
 describe("Constant formatter", () => {
 

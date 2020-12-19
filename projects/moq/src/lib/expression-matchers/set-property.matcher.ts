@@ -1,6 +1,6 @@
-import { ExpectedSetPropertyExpression } from "../expected-expressions/expected-expressions";
+import { SetPropertyExpression } from "../reflector/expressions";
 import { SetPropertyInteraction } from "../interactions";
-import { It } from "../expected-expressions/expression-predicates";
+import { It } from "../reflector/expression-predicates";
 import { ConstantMatcher } from "./constant.matcher";
 
 /**
@@ -12,12 +12,12 @@ export class SetPropertyExpressionMatcher {
 
     }
 
-    public matched(left: SetPropertyInteraction, right: ExpectedSetPropertyExpression | It<any>): boolean {
+    public matched(left: SetPropertyInteraction, right: SetPropertyExpression | It<any>): boolean {
         if (right instanceof It) {
             return (right as It<any>).test(left);
         }
 
-        const rightExpression = right as ExpectedSetPropertyExpression;
+        const rightExpression = right as SetPropertyExpression;
         if (left.name === rightExpression.name && this.constantMatcher.matched(left.value, rightExpression.value)) return true;
 
         return false;

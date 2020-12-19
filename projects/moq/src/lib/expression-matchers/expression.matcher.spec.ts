@@ -1,4 +1,4 @@
-import { It } from "../expected-expressions/expression-predicates";
+import { It } from "../reflector/expression-predicates";
 import { ExpressionMatcher } from "./expression.matcher";
 import { GetPropertyExpressionMatcher } from "./get-property.matcher";
 import { SetPropertyExpressionMatcher } from "./set-property.matcher";
@@ -13,12 +13,12 @@ import {
     SetPropertyInteraction
 } from "../interactions";
 import {
-    ExpectedGetPropertyExpression,
-    ExpectedInOperatorExpression,
-    ExpectedMethodExpression,
-    ExpectedNamedMethodExpression,
-    ExpectedSetPropertyExpression
-} from "../expected-expressions/expected-expressions";
+    GetPropertyExpression,
+    InOperatorExpression,
+    MethodExpression,
+    NamedMethodExpression,
+    SetPropertyExpression
+} from "../reflector/expressions";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("Expression matcher", () => {
@@ -65,7 +65,7 @@ describe("Expression matcher", () => {
 
     it("Returns value from GetPropertyExpressionMatcher when left and right are GetProperty expressions", () => {
         const left = new GetPropertyInteraction("left name");
-        const right = new ExpectedGetPropertyExpression("right name");
+        const right = new GetPropertyExpression("right name");
         const expected = true;
 
         resolveMock(GetPropertyExpressionMatcher)
@@ -95,7 +95,7 @@ describe("Expression matcher", () => {
 
     it("Returns value from SetPropertyExpressionMatcher when left and right are SetProperty expressions", () => {
         const left = new SetPropertyInteraction("left name", "left value");
-        const right = new ExpectedSetPropertyExpression("right name", "right value");
+        const right = new SetPropertyExpression("right name", "right value");
         const expected = true;
 
         resolveMock(SetPropertyExpressionMatcher)
@@ -125,7 +125,7 @@ describe("Expression matcher", () => {
 
     it("Returns value from InOperatorExpressionMatcher when left and right are InOperator expressions", () => {
         const left = new InOperatorInteraction("left name");
-        const right = new ExpectedInOperatorExpression("right name");
+        const right = new InOperatorExpression("right name");
         const expected = true;
 
         resolveMock(InOperatorMatcher)
@@ -155,7 +155,7 @@ describe("Expression matcher", () => {
 
     it("Returns value from MethodExpressionMatcher when left and right are Method expressions", () => {
         const left = new MethodInteraction([]);
-        const right = new ExpectedMethodExpression([]);
+        const right = new MethodExpression([]);
         const expected = true;
 
         resolveMock(MethodExpressionMatcher)
@@ -185,7 +185,7 @@ describe("Expression matcher", () => {
 
     it("Returns value from NamedMethodExpressionMatcher when left and right are NamedMethod expressions", () => {
         const left = new NamedMethodInteraction("name", []);
-        const right = new ExpectedNamedMethodExpression("name", []);
+        const right = new NamedMethodExpression("name", []);
         const expected = true;
 
         resolveMock(NamedMethodExpressionMatcher)
@@ -215,7 +215,7 @@ describe("Expression matcher", () => {
 
     it("Returns false when left and right represent different expressions", () => {
         const left = new NamedMethodInteraction("name", []);
-        const right = new ExpectedGetPropertyExpression("name");
+        const right = new GetPropertyExpression("name");
 
         const matcher = resolve2(ExpressionMatcher);
         const actual = matcher.matched(left, right);

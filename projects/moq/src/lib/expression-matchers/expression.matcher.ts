@@ -11,14 +11,14 @@ import {
     SetPropertyInteraction
 } from "../interactions";
 import {
-    ExpectedExpressions,
-    ExpectedGetPropertyExpression,
-    ExpectedInOperatorExpression,
-    ExpectedMethodExpression,
-    ExpectedNamedMethodExpression,
-    ExpectedSetPropertyExpression
-} from "../expected-expressions/expected-expressions";
-import { It } from "../expected-expressions/expression-predicates";
+    Expressions,
+    GetPropertyExpression,
+    InOperatorExpression,
+    MethodExpression,
+    NamedMethodExpression,
+    SetPropertyExpression
+} from "../reflector/expressions";
+import { It } from "../reflector/expression-predicates";
 import { InOperatorMatcher } from "./in-operator.matcher";
 
 /**
@@ -34,24 +34,24 @@ export class ExpressionMatcher {
 
     }
 
-    public matched(left: Interaction, right: ExpectedExpressions<any>): boolean {
+    public matched(left: Interaction, right: Expressions<any>): boolean {
 
         if (left === right) return true;
         if (right === undefined) return true;
 
-        if (left instanceof GetPropertyInteraction && (right instanceof ExpectedGetPropertyExpression || right instanceof It)) {
+        if (left instanceof GetPropertyInteraction && (right instanceof GetPropertyExpression || right instanceof It)) {
             return this.getPropertyExpressionMatcher.matched(left, right);
         }
-        if (left instanceof SetPropertyInteraction && (right instanceof ExpectedSetPropertyExpression || right instanceof It)) {
+        if (left instanceof SetPropertyInteraction && (right instanceof SetPropertyExpression || right instanceof It)) {
             return this.setPropertyExpressionMatcher.matched(left, right);
         }
-        if (left instanceof InOperatorInteraction && (right instanceof ExpectedInOperatorExpression || right instanceof It)) {
+        if (left instanceof InOperatorInteraction && (right instanceof InOperatorExpression || right instanceof It)) {
             return this.inOperatorExpressionMatcher.matched(left, right);
         }
-        if (left instanceof MethodInteraction && (right instanceof ExpectedMethodExpression || right instanceof It)) {
+        if (left instanceof MethodInteraction && (right instanceof MethodExpression || right instanceof It)) {
             return this.methodExpressionMatcher.matched(left, right);
         }
-        if (left instanceof NamedMethodInteraction && (right instanceof ExpectedNamedMethodExpression || right instanceof It)) {
+        if (left instanceof NamedMethodInteraction && (right instanceof NamedMethodExpression || right instanceof It)) {
             return this.namedMethodExpressionMatcher.matched(left, right);
         }
 

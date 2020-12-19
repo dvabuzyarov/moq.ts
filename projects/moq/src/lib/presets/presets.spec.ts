@@ -1,6 +1,6 @@
 import { Presets } from "./presets";
 import { IPreset } from "./presets/preset";
-import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
+import { Expressions } from "../reflector/expressions";
 
 describe("List of defined presets", () => {
     it("Returns a copy of presets list", () => {
@@ -14,7 +14,7 @@ describe("List of defined presets", () => {
     it("Returns defined presets in LIFO order", () => {
         class Preset implements IPreset<unknown> {
             readonly playable: undefined;
-            readonly target: ExpectedExpressions<unknown>;
+            readonly target: Expressions<unknown>;
         }
 
         const preset1 = new Preset();

@@ -1,8 +1,8 @@
 ﻿import { SetPropertyInteraction } from "../interactions";
 import { SetPropertyExpressionMatcher } from "./set-property.matcher";
-import { ExpectedSetPropertyExpression } from "../expected-expressions/expected-expressions";
+import { SetPropertyExpression } from "../reflector/expressions";
 import { ConstantMatcher } from "./constant.matcher";
-import { It } from "../expected-expressions/expression-predicates";
+import { It } from "../reflector/expression-predicates";
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
 
 describe("Set property expression matcher", () => {
@@ -18,7 +18,7 @@ describe("Set property expression matcher", () => {
         const name = "name";
         const value = "value";
         const left = new SetPropertyInteraction(name, value);
-        const right = new ExpectedSetPropertyExpression(name, value);
+        const right = new SetPropertyExpression(name, value);
 
         resolve(ConstantMatcher)
             .matched.withArgs(value, value).and.returnValue(true);
@@ -46,7 +46,7 @@ describe("Set property expression matcher", () => {
     it("Returns false when left does not equal to right by name", () => {
         const value = "value";
         const left = new SetPropertyInteraction("left name", value);
-        const right = new ExpectedSetPropertyExpression("right name", value);
+        const right = new SetPropertyExpression("right name", value);
 
         resolve(ConstantMatcher)
             .matched.withArgs(left, right).and.returnValue(true);
@@ -63,7 +63,7 @@ describe("Set property expression matcher", () => {
         const rightValue = "right value";
 
         const left = new SetPropertyInteraction(name, leftValue);
-        const right = new ExpectedSetPropertyExpression(name, rightValue);
+        const right = new SetPropertyExpression(name, rightValue);
 
         resolve(ConstantMatcher)
             .matched.withArgs(leftValue, rightValue).and.returnValue(false);

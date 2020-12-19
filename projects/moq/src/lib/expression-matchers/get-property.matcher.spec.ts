@@ -1,14 +1,14 @@
 import {GetPropertyInteraction} from "../interactions";
 import {GetPropertyExpressionMatcher} from "./get-property.matcher";
-import {It} from "../expected-expressions/expression-predicates";
-import {ExpectedGetPropertyExpression} from "../expected-expressions/expected-expressions";
+import {It} from "../reflector/expression-predicates";
+import {GetPropertyExpression} from "../reflector/expressions";
 
 describe("Get property expression matcher", () => {
 
     it("Returns true when they are equal", () => {
         const name = "name";
         const left = new GetPropertyInteraction(name);
-        const right = new ExpectedGetPropertyExpression(name);
+        const right = new GetPropertyExpression(name);
 
         const matcher = new GetPropertyExpressionMatcher();
         const actual = matcher.matched(left, right);
@@ -33,7 +33,7 @@ describe("Get property expression matcher", () => {
 
     it("Returns false when left does not equal to right", () => {
         const left = new GetPropertyInteraction("left name");
-        const right = new ExpectedGetPropertyExpression("right name");
+        const right = new GetPropertyExpression("right name");
 
         const matcher = new GetPropertyExpressionMatcher();
         const actual = matcher.matched(left, right);

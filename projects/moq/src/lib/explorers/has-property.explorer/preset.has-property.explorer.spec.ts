@@ -1,6 +1,6 @@
 import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
 import { IPreset } from "../../presets/presets/preset";
-import { ExpectedExpressions } from "../../expected-expressions/expected-expressions";
+import { Expressions } from "../../reflector/expressions";
 import { ExpressionHasPropertyExplorer } from "./expression-has-property.explorer";
 import { ObjectHasPropertyExplorer } from "./object-has-property.explorer";
 import { MimicsPreset } from "../../presets/presets/mimics.preset";
@@ -15,7 +15,7 @@ describe("Preset has property explorer", () => {
 
     it("Returns true when preset expression has property", () => {
         const name = "name";
-        const target = {} as ExpectedExpressions<unknown>;
+        const target = {} as Expressions<unknown>;
         const preset = {target} as IPreset<unknown>;
 
         resolveMock(ExpressionHasPropertyExplorer)

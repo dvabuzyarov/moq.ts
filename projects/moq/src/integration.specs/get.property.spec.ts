@@ -1,5 +1,5 @@
-import { It } from "../lib/expected-expressions/expression-predicates";
-import { ExpectedGetPropertyExpression } from "../lib/expected-expressions/expected-expressions";
+import { It } from "../lib/reflector/expression-predicates";
+import { GetPropertyExpression } from "../lib/reflector/expressions";
 import { Times } from "../lib/times";
 import { Mock } from "../lib/mock";
 
@@ -25,7 +25,7 @@ describe("Mock: Get property", () => {
         const value = "value";
 
         const object = new Mock<ITestObject>()
-            .setup(() => It.Is((expression: ExpectedGetPropertyExpression) => expression.name === "property"))
+            .setup(() => It.Is((expression: GetPropertyExpression) => expression.name === "property"))
             .returns(value)
             .object();
 

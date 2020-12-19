@@ -1,4 +1,4 @@
-import { It } from "../expected-expressions/expression-predicates";
+import { It } from "../reflector/expression-predicates";
 import { ConstantMatcher } from "./constant.matcher";
 
 /**

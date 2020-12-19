@@ -1,5 +1,5 @@
 import { IMock, IPlayable, IPresetBuilder } from "../moq";
-import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
+import { Expressions } from "../reflector/expressions";
 import { IPreset } from "./presets/preset";
 import { MimicsPreset } from "./presets/mimics.preset";
 import { ReturnsPreset } from "./presets/returns.preset";
@@ -19,7 +19,7 @@ export class PresetBuilder<T, TValue = any> implements IPresetBuilder<T> {
     constructor(
         private mock: IMock<T>,
         private set: (preset: IPreset<T>) => void,
-        private target: ExpectedExpressions<T>,
+        private target: Expressions<T>,
         private playable: IPlayable = PlayTimes.Always()) {
 
     }

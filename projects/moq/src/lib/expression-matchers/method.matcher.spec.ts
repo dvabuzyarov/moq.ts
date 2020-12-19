@@ -1,7 +1,7 @@
-import { It } from "../expected-expressions/expression-predicates";
+import { It } from "../reflector/expression-predicates";
 import { ArgumentsMatcher } from "./arguments.matcher";
 import { MethodInteraction } from "../interactions";
-import { ExpectedMethodExpression } from "../expected-expressions/expected-expressions";
+import { MethodExpression } from "../reflector/expressions";
 import { MethodExpressionMatcher } from "./method.matcher";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { Mock } from "moq.ts";
@@ -17,7 +17,7 @@ describe("Method expression matcher", () => {
         const arguments2 = [];
 
         const left = new MethodInteraction(arguments1);
-        const right = new ExpectedMethodExpression(arguments2);
+        const right = new MethodExpression(arguments2);
 
         resolveMock(ArgumentsMatcher)
             .setup(instance => instance.matched(arguments1, arguments2))
@@ -47,7 +47,7 @@ describe("Method expression matcher", () => {
         const arguments2 = [];
 
         const left = new MethodInteraction(arguments1);
-        const right = new ExpectedMethodExpression(arguments2);
+        const right = new MethodExpression(arguments2);
 
         resolveMock(ArgumentsMatcher)
             .setup(instance => instance.matched(arguments1, arguments2))

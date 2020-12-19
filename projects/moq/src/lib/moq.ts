@@ -1,4 +1,4 @@
-import { IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
+import { IExpectedExpression } from "./reflector/expression-reflector";
 import { Times } from "./times";
 import { Interaction } from "./interactions";
 import { Tracker } from "./tracker/tracker";
@@ -198,7 +198,7 @@ export interface IMock<T> {
      * .setup(instance => instance.property)
      *
      * //accessing to a named function with name 'test' of an object and the first parameter is 1
-     * .setup(instance => It.Is((expression: ExpectedNamedMethodExpression) => {
+     * .setup(instance => It.Is((expression: NamedMethodExpression) => {
      *      return expression.name === 'test' && expression.args[0] === 1
      * }))
      *

@@ -1,6 +1,6 @@
 import { Mock } from "../lib/mock";
 import { Times } from "../lib/times";
-import { It } from "../lib/expected-expressions/expression-predicates";
+import { It } from "../lib/reflector/expression-predicates";
 
 interface IMyService {
     findSomething(value: number): number;

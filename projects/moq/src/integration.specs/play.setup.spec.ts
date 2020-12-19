@@ -1,6 +1,6 @@
 import { Mock } from "../lib/mock";
 import { PlayTimes } from "../lib/playables/play-times";
-import { It } from "../lib/expected-expressions/expression-predicates";
+import { It } from "../lib/reflector/expression-predicates";
 
 type ITestFunction = (value: number) => number;
 

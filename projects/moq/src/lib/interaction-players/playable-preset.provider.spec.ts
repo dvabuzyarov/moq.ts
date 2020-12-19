@@ -1,4 +1,4 @@
-import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
+import { Expressions } from "../reflector/expressions";
 import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 import { Interaction } from "../interactions";
 import { Presets } from "../presets/presets";
@@ -13,13 +13,13 @@ describe("Playable preset provider", () => {
         createInjector2(PlayablePresetProvider, [Presets, ExpressionMatcher]);
     });
 
-    function createPreset(target: ExpectedExpressions<unknown>): SpiedObject<IPreset<unknown>> {
+    function createPreset(target: Expressions<unknown>): SpiedObject<IPreset<unknown>> {
         const playable = jasmine.createSpyObj<IPlayable>(["isPlayable"]);
         return {target, playable} as any;
     }
 
     it("Returns playable preset by expression", () => {
-        const expectedExpression = {} as ExpectedExpressions<unknown>;
+        const expectedExpression = {} as Expressions<unknown>;
         const expression = {} as Interaction;
 
         const preset = createPreset(expectedExpression);
@@ -39,7 +39,7 @@ describe("Playable preset provider", () => {
     });
 
     it("Returns the first playable preset", () => {
-        const expectedExpression = {} as ExpectedExpressions<unknown>;
+        const expectedExpression = {} as Expressions<unknown>;
         const expression = {} as Interaction;
 
         const preset1 = createPreset(expectedExpression);
@@ -62,7 +62,7 @@ describe("Playable preset provider", () => {
     });
 
     it("Skips unplayable preset by expression and returns undefined", () => {
-        const expectedExpression = {} as ExpectedExpressions<unknown>;
+        const expectedExpression = {} as Expressions<unknown>;
         const expression = {} as Interaction;
 
         const preset = createPreset(expectedExpression);
@@ -83,7 +83,7 @@ describe("Playable preset provider", () => {
     });
 
     it("Skips preset that expected expression does not match to the interaction expression", () => {
-        const expectedExpression = {} as ExpectedExpressions<unknown>;
+        const expectedExpression = {} as Expressions<unknown>;
         const expression = {} as Interaction;
 
         const preset = createPreset(expectedExpression);
@@ -103,7 +103,7 @@ describe("Playable preset provider", () => {
     });
 
     it("Does not check playability of a preset when its expected expression does not match to the interaction expression", () => {
-        const expectedExpression = {} as ExpectedExpressions<unknown>;
+        const expectedExpression = {} as Expressions<unknown>;
         const expression = {} as Interaction;
 
         const preset = jasmine.createSpyObj<IPreset<unknown>>(["playable"]);

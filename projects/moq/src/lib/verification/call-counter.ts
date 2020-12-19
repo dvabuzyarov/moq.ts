@@ -1,4 +1,4 @@
-import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
+import { Expressions } from "../reflector/expressions";
 import { Interaction } from "../interactions";
 import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 
@@ -11,7 +11,7 @@ export class CallCounter {
 
     }
 
-    public count<T>(expected: ExpectedExpressions<T>, expressions: Interaction[]): number {
+    public count<T>(expected: Expressions<T>, expressions: Interaction[]): number {
         let count = 0;
         for (const expression of expressions) {
             if (this.expressionMatcher.matched(expression, expected) === true) {

@@ -1,6 +1,6 @@
 import { EqualMatcher } from "../../lib/equal-matchers/equal.matcher";
 import { resolve } from "../../tests.components/resolve.builder";
-import { It } from "../../lib/expected-expressions/expression-predicates";
+import { It } from "../../lib/reflector/expression-predicates";
 import { createInjectorForEqualMatcher } from "./create-injector.for-equal-matcher";
 
 describe("Equal matcher for POJO with func", () => {

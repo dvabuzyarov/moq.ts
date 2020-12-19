@@ -6,7 +6,7 @@ import {
     NamedMethodInteraction,
     SetPropertyInteraction
 } from "../interactions";
-import { It } from "../expected-expressions/expression-predicates";
+import { It } from "../reflector/expression-predicates";
 import { GetPropertyExpressionFormatter } from "./get.property-formatter";
 import { SetPropertyExpressionFormatter } from "./set.property-formatter";
 import { MethodExpressionFormatter } from "./method-formatter";

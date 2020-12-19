@@ -1,5 +1,5 @@
 import { Mock } from "../lib/mock";
-import { It } from "../lib/expected-expressions/expression-predicates";
+import { It } from "../lib/reflector/expression-predicates";
 import { IMockOptions } from "../lib/moq";
 import { EqualMatchingInjectorConfig } from "../lib/injector/equal-matching-injector.config";
 

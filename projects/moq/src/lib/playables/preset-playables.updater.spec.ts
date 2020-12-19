@@ -1,4 +1,4 @@
-import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
+import { Expressions } from "../reflector/expressions";
 import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 import { Interaction } from "../interactions";
 import { Presets } from "../presets/presets";
@@ -12,13 +12,13 @@ describe("Presets playable updater", () => {
         createInjector2(PresetPlayablesUpdater, [Presets, ExpressionMatcher]);
     });
 
-    const createPreset = (target: ExpectedExpressions<unknown>): SpiedObject<IPreset<unknown>> => {
+    const createPreset = (target: Expressions<unknown>): SpiedObject<IPreset<unknown>> => {
         const playable = jasmine.createSpyObj<IPlayable>(["update"]);
         return {target, playable} as any;
     };
 
     it("Updates playable preset", () => {
-        const target = {} as ExpectedExpressions<unknown>;
+        const target = {} as Expressions<unknown>;
         const expression = {} as Interaction;
 
         const preset = createPreset(target);
@@ -38,7 +38,7 @@ describe("Presets playable updater", () => {
     });
 
     it("Updates preset", () => {
-        const target = {} as ExpectedExpressions<unknown>;
+        const target = {} as Expressions<unknown>;
         const expression = {} as Interaction;
 
         const preset = createPreset(target);
@@ -58,7 +58,7 @@ describe("Presets playable updater", () => {
     });
 
     it("Does not update preset", () => {
-        const target = {} as ExpectedExpressions<unknown>;
+        const target = {} as Expressions<unknown>;
         const expression = {} as Interaction;
 
         const preset = createPreset(target);

@@ -10,7 +10,7 @@ import { GetPropertyExpressionFormatter } from "./get.property-formatter";
 import { SetPropertyExpressionFormatter } from "./set.property-formatter";
 import { NamedMethodExpressionFormatter } from "./named.method-formatter";
 import { MethodExpressionFormatter } from "./method-formatter";
-import { It } from "../expected-expressions/expression-predicates";
+import { It } from "../reflector/expression-predicates";
 import { ConstantFormatter } from "./constant-formatter";
 import { InOperatorFormatter } from "./in-operator.formatter";
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
