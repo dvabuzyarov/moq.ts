@@ -1,4 +1,4 @@
-import { ExpressionReflector, IExpectedExpression } from "./reflector/expression-reflector";
+import { ExpressionReflector, IExpression } from "./reflector/expression-reflector";
 import { ProxyFactory } from "./interceptors/proxy.factory";
 import { IMock, IMockOptions, IPresetBuilder, ISequenceVerifier } from "./moq";
 import { Times } from "./times";
@@ -69,13 +69,13 @@ export class Mock<T> implements IMock<T> {
     }
 
     public setup<
-        E extends IExpectedExpression<T>,
+        E extends IExpression<T>,
         R = E extends (...args: any[]) => infer M ? M : any>(expression: E): IPresetBuilder<T, R> {
         const expectedExpression = this.expressionReflector.reflect(expression);
         return this.setupFactory(expectedExpression);
     }
 
-    public verify(expression: IExpectedExpression<T>, times?: Times): IMock<T> {
+    public verify(expression: IExpression<T>, times?: Times): IMock<T> {
         times = times === undefined ? Times.Once() : times;
         const expressions = this.tracker.get().map(record => record.expression);
         this.verifier.test(expression, times, expressions, this.name);
@@ -94,7 +94,7 @@ export class Mock<T> implements IMock<T> {
     /**
      * @experimental
      */
-    public insequence(sequence: ISequenceVerifier, expression: IExpectedExpression<T>): IMock<T> {
+    public insequence(sequence: ISequenceVerifier, expression: IExpression<T>): IMock<T> {
         sequence.add(this, expression);
         return this;
     }

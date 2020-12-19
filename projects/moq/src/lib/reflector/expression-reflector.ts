@@ -1,5 +1,6 @@
 ﻿import { It } from "./expression-predicates";
 import {
+    ConstructOperatorExpression,
     Expressions,
     GetPropertyExpression,
     InOperatorExpression,
@@ -13,7 +14,7 @@ import {
  * and either plays expected interaction or returns a predicate function.
  * See {@link IMock.setup} function and {@link It} class for more details.
  */
-export type IExpectedExpression<T> = (instance: T) => void | any | It<T>;
+export type IExpression<T> = (instance: T) => void | any | It<T>;
 
 /**
  * This class reflects an expression to an expression tree representation.
@@ -40,7 +41,7 @@ export class ExpressionReflector {
     /**
      * Reflects the provided code as an expression tree.
      */
-    public reflect<T>(expression: IExpectedExpression<T>): Expressions<T> {
+    public reflect<T>(expression: IExpression<T>): Expressions<T> {
         this.reflectedInfo = undefined;
 
         const proxy = this.expressionProxy();
@@ -72,9 +73,14 @@ export class ExpressionReflector {
             has: (target, name) => {
                 this.reflectedInfo = new InOperatorExpression(name);
                 return true;
+            },
+
+            construct: (target: any, args: any, newTarget?: any): object => {
+                this.reflectedInfo = new ConstructOperatorExpression(args);
+                return new target(args);
             }
         };
 
-        return new Proxy(() => undefined, options);
+        return new Proxy(function () {}, options);
     }
 }

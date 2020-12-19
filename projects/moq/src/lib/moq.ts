@@ -1,4 +1,4 @@
-import { IExpectedExpression } from "./reflector/expression-reflector";
+import { IExpression } from "./reflector/expression-reflector";
 import { Times } from "./times";
 import { Interaction } from "./interactions";
 import { Tracker } from "./tracker/tracker";
@@ -212,7 +212,7 @@ export interface IMock<T> {
      * Refer the integration tests for more examples.
      * @returns PresetBuilder config interface for the provided expression.
      */
-    setup<E extends IExpectedExpression<T>,
+    setup<E extends IExpression<T>,
         R = E extends (...args: any[]) => infer M ? M : any>(expression: E): IPresetBuilder<T, R>;
 
     /**
@@ -221,7 +221,7 @@ export interface IMock<T> {
      * @param expression Expected expression
      * @param times The default value is {@link Times.Once}
      */
-    verify(expression: IExpectedExpression<T>, times?: Times): IMock<T>;
+    verify(expression: IExpression<T>, times?: Times): IMock<T>;
 
     /**
      * Set the prototype of the mocked object.
@@ -245,7 +245,7 @@ export interface IMock<T> {
      * @experimental
      * @hidden
      */
-    insequence(sequence: ISequenceVerifier, expression: IExpectedExpression<T>): IMock<T>;
+    insequence(sequence: ISequenceVerifier, expression: IExpression<T>): IMock<T>;
 }
 
 /**
@@ -253,7 +253,7 @@ export interface IMock<T> {
  * @experimental
  */
 export interface ISequenceVerifier {
-    add<T>(mock: IMock<T>, expression: IExpectedExpression<T>): ISequenceVerifier;
+    add<T>(mock: IMock<T>, expression: IExpression<T>): ISequenceVerifier;
 
     verify(times?: Times): void;
 }

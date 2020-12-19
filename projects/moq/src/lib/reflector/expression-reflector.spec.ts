@@ -1,5 +1,6 @@
 import { ExpressionReflector } from "./expression-reflector";
 import {
+    ConstructOperatorExpression,
     GetPropertyExpression,
     InOperatorExpression,
     MethodExpression,
@@ -125,4 +126,12 @@ describe("Expression Reflector", () => {
         expect(actual).toEqual(jasmine.any(It));
     });
 
+    it("Resolves construct operator", () => {
+        const arg = "value";
+        const reflector = resolve2(ExpressionReflector);
+        const actual = reflector.reflect<(arg: string) => void>(instance => new instance(arg));
+
+        const expected = new ConstructOperatorExpression([arg]);
+        expect(actual).toEqual(expected);
+    });
 });
