@@ -3,7 +3,7 @@
  */
 import { Verifier } from "./verifier";
 import { CallCounter } from "./call-counter";
-import { VerifyFormatter } from "../formatters/verify-formatter";
+import { VerifyFormatter } from "../formatters/verify.formatter";
 import { ExpressionReflector } from "../reflector/expression-reflector";
 import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 

@@ -1,12 +1,17 @@
-import {ConstantFormatter} from "./constant-formatter";
-import {It} from "../reflector/expression-predicates";
+import { ConstantFormatter } from "./constant.formatter";
+import { It } from "../reflector/expression-predicates";
+import { createInjector2, resolve2 } from "../../tests.components/resolve.builder";
 
 describe("Constant formatter", () => {
+
+    beforeEach(() => {
+        createInjector2(ConstantFormatter, []);
+    });
 
     it("Returns formatted description for undefined", () => {
         const value = undefined;
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe("undefined");
@@ -15,7 +20,7 @@ describe("Constant formatter", () => {
     it("Returns formatted description for null", () => {
         const value = null;
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe("null");
@@ -24,7 +29,7 @@ describe("Constant formatter", () => {
     it("Returns formatted description for boolean", () => {
         const value = true;
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe("true");
@@ -33,7 +38,7 @@ describe("Constant formatter", () => {
     it("Returns formatted description for string", () => {
         const value = "string value";
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe("'string value'");
@@ -42,7 +47,7 @@ describe("Constant formatter", () => {
     it("Returns formatted description for date", () => {
         const value = new Date(2016);
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe(`${value}`);
@@ -51,7 +56,7 @@ describe("Constant formatter", () => {
     it("Returns formatted description for number", () => {
         const value = 2016.12;
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe("2016.12");
@@ -60,7 +65,7 @@ describe("Constant formatter", () => {
     it("Returns formatted description for Regex", () => {
         const value = new RegExp("^$");
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe("/^$/");
@@ -69,7 +74,7 @@ describe("Constant formatter", () => {
     it("Returns formatted description for object", () => {
         const value = {property: "value"};
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe("[object Object]");
@@ -78,7 +83,7 @@ describe("Constant formatter", () => {
     it("Returns formatted description for array", () => {
         const value = [1, "string value", true, new It(() => undefined), [0, 3]];
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe("[1,'string value',true,It.Is(() => undefined),[0,3]]");
@@ -88,7 +93,7 @@ describe("Constant formatter", () => {
         const predicate = () => undefined;
         const value = new It(predicate);
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe("It.Is(() => undefined)");
@@ -99,7 +104,7 @@ describe("Constant formatter", () => {
             return 1;
         };
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe(`${value}`);
@@ -108,7 +113,7 @@ describe("Constant formatter", () => {
     it("Returns formatted description for arrow function", () => {
         const value = () => 1;
 
-        const matcher = new ConstantFormatter();
+        const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
         expect(actual).toBe("() => 1");

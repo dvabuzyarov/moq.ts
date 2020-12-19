@@ -1,12 +1,12 @@
 import { GetPropertyInteraction } from "../interactions";
-import { VerifyFormatter } from "./verify-formatter";
-import { ExpectedExpressionFormatter } from "./expected-expression-formatter";
-import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
+import { VerifyFormatter } from "./verify.formatter";
+import { ExpressionsFormatter } from "./expressions.formatter";
+import { TrackedExpressionsFormatter } from "./tracked-expressions.formatter";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
-describe("Verify message formatter", () => {
+describe("Verify formatter", () => {
     beforeEach(() => {
-        createInjector2(VerifyFormatter, [ExpectedExpressionFormatter, TrackedExpressionsFormatter]);
+        createInjector2(VerifyFormatter, [ExpressionsFormatter, TrackedExpressionsFormatter]);
     });
 
     it("Returns formatted description for a verify assertion", () => {
@@ -18,7 +18,7 @@ describe("Verify message formatter", () => {
         const trackedExpressions = [];
         const expression = new GetPropertyInteraction("name");
 
-        resolveMock(ExpectedExpressionFormatter)
+        resolveMock(ExpressionsFormatter)
             .setup(instance => instance.format(expression, timesMessage, haveBeenCalledTimes, mockName))
             .returns(expressionDescription);
         resolveMock(TrackedExpressionsFormatter)

@@ -1,12 +1,12 @@
 import { NamedMethodInteraction } from "../interactions";
-import { ConstantFormatter } from "./constant-formatter";
-import { NamedMethodExpressionFormatter } from "./named.method-formatter";
+import { ConstantFormatter } from "./constant.formatter";
+import { NamedMethodFormatter } from "./named-method.formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
-describe("Named method expression formatter", () => {
+describe("Named method formatter", () => {
     beforeEach(() => {
-        createInjector2(NamedMethodExpressionFormatter, [ConstantFormatter, PropertyKeyFormatter]);
+        createInjector2(NamedMethodFormatter, [ConstantFormatter, PropertyKeyFormatter]);
     });
 
     it("Returns formatted description for named method expression", () => {
@@ -24,7 +24,7 @@ describe("Named method expression formatter", () => {
             .setup(instance => instance.format(name))
             .returns(nameDescription);
 
-        const formatter = resolve2(NamedMethodExpressionFormatter);
+        const formatter = resolve2(NamedMethodFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(`${nameDescription}(${valueDescription})`);
@@ -50,7 +50,7 @@ describe("Named method expression formatter", () => {
             .setup(instance => instance.format(name))
             .returns(nameDescription);
 
-        const formatter = resolve2(NamedMethodExpressionFormatter);
+        const formatter = resolve2(NamedMethodFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(`${nameDescription}(${firstValueDescription}, ${secondValueDescription})`);

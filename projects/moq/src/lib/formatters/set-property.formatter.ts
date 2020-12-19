@@ -1,11 +1,11 @@
 import { SetPropertyInteraction } from "../interactions";
-import { ConstantFormatter } from "./constant-formatter";
+import { ConstantFormatter } from "./constant.formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
 
 /**
  * @hidden
  */
-export class SetPropertyExpressionFormatter {
+export class SetPropertyFormatter {
 
     constructor(private constantFormatter: ConstantFormatter,
                 private propertyKeyFormatter: PropertyKeyFormatter) {

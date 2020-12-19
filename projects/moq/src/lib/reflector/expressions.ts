@@ -1,11 +1,11 @@
 /*eslint-disable max-classes-per-file*/
 import { It } from "./expression-predicates";
 import {
-    NewOperatorInteraction,
     GetPropertyInteraction,
     InOperatorInteraction,
     MethodInteraction,
     NamedMethodInteraction,
+    NewOperatorInteraction,
     SetPropertyInteraction
 } from "../interactions";
 

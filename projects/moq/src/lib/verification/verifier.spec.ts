@@ -3,7 +3,7 @@ import { ExpressionReflector } from "../reflector/expression-reflector";
 import { Times } from "../times";
 import { CallCounter } from "./call-counter";
 import { GetPropertyExpression } from "../reflector/expressions";
-import { VerifyFormatter } from "../formatters/verify-formatter";
+import { VerifyFormatter } from "../formatters/verify.formatter";
 import { VerifyError } from "./verify-error";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { It } from "moq.ts";

@@ -5,7 +5,7 @@ import {
     IExpression
 } from "../reflector/expression-reflector";
 import { CallCounter } from "./call-counter";
-import { VerifyFormatter } from "../formatters/verify-formatter";
+import { VerifyFormatter } from "../formatters/verify.formatter";
 import { VerifyError } from "./verify-error";
 
 /**
