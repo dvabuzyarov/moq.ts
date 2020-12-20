@@ -1,4 +1,4 @@
-/*eslint-disable max-classes-per-file*/
+/*eslint-disable max-classes-per-file, @typescript-eslint/no-extraneous-class, @typescript-eslint/no-empty-function*/
 import { ProxyFactory } from "./proxy.factory";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { GetTrap } from "./get.trap";
@@ -8,6 +8,7 @@ import { GetPrototypeOfTrap } from "./get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./set-prototype-of.trap";
 import { HasTrap } from "./has.trap";
 import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
+import { ConstructTrap } from "./construct.trap";
 
 describe("Proxy factory", () => {
 
@@ -19,7 +20,8 @@ describe("Proxy factory", () => {
             HasTrap,
             ApplyTrap,
             GetPrototypeOfTrap,
-            SetPrototypeOfTrap
+            SetPrototypeOfTrap,
+            ConstructTrap
         ]);
     });
 
@@ -216,5 +218,30 @@ describe("Proxy factory", () => {
 
         expect(typeof object).toBe(typeof Prototype);
         expect(object instanceof Prototype).toBe(true);
+    });
+
+    it("Traps construct", () => {
+        class Foo {
+            constructor(name: string) {
+            }
+        }
+
+        const arg = "argument";
+        const value = {};
+
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.target)
+            .returns(Foo);
+
+        resolveMock(ConstructTrap)
+            .setup(instance => instance.intercept([arg]))
+            .returns(value);
+
+        const interceptor = resolve2<ProxyFactory<typeof Foo>>(ProxyFactory);
+        const object = interceptor.object();
+
+        const actual = new object(arg);
+
+        expect(actual).toBe(value);
     });
 });
