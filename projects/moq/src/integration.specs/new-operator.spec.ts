@@ -12,7 +12,7 @@ describe("Mock: new operator", () => {
         const value = "value";
         const mock = new Mock<typeof TestObject>({target: TestObject})
             .setup(instance => new instance(value))
-            .callback(({args}) => new TestObject(args[0]));
+            .callback(({args: [name]}) => new TestObject(name));
         const object = mock.object();
 
         const actual = new object(value);
