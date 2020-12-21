@@ -95,7 +95,7 @@
 						<dd><pre><code class="language-typescript">
 <span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
 <span class="hljs-comment">// the expression dynamically checks the property name that is being read</span>
-.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function">(<span class="hljs-params">expression: ExpectedGetPropertyExpression</span>) =&gt;</span> expression.name === <span class="hljs-string">&#x27;property&#x27;</span>))
+.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function">(<span class="hljs-params">expression: GetPropertyExpression</span>) =&gt;</span> expression.name === <span class="hljs-string">&#x27;property&#x27;</span>))
 .returns(value)
 .object();
 
@@ -107,7 +107,7 @@
 .object();
 
 <span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
-.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function">(<span class="hljs-params">expression: ExpectedNamedMethodExpression</span>) =&gt;</span> expression.name === <span class="hljs-string">&#x27;methodName&#x27;</span> &amp;&amp; expression.args[<span class="hljs-number">0</span>] === <span class="hljs-number">1</span>))
+.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function">(<span class="hljs-params">expression: NamedMethodExpression</span>) =&gt;</span> expression.name === <span class="hljs-string">&#x27;methodName&#x27;</span> &amp;&amp; expression.args[<span class="hljs-number">0</span>] === <span class="hljs-number">1</span>))
 .returns(value)
 .object();
 
@@ -171,7 +171,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/expected-expressions/expression-predicates.ts#L53">projects/moq/src/lib/expected-expressions/expression-predicates.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/reflector/expression-predicates.ts#L53">projects/moq/src/lib/reflector/expression-predicates.ts:53</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -193,7 +193,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 					<div class="tsd-signature tsd-kind-icon">predicate<span class="tsd-signature-symbol">:</span> <a href="../modules/moq_ts.html#ipredicate" class="tsd-signature-type">IPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/expected-expressions/expression-predicates.ts#L54">projects/moq/src/lib/expected-expressions/expression-predicates.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/reflector/expression-predicates.ts#L54">projects/moq/src/lib/reflector/expression-predicates.ts:54</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -210,7 +210,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/expected-expressions/expression-predicates.ts#L75">projects/moq/src/lib/expected-expressions/expression-predicates.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/reflector/expression-predicates.ts#L75">projects/moq/src/lib/reflector/expression-predicates.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -258,7 +258,7 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/expected-expressions/expression-predicates.ts#L96">projects/moq/src/lib/expected-expressions/expression-predicates.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/reflector/expression-predicates.ts#L96">projects/moq/src/lib/reflector/expression-predicates.ts:96</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ExpectedExpressionReflector | moq.ts | documentation</title>
+	<title>ExpressionReflector | moq.ts | documentation</title>
 	<meta name="description" content="Documentation for moq.ts | documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.expectedexpressionreflector.html">ExpectedExpressionReflector</a>
+					<a href="moq_ts.expressionreflector.html">ExpressionReflector</a>
 				</li>
 			</ul>
-			<h1>Class ExpectedExpressionReflector</h1>
+			<h1>Class ExpressionReflector</h1>
 		</div>
 	</div>
 </header>
@@ -76,10 +76,10 @@
 						<dt>example</dt>
 						<dd><pre><code class="language-typescript">
 <span class="hljs-keyword">const</span> arg = <span class="hljs-string">&#x27;argument&#x27;</span>;
-<span class="hljs-keyword">const</span> reflector = <span class="hljs-keyword">new</span> ExpectedExpressionReflector();
+<span class="hljs-keyword">const</span> reflector = <span class="hljs-keyword">new</span> ExpressionReflector();
 <span class="hljs-keyword">const</span> actual = reflector.reflect&lt;<span class="hljs-built_in">any</span>&gt;(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(arg));
 
-<span class="hljs-keyword">const</span> expected = <span class="hljs-keyword">new</span> ExpectedMethodExpression([arg]);
+<span class="hljs-keyword">const</span> expected = <span class="hljs-keyword">new</span> MethodExpression([arg]);
 expect(actual).toEqual(expected);</code></pre>
 							<p>For more examples check
 								[unit tests for this class]
@@ -92,7 +92,7 @@ expect(actual).toEqual(expected);</code></pre>
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ExpectedExpressionReflector</span>
+						<span class="target">ExpressionReflector</span>
 					</li>
 				</ul>
 			</section>
@@ -103,7 +103,7 @@ expect(actual).toEqual(expected);</code></pre>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="moq_ts.expectedexpressionreflector.html#reflect" class="tsd-kind-icon">reflect</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="moq_ts.expressionreflector.html#reflect" class="tsd-kind-icon">reflect</a></li>
 							</ul>
 						</section>
 					</div>
@@ -115,13 +115,13 @@ expect(actual).toEqual(expected);</code></pre>
 					<a name="reflect" class="tsd-anchor"></a>
 					<h3>reflect</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">reflect&lt;T&gt;<span class="tsd-signature-symbol">(</span>expression<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#iexpectedexpression" class="tsd-signature-type">IExpectedExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#expectedexpressions" class="tsd-signature-type">ExpectedExpressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">reflect&lt;T&gt;<span class="tsd-signature-symbol">(</span>expression<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#iexpression" class="tsd-signature-type">IExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#expressions" class="tsd-signature-type">Expressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/expected-expressions/expected-expression-reflector.ts#L43">projects/moq/src/lib/expected-expressions/expected-expression-reflector.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/reflector/expression-reflector.ts#L44">projects/moq/src/lib/reflector/expression-reflector.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -138,10 +138,10 @@ expect(actual).toEqual(expected);</code></pre>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>expression: <a href="../modules/moq_ts.html#iexpectedexpression" class="tsd-signature-type">IExpectedExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>expression: <a href="../modules/moq_ts.html#iexpression" class="tsd-signature-type">IExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../modules/moq_ts.html#expectedexpressions" class="tsd-signature-type">ExpectedExpressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/moq_ts.html#expressions" class="tsd-signature-type">Expressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -163,10 +163,10 @@ expect(actual).toEqual(expected);</code></pre>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="moq_ts.expectedexpressionreflector.html" class="tsd-kind-icon">Expected<wbr>Expression<wbr>Reflector</a>
+						<a href="moq_ts.expressionreflector.html" class="tsd-kind-icon">Expression<wbr>Reflector</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="moq_ts.expectedexpressionreflector.html#reflect" class="tsd-kind-icon">reflect</a>
+								<a href="moq_ts.expressionreflector.html#reflect" class="tsd-kind-icon">reflect</a>
 							</li>
 						</ul>
 					</li>

@@ -171,7 +171,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/moq.ts#L168">projects/moq/src/lib/moq.ts:168</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L168">projects/moq/src/lib/moq.ts:168</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -187,7 +187,7 @@
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/moq.ts#L178">projects/moq/src/lib/moq.ts:178</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L178">projects/moq/src/lib/moq.ts:178</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -202,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">tracker<span class="tsd-signature-symbol">:</span> <a href="../classes/moq_ts.tracker.html" class="tsd-signature-type">Tracker</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/moq.ts#L173">projects/moq/src/lib/moq.ts:173</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L173">projects/moq/src/lib/moq.ts:173</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -224,7 +224,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/moq.ts#L183">projects/moq/src/lib/moq.ts:183</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L183">projects/moq/src/lib/moq.ts:183</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -246,7 +246,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/moq.ts#L242">projects/moq/src/lib/moq.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L242">projects/moq/src/lib/moq.ts:242</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -287,7 +287,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/moq.ts#L215">projects/moq/src/lib/moq.ts:215</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L215">projects/moq/src/lib/moq.ts:215</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -307,7 +307,7 @@
 .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.property)
 
 <span class="hljs-comment">//accessing to a named function with name &#x27;test&#x27; of an object and the first parameter is 1</span>
-.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function">(<span class="hljs-params">expression: ExpectedNamedMethodExpression</span>) =&gt;</span> {
+.setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function">(<span class="hljs-params">expression: NamedMethodExpression</span>) =&gt;</span> {
      <span class="hljs-keyword">return</span> expression.name === <span class="hljs-string">&#x27;test&#x27;</span> &amp;&amp; expression.args[<span class="hljs-number">0</span>] === <span class="hljs-number">1</span>
 }))
 
@@ -319,7 +319,7 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>E<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#iexpectedexpression" class="tsd-signature-type">IExpectedExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									<h4>E<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#iexpression" class="tsd-signature-type">IExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 								</li>
 								<li>
 									<h4>R = <span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-symbol">infer </span> M<span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">M</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">any</span></h4>
@@ -347,13 +347,13 @@
 					<a name="verify" class="tsd-anchor"></a>
 					<h3>verify</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">verify<span class="tsd-signature-symbol">(</span>expression<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#iexpectedexpression" class="tsd-signature-type">IExpectedExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, times<span class="tsd-signature-symbol">?: </span><a href="../classes/moq_ts.times-1.html" class="tsd-signature-type">Times</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">verify<span class="tsd-signature-symbol">(</span>expression<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#iexpression" class="tsd-signature-type">IExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, times<span class="tsd-signature-symbol">?: </span><a href="../classes/moq_ts.times-1.html" class="tsd-signature-type">Times</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/531ab0b/projects/moq/src/lib/moq.ts#L224">projects/moq/src/lib/moq.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L224">projects/moq/src/lib/moq.ts:224</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -364,7 +364,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>expression: <a href="../modules/moq_ts.html#iexpectedexpression" class="tsd-signature-type">IExpectedExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>expression: <a href="../modules/moq_ts.html#iexpression" class="tsd-signature-type">IExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Expected expression</p>
 									</div>
