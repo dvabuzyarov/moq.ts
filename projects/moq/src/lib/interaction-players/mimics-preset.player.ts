@@ -4,6 +4,7 @@ import {
     Interaction,
     MethodInteraction,
     NamedMethodInteraction,
+    NewOperatorInteraction,
     SetPropertyInteraction
 } from "../interactions";
 import { REFLECT_APPLY } from "./reflect-apply.injection-token";
@@ -37,5 +38,8 @@ export class MimicsPresetPlayer {
             return interaction.name in origin;
         }
 
+        if (interaction instanceof NewOperatorInteraction) {
+            return new origin(...interaction.args);
+        }
     }
 }
