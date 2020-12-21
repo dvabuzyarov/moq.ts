@@ -532,6 +532,10 @@ mock.verify(instance => "method" in instance, Times.Once());
 The library supports [new operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new).
 More examples could be found [here](https://raw.githubusercontent.com/dvabuzyarov/moq.ts/master/projects/moq/src/integration.specs/new-operator.spec.ts)
 
+> [In order for the new operation to be valid on the resulting Proxy object, 
+> the target used to initialize the proxy must itself have a [[Construct]] internal method 
+> (i.e. new target must be valid)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/construct).
+
 ```typescript
 class TestObject {
     constructor(public readonly arg) {
@@ -608,4 +612,4 @@ expect(MoqAPI in object).toBe(true);
 expect(object[MoqAPI]).toBe(mock);
 ```
 
-Sponsored by [2BIT](https://www.2bit.ch)
+> [Sponsored by 2BIT GmbH](https://www.2bit.ch)
