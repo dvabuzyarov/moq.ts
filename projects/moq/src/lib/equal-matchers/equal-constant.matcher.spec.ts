@@ -1,5 +1,5 @@
 import { EqualConstantMatcher } from "./equal-constant.matcher";
-import { It } from "../expected-expressions/expression-predicates";
+import { It } from "../reflector/expression-predicates";
 import { createInjector, resolve } from "../../tests.components/resolve.builder";
 import { EqualMatcher } from "./equal.matcher";
 

@@ -1,8 +1,8 @@
 import { ArgumentsMatcher } from "./arguments.matcher";
-import { It } from "../expected-expressions/expression-predicates";
+import { It } from "../reflector/expression-predicates";
 import { NamedMethodInteraction } from "../interactions";
 import { NamedMethodExpressionMatcher } from "./instance-method.matcher";
-import { ExpectedNamedMethodExpression } from "../expected-expressions/expected-expressions";
+import { NamedMethodExpression } from "../reflector/expressions";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { Mock, Times } from "moq.ts";
 
@@ -18,7 +18,7 @@ describe("Named method expression matcher", () => {
 
         const name = "name";
         const left = new NamedMethodInteraction(name, arguments1);
-        const right = new ExpectedNamedMethodExpression(name, arguments2);
+        const right = new NamedMethodExpression(name, arguments2);
 
         resolveMock(ArgumentsMatcher)
             .setup(instance => instance.matched(arguments1, arguments2))
@@ -49,7 +49,7 @@ describe("Named method expression matcher", () => {
 
         const name = "name";
         const left = new NamedMethodInteraction(name, arguments1);
-        const right = new ExpectedNamedMethodExpression(name, arguments2);
+        const right = new NamedMethodExpression(name, arguments2);
 
         resolveMock(ArgumentsMatcher)
             .setup(instance => instance.matched(arguments1, arguments2))
@@ -65,7 +65,7 @@ describe("Named method expression matcher", () => {
         const args = [];
 
         const left = new NamedMethodInteraction("left name", args);
-        const right = new ExpectedNamedMethodExpression("right name", args);
+        const right = new NamedMethodExpression("right name", args);
 
         resolveMock(ArgumentsMatcher)
             .setup(instance => instance.matched(args, args))
@@ -94,7 +94,7 @@ describe("Named method expression matcher", () => {
         const args = [];
 
         const left = new NamedMethodInteraction("left name", args);
-        const right = new ExpectedNamedMethodExpression("right name", args);
+        const right = new NamedMethodExpression("right name", args);
 
         const matcher = resolve2(NamedMethodExpressionMatcher);
         const actual = matcher.matched(left, right);

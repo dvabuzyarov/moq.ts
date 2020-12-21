@@ -1,6 +1,6 @@
 import { IMock, IPlayable } from "../moq";
 import { PresetBuilder } from "./preset-builder";
-import { ExpectedExpressions } from "../expected-expressions/expected-expressions";
+import { Expressions } from "../reflector/expressions";
 import { MimicsPreset } from "./presets/mimics.preset";
 import { ReturnsPreset } from "./presets/returns.preset";
 import { ThrowsPreset } from "./presets/throws.preset";
@@ -13,7 +13,7 @@ import { InjectionToken } from "../static.injector/injection_token";
 describe("Preset builder", () => {
     const Mock = new InjectionToken<IMock<unknown>>("mock");
     const Set = new InjectionToken<(preset: IPreset<unknown>) => void>("set");
-    const Target = new InjectionToken<ExpectedExpressions<any>>("target");
+    const Target = new InjectionToken<Expressions<any>>("target");
 
     beforeEach(() => {
         createInjector2(PresetBuilder, [Mock, Set, Target]);

@@ -7,52 +7,58 @@ import {
     InOperatorInteraction,
     Interaction,
     MethodInteraction,
-    NamedMethodInteraction,
+    NamedMethodInteraction, NewOperatorInteraction,
     SetPropertyInteraction
 } from "../interactions";
 import {
-    ExpectedExpressions,
-    ExpectedGetPropertyExpression,
-    ExpectedInOperatorExpression,
-    ExpectedMethodExpression,
-    ExpectedNamedMethodExpression,
-    ExpectedSetPropertyExpression
-} from "../expected-expressions/expected-expressions";
-import { It } from "../expected-expressions/expression-predicates";
-import { InOperatorMatcher } from "./in-operator.matcher";
+    Expressions,
+    GetPropertyExpression,
+    InOperatorExpression,
+    MethodExpression,
+    NamedMethodExpression, NewOperatorExpression,
+    SetPropertyExpression
+} from "../reflector/expressions";
+import { It } from "../reflector/expression-predicates";
+import { InOperatorExpressionMatcher } from "./in-operator.matcher";
+import { NewOperatorExpressionMatcher } from "./new-operator.matcher";
 
 /**
  * @hidden
  */
 export class ExpressionMatcher {
 
-    constructor(private getPropertyExpressionMatcher: GetPropertyExpressionMatcher,
-                private setPropertyExpressionMatcher: SetPropertyExpressionMatcher,
-                private methodExpressionMatcher: MethodExpressionMatcher,
-                private namedMethodExpressionMatcher: NamedMethodExpressionMatcher,
-                private inOperatorExpressionMatcher: InOperatorMatcher) {
+    constructor(private readonly getPropertyExpressionMatcher: GetPropertyExpressionMatcher,
+                private readonly setPropertyExpressionMatcher: SetPropertyExpressionMatcher,
+                private readonly methodExpressionMatcher: MethodExpressionMatcher,
+                private readonly namedMethodExpressionMatcher: NamedMethodExpressionMatcher,
+                private readonly inOperatorExpressionMatcher: InOperatorExpressionMatcher,
+                private readonly newOperatorExpressionMatcher: NewOperatorExpressionMatcher) {
 
     }
 
-    public matched(left: Interaction, right: ExpectedExpressions<any>): boolean {
+    /*eslint-disable-next-line complexity*/
+    public matched(left: Interaction, right: Expressions<any>): boolean {
 
         if (left === right) return true;
         if (right === undefined) return true;
 
-        if (left instanceof GetPropertyInteraction && (right instanceof ExpectedGetPropertyExpression || right instanceof It)) {
+        if (left instanceof GetPropertyInteraction && (right instanceof GetPropertyExpression || right instanceof It)) {
             return this.getPropertyExpressionMatcher.matched(left, right);
         }
-        if (left instanceof SetPropertyInteraction && (right instanceof ExpectedSetPropertyExpression || right instanceof It)) {
+        if (left instanceof SetPropertyInteraction && (right instanceof SetPropertyExpression || right instanceof It)) {
             return this.setPropertyExpressionMatcher.matched(left, right);
         }
-        if (left instanceof InOperatorInteraction && (right instanceof ExpectedInOperatorExpression || right instanceof It)) {
+        if (left instanceof InOperatorInteraction && (right instanceof InOperatorExpression || right instanceof It)) {
             return this.inOperatorExpressionMatcher.matched(left, right);
         }
-        if (left instanceof MethodInteraction && (right instanceof ExpectedMethodExpression || right instanceof It)) {
+        if (left instanceof MethodInteraction && (right instanceof MethodExpression || right instanceof It)) {
             return this.methodExpressionMatcher.matched(left, right);
         }
-        if (left instanceof NamedMethodInteraction && (right instanceof ExpectedNamedMethodExpression || right instanceof It)) {
+        if (left instanceof NamedMethodInteraction && (right instanceof NamedMethodExpression || right instanceof It)) {
             return this.namedMethodExpressionMatcher.matched(left, right);
+        }
+        if (left instanceof NewOperatorInteraction && (right instanceof NewOperatorExpression || right instanceof It)) {
+            return this.newOperatorExpressionMatcher.matched(left, right);
         }
 
         return false;

@@ -1,11 +1,11 @@
 import { MethodInteraction } from "../interactions";
-import { ConstantFormatter } from "./constant-formatter";
-import { MethodExpressionFormatter } from "./method-formatter";
+import { ConstantFormatter } from "./constant.formatter";
+import { MethodFormatter } from "./method.formatter";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
-describe("Method expression formatter", () => {
+describe("Method formatter", () => {
     beforeEach(() => {
-        createInjector2(MethodExpressionFormatter, [ConstantFormatter]);
+        createInjector2(MethodFormatter, [ConstantFormatter]);
     });
 
     it("Returns formatted description for method expression", () => {
@@ -17,7 +17,7 @@ describe("Method expression formatter", () => {
             .setup(instance => instance.format(value))
             .returns(valueDescription);
 
-        const formatter = resolve2(MethodExpressionFormatter);
+        const formatter = resolve2(MethodFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(`(${valueDescription})`);

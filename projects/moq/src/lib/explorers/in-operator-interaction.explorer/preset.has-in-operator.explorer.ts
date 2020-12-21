@@ -1,7 +1,7 @@
 import { IPreset } from "../../presets/presets/preset";
 import { InOperatorInteraction } from "../../interactions";
-import { ExpectedInOperatorExpression } from "../../expected-expressions/expected-expressions";
-import { It } from "../../expected-expressions/expression-predicates";
+import { InOperatorExpression } from "../../reflector/expressions";
+import { It } from "../../reflector/expression-predicates";
 
 /**
  * @hidden
@@ -14,7 +14,7 @@ export class PresetHasInOperatorExplorer {
             return false;
         }
 
-        if (preset.target instanceof ExpectedInOperatorExpression) {
+        if (preset.target instanceof InOperatorExpression) {
             return preset.target.name === name;
         }
 

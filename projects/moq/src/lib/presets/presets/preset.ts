@@ -1,7 +1,7 @@
-import { ExpectedExpressions } from "../../expected-expressions/expected-expressions";
+import { Expressions } from "../../reflector/expressions";
 import { IPlayable } from "../../moq";
 
 export interface IPreset<T> {
-    readonly target: ExpectedExpressions<T>;
+    readonly target: Expressions<T>;
     readonly playable: IPlayable;
 }

@@ -1,6 +1,6 @@
 import { IInjectorConfig, IMockOptions } from "../moq";
 import { trackerProviders } from "../tracker/tracker.providers";
-import { reflectorProviders } from "../expected-expressions/reflector.providers";
+import { reflectorProviders } from "../reflector/reflector.providers";
 import { presetsProviders } from "../presets/presets.providers";
 import { verificationProviders } from "../verification/verification.providers";
 import { interceptorsProviders } from "../interceptors/interceptors.providers";

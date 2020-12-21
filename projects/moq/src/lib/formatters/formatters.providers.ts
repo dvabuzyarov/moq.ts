@@ -1,51 +1,42 @@
-import { VerifyFormatter } from "./verify-formatter";
-import { ExpectedExpressionFormatter } from "./expected-expression-formatter";
-import { TrackedExpressionsFormatter } from "./tracked-expressions-formatter";
-import { ExpressionFormatter } from "./expression-formatter";
-import { SetPropertyExpressionFormatter } from "./set.property-formatter";
-import { ConstantFormatter } from "./constant-formatter";
+import { VerifyFormatter } from "./verify.formatter";
+import { ExpressionsFormatter } from "./expressions.formatter";
+import { TrackedExpressionsFormatter } from "./tracked-expressions.formatter";
+import { InteractionFormatter } from "./interaction.formatter";
+import { SetPropertyFormatter } from "./set-property.formatter";
+import { ConstantFormatter } from "./constant.formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
-import { NamedMethodExpressionFormatter } from "./named.method-formatter";
-import { MethodExpressionFormatter } from "./method-formatter";
+import { NamedMethodFormatter } from "./named-method.formatter";
+import { MethodFormatter } from "./method.formatter";
 import { InOperatorFormatter } from "./in-operator.formatter";
-import { GetPropertyExpressionFormatter } from "./get.property-formatter";
+import { GetPropertyFormatter } from "./get-property.formatter";
+import { NewOperatorFormatter } from "./new-operator.formatter";
 
 /**
  * @hidden
  */
 export const formattersProviders = [
-    {
-        provide: VerifyFormatter,
-        useClass: VerifyFormatter,
-        deps: [ExpectedExpressionFormatter, TrackedExpressionsFormatter]
-    },
-    {provide: TrackedExpressionsFormatter, useClass: TrackedExpressionsFormatter, deps: [ExpressionFormatter]},
-    {
-        provide: SetPropertyExpressionFormatter,
-        useClass: SetPropertyExpressionFormatter,
-        deps: [ConstantFormatter, PropertyKeyFormatter]
-    },
+    {provide: VerifyFormatter, useClass: VerifyFormatter, deps: [ExpressionsFormatter, TrackedExpressionsFormatter]},
+    {provide: TrackedExpressionsFormatter, useClass: TrackedExpressionsFormatter, deps: [InteractionFormatter]},
+    {provide: SetPropertyFormatter, useClass: SetPropertyFormatter, deps: [ConstantFormatter, PropertyKeyFormatter]},
     {provide: PropertyKeyFormatter, useClass: PropertyKeyFormatter, deps: []},
-    {
-        provide: NamedMethodExpressionFormatter,
-        useClass: NamedMethodExpressionFormatter,
-        deps: [ConstantFormatter, PropertyKeyFormatter]
-    },
-    {provide: MethodExpressionFormatter, useClass: MethodExpressionFormatter, deps: [ConstantFormatter]},
+    {provide: NamedMethodFormatter, useClass: NamedMethodFormatter, deps: [ConstantFormatter, PropertyKeyFormatter]},
+    {provide: MethodFormatter, useClass: MethodFormatter, deps: [ConstantFormatter]},
     {provide: InOperatorFormatter, useClass: InOperatorFormatter, deps: [PropertyKeyFormatter]},
-    {provide: GetPropertyExpressionFormatter, useClass: GetPropertyExpressionFormatter, deps: [PropertyKeyFormatter]},
-    {
-        provide: ExpressionFormatter,
-        useClass: ExpressionFormatter,
-        deps: [
-            GetPropertyExpressionFormatter,
-            SetPropertyExpressionFormatter,
-            MethodExpressionFormatter,
-            NamedMethodExpressionFormatter,
-            ConstantFormatter,
-            InOperatorFormatter
-        ]
-    },
-    {provide: ExpectedExpressionFormatter, useClass: ExpectedExpressionFormatter, deps: [ExpressionFormatter]},
+    {provide: GetPropertyFormatter, useClass: GetPropertyFormatter, deps: [PropertyKeyFormatter]},
+    {provide: ExpressionsFormatter, useClass: ExpressionsFormatter, deps: [InteractionFormatter]},
     {provide: ConstantFormatter, useClass: ConstantFormatter, deps: []},
+    {provide: NewOperatorFormatter, useClass: NewOperatorFormatter, deps: [ConstantFormatter]},
+    {
+        provide: InteractionFormatter,
+        useClass: InteractionFormatter,
+        deps: [
+            GetPropertyFormatter,
+            SetPropertyFormatter,
+            MethodFormatter,
+            NamedMethodFormatter,
+            ConstantFormatter,
+            InOperatorFormatter,
+            NewOperatorFormatter
+        ]
+    }
 ];

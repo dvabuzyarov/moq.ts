@@ -1,16 +1,16 @@
 import { InOperatorInteraction } from "../interactions";
-import { It } from "../expected-expressions/expression-predicates";
-import { ExpectedInOperatorExpression } from "../expected-expressions/expected-expressions";
-import { InOperatorMatcher } from "./in-operator.matcher";
+import { It } from "../reflector/expression-predicates";
+import { InOperatorExpression } from "../reflector/expressions";
+import { InOperatorExpressionMatcher } from "./in-operator.matcher";
 
 describe("In operator expression matcher", () => {
 
     it("Returns true when they are equal", () => {
         const name = "name";
         const left = new InOperatorInteraction(name);
-        const right = new ExpectedInOperatorExpression(name);
+        const right = new InOperatorExpression(name);
 
-        const matcher = new InOperatorMatcher();
+        const matcher = new InOperatorExpressionMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -25,7 +25,7 @@ describe("In operator expression matcher", () => {
             return true;
         });
 
-        const matcher = new InOperatorMatcher();
+        const matcher = new InOperatorExpressionMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -33,9 +33,9 @@ describe("In operator expression matcher", () => {
 
     it("Returns false when left does not equal to right", () => {
         const left = new InOperatorInteraction("left name");
-        const right = new ExpectedInOperatorExpression("right name");
+        const right = new InOperatorExpression("right name");
 
-        const matcher = new InOperatorMatcher();
+        const matcher = new InOperatorExpressionMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -49,7 +49,7 @@ describe("In operator expression matcher", () => {
             return false;
         });
 
-        const matcher = new InOperatorMatcher();
+        const matcher = new InOperatorExpressionMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);

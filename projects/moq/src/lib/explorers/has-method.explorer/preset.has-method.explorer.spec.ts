@@ -1,6 +1,6 @@
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
 import { IPreset } from "../../presets/presets/preset";
-import { ExpectedExpressions } from "../../expected-expressions/expected-expressions";
+import { Expressions } from "../../reflector/expressions";
 import { ExpressionHasMethodExplorer } from "./expression.has-method.explorer";
 import { ObjectHasMethodExplorer } from "./object.has-method.explorer";
 import { MimicsPreset } from "../../presets/presets/mimics.preset";
@@ -15,7 +15,7 @@ describe("Preset has instance method explorer", () => {
 
     it("Returns true when preset expression has instance method", () => {
         const name = "name";
-        const target = {} as ExpectedExpressions<unknown>;
+        const target = {} as Expressions<unknown>;
         const preset = {target} as IPreset<unknown>;
 
         resolveMock(ExpressionHasMethodExplorer)

@@ -1,11 +1,11 @@
-import { ExpectedExpressions, ExpectedNamedMethodExpression } from "../../expected-expressions/expected-expressions";
+import { Expressions, NamedMethodExpression } from "../../reflector/expressions";
 
 /**
  * @hidden
  */
 export class ExpressionHasMethodExplorer {
-    public has(name: PropertyKey, expression: ExpectedExpressions<unknown>): boolean {
-        if (expression instanceof ExpectedNamedMethodExpression) {
+    public has(name: PropertyKey, expression: Expressions<unknown>): boolean {
+        if (expression instanceof NamedMethodExpression) {
             return expression.name === name;
         }
 

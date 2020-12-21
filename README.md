@@ -38,15 +38,43 @@ You can find a pretty full set of usages in the integration tests. Check out [te
 - [Mimics](#mimics)
 - [typeof operator](#typeof-operator)
 - [in operator](#in-operator)
+- [new operator](#new-operator)
 - [MoqAPI symbol](#moqapi-symbol)
 * * *
 
 <!-- toc -->
+Mocking functions of objects
+-
+[instance-method.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/instance-method.spec.ts)
+ ```typescript
+import {Mock, It, Times} from "moq.ts";
+interface ITestObject {
+    method(arg1: number, arg2: string): Date;
+}
+
+const values = ["a", "b", "c"];
+
+const mock = new Mock<ITestObject>()
+    .setup(instance => instance.method(1, values[0]))
+    .returns(new Date(2016))
+    
+    .setup(instance => instance.method(It.Is(value => value === 2), values[1]))
+    .callback(({args: [arg1, arg2]})=> new Date(2017 + arg1))
+    
+    .setup(instance => instance.method(3, It.Is(value => value === values[2])))
+    .throws(new Error("Invoking method with 3 and c"));
+
+const object = mock.object();
+const actual = object.method(1, "a");
+
+mock.verify(instance => instance.method(2, "a"), Times.Never());
+```
+
 Mocking reading properties
 -
 [get.property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/get.property.spec.ts)
 ```typescript
-import {Mock, It, Times, ExpectedGetPropertyExpression} from 'moq.ts';
+import {Mock, It, Times, GetPropertyExpression} from "moq.ts";
 interface ITestObject {
     property1: number;
     property2: number;
@@ -55,27 +83,23 @@ interface ITestObject {
     method(): void;
 }
 
-const property4Name = 'property4';
+const property4Name = "property4";
 const mock = new Mock<ITestObject>()
     .setup(instance => instance.property1)
     .returns(1)
     
-    .setup(instance => It.Is((expression: ExpectedGetPropertyExpression) => expression.name === 'property2'))
+    .setup(instance => It.Is((expression: GetPropertyExpression) => expression.name === "property2"))
     .returns(100)
-    
-    //let's deny any write operation on the property for all values
-    .setup(instance => {instance.property2 = It.Is(() => true)})
-    .returns(false)
     
     .setup(instance => instance.property3)
     .callback(()=> 10 + 10)
     
     .setup(instance => instance[property4Name])
-    .throws(new Error('property4 access'))
+    .throws(new Error("property4 access"))
     
     //since a method is a property that holds a pointer to a function
     .setup(instance => instance.method)
-    .returns(()=>{console.log('The method was called')});
+    .returns(()=>{console.log("The method was called")});
 
 const object = mock.object();
 object.method();
@@ -84,12 +108,12 @@ mock.verify(instance=> instance.property1, Times.Never());
 ```
 Mocking writing properties
 -
-[The documentation on returned value from 'set hook' on Proxy object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set)
+[The documentation on returned value from "set hook" on Proxy object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set)
 
 
 [set-property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/set.property.spec.ts)
 ```typescript
-import {Mock, It, Times, ExpectedSetPropertyExpression} from 'moq.ts';
+import {Mock, It, Times, SetPropertyExpression} from "moq.ts";
 interface ITestObject {
     property: number|any;
 }
@@ -101,7 +125,7 @@ const mock = new Mock<ITestObject>()
     //true - allows the write operation
     .returns(true as any)
     
-    .setup(instance => It.Is((expression: ExpectedSetPropertyExpression) => expression.name === 'property' && expression.value === 2))
+    .setup(instance => It.Is((expression: SetPropertyExpression) => expression.name === "property" && expression.value === 2))
     //false - denies the write operation
     .returns(false)
     
@@ -110,7 +134,7 @@ const mock = new Mock<ITestObject>()
     .callback(()=> true)
     
     .setup(instance => {instance.property = value})
-    .throws(new Error('an object has been written into property'));
+    .throws(new Error("an object has been written into property"));
 
 
 const object = mock.object();
@@ -123,7 +147,7 @@ Mocking functions
 
 [mock-method.property.IntegrationTests.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/method.spec.ts)
 ```typescript
-import {Mock, It, Times} from 'moq.ts';
+import {Mock, It, Times} from "moq.ts";
 interface ITestFunction {
     (arg: number|any): string;
 }
@@ -132,16 +156,16 @@ const value = {field: new Date()};
 
 const mock = new Mock<ITestFunction>()
     .setup(instance => instance(1))
-    .returns('called with 1')
+    .returns("called with 1")
     
     .setup(instance => instance(2))
-    .callback(({args: [argument]})=> argument === 2 ? 'called with 2' : `called with ${argument}`)
+    .callback(({args: [argument]})=> argument === 2 ? "called with 2" : `called with ${argument}`)
     
     .setup(instance => instance(value))
-    .throws(new Error('Argument is object with date'))
+    .throws(new Error("Argument is object with date"))
     
     .setup(instance => instance(It.Is(value => value === 4)))
-    .returns('called with 4');
+    .returns("called with 4");
 
 const method = mock.object();
 const actual = method(1);
@@ -150,34 +174,6 @@ mock.verify(instance => instance(1), Times.Once());
 mock.verify(instance => instance(It.Is(value=> value === 1)), Times.Exactly(1));
 
 
-```
-
- 
- Mocking functions of objects
- -
-[instance-method.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/instance-method.spec.ts)
- ```typescript
-import {Mock, It, Times} from 'moq.ts';
-interface ITestObject {
-    method(arg1: number, arg2: string): Date;
-}
-
-const values = ['a', 'b', 'c'];
-
-const mock = new Mock<ITestObject>()
-    .setup(instance => instance.method(1, values[0]))
-    .returns(new Date(2016))
-    
-    .setup(instance => instance.method(It.Is(value => value === 2), values[1]))
-    .callback(({args: [arg1, arg2]})=> new Date(2017 + arg1))
-    
-    .setup(instance => instance.method(3, It.Is(value => value === values[2])))
-    .throws(new Error('Invoking method with 3 and c'));
-
-const object = mock.object();
-const actual = object.method(1, 'a');
-
-mock.verify(instance => instance.method(2, 'a'), Times.Never());
 ```
 
 ## Type Discovering
@@ -532,6 +528,47 @@ mock.verify(instance => "property" in instance, Times.Once());
 mock.verify(instance => "method" in instance, Times.Once());
 ```
 
+## new operator
+The library supports [new operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new).
+More examples could be found [here](https://raw.githubusercontent.com/dvabuzyarov/moq.ts/master/projects/moq/src/integration.specs/new-operator.spec.ts)
+
+> [In order for the new operation to be valid on the resulting Proxy object, 
+> the target used to initialize the proxy must itself have a [[Construct]] internal method 
+> (i.e. new target must be valid)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/construct).
+
+```typescript
+class TestObject {
+    constructor(public readonly arg) {
+    }
+}
+```
+
+```typescript
+    it("Returns new object with callback", () => {
+        const value = "value";
+        const mock = new Mock<typeof TestObject>({target: TestObject})
+            .setup(instance => new instance(value))
+            .callback(({args: [name]}) => new TestObject(name));
+        const object = mock.object();
+
+        const actual = new object(value);
+        expect(actual).toEqual(new TestObject(value));
+        mock.verify(instance => new instance(value));
+    });
+
+    it("Returns new object with returns", () => {
+        const value = "value";
+        const expected = new TestObject(value);
+        const mock = new Mock<typeof TestObject>({target: TestObject})
+            .setup(instance => new instance(value))
+            .returns(expected);
+        const object = mock.object();
+
+        const actual = new object(value);
+        expect(actual).toBe(expected);
+        mock.verify(instance => new instance(value));
+    });
+```
 ## MoqAPI symbol
 
 In some scenarios it is necessary to get Moq API from mocked object. For this purposes the library
@@ -575,4 +612,4 @@ expect(MoqAPI in object).toBe(true);
 expect(object[MoqAPI]).toBe(mock);
 ```
 
-Sponsored by [2BIT](https://www.2bit.ch)
+> [Sponsored by 2BIT GmbH](https://www.2bit.ch)

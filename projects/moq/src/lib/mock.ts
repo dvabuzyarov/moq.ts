@@ -1,10 +1,10 @@
-import { ExpectedExpressionReflector, IExpectedExpression } from "./expected-expressions/expected-expression-reflector";
+import { ExpressionReflector, IExpression } from "./reflector/expression-reflector";
 import { ProxyFactory } from "./interceptors/proxy.factory";
 import { IMock, IMockOptions, IPresetBuilder, ISequenceVerifier } from "./moq";
 import { Times } from "./times";
 import { Tracker } from "./tracker/tracker";
 import { Verifier } from "./verification/verifier";
-import { ExpectedExpressions } from "./expected-expressions/expected-expressions";
+import { Expressions } from "./reflector/expressions";
 import { PrototypeStorage } from "./interceptors/prototype.storage";
 import { injectorFactory } from "./injector/injector.factory";
 import { MOCK } from "./injector/moq.injection-token";
@@ -18,9 +18,9 @@ import { DefaultInjectorConfig } from "./injector/default-injector.config";
 export class Mock<T> implements IMock<T> {
     private static Options: IMockOptions<unknown> = undefined;
     public readonly tracker: Tracker;
-    private expressionReflector: ExpectedExpressionReflector;
+    private expressionReflector: ExpressionReflector;
     private interceptor: ProxyFactory<T>;
-    private readonly setupFactory: (target: ExpectedExpressions<T>) => IPresetBuilder<T>;
+    private readonly setupFactory: (target: Expressions<T>) => IPresetBuilder<T>;
     private verifier: Verifier<T>;
     private prototypeStorage: PrototypeStorage;
 
@@ -33,7 +33,7 @@ export class Mock<T> implements IMock<T> {
 
         this.options = injector.get(MOCK_OPTIONS);
         this.tracker = injector.get(Tracker);
-        this.expressionReflector = injector.get(ExpectedExpressionReflector);
+        this.expressionReflector = injector.get(ExpressionReflector);
         this.interceptor = injector.get(ProxyFactory);
         this.setupFactory = injector.get(PRESET_BUILDER_FACTORY);
         this.verifier = injector.get(Verifier);
@@ -69,13 +69,13 @@ export class Mock<T> implements IMock<T> {
     }
 
     public setup<
-        E extends IExpectedExpression<T>,
+        E extends IExpression<T>,
         R = E extends (...args: any[]) => infer M ? M : any>(expression: E): IPresetBuilder<T, R> {
         const expectedExpression = this.expressionReflector.reflect(expression);
         return this.setupFactory(expectedExpression);
     }
 
-    public verify(expression: IExpectedExpression<T>, times?: Times): IMock<T> {
+    public verify(expression: IExpression<T>, times?: Times): IMock<T> {
         times = times === undefined ? Times.Once() : times;
         const expressions = this.tracker.get().map(record => record.expression);
         this.verifier.test(expression, times, expressions, this.name);
@@ -94,7 +94,7 @@ export class Mock<T> implements IMock<T> {
     /**
      * @experimental
      */
-    public insequence(sequence: ISequenceVerifier, expression: IExpectedExpression<T>): IMock<T> {
+    public insequence(sequence: ISequenceVerifier, expression: IExpression<T>): IMock<T> {
         sequence.add(this, expression);
         return this;
     }

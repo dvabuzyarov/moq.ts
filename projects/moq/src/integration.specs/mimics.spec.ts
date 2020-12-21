@@ -1,6 +1,6 @@
 /*eslint-disable max-classes-per-file*/
 import { Mock } from "../lib/mock";
-import { It } from "../lib/expected-expressions/expression-predicates";
+import { It } from "../lib/reflector/expression-predicates";
 
 describe("Mimics preset", () => {
     it("Mimics property read interaction", () => {

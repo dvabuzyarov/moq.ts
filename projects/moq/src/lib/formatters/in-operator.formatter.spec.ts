@@ -3,7 +3,7 @@ import { PropertyKeyFormatter } from "./property-key.formatter";
 import { InOperatorFormatter } from "./in-operator.formatter";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
-describe("In operator expression formatter", () => {
+describe("In operator formatter", () => {
     beforeEach(() => {
         createInjector2(InOperatorFormatter, [PropertyKeyFormatter]);
     });

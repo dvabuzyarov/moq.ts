@@ -1,12 +1,12 @@
 import { SetPropertyInteraction } from "../interactions";
-import { SetPropertyExpressionFormatter } from "./set.property-formatter";
-import { ConstantFormatter } from "./constant-formatter";
+import { SetPropertyFormatter } from "./set-property.formatter";
+import { ConstantFormatter } from "./constant.formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
-describe("Set property expression formatter", () => {
+describe("Set property formatter", () => {
     beforeEach(() => {
-        createInjector2(SetPropertyExpressionFormatter, [ConstantFormatter, PropertyKeyFormatter]);
+        createInjector2(SetPropertyFormatter, [ConstantFormatter, PropertyKeyFormatter]);
     });
 
     it("Returns formatted description for set property expression", () => {
@@ -23,7 +23,7 @@ describe("Set property expression formatter", () => {
             .setup(instance => instance.format(name))
             .returns(nameDescription);
 
-        const formatter = resolve2(SetPropertyExpressionFormatter);
+        const formatter = resolve2(SetPropertyFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(`Assignment of ${valueDescription} to property \'${nameDescription}\'`);

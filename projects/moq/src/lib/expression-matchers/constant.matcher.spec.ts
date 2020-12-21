@@ -1,5 +1,5 @@
 import {ConstantMatcher} from "./constant.matcher";
-import {It} from "../expected-expressions/expression-predicates";
+import {It} from "../reflector/expression-predicates";
 
 describe("Constant matcher", () => {
 

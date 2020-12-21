@@ -58,3 +58,13 @@ export class InOperatorInteraction extends Interaction {
         super(name, undefined);
     }
 }
+
+/**
+ * This class represents applying of [new operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new).
+ * It provides access to the list of arguments for the constructor..
+ */
+export class NewOperatorInteraction extends Interaction {
+    constructor(args: any[]) {
+        super(undefined, args);
+    }
+}

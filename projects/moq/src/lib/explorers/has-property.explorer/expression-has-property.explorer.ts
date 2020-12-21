@@ -1,20 +1,20 @@
 import {
-    ExpectedExpressions,
-    ExpectedInOperatorExpression,
-    ExpectedMethodExpression,
-    ExpectedNamedMethodExpression
-} from "../../expected-expressions/expected-expressions";
-import { It } from "../../expected-expressions/expression-predicates";
+    Expressions,
+    InOperatorExpression,
+    MethodExpression,
+    NamedMethodExpression
+} from "../../reflector/expressions";
+import { It } from "../../reflector/expression-predicates";
 
 /**
  * @hidden
  */
 export class ExpressionHasPropertyExplorer {
-    public has(name: PropertyKey, expression: ExpectedExpressions<unknown>): boolean {
+    public has(name: PropertyKey, expression: Expressions<unknown>): boolean {
         if (expression instanceof It
-            || expression instanceof ExpectedMethodExpression
-            || expression instanceof ExpectedNamedMethodExpression
-            || expression instanceof ExpectedInOperatorExpression) {
+            || expression instanceof MethodExpression
+            || expression instanceof NamedMethodExpression
+            || expression instanceof InOperatorExpression) {
             return false;
         }
 

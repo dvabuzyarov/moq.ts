@@ -1,4 +1,4 @@
-import { TrackedExpressionsFormatter } from "./formatters/tracked-expressions-formatter";
+import { TrackedExpressionsFormatter } from "./formatters/tracked-expressions.formatter";
 import { injectorFactory } from "./injector/injector.factory";
 import { IMock } from "./moq";
 import { MOCK } from "./injector/moq.injection-token";

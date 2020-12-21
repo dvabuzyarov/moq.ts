@@ -1,17 +1,17 @@
 import { ExpressionHasPropertyExplorer } from "./expression-has-property.explorer";
 import {
-    ExpectedGetPropertyExpression, ExpectedInOperatorExpression,
-    ExpectedMethodExpression,
-    ExpectedNamedMethodExpression,
-    ExpectedSetPropertyExpression
-} from "../../expected-expressions/expected-expressions";
-import { It } from "../../expected-expressions/expression-predicates";
+    GetPropertyExpression, InOperatorExpression,
+    MethodExpression,
+    NamedMethodExpression,
+    SetPropertyExpression
+} from "../../reflector/expressions";
+import { It } from "../../reflector/expression-predicates";
 
 describe("Expression has property explorer", () => {
 
     it("Returns true when expression is read property interaction", () => {
         const name = "name";
-        const expression = new ExpectedGetPropertyExpression(name);
+        const expression = new GetPropertyExpression(name);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);
@@ -21,7 +21,7 @@ describe("Expression has property explorer", () => {
 
     it("Returns false when expression is read property interaction with different name", () => {
         const name = "name";
-        const expression = new ExpectedGetPropertyExpression("other name");
+        const expression = new GetPropertyExpression("other name");
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);
@@ -31,7 +31,7 @@ describe("Expression has property explorer", () => {
 
     it("Returns true when expression is write property interaction", () => {
         const name = "name";
-        const expression = new ExpectedSetPropertyExpression(name, undefined);
+        const expression = new SetPropertyExpression(name, undefined);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);
@@ -41,7 +41,7 @@ describe("Expression has property explorer", () => {
 
     it("Returns false when expression is write property interaction with different name", () => {
         const name = "name";
-        const expression = new ExpectedSetPropertyExpression("other name", undefined);
+        const expression = new SetPropertyExpression("other name", undefined);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);
@@ -51,7 +51,7 @@ describe("Expression has property explorer", () => {
 
     it("Returns false when expression is instance method interaction", () => {
         const name = "name";
-        const expression = new ExpectedNamedMethodExpression(name, undefined);
+        const expression = new NamedMethodExpression(name, undefined);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);
@@ -61,7 +61,7 @@ describe("Expression has property explorer", () => {
 
     it("Returns false when expression is instance method interaction with different name", () => {
         const name = "name";
-        const expression = new ExpectedNamedMethodExpression("other name", undefined);
+        const expression = new NamedMethodExpression("other name", undefined);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);
@@ -71,7 +71,7 @@ describe("Expression has property explorer", () => {
 
     it("Returns false when expression is method interaction", () => {
         const name = "name";
-        const expression = new ExpectedMethodExpression(undefined);
+        const expression = new MethodExpression(undefined);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);
@@ -91,7 +91,7 @@ describe("Expression has property explorer", () => {
 
     it("Returns false when expression is In operator", () => {
         const name = "name";
-        const expression = new ExpectedInOperatorExpression(name);
+        const expression = new InOperatorExpression(name);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);

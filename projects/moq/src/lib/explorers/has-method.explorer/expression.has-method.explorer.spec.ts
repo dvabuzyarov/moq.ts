@@ -1,5 +1,5 @@
 import { ExpressionHasMethodExplorer } from "./expression.has-method.explorer";
-import { ExpectedExpressions, ExpectedNamedMethodExpression } from "../../expected-expressions/expected-expressions";
+import { Expressions, NamedMethodExpression } from "../../reflector/expressions";
 import { createInjector2, resolve2 } from "../../../tests.components/resolve.builder";
 
 describe("Expression has instance method explorer", () => {
@@ -9,7 +9,7 @@ describe("Expression has instance method explorer", () => {
 
     it("Returns true when expression is instance method interaction", () => {
         const name = "name";
-        const expression = new ExpectedNamedMethodExpression(name, undefined);
+        const expression = new NamedMethodExpression(name, undefined);
 
         const explorer = resolve2(ExpressionHasMethodExplorer);
         const actual = explorer.has(name, expression);
@@ -19,7 +19,7 @@ describe("Expression has instance method explorer", () => {
 
     it("Returns false when expression is instance method interaction with different name", () => {
         const name = "name";
-        const expression = new ExpectedNamedMethodExpression("other name", undefined);
+        const expression = new NamedMethodExpression("other name", undefined);
 
         const explorer = resolve2(ExpressionHasMethodExplorer);
         const actual = explorer.has(name, expression);
@@ -29,7 +29,7 @@ describe("Expression has instance method explorer", () => {
 
     it("Returns false when expression is not instance method interaction", () => {
         const name = "name";
-        const expression = {} as ExpectedExpressions<unknown>;
+        const expression = {} as Expressions<unknown>;
 
         const explorer = resolve2(ExpressionHasMethodExplorer);
         const actual = explorer.has(name, expression);

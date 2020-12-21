@@ -3,20 +3,17 @@ import {
     InOperatorInteraction,
     MethodInteraction,
     NamedMethodInteraction,
+    NewOperatorInteraction,
     SetPropertyInteraction
 } from "../interactions";
 import { MimicsPresetPlayer } from "./mimics-preset.player";
 import { nameof } from "../../tests.components/nameof";
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { REFLECT_APPLY } from "./reflect-apply.injection-token";
 
 describe("Mimics preset player", () => {
     beforeEach(() => {
-        const apply = jasmine.createSpy<typeof Reflect.apply>();
-        createInjector([
-            {provide: MimicsPresetPlayer, useClass: MimicsPresetPlayer, deps: [REFLECT_APPLY]},
-            {provide: REFLECT_APPLY, useValue: apply, deps: []},
-        ]);
+        createInjector2(MimicsPresetPlayer, [REFLECT_APPLY]);
     });
 
     it("Plays property read interaction", () => {
@@ -26,7 +23,7 @@ describe("Mimics preset player", () => {
         const target = {};
         target[propertyName] = value;
 
-        const player = resolve(MimicsPresetPlayer);
+        const player = resolve2(MimicsPresetPlayer);
         const actual = player.play(target, new GetPropertyInteraction(propertyName));
 
         expect(actual).toBe(value);
@@ -38,7 +35,7 @@ describe("Mimics preset player", () => {
 
         const target = {};
 
-        const player = resolve(MimicsPresetPlayer);
+        const player = resolve2(MimicsPresetPlayer);
         const actual = player.play(target, new SetPropertyInteraction(propertyName, value));
 
         expect(actual).toBe(true);
@@ -54,9 +51,11 @@ describe("Mimics preset player", () => {
         const method = jasmine.createSpy();
         target[propertyName] = method;
 
-        resolve(REFLECT_APPLY).withArgs(method, target, [arg]).and.returnValue(result);
+        resolveMock(REFLECT_APPLY)
+            .setup(instance => instance(method, target, [arg]))
+            .returns(result);
 
-        const player = resolve(MimicsPresetPlayer);
+        const player = resolve2(MimicsPresetPlayer);
         const actual = player.play(target, new NamedMethodInteraction(propertyName, [arg]));
 
         expect(actual).toBe(result);
@@ -67,9 +66,11 @@ describe("Mimics preset player", () => {
         const result = "result";
         const target = jasmine.createSpy();
 
-        resolve(REFLECT_APPLY).withArgs(target, undefined, [arg]).and.returnValue(result);
+        resolveMock(REFLECT_APPLY)
+            .setup(instance => instance(target, undefined, [arg]))
+            .returns(result);
 
-        const player = resolve(MimicsPresetPlayer);
+        const player = resolve2(MimicsPresetPlayer);
         const actual = player.play(target, new MethodInteraction([arg]));
 
         expect(actual).toBe(result);
@@ -79,9 +80,24 @@ describe("Mimics preset player", () => {
         const name = "value";
         const target = {name};
 
-        const player = resolve(MimicsPresetPlayer);
+        const player = resolve2(MimicsPresetPlayer);
         const actual = player.play(target, new InOperatorInteraction(nameof<typeof target>("name")));
 
         expect(actual).toBe(true);
+    });
+
+    it("Plays new operator", () => {
+
+        class TestClass {
+            constructor(public readonly name: string) {
+            }
+        }
+
+        const name = "value";
+
+        const player = resolve2(MimicsPresetPlayer);
+        const actual = player.play(TestClass, new NewOperatorInteraction([name]));
+
+        expect(actual).toEqual(new TestClass(name));
     });
 });

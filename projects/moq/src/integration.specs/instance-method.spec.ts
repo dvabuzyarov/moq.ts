@@ -1,6 +1,6 @@
 import { Mock } from "../lib/mock";
-import { It } from "../lib/expected-expressions/expression-predicates";
-import { ExpectedNamedMethodExpression } from "../lib/expected-expressions/expected-expressions";
+import { It } from "../lib/reflector/expression-predicates";
+import { NamedMethodExpression } from "../lib/reflector/expressions";
 import { Times } from "../lib/times";
 import { nameof } from "../tests.components/nameof";
 import { NamedMethodInteraction } from "../lib/interactions";
@@ -31,7 +31,7 @@ describe("Instance method", () => {
         Object.defineProperty(target, name, {value: () => undefined});
 
         const object = new Mock<ITestObject>({target: Object.create(target)})
-            .setup(() => It.Is((expression: ExpectedNamedMethodExpression) =>
+            .setup(() => It.Is((expression: NamedMethodExpression) =>
                 expression.name === "method" && expression.args[0] === 1))
             .returns(value)
             .object();
@@ -50,7 +50,7 @@ describe("Instance method", () => {
 
         const object = new Mock<ITestObject>()
             .prototypeof(prototype)
-            .setup(() => It.Is((expression: ExpectedNamedMethodExpression) =>
+            .setup(() => It.Is((expression: NamedMethodExpression) =>
                 expression.name === methodName && expression.args[0] === 1))
             .returns(value)
             .object();
