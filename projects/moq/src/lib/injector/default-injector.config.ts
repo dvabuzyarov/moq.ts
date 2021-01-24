@@ -11,6 +11,8 @@ import { expressionMatchersProviders } from "../expression-matchers/expression-m
 import { typeExplorersProviders } from "../explorers/type-explorers.providers";
 import { mockOptionsProviders } from "../mock-options/mock-options.providers";
 import { StaticProvider } from "../static.injector/interface/provider";
+import { mockCoreProviders } from "../core/mock-core.providers";
+import { autoMocksProviders } from "../auto-mocks/auto-mocks.providers";
 
 /**
  * Provides the default configuration for an angular based injector that would be used internally by {@link Mock} instance.
@@ -23,13 +25,15 @@ export class DefaultInjectorConfig implements IInjectorConfig {
             ...trackerProviders,
             ...reflectorProviders,
             ...presetsProviders,
+            ...autoMocksProviders,
             ...verificationProviders,
             ...interceptorsProviders,
             ...playablesProviders,
             ...interactionPlayersProviders,
             ...formattersProviders,
             ...expressionMatchersProviders,
-            ...typeExplorersProviders
+            ...typeExplorersProviders,
+            ...mockCoreProviders
         ];
     }
 }

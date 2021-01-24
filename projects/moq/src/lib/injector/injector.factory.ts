@@ -8,7 +8,10 @@ import { Injector } from "../static.injector/injector";
 export function injectorFactory<T>(options: IMockOptions<T>, ...providers: StaticProvider[]) {
     const {injectorConfig} = options;
     if (injectorConfig) {
-        return Injector.create({providers: injectorConfig.get(options, providers)});
+        const resolved = injectorConfig.get(options, providers);
+        return Injector.create({
+            providers: resolved
+        });
     }
     throw new Error("injectorConfig is not defined");
 }

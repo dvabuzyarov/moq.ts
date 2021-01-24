@@ -1,7 +1,7 @@
 import { TrackedExpressionsFormatter } from "./formatters/tracked-expressions.formatter";
 import { injectorFactory } from "./injector/injector.factory";
 import { IMock } from "./moq";
-import { MOCK } from "./injector/moq.injection-token";
+import { MOCK } from "./injector/mock.injection-token";
 
 /**
  * This function dumps into console.log all interactions with the mocked object

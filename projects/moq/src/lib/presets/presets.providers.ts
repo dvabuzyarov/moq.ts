@@ -1,16 +1,14 @@
-import { Expressions } from "../reflector/expressions";
-import { PresetBuilder } from "./preset-builder";
 import { Presets } from "./presets";
-import { MOCK } from "../injector/moq.injection-token";
-import { PRESET_BUILDER_FACTORY } from "./preset-builder-factory.injection-token";
+import { PresetBuilderFactory } from "./preset-builder.factory";
+import { SetupFactory } from "./setup.factory";
+import { AutoMocks } from "../auto-mocks/auto-mocks";
+import { RootProvider } from "../auto-mocks/root.provider";
 
 /**
  * @hidden
  */
 export const presetsProviders = [
+    {provide: SetupFactory, useClass: SetupFactory, deps: [PresetBuilderFactory, AutoMocks]},
     {provide: Presets, useClass: Presets, deps: []},
-    {
-        provide: PRESET_BUILDER_FACTORY, useFactory: (mock, presets) => <T>(target: Expressions<T>) =>
-            new PresetBuilder<T>(mock, preset => presets.add(preset), target), deps: [MOCK, Presets]
-    }
+    {provide: PresetBuilderFactory, useClass: PresetBuilderFactory, deps: [RootProvider, Presets]},
 ];

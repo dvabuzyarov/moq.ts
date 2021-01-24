@@ -26,7 +26,7 @@ describe("Verifier", () => {
 
         resolveMock(ExpressionReflector)
             .setup(instance => instance.reflect(expected))
-            .returns(expectedExpression);
+            .returns([expectedExpression]);
 
         resolveMock(CallCounter)
             .setup(instance => instance.count(expectedExpression, expressions))
@@ -51,9 +51,10 @@ describe("Verifier", () => {
         const expected = () => undefined;
         const expectedExpression = new GetPropertyExpression("property");
 
+        //todo: revert
         resolveMock(ExpressionReflector)
             .setup(instance => instance.reflect(expected))
-            .returns(expectedExpression);
+            .returns([expectedExpression]);
 
         resolveMock(CallCounter)
             .setup(instance => instance.count(expectedExpression, []))

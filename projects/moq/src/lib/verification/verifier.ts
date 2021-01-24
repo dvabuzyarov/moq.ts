@@ -21,7 +21,8 @@ export class Verifier<T> {
     }
 
     public test(expected: IExpression<T>, times: Times, expressions: Interaction[], mockName?: string): void {
-        const expression = this.reflector.reflect(expected);
+        //todo: revert
+        const [expression] = this.reflector.reflect(expected);
         const callCount = this.callCounter.count(expression, expressions);
         const passed = times.test(callCount);
         if (passed === false) {

@@ -1,4 +1,4 @@
-import { TypeofInjectionToken } from "../typeof-injection-token";
+import { TypeofInjectionToken } from "../injector/typeof-injection-token";
 import { OBJECT_MATCHERS } from "./object-matchers.injection-token";
 
 /**

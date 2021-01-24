@@ -24,10 +24,10 @@ Every each mock is an instance of [Proxy](https://developer.mozilla.org/en-US/do
 You can find a pretty full set of usages in the integration tests. Check out [tests.integration](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/) folder.
 * * *
 
+- [Mocking functions of objects](#mocking-functions-of-objects)
 - [Mocking reading properties](#mocking-reading-properties)
 - [Mocking writing property setting](#mocking-writing-property)
 - [Mocking functions](#mocking-functions)
-- [Mocking functions of objects](#mocking-functions-of-objects)
 - [Type Discovering](#type-discovering)
 - [Mock behavior](#mock-behavior)
     - [Injector config](#injector-config)

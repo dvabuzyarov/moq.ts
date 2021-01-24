@@ -1,63 +1,50 @@
-import { IInjectorConfig, IPresetBuilder, ISequenceVerifier } from "./moq";
-import { Times } from "./times";
-import { nameof } from "../tests.components/nameof";
-import { ExpressionReflector } from "./reflector/expression-reflector";
-import { Tracker } from "./tracker/tracker";
-import { ProxyFactory } from "./interceptors/proxy.factory";
-import { Verifier } from "./verification/verifier";
-import { Mock } from "./mock";
-import { Expressions } from "./reflector/expressions";
-import { PrototypeStorage } from "./interceptors/prototype.storage";
-import { createInjector, resolve } from "../tests.components/resolve.builder";
-import { MethodInteraction } from "./interactions";
-import { MOCK_OPTIONS } from "./mock-options/mock-options.injection-token";
-import { PRESET_BUILDER_FACTORY } from "./presets/preset-builder-factory.injection-token";
-import { MOCK } from "./injector/moq.injection-token";
+import { IInjectorConfig, IMock, IPresetBuilder, ISequenceVerifier } from "./moq";
+import { createInjector2, resolveMock } from "../tests.components/resolve.builder";
+import { MOCK } from "./injector/mock.injection-token";
 import { DefaultInjectorConfig } from "./injector/default-injector.config";
 import * as injectorFactory from "./injector/injector.factory";
+import { MockCore } from "./core/mock-core";
+import { Mock } from "./mock";
+import * as moq from "moq.ts";
+import { InjectionToken } from "./static.injector/injection_token";
+import { Times } from "./times";
 
 describe("Mock", () => {
     beforeEach(() => {
-        const expressionReflector = jasmine.createSpyObj<ExpressionReflector>(["reflect"]);
-        const tracker = jasmine.createSpyObj<Tracker>(["get"]);
-        const proxyFactory = jasmine.createSpyObj<ProxyFactory<unknown>>(["object"]);
-        const setupFactory = jasmine.createSpy();
-        const verifier = jasmine.createSpyObj<Verifier<unknown>>(["test"]);
-        const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>("", ["set"]);
-
-        const injector = createInjector([
-            {provide: ExpressionReflector, useValue: expressionReflector, deps: []},
-            {provide: Tracker, useValue: tracker, deps: []},
-            {provide: ProxyFactory, useValue: proxyFactory, deps: []},
-            {provide: Verifier, useValue: verifier, deps: []},
-            {provide: PrototypeStorage, useValue: prototypeStorage, deps: []},
-            {provide: PRESET_BUILDER_FACTORY, useValue: setupFactory, deps: []},
-            {provide: MOCK_OPTIONS, useValue: {}, deps: []},
-        ]);
-
+        const injector = createInjector2(Mock, [MockCore]);
         spyOn(injectorFactory, "injectorFactory").and.returnValue(injector);
     });
 
     it("Exposes mock name", () => {
         const name = "mock name";
-        const options = {name};
 
-        Object.defineProperty(resolve(MOCK_OPTIONS), "name", {value: name});
+        resolveMock(MockCore)
+            .setup(instance => instance.name)
+            .returns(name);
 
-        const mock = new Mock(options);
+        const mock = new Mock();
         const actual = mock.name;
 
         expect(actual).toBe(name);
     });
 
     it("Exposes mock options", () => {
+        const options = {};
+
+        resolveMock(MockCore)
+            .setup(instance => instance.options)
+            .returns(options);
+
         const mock = new Mock();
-        expect(mock.options).toBe(resolve(MOCK_OPTIONS));
+        expect(mock.options).toBe(options);
     });
 
     it("Returns object", () => {
         const object = {};
-        resolve(ProxyFactory).object.and.returnValue(object);
+
+        resolveMock(MockCore)
+            .setup(instance => instance.object())
+            .returns(object);
 
         const mock = new Mock();
         const actual = mock.object();
@@ -65,77 +52,78 @@ describe("Mock", () => {
         expect(actual).toBe(object);
     });
 
-    it("Verifies an expression", () => {
-        const expressions = [];
-        resolve(Tracker).get.and.returnValue(expressions);
+    it("Returns resolved service", () => {
+        const object = {};
+        const token = new InjectionToken<any>("test");
+
+        resolveMock(MockCore)
+            .setup(instance => instance.resolve(token))
+            .returns(object);
 
         const mock = new Mock();
-        const expression = instance => instance["property"];
-        const actual = mock.verify(expression);
+        const actual = mock.resolve(token);
 
-        expect(actual).toBe(mock);
-        expect(resolve(Verifier).test).toHaveBeenCalledWith(expression, Times.Once(), expressions, undefined);
+        expect(actual).toBe(object);
     });
 
-    it("Verifies an expression has been invoked provided times", () => {
-        const mockName = "name";
-        const id = 1;
-        const interaction = new MethodInteraction([]);
-        const expressions = [
-            {id, expression: interaction}
-        ];
-        resolve(Tracker).get.and.returnValue(expressions);
-        Object.defineProperty(resolve(MOCK_OPTIONS), "name", {value: mockName});
+    it("Verifies an expression", () => {
+        const expected = {} as IMock<unknown>;
+        const expression = instance => instance["property"];
+
+        resolveMock(MockCore)
+            .setup(instance => instance.verify(expression, Times.Once()))
+            .returns(expected);
 
         const mock = new Mock();
-        const expression = instance => instance["property"];
-        const actual = mock.verify(expression, Times.AtLeastOnce());
 
-        expect(actual).toBe(mock);
-        expect(resolve(Verifier).test).toHaveBeenCalledWith(expression, Times.AtLeastOnce(), [interaction], mockName);
+        const actual = mock.verify(expression);
+
+        expect(actual).toBe(expected);
     });
 
     it("Setups mock", () => {
-        const setup = {} as IPresetBuilder<any>;
+        const builder = {} as IPresetBuilder<any>;
         const expression = instance => instance["property"];
-        const expectedExpression = {} as Expressions<unknown>;
-        resolve(ExpressionReflector).reflect.withArgs(expression).and.returnValue(expectedExpression);
-        resolve(PRESET_BUILDER_FACTORY).withArgs(expectedExpression).and.returnValue(setup);
+
+        resolveMock(MockCore)
+            .setup(instance => instance.setup(expression))
+            .returns(builder);
 
         const mock = new Mock();
-
         const actual = mock.setup(expression);
 
-        expect(actual).toBe(setup);
+        expect(actual).toBe(builder);
     });
 
     it("Sets prototype of mock", () => {
         const prototype = {};
+        const expected = {} as IMock<unknown>;
+
+        resolveMock(MockCore)
+            .setup(instance => instance.prototypeof(prototype))
+            .returns(expected);
 
         const mock = new Mock();
-        mock.prototypeof(prototype);
+        const actual = mock.prototypeof(prototype);
 
-        expect(resolve(PrototypeStorage).set).toHaveBeenCalledWith(prototype);
-    });
-
-    it("Returns the current instance of mock from prototypeof", () => {
-        const mock = new Mock();
-        const actual = mock.prototypeof();
-
-        expect(actual).toBe(mock);
+        expect(actual).toBe(expected);
     });
 
     it("Adds verified expression into sequence verifier", () => {
-        const sequenceVerifier = jasmine.createSpyObj("sequence verifier", [
-            nameof<ISequenceVerifier>("add")
-        ]) as ISequenceVerifier;
         const expression = instance => instance["property"];
+        const expected = {} as IMock<unknown>;
+
+        const sequenceVerifier = new moq.Mock<ISequenceVerifier>()
+            .object();
+
+        resolveMock(MockCore)
+            .setup(instance => instance.insequence(sequenceVerifier, expression))
+            .returns(expected);
 
         const mock = new Mock();
         const actual = mock.insequence(sequenceVerifier, expression);
 
-        expect(actual).toBe(mock);
-        expect(sequenceVerifier.add).toHaveBeenCalledWith(mock, expression);
+        expect(actual).toBe(expected);
     });
 
     it("Returns default static Mock options", () => {

@@ -8,7 +8,7 @@ import {
     SetPropertyInteraction
 } from "../interactions";
 import { REFLECT_APPLY } from "./reflect-apply.injection-token";
-import { TypeofInjectionToken } from "../typeof-injection-token";
+import { TypeofInjectionToken } from "../injector/typeof-injection-token";
 
 /**
  * @hidden
