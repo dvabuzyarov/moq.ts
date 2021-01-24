@@ -114,4 +114,20 @@ describe("Mock: Get property", () => {
 
         expect(action).toThrow();
     });
+
+    fit("Returns value with a deep expression", () => {
+        interface ITest {
+            property: ITestObject;
+        }
+
+        const value = "value";
+        const object = new Mock<ITest>()
+            .setup(instance => instance.property.property)
+            .returns(value)
+            .object();
+
+        const actual = object.property.property;
+
+        expect(actual).toBe(value);
+    });
 });
