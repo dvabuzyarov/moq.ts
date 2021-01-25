@@ -2,12 +2,15 @@ import { It } from "../lib/reflector/expression-predicates";
 import { GetPropertyExpression } from "../lib/reflector/expressions";
 import { Times } from "../lib/times";
 import { Mock } from "../lib/mock";
+import { nameof } from "../tests.components/nameof";
 
-interface ITestObject {
-    property: string;
-}
+describe("Read property", () => {
 
-describe("Mock: Get property", () => {
+    interface ITestObject {
+        property: string;
+
+        get(): string;
+    }
 
     it("Returns value with a simple setup", () => {
         const value = "value";
@@ -113,21 +116,5 @@ describe("Mock: Get property", () => {
         const action = () => mock.verify(instance => instance.property, Times.AtLeast(2));
 
         expect(action).toThrow();
-    });
-
-    fit("Returns value with a deep expression", () => {
-        interface ITest {
-            property: ITestObject;
-        }
-
-        const value = "value";
-        const object = new Mock<ITest>()
-            .setup(instance => instance.property.property)
-            .returns(value)
-            .object();
-
-        const actual = object.property.property;
-
-        expect(actual).toBe(value);
     });
 });

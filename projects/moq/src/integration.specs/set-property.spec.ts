@@ -10,7 +10,6 @@ interface ITestObject {
 
 describe("Set property", () => {
 
-
     it("Allows write", () => {
         const value = "value";
         const object = new Mock<ITestObject>()

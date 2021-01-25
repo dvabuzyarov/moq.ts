@@ -72,7 +72,7 @@ mock.verify(instance => instance.method(2, "a"), Times.Never());
 
 Mocking reading properties
 -
-[get.property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/get.property.spec.ts)
+[read-property.spec.ts](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/read-property.spec.ts)
 ```typescript
 import {Mock, It, Times, GetPropertyExpression} from "moq.ts";
 interface ITestObject {
