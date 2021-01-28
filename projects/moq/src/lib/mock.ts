@@ -83,7 +83,7 @@ export class Mock<T> implements IMock<T> {
         return this.core.insequence(sequence, expression);
     }
 
-    public resolve<T, R = T extends InjectionFactory ? TypeOfInjectionFactory<T> : T>(token: Type<T> | InjectionToken<T>): R {
+    public resolve<S, R = S extends InjectionFactory ? TypeOfInjectionFactory<S> : S>(token: Type<S> | InjectionToken<S>): R {
         return this.core.resolve(token);
     }
 }

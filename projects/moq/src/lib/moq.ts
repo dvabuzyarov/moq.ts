@@ -255,7 +255,7 @@ export interface IMock<T> {
      *
      * @returns The instance from the injector if defined, otherwise null.
      */
-    resolve<T, R = T extends InjectionFactory ? TypeOfInjectionFactory<T> : T>(token: Type<T> | InjectionToken<T>): R;
+    resolve<S, R = S extends InjectionFactory ? TypeOfInjectionFactory<S> : S>(token: Type<S> | InjectionToken<S>): R;
 }
 
 /**

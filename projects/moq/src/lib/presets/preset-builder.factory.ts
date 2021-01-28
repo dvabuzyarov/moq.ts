@@ -1,19 +1,20 @@
 import { Expressions } from "../reflector/expressions";
 import { PresetBuilder } from "./preset-builder";
-import { InjectionFactory } from "../injector/injection-factory";
+import { InjectionFactory, TypeOfInjectionFactory } from "../injector/injection-factory";
 import { Presets } from "./presets";
-import { RootProvider } from "../auto-mocks/root.provider";
+import { RootMockProvider } from "../auto-mocking/root-mock.provider";
+import { IMock } from "../moq";
 
 /**
  * @hidden
  */
 export class PresetBuilderFactory implements InjectionFactory {
-    constructor(private readonly rootProvider: RootProvider,
+    constructor(private readonly rootMock: TypeOfInjectionFactory<RootMockProvider>,
                 private readonly presets: Presets<unknown>) {
         return this.factory() as any;
     }
 
     public factory() {
-        return <T>(target: Expressions<T>) => new PresetBuilder<T>(this.rootProvider, this.presets, target);
+        return <T>(target: Expressions<T>) => new PresetBuilder<T>(this.rootMock as IMock<T>, this.presets, target);
     }
 }

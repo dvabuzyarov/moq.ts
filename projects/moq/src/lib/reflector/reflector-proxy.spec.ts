@@ -131,7 +131,7 @@ describe("Reflector proxy", () => {
         expect(expressions).toEqual(expected);
     });
 
-    it("Resolves complex name", () => {
+    it("Resolves deep expression of instance.property.property", () => {
         const expression = instance => instance.member1.member2;
         expression(reflector);
 
@@ -142,7 +142,7 @@ describe("Reflector proxy", () => {
         expect(expressions).toEqual(expected);
     });
 
-    it("Resolves complex name and argument", () => {
+    it("Resolves deep expression of instance.property.method()", () => {
         const arg = "argument";
 
         const expression = instance => instance.member1.member2(arg);
@@ -155,7 +155,21 @@ describe("Reflector proxy", () => {
         expect(expressions).toEqual(expected);
     });
 
-    it("Resolves complex name with arguments and argument", () => {
+    it("Resolves deep expression of instance.method().property", () => {
+        const arg1 = "argument 1";
+
+        const expression = instance => instance.member1(arg1).member2;
+        expression(reflector);
+
+        const expected = [
+            new NamedMethodExpression("member1", [arg1]),
+            new GetPropertyExpression("member2"),
+        ];
+
+        expect(expressions).toEqual(expected);
+    });
+
+    it("Resolves deep expression of instance.method().method()", () => {
         const arg1 = "argument 1";
         const arg2 = "argument 2";
 
@@ -170,7 +184,62 @@ describe("Reflector proxy", () => {
         expect(expressions).toEqual(expected);
     });
 
-    it("Resolves complex name with arguments, function and name with argument", () => {
+    it("Resolves deep expression of method().property", () => {
+        const arg1 = "argument 1";
+
+        const expression = instance => instance(arg1).member;
+        expression(reflector);
+
+        const expected = [
+            new MethodExpression([arg1]),
+            new GetPropertyExpression("member"),
+        ];
+
+        expect(expressions).toEqual(expected);
+    });
+
+    it("Resolves deep expression of method().method()", () => {
+        const arg1 = "argument 1";
+        const arg2 = "argument 2";
+
+        const expression = instance => instance(arg1).member(arg2);
+        expression(reflector);
+
+        const expected = [
+            new MethodExpression([arg1]),
+            new NamedMethodExpression("member", [arg2]),
+        ];
+
+        expect(expressions).toEqual(expected);
+    });
+
+    it("Resolves deep expression of new instance().property", () => {
+        const expression = instance => new instance().member1;
+        expression(reflector);
+
+        const expected = [
+            new NewOperatorExpression([]),
+            new GetPropertyExpression("member1"),
+        ];
+
+        expect(expressions).toEqual(expected);
+    });
+
+    it("Resolves deep expression of new instance().method()", () => {
+        const arg1 = "argument 1";
+
+        const expression = instance => new instance().member1(arg1);
+        expression(reflector);
+
+        const expected = [
+            new NewOperatorExpression([]),
+            new NamedMethodExpression("member1", [arg1]),
+        ];
+
+        expect(expressions).toEqual(expected);
+    });
+
+    it("Resolves deep expression of instance.method()method().method()", () => {
         const arg1 = "argument 1";
         const arg2 = "argument 2";
         const arg3 = "argument 3";
@@ -186,17 +255,4 @@ describe("Reflector proxy", () => {
 
         expect(expressions).toEqual(expected);
     });
-
-    it("Resolves new operator with complex name", () => {
-        const expression = instance => new instance().member1;
-        expression(reflector);
-
-        const expected = [
-            new NewOperatorExpression([]),
-            new GetPropertyExpression("member1"),
-        ];
-
-        expect(expressions).toEqual(expected);
-    });
-
 });
