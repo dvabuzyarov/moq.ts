@@ -36,7 +36,7 @@ export class MockCore<T> implements IMock<T> {
         return this.options.name;
     }
 
-    public resolve<T, R = T extends InjectionFactory ? ReturnType<T["factory"]> : T>(token: Type<T> | InjectionToken<T>): R {
+    public resolve<S, R = S extends InjectionFactory ? ReturnType<S["factory"]> : S>(token: Type<S> | InjectionToken<S>): R {
         return this.injector.get(token, null) as unknown as R;
     }
 

@@ -2,6 +2,9 @@ import { Expressions } from "../reflector/expressions";
 import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 import { It } from "../reflector/expression-predicates";
 
+/**
+ * @hidden
+ */
 export class ExpressionsMatcher {
     constructor(private readonly matcher: ExpressionMatcher) {
     }

@@ -28,6 +28,11 @@ export const createInjector2 = <T>(subject: Type<T>, dependencies: (Type<any> | 
     return injector;
 };
 
+export const createInjectorFromProviders = <T>(providers: StaticProvider[]) => {
+    injector = Injector.create({providers});
+    return injector;
+};
+
 export const resolve2 = <T,
     R = T extends InjectionFactory ? TypeOfInjectionFactory<T> : T>(token: Type<T> | InjectionToken<T>) =>
     injector.get(token) as unknown as R;

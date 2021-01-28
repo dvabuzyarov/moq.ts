@@ -31,4 +31,5 @@ export { INJECTOR, NullInjector } from "./lib/static.injector/injector_compatibi
 export { getClosureSafeProperty } from "./lib/static.injector/property";
 export { StaticProvider } from "./lib/static.injector/interface/provider";
 export * from "./lib/static.injector/injection_token";
+export * from "./lib/auto-mocking/auto-mock.factory";
 
