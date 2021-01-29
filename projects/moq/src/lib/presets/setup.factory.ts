@@ -7,7 +7,6 @@ import { AutoMockProvider } from "../auto-mocking/auto-mock.provider";
 /**
  * @Hidden
  */
-// todo: doc
 export class SetupFactory<T> {
     constructor(
         private readonly presetBuilderFactory: TypeOfInjectionFactory<PresetBuilderFactory>,
@@ -18,8 +17,8 @@ export class SetupFactory<T> {
     public create<R = unknown>([shallow, ...rest]: Expressions<T>[]): IPresetBuilder<T, R> {
         const preset = this.presetBuilderFactory(shallow);
         if (rest.length === 0) {
-return preset;
-}
+            return preset;
+        }
 
         const mock = this.autoMockProvider.getOrCreate(shallow);
         preset.returns(mock.object());

@@ -2,10 +2,11 @@ import { GetPropertyInteraction } from "../interactions";
 import { InteractionFormatter } from "./interaction.formatter";
 import { ExpressionsFormatter } from "./expressions.formatter";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
 
 describe("Expressions formatter", () => {
     beforeEach(() => {
-        createInjector2(ExpressionsFormatter, [InteractionFormatter]);
+        createInjector2(ExpressionsFormatter, [InteractionFormatter, MOCK_OPTIONS]);
     });
 
     it("Returns formatted description for verify message with mock name", () => {
@@ -16,12 +17,16 @@ describe("Expressions formatter", () => {
 
         const expression = new GetPropertyInteraction("name");
 
+        resolveMock(MOCK_OPTIONS)
+            .setup(instance => instance.name)
+            .returns(mockName);
+
         resolveMock(InteractionFormatter)
             .setup(instance => instance.format(expression))
             .returns(expressionDescription);
 
         const formatter = resolve2(ExpressionsFormatter);
-        const actual = formatter.format(expression, timesMessage, haveBeenCalledTimes, mockName);
+        const actual = formatter.format(expression, timesMessage, haveBeenCalledTimes);
 
         const but = `, but was called ${haveBeenCalledTimes} time(s)`;
         const expected = `${expressionDescription} of ${mockName} ${timesMessage.toLowerCase()}${but}`;

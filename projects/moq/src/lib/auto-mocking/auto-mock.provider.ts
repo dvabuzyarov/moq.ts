@@ -17,8 +17,8 @@ export class AutoMockProvider {
     public getOrCreate<T>(expression: Expressions<T>) {
         for (const [key, value] of this.map) {
             if (this.matcher.matched(expression, key) === true) {
-return value;
-}
+                return value;
+            }
         }
         const mock = this.autoMockFactory.create(expression);
         this.map.set(expression, mock);

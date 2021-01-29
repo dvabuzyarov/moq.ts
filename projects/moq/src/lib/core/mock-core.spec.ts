@@ -86,8 +86,8 @@ describe("Mock core", () => {
         const expressions = [];
         const expression = instance => instance["property"];
 
-        resolveMock(Tracker)
-            .setup(instance => instance.get())
+        resolveMock(ExpressionReflector)
+            .setup(instance => instance.reflect(expression))
             .returns(expressions);
 
         const core = resolve2(MockCore);
@@ -95,31 +95,7 @@ describe("Mock core", () => {
 
         expect(actual).toBe(resolve2(MOCK));
         resolveMock(Verifier)
-            .verify(instance => instance.test(expression, Times.Once(), expressions, undefined));
-    });
-
-    it("Verifies an expression has been invoked provided times", () => {
-        const mockName = "name";
-        const id = 1;
-        const interaction = new MethodInteraction([]);
-        const expressions = [
-            {id, expression: interaction}
-        ];
-        resolveMock(Tracker)
-            .setup(instance => instance.get())
-            .returns(expressions);
-
-        resolveMock(MOCK_OPTIONS)
-            .setup(instance => instance.name)
-            .returns(mockName);
-
-        const core = resolve2(MockCore);
-        const expression = instance => instance["property"];
-        const actual = core.verify(expression, Times.AtLeastOnce());
-
-        expect(actual).toBe(resolve2(MOCK));
-        resolveMock(Verifier)
-            .verify(instance => instance.test(expression, Times.AtLeastOnce(), [interaction], mockName));
+            .verify(instance => instance.test(expressions, Times.Once()));
     });
 
     it("Setups mock", () => {

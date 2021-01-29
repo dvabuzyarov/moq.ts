@@ -47,8 +47,8 @@ export class MockCore<T> implements IMock<T> {
     }
 
     public verify(expression: IExpression<T>, times: Times): IMock<T> {
-        const interactions = this.tracker.get().map(record => record.expression);
-        this.verifier.test(expression, times, interactions, this.name);
+        const expressions = this.reflector.reflect(expression);
+        this.verifier.test(expressions, times);
         return this.mock as IMock<T>;
     }
 

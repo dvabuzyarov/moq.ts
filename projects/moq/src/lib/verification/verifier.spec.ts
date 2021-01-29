@@ -1,75 +1,66 @@
 import { Verifier } from "./verifier";
-import { ExpressionReflector } from "../reflector/expression-reflector";
 import { Times } from "../times";
+import { Mock, Times as moqTimes } from "moq.ts";
 import { CallCounter } from "./call-counter";
-import { GetPropertyExpression } from "../reflector/expressions";
-import { VerifyFormatter } from "../formatters/verify.formatter";
-import { VerifyError } from "./verify-error";
+import { Expressions } from "../reflector/expressions";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
-import { It } from "moq.ts";
+import { VerificationTester } from "./verification-tester";
+import { AutoMockProvider } from "../auto-mocking/auto-mock.provider";
+import { IMock } from "../moq";
 
 describe("Verifier", () => {
 
     beforeEach(() => {
-        createInjector2(Verifier, [ExpressionReflector, CallCounter, VerifyFormatter]);
+        createInjector2(Verifier, [CallCounter, VerificationTester, AutoMockProvider]);
     });
 
-    it("Throws VerifyException when the expected expression has not been called expected times", () => {
-        const mockName = "mock name";
-        const message = "message";
-        const timesMessage = "Should be called once";
-        const haveBeenCalled = 0;
-        const expressions = [];
+    beforeEach(() => {
+        resolveMock(VerificationTester).prototypeof(VerificationTester.prototype);
+    });
 
-        const expectedExpression = new GetPropertyExpression("property");
-        const expected = () => undefined;
-
-        resolveMock(ExpressionReflector)
-            .setup(instance => instance.reflect(expected))
-            .returns([expectedExpression]);
+    it("Verifies simple expression", () => {
+        const haveBeenCalled = 1;
+        const expression = {} as Expressions<unknown>;
 
         resolveMock(CallCounter)
-            .setup(instance => instance.count(expectedExpression, expressions))
+            .setup(instance => instance.count(expression))
             .returns(haveBeenCalled);
 
-        resolveMock(VerifyFormatter)
-            .setup(instance => instance.format(expectedExpression, timesMessage, haveBeenCalled, expressions, mockName))
-            .returns(message);
-
-        const evaluator = value => value === 1;
-
-        const times = new Times(evaluator, timesMessage);
         const verify = resolve2(Verifier);
-        const action = () => verify.test(expected, times, expressions, mockName);
+        verify.test([expression], Times.Once());
 
-        expect(action).toThrow(new VerifyError(message));
+        resolveMock(VerificationTester)
+            .verify(instance => instance.test(expression, haveBeenCalled, Times.Once()));
+        resolveMock(VerificationTester)
+            .verify(instance => instance.test(expression, haveBeenCalled, Times.AtLeastOnce()), moqTimes.Never());
     });
 
-    it("Does not throws VerifyException when the expected expression has been called expected times", () => {
-        const message = "message";
+    it("Verifies deep expression", () => {
+        const haveBeenCalled = 1;
+        const shallow = {} as Expressions<unknown>;
+        const deep = {} as Expressions<unknown>;
 
-        const expected = () => undefined;
-        const expectedExpression = new GetPropertyExpression("property");
-
-        //todo: revert
-        resolveMock(ExpressionReflector)
-            .setup(instance => instance.reflect(expected))
-            .returns([expectedExpression]);
-
+        const verifierMock = new Mock<Verifier<unknown>>()
+            .prototypeof(Verifier.prototype);
+        const autoMock = new Mock<IMock<unknown>>()
+            .setup(instance => instance.resolve(Verifier))
+            .returns(verifierMock.object())
+            .object();
         resolveMock(CallCounter)
-            .setup(instance => instance.count(expectedExpression, []))
-            .returns(1);
+            .setup(instance => instance.count(shallow))
+            .returns(haveBeenCalled);
 
-        resolveMock(VerifyFormatter)
-            .setup(instance => instance.format(expectedExpression, It.IsAny(), 1, [], It.IsAny()))
-            .returns(message);
-
-        const evaluator = value => value === 1;
-        const times = new Times(evaluator, message);
+        resolveMock(AutoMockProvider)
+            .setup(instance => instance.getOrCreate(shallow))
+            .returns(autoMock);
 
         const verify = resolve2(Verifier);
-        const action = () => verify.test(expected, times, []);
+        verify.test([shallow, deep], Times.Once());
 
-        expect(action).not.toThrow(new VerifyError(message));
+        resolveMock(VerificationTester)
+            .verify(instance => instance.test(shallow, haveBeenCalled, Times.AtLeastOnce()));
+        verifierMock
+            .verify(instance => instance.test([deep], Times.Once()));
     });
+
 });
