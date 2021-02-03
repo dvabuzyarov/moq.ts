@@ -16,6 +16,7 @@ import { MethodFormatter } from "../formatters/method.formatter";
 import { PropertyKeyFormatter } from "../formatters/property-key.formatter";
 import { NamedMethodFormatter } from "../formatters/named-method.formatter";
 import { ConstantFormatter } from "../formatters/constant.formatter";
+import { MOCK_CONSTRUCTOR } from "../injector/mock-constructor.injection-token";
 
 /**
  * @hidden
@@ -38,7 +39,7 @@ export const autoMockingProviders = [
         useClass: AutoMockInjectorConfig,
         deps: [MOCK_OPTIONS, MOCK, [new Optional(), ROOT_MOCK]]
     },
-    {provide: AutoMockFactory, useClass: AutoMockFactory, deps: [AutoMockOptionsBuilder]},
+    {provide: AutoMockFactory, useClass: AutoMockFactory, deps: [MOCK_CONSTRUCTOR, AutoMockOptionsBuilder]},
     {provide: RootMockProvider, useClass: RootMockProvider, deps: [MOCK, [new Optional(), ROOT_MOCK]]},
     {
         provide: AutoMockProvider,

@@ -1,12 +1,12 @@
 import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import { EXPRESSIONS } from "../expressions.injection-token";
-import { NewOperatorExpression } from "../expressions";
+import { GetPropertyExpression } from "../expressions";
+import { GetReflectorTrap } from "./get.reflector-trap";
 import { ReflectorProxy } from "../reflector-proxy";
-import { ConstructTrap } from "./construct.trap";
 
-describe("Construct trap", () => {
+describe("Get reflector-trap", () => {
     beforeEach(() => {
-        createInjector2(ConstructTrap, [ReflectorProxy, EXPRESSIONS]);
+        createInjector2(GetReflectorTrap, [ReflectorProxy, EXPRESSIONS]);
     });
 
     beforeEach(() => {
@@ -15,18 +15,18 @@ describe("Construct trap", () => {
     });
 
     it("Logs expression", () => {
-        const args = [];
+        const name = "name";
         const proxy = {};
 
         resolveMock(ReflectorProxy)
             .setup(instance => instance.factory())
             .returns(proxy);
 
-        const trap = resolve2(ConstructTrap);
-        const actual = trap(undefined, args);
+        const trap = resolve2(GetReflectorTrap);
+        const actual = trap(undefined, name);
 
         expect(actual).toBe(proxy);
         resolveMock(EXPRESSIONS)
-            .verify(instance => instance.push(new NewOperatorExpression(args)));
+            .verify(instance => instance.push(new GetPropertyExpression(name)));
     });
 });

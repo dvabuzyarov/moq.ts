@@ -1,11 +1,11 @@
 import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
-import { SetTrap } from "./set.trap";
 import { EXPRESSIONS } from "../expressions.injection-token";
-import { SetPropertyExpression } from "../expressions";
+import { InOperatorExpression } from "../expressions";
+import { HasReflectorTrap } from "./has.reflector-trap";
 
-describe("Set trap", () => {
+describe("Has reflector-trap", () => {
     beforeEach(() => {
-        createInjector2(SetTrap, [EXPRESSIONS]);
+        createInjector2(HasReflectorTrap, [EXPRESSIONS]);
     });
 
     beforeEach(() => {
@@ -14,14 +14,13 @@ describe("Set trap", () => {
     });
 
     it("Logs expression", () => {
-        const value = {};
         const name = "name";
 
-        const trap = resolve2(SetTrap);
-        const actual = trap(undefined, name, value);
+        const trap = resolve2(HasReflectorTrap);
+        const actual = trap(undefined, name);
 
         expect(actual).toBe(true);
         resolveMock(EXPRESSIONS)
-            .verify(instance => instance.push(new SetPropertyExpression(name, value)));
+            .verify(instance => instance.push(new InOperatorExpression(name)));
     });
 });

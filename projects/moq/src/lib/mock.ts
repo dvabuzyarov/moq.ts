@@ -8,6 +8,7 @@ import { MockCore } from "./core/mock-core";
 import { InjectionFactory, TypeOfInjectionFactory } from "./injector/injection-factory";
 import { Type } from "./static.injector/type";
 import { InjectionToken } from "./static.injector/injection_token";
+import { MOCK_CONSTRUCTOR } from "./injector/mock-constructor.injection-token";
 
 /**
  * The default implementation of {@link IMock} interface.
@@ -18,8 +19,11 @@ export class Mock<T> implements IMock<T> {
 
     constructor(options: IMockOptions<T> = {}) {
         const preOptions = {...Mock.options, ...options} as IMockOptions<T>;
-        const provider = {provide: MOCK, useValue: this, deps: []};
-        const injector = injectorFactory(preOptions, provider);
+        const providers = [
+            {provide: MOCK, useValue: this, deps: []},
+            {provide: MOCK_CONSTRUCTOR, useValue: (opts: IMockOptions<unknown>) => new Mock(opts), deps: []},
+        ];
+        const injector = injectorFactory(preOptions, providers);
         this.core = injector.get(MockCore);
     }
 

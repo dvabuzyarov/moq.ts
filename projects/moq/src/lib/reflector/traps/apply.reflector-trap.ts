@@ -2,7 +2,7 @@ import { Expressions, GetPropertyExpression, MethodExpression, NamedMethodExpres
 import { ReflectorProxy } from "../reflector-proxy";
 import { InjectionFactory } from "../../injector/injection-factory";
 
-export class ApplyTrap implements InjectionFactory {
+export class ApplyReflectorTrap implements InjectionFactory {
     constructor(
         private readonly proxy: ReflectorProxy,
         private readonly expressions: Expressions<unknown>[]) {

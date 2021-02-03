@@ -2,13 +2,13 @@ import { createInjector2, resolve2, resolveMock } from "../../../tests.component
 import { EXPRESSIONS } from "../expressions.injection-token";
 import { GetPropertyExpression, MethodExpression, NamedMethodExpression } from "../expressions";
 import { ReflectorProxy } from "../reflector-proxy";
-import { ApplyTrap } from "./apply.trap";
+import { ApplyReflectorTrap } from "./apply.reflector-trap";
 import { It } from "moq.ts";
 import { Interaction } from "../../interactions";
 
-describe("Apply trap", () => {
+describe("Apply reflector-trap", () => {
     beforeEach(() => {
-        createInjector2(ApplyTrap, [ReflectorProxy, EXPRESSIONS]);
+        createInjector2(ApplyReflectorTrap, [ReflectorProxy, EXPRESSIONS]);
     });
 
     it("Logs method expression", () => {
@@ -24,7 +24,7 @@ describe("Apply trap", () => {
             .setup(() => It.IsAny())
             .mimics(expressions);
 
-        const trap = resolve2(ApplyTrap);
+        const trap = resolve2(ApplyReflectorTrap);
         const actual = trap(undefined, undefined, args);
 
         expect(actual).toBe(proxy);
@@ -44,7 +44,7 @@ describe("Apply trap", () => {
             .setup(() => It.IsAny())
             .mimics(expressions);
 
-        const trap = resolve2(ApplyTrap);
+        const trap = resolve2(ApplyReflectorTrap);
         const actual = trap(undefined, undefined, args);
 
         expect(actual).toBe(proxy);
@@ -66,7 +66,7 @@ describe("Apply trap", () => {
             .setup(() => It.IsAny())
             .mimics(expressions);
 
-        const trap = resolve2(ApplyTrap);
+        const trap = resolve2(ApplyReflectorTrap);
         const actual = trap(undefined, undefined, args);
 
         expect(actual).toBe(proxy);

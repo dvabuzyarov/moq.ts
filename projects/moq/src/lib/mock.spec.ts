@@ -8,6 +8,7 @@ import { Mock } from "./mock";
 import * as moq from "moq.ts";
 import { InjectionToken } from "./static.injector/injection_token";
 import { Times } from "./times";
+import { MOCK_CONSTRUCTOR } from "./injector/mock-constructor.injection-token";
 
 describe("Mock", () => {
     beforeEach(() => {
@@ -136,11 +137,11 @@ describe("Mock", () => {
 
     it("Invokes injectorFactory with static provider of self", () => {
         const mock = new Mock();
-        expect(injectorFactory.injectorFactory).toHaveBeenCalledWith(Mock.options, {
-            provide: MOCK,
-            useValue: mock,
-            deps: []
-        });
+        const providers = [
+            {provide: MOCK, useValue: mock, deps: []},
+            {provide: MOCK_CONSTRUCTOR, useValue: jasmine.any(Function), deps: []},
+        ];
+        expect(injectorFactory.injectorFactory).toHaveBeenCalledWith(Mock.options, providers);
     });
 
     it("Invokes injectorFactory with overridden static options", () => {
@@ -154,11 +155,15 @@ describe("Mock", () => {
         // Since this one is a static singleton we have to restore it
         Mock.options = undefined;
 
+        const providers = [
+            {provide: MOCK, useValue: mock, deps: []},
+            {provide: MOCK_CONSTRUCTOR, useValue: jasmine.any(Function), deps: []},
+        ];
         expect(injectorFactory.injectorFactory).toHaveBeenCalledWith({
             name,
             target,
             injectorConfig
-        }, {provide: MOCK, useValue: mock, deps: []});
+        }, providers);
     });
 
     it("Invokes injectorFactory with overridden instance options", () => {
@@ -168,10 +173,14 @@ describe("Mock", () => {
 
         const mock = new Mock({name, target, injectorConfig});
 
+        const providers = [
+            {provide: MOCK, useValue: mock, deps: []},
+            {provide: MOCK_CONSTRUCTOR, useValue: jasmine.any(Function), deps: []},
+        ];
         expect(injectorFactory.injectorFactory).toHaveBeenCalledWith({
             name,
             target,
             injectorConfig
-        }, {provide: MOCK, useValue: mock, deps: []});
+        }, providers);
     });
 });

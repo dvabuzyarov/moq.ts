@@ -1,8 +1,8 @@
-import { Expressions, NewOperatorExpression } from "../expressions";
+import { Expressions, GetPropertyExpression } from "../expressions";
 import { ReflectorProxy } from "../reflector-proxy";
 import { InjectionFactory } from "../../injector/injection-factory";
 
-export class ConstructTrap implements InjectionFactory {
+export class GetReflectorTrap implements InjectionFactory {
     constructor(
         private readonly proxy: ReflectorProxy,
         private readonly expressions: Expressions<unknown>[]) {
@@ -10,8 +10,8 @@ export class ConstructTrap implements InjectionFactory {
     }
 
     factory() {
-        return (target: any, args: any) => {
-            this.expressions.push(new NewOperatorExpression(args));
+        return (target, name) => {
+            this.expressions.push(new GetPropertyExpression(name));
             return this.proxy.factory();
         };
     }
