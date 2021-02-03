@@ -23,6 +23,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - run: npm ci
       - run: npm run lint
       - run: npm run test
       - run: npm run schematics:test
