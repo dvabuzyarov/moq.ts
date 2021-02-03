@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IInjectorConfig | moq.ts | documentation</title>
+	<title>InjectionFactory | moq.ts | documentation</title>
 	<meta name="description" content="Documentation for moq.ts | documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,37 +57,33 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.iinjectorconfig-1.html">IInjectorConfig</a>
+					<a href="moq_ts.injectionfactory.html">InjectionFactory</a>
 				</li>
 			</ul>
-			<h1>Interface IInjectorConfig</h1>
+			<h1>Interface InjectionFactory</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>The Mock internally depends on angular based injector to construct its dependencies.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IInjectorConfig</span>
+						<span class="target">InjectionFactory</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../classes/moq_ts.automockinjectorconfig.html" class="tsd-signature-type">AutoMockInjectorConfig</a></li>
-					<li><a href="../classes/moq_ts.defaultinjectorconfig-1.html" class="tsd-signature-type">DefaultInjectorConfig</a></li>
-					<li><a href="../classes/moq_ts.equalmatchinginjectorconfig-1.html" class="tsd-signature-type">EqualMatchingInjectorConfig</a></li>
+					<li><a href="../classes/moq_ts.applyreflectortrap.html" class="tsd-signature-type">ApplyReflectorTrap</a></li>
+					<li><a href="../classes/moq_ts.automockedstorage.html" class="tsd-signature-type">AutoMockedStorage</a></li>
+					<li><a href="../classes/moq_ts.constructreflectortrap.html" class="tsd-signature-type">ConstructReflectorTrap</a></li>
+					<li><a href="../classes/moq_ts.getreflectortrap.html" class="tsd-signature-type">GetReflectorTrap</a></li>
+					<li><a href="../classes/moq_ts.hasreflectortrap.html" class="tsd-signature-type">HasReflectorTrap</a></li>
+					<li><a href="../classes/moq_ts.setreflectortrap.html" class="tsd-signature-type">SetReflectorTrap</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -97,7 +93,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="moq_ts.iinjectorconfig-1.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="moq_ts.injectionfactory.html#factory" class="tsd-kind-icon">factory</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,44 +102,25 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="get" class="tsd-anchor"></a>
-					<h3>get</h3>
+					<a name="factory" class="tsd-anchor"></a>
+					<h3>factory</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span>, <span class="tsd-signature-symbol">...</span>providers<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#staticprovider" class="tsd-signature-type">StaticProvider</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#staticprovider" class="tsd-signature-type">StaticProvider</a><span class="tsd-signature-symbol">[]</span></li>
+						<li class="tsd-signature tsd-kind-icon">factory<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/moq.ts#L312">projects/moq/src/lib/moq.ts:312</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/injector/injection-factory.ts#L2">projects/moq/src/lib/injector/injection-factory.ts:2</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns array of StaticProviders to construct an angular based injector.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The final version of mock options. Options that passed to Mock constructor are merged with
-											the global mock options (<a href="../classes/moq_ts.mock-1.html#options-1">Mock.options</a>). Some components depend on the options and the injector
-										should be able to resolve it. To configure the injector property the implementation could do the following:</p>
-										<pre><code class="language-typescript"><span class="hljs-keyword">return</span> [
- {<span class="hljs-attr">provide</span>: MOCK_OPTIONS, <span class="hljs-attr">useValue</span>: options, <span class="hljs-attr">deps</span>: []},
-];</code></pre>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>providers: <a href="../modules/moq_ts.html#staticprovider" class="tsd-signature-type">StaticProvider</a><span class="tsd-signature-symbol">[]</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>An array of additional providers that could be added to the final configuration.</p>
-									</div>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../modules/moq_ts.html#staticprovider" class="tsd-signature-type">StaticProvider</a><span class="tsd-signature-symbol">[]</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -165,10 +142,10 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="moq_ts.iinjectorconfig-1.html" class="tsd-kind-icon">IInjector<wbr>Config</a>
+						<a href="moq_ts.injectionfactory.html" class="tsd-kind-icon">Injection<wbr>Factory</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="moq_ts.iinjectorconfig-1.html#get" class="tsd-kind-icon">get</a>
+								<a href="moq_ts.injectionfactory.html#factory" class="tsd-kind-icon">factory</a>
 							</li>
 						</ul>
 					</li>

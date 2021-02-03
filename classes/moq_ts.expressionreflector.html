@@ -83,7 +83,7 @@
 expect(actual).toEqual(expected);</code></pre>
 							<p>For more examples check
 								[unit tests for this class]
-							(<a href="https://github.com/dvabuzyarov/moq.ts/blob/master/tests.unit/expected-expressions/expected-expression-reflector.UnitTests.ts">https://github.com/dvabuzyarov/moq.ts/blob/master/tests.unit/expected-expressions/expected-expression-reflector.UnitTests.ts</a>)</p>
+							(<a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-reflector.spec.ts">https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-reflector.spec.ts</a>)</p>
 						</dd>
 					</dl>
 				</div>
@@ -101,6 +101,12 @@ expect(actual).toEqual(expected);</code></pre>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="moq_ts.expressionreflector.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="moq_ts.expressionreflector.html#reflect" class="tsd-kind-icon">reflect</a></li>
@@ -110,18 +116,44 @@ expect(actual).toEqual(expected);</code></pre>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-					<a name="reflect" class="tsd-anchor"></a>
-					<h3>reflect</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">reflect&lt;T&gt;<span class="tsd-signature-symbol">(</span>expression<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#iexpression" class="tsd-signature-type">IExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#expressions" class="tsd-signature-type">Expressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Expression<wbr>Reflector<span class="tsd-signature-symbol">(</span>reflectorProxyFactory<span class="tsd-signature-symbol">: </span><a href="moq_ts.reflectorproxyfactory.html" class="tsd-signature-type">ReflectorProxyFactory</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.expressionreflector.html" class="tsd-signature-type">ExpressionReflector</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/reflector/expression-reflector.ts#L44">projects/moq/src/lib/reflector/expression-reflector.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/reflector/expression-reflector.ts#L30">projects/moq/src/lib/reflector/expression-reflector.ts:30</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>reflectorProxyFactory: <a href="moq_ts.reflectorproxyfactory.html" class="tsd-signature-type">ReflectorProxyFactory</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="moq_ts.expressionreflector.html" class="tsd-signature-type">ExpressionReflector</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="reflect" class="tsd-anchor"></a>
+					<h3>reflect</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">reflect&lt;T&gt;<span class="tsd-signature-symbol">(</span>expression<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#iexpression" class="tsd-signature-type">IExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#expressions" class="tsd-signature-type">Expressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/reflector/expression-reflector.ts#L37">projects/moq/src/lib/reflector/expression-reflector.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -141,7 +173,7 @@ expect(actual).toEqual(expected);</code></pre>
 									<h5>expression: <a href="../modules/moq_ts.html#iexpression" class="tsd-signature-type">IExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../modules/moq_ts.html#expressions" class="tsd-signature-type">Expressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/moq_ts.html#expressions" class="tsd-signature-type">Expressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -165,6 +197,9 @@ expect(actual).toEqual(expected);</code></pre>
 					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="moq_ts.expressionreflector.html" class="tsd-kind-icon">Expression<wbr>Reflector</a>
 						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="moq_ts.expressionreflector.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="moq_ts.expressionreflector.html#reflect" class="tsd-kind-icon">reflect</a>
 							</li>
@@ -189,12 +224,13 @@ expect(actual).toEqual(expected);</code></pre>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>

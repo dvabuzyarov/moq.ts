@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VerifyError | moq.ts | documentation</title>
+	<title>AutoMockFactory | moq.ts | documentation</title>
 	<meta name="description" content="Documentation for moq.ts | documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,26 +57,28 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.verifyerror.html">VerifyError</a>
+					<a href="moq_ts.automockfactory-1.html">AutoMockFactory</a>
 				</li>
 			</ul>
-			<h1>Class VerifyError</h1>
+			<h1>Class AutoMockFactory</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This service is used to create an instance of a Mock for auto mocking feature</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="moq_ts.verifyerror.html#error" class="tsd-signature-type">Error</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">VerifyError</span>
-							</li>
-						</ul>
+						<span class="target">AutoMockFactory</span>
 					</li>
 				</ul>
 			</section>
@@ -87,16 +89,13 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="moq_ts.verifyerror.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="moq_ts.automockfactory-1.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="moq_ts.verifyerror.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="moq_ts.verifyerror.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="moq_ts.verifyerror.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="moq_ts.verifyerror.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="moq_ts.automockfactory-1.html#create" class="tsd-kind-icon">create</a></li>
 							</ul>
 						</section>
 					</div>
@@ -108,71 +107,59 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Verify<wbr>Error<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.verifyerror.html" class="tsd-signature-type">VerifyError</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Auto<wbr>Mock<wbr>Factory<span class="tsd-signature-symbol">(</span>ctor<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#typeofinjectiontoken" class="tsd-signature-type">TypeofInjectionToken</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">MOCK_CONSTRUCTOR</span><span class="tsd-signature-symbol">&gt;</span>, optionsBuilder<span class="tsd-signature-symbol">: </span><a href="moq_ts.automockoptionsbuilder.html" class="tsd-signature-type">AutoMockOptionsBuilder</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.automockfactory-1.html" class="tsd-signature-type">AutoMockFactory</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/verification/verify-error.ts#L1">projects/moq/src/lib/verification/verify-error.ts:1</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/auto-mocking/auto-mock.factory.ts#L9">projects/moq/src/lib/auto-mocking/auto-mock.factory.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>message: <span class="tsd-signature-type">string</span></h5>
+									<h5>ctor: <a href="../modules/moq_ts.html#typeofinjectiontoken" class="tsd-signature-type">TypeofInjectionToken</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">MOCK_CONSTRUCTOR</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>optionsBuilder: <a href="moq_ts.automockoptionsbuilder.html" class="tsd-signature-type">AutoMockOptionsBuilder</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="moq_ts.verifyerror.html" class="tsd-signature-type">VerifyError</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="moq_ts.automockfactory-1.html" class="tsd-signature-type">AutoMockFactory</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="message" class="tsd-anchor"></a>
-					<h3>message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="moq_ts.verifyerror.html">VerifyError</a>.<a href="moq_ts.verifyerror.html#message">message</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:974</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="moq_ts.verifyerror.html">VerifyError</a>.<a href="moq_ts.verifyerror.html#name">name</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:973</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-					<a name="stack" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> stack</h3>
-					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="moq_ts.verifyerror.html">VerifyError</a>.<a href="moq_ts.verifyerror.html#stack">stack</a></p>
-						<p>Overrides <a href="moq_ts.verifyerror.html">VerifyError</a>.<a href="moq_ts.verifyerror.html#stack">stack</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:975</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="error" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Error</h3>
-					<div class="tsd-signature tsd-kind-icon">Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ErrorConstructor</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:984</li>
-						</ul>
-					</aside>
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="create" class="tsd-anchor"></a>
+					<h3>create</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">create&lt;T&gt;<span class="tsd-signature-symbol">(</span>expression<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#expressions" class="tsd-signature-type">Expressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/auto-mocking/auto-mock.factory.ts#L15">projects/moq/src/lib/auto-mocking/auto-mock.factory.ts:15</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>expression: <a href="../modules/moq_ts.html#expressions" class="tsd-signature-type">Expressions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -192,22 +179,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="moq_ts.verifyerror.html" class="tsd-kind-icon">Verify<wbr>Error</a>
+						<a href="moq_ts.automockfactory-1.html" class="tsd-kind-icon">Auto<wbr>Mock<wbr>Factory</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="moq_ts.verifyerror.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="moq_ts.automockfactory-1.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="moq_ts.verifyerror.html#message" class="tsd-kind-icon">message</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="moq_ts.verifyerror.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="moq_ts.verifyerror.html#stack" class="tsd-kind-icon">stack</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="moq_ts.verifyerror.html#error" class="tsd-kind-icon">Error</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="moq_ts.automockfactory-1.html#create" class="tsd-kind-icon">create</a>
 							</li>
 						</ul>
 					</li>
@@ -240,12 +218,6 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
 			</ul>
 		</div>
 	</div>

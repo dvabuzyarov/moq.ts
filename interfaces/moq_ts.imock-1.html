@@ -137,6 +137,7 @@
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
 					<li><a href="../classes/moq_ts.mock-1.html" class="tsd-signature-type">Mock</a></li>
+					<li><a href="../classes/moq_ts.mockcore.html" class="tsd-signature-type">MockCore</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -156,6 +157,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="moq_ts.imock-1.html#object" class="tsd-kind-icon">object</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="moq_ts.imock-1.html#prototypeof" class="tsd-kind-icon">prototypeof</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="moq_ts.imock-1.html#resolve" class="tsd-kind-icon">resolve</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="moq_ts.imock-1.html#setup" class="tsd-kind-icon">setup</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="moq_ts.imock-1.html#verify" class="tsd-kind-icon">verify</a></li>
 							</ul>
@@ -171,7 +173,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L168">projects/moq/src/lib/moq.ts:168</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/moq.ts#L171">projects/moq/src/lib/moq.ts:171</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -187,7 +189,7 @@
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L178">projects/moq/src/lib/moq.ts:178</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/moq.ts#L181">projects/moq/src/lib/moq.ts:181</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -202,7 +204,7 @@
 					<div class="tsd-signature tsd-kind-icon">tracker<span class="tsd-signature-symbol">:</span> <a href="../classes/moq_ts.tracker.html" class="tsd-signature-type">Tracker</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L173">projects/moq/src/lib/moq.ts:173</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/moq.ts#L176">projects/moq/src/lib/moq.ts:176</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -224,7 +226,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L183">projects/moq/src/lib/moq.ts:183</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/moq.ts#L186">projects/moq/src/lib/moq.ts:186</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -246,7 +248,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L242">projects/moq/src/lib/moq.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/moq.ts#L245">projects/moq/src/lib/moq.ts:245</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -278,6 +280,44 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+					<a name="resolve" class="tsd-anchor"></a>
+					<h3>resolve</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">resolve&lt;S, R&gt;<span class="tsd-signature-symbol">(</span>token<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/moq_ts.injectiontoken-1.html" class="tsd-signature-type">InjectionToken</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/moq.ts#L258">projects/moq/src/lib/moq.ts:258</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieves an instance from the injector based on the provided token.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>S</h4>
+								</li>
+								<li>
+									<h4>R = <span class="tsd-signature-type">S</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">InjectionFactory</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">TypeOfInjectionFactory</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">S</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>token: <a href="../modules/moq_ts.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/moq_ts.injectiontoken-1.html" class="tsd-signature-type">InjectionToken</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span></h4>
+							<p>The instance from the injector if defined, otherwise null.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
 					<a name="setup" class="tsd-anchor"></a>
 					<h3>setup</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
@@ -287,7 +327,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L215">projects/moq/src/lib/moq.ts:215</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/moq.ts#L218">projects/moq/src/lib/moq.ts:218</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -353,7 +393,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a80f351/projects/moq/src/lib/moq.ts#L224">projects/moq/src/lib/moq.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/moq.ts#L227">projects/moq/src/lib/moq.ts:227</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -372,7 +412,7 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> times: <a href="../classes/moq_ts.times-1.html" class="tsd-signature-type">Times</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The default value is <a href="../classes/moq_ts.times-1.html#once">Times.Once</a></p>
+										<p>The default value is {@link Times.Once()}</p>
 									</div>
 								</li>
 							</ul>
@@ -414,6 +454,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="moq_ts.imock-1.html#prototypeof" class="tsd-kind-icon">prototypeof</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
+								<a href="moq_ts.imock-1.html#resolve" class="tsd-kind-icon">resolve</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
 								<a href="moq_ts.imock-1.html#setup" class="tsd-kind-icon">setup</a>

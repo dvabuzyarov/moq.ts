@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DefaultInjectorConfig | moq.ts | documentation</title>
+	<title>AutoMockInjectorConfig | moq.ts | documentation</title>
 	<meta name="description" content="Documentation for moq.ts | documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.defaultinjectorconfig-1.html">DefaultInjectorConfig</a>
+					<a href="moq_ts.automockinjectorconfig.html">AutoMockInjectorConfig</a>
 				</li>
 			</ul>
-			<h1>Class DefaultInjectorConfig</h1>
+			<h1>Class AutoMockInjectorConfig</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Provides the default configuration for an angular based injector that would be used internally by <a href="../modules/moq_ts.html#mock">Mock</a> instance.</p>
+						<p>Provides configuration for an angular based injector that would be used internally for auto mocking feature</p>
 					</div>
 				</div>
 			</section>
@@ -78,12 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">DefaultInjectorConfig</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<a href="moq_ts.equalmatchinginjectorconfig-1.html" class="tsd-signature-type">EqualMatchingInjectorConfig</a>
-							</li>
-						</ul>
+						<span class="target">AutoMockInjectorConfig</span>
 					</li>
 				</ul>
 			</section>
@@ -98,12 +93,50 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="moq_ts.automockinjectorconfig.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.defaultinjectorconfig-1.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.automockinjectorconfig.html#get" class="tsd-kind-icon">get</a></li>
 							</ul>
 						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Auto<wbr>Mock<wbr>Injector<wbr>Config<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#typeofinjectiontoken" class="tsd-signature-type">TypeofInjectionToken</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">MOCK_OPTIONS</span><span class="tsd-signature-symbol">&gt;</span>, mock<span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span>, root<span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.automockinjectorconfig.html" class="tsd-signature-type">AutoMockInjectorConfig</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/auto-mocking/auto-mock-injector.config.ts#L10">projects/moq/src/lib/auto-mocking/auto-mock-injector.config.ts:10</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <a href="../modules/moq_ts.html#typeofinjectiontoken" class="tsd-signature-type">TypeofInjectionToken</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">MOCK_OPTIONS</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>mock: <a href="../interfaces/moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>root: <a href="../interfaces/moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="moq_ts.automockinjectorconfig.html" class="tsd-signature-type">AutoMockInjectorConfig</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -119,7 +152,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/moq_ts.iinjectorconfig-1.html">IInjectorConfig</a>.<a href="../interfaces/moq_ts.iinjectorconfig-1.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/injector/default-injector.config.ts#L21">projects/moq/src/lib/injector/default-injector.config.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/auto-mocking/auto-mock-injector.config.ts#L17">projects/moq/src/lib/auto-mocking/auto-mock-injector.config.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -153,10 +186,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="moq_ts.defaultinjectorconfig-1.html" class="tsd-kind-icon">Default<wbr>Injector<wbr>Config</a>
+						<a href="moq_ts.automockinjectorconfig.html" class="tsd-kind-icon">Auto<wbr>Mock<wbr>Injector<wbr>Config</a>
 						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="moq_ts.automockinjectorconfig.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="moq_ts.defaultinjectorconfig-1.html#get" class="tsd-kind-icon">get</a>
+								<a href="moq_ts.automockinjectorconfig.html#get" class="tsd-kind-icon">get</a>
 							</li>
 						</ul>
 					</li>
@@ -181,6 +217,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">

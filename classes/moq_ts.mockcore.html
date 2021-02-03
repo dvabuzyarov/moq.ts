@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Mock | moq.ts | documentation</title>
+	<title>MockCore | moq.ts | documentation</title>
 	<meta name="description" content="Documentation for moq.ts | documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.mock-1.html">Mock</a>
+					<a href="moq_ts.mockcore.html">MockCore</a>
 				</li>
 			</ul>
-			<h1>Class Mock&lt;T&gt;</h1>
+			<h1>Class MockCore&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The default implementation of <a href="../modules/moq_ts.html#imock">IMock</a> interface.</p>
+						<p>The internal core of <a href="../modules/moq_ts.html#mock">Mock</a> class.</p>
 					</div>
 				</div>
 			</section>
@@ -86,7 +86,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Mock</span>
+						<span class="target">MockCore</span>
 					</li>
 				</ul>
 			</section>
@@ -103,27 +103,31 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="moq_ts.mock-1.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="moq_ts.mockcore.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moq_ts.mockcore.html#options" class="tsd-kind-icon">options</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="moq_ts.mockcore.html#tracker" class="tsd-kind-icon">tracker</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="moq_ts.mock-1.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="moq_ts.mock-1.html#options" class="tsd-kind-icon">options</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="moq_ts.mock-1.html#tracker" class="tsd-kind-icon">tracker</a></li>
-								<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-static"><a href="moq_ts.mock-1.html#options-1" class="tsd-kind-icon">options</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="moq_ts.mockcore.html#name" class="tsd-kind-icon">name</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.mock-1.html#insequence" class="tsd-kind-icon">insequence</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.mock-1.html#object" class="tsd-kind-icon">object</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.mock-1.html#prototypeof" class="tsd-kind-icon">prototypeof</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="moq_ts.mock-1.html#resolve" class="tsd-kind-icon">resolve</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="moq_ts.mock-1.html#setup" class="tsd-kind-icon">setup</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.mock-1.html#verify" class="tsd-kind-icon">verify</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.mockcore.html#insequence" class="tsd-kind-icon">insequence</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.mockcore.html#object" class="tsd-kind-icon">object</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.mockcore.html#prototypeof" class="tsd-kind-icon">prototypeof</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="moq_ts.mockcore.html#resolve" class="tsd-kind-icon">resolve</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="moq_ts.mockcore.html#setup" class="tsd-kind-icon">setup</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.mockcore.html#verify" class="tsd-kind-icon">verify</a></li>
 							</ul>
 						</section>
 					</div>
@@ -135,24 +139,73 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Mock<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.mock-1.html" class="tsd-signature-type">Mock</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Mock<wbr>Core<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#typeofinjectiontoken" class="tsd-signature-type">TypeofInjectionToken</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">MOCK_OPTIONS</span><span class="tsd-signature-symbol">&gt;</span>, tracker<span class="tsd-signature-symbol">: </span><a href="moq_ts.tracker.html" class="tsd-signature-type">Tracker</a>, injector<span class="tsd-signature-symbol">: </span><a href="moq_ts.injector-2.html" class="tsd-signature-type">Injector</a>, reflector<span class="tsd-signature-symbol">: </span><a href="moq_ts.expressionreflector.html" class="tsd-signature-type">ExpressionReflector</a>, interceptor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ProxyFactory</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, verifier<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Verifier</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, prototypeStorage<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PrototypeStorage</span>, mock<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#typeofinjectiontoken" class="tsd-signature-type">TypeofInjectionToken</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">MOCK</span><span class="tsd-signature-symbol">&gt;</span>, setupFactory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SetupFactory</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.mockcore.html" class="tsd-signature-type">MockCore</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L18">projects/moq/src/lib/mock.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/core/mock-core.ts#L21">projects/moq/src/lib/core/mock-core.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <a href="../modules/moq_ts.html#typeofinjectiontoken" class="tsd-signature-type">TypeofInjectionToken</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">MOCK_OPTIONS</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>tracker: <a href="moq_ts.tracker.html" class="tsd-signature-type">Tracker</a></h5>
+								</li>
+								<li>
+									<h5>injector: <a href="moq_ts.injector-2.html" class="tsd-signature-type">Injector</a></h5>
+								</li>
+								<li>
+									<h5>reflector: <a href="moq_ts.expressionreflector.html" class="tsd-signature-type">ExpressionReflector</a></h5>
+								</li>
+								<li>
+									<h5>interceptor: <span class="tsd-signature-type">ProxyFactory</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>verifier: <span class="tsd-signature-type">Verifier</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>prototypeStorage: <span class="tsd-signature-type">PrototypeStorage</span></h5>
+								</li>
+								<li>
+									<h5>mock: <a href="../modules/moq_ts.html#typeofinjectiontoken" class="tsd-signature-type">TypeofInjectionToken</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">MOCK</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>setupFactory: <span class="tsd-signature-type">SetupFactory</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="moq_ts.mock-1.html" class="tsd-signature-type">Mock</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="moq_ts.mockcore.html" class="tsd-signature-type">MockCore</a></h4>
 						</li>
 					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="options" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> options</h3>
+					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../modules/moq_ts.html#typeofinjectiontoken" class="tsd-signature-type">TypeofInjectionToken</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">MOCK_OPTIONS</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/moq_ts.imock-1.html">IMock</a>.<a href="../interfaces/moq_ts.imock-1.html#options">options</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/core/mock-core.ts#L23">projects/moq/src/lib/core/mock-core.ts:23</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="tracker" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> tracker</h3>
+					<div class="tsd-signature tsd-kind-icon">tracker<span class="tsd-signature-symbol">:</span> <a href="moq_ts.tracker.html" class="tsd-signature-type">Tracker</a></div>
+					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/moq_ts.imock-1.html">IMock</a>.<a href="../interfaces/moq_ts.imock-1.html#tracker">tracker</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/core/mock-core.ts#L24">projects/moq/src/lib/core/mock-core.ts:24</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -167,90 +220,10 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L62">projects/moq/src/lib/mock.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/core/mock-core.ts#L35">projects/moq/src/lib/core/mock-core.ts:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="options" class="tsd-anchor"></a>
-					<h3>options</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> options<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L54">projects/moq/src/lib/mock.ts:54</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="tracker" class="tsd-anchor"></a>
-					<h3>tracker</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> tracker<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.tracker.html" class="tsd-signature-type">Tracker</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L58">projects/moq/src/lib/mock.ts:58</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="moq_ts.tracker.html" class="tsd-signature-type">Tracker</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-static">
-					<a name="options-1" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> options</h3>
-					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> options<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> options<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L36">projects/moq/src/lib/mock.ts:36</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>The default mock options that would applied to all instantiating Mock objects.
-										By default it sets <a href="../interfaces/moq_ts.imockoptions-1.html#target">IMockOptions.target</a> as a function, <a href="../interfaces/moq_ts.imockoptions-1.html#injectorconfig">IMockOptions.injectorConfig</a> as
-										instance of <a href="../modules/moq_ts.html#defaultinjectorconfig">DefaultInjectorConfig</a> and <a href="../interfaces/moq_ts.imockoptions-1.html#name">IMockOptions.name</a> as undefined.
-									If an options are passed as constructor parameter <a href="moq_ts.mock-1.html#constructor">Mock.constructor</a> they will override the default options.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L50">projects/moq/src/lib/mock.ts:50</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>The default mock options that would applied to all instantiating Mock objects.
-									If an options are passed as constructor parameter they will override the default options.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>options: <a href="../interfaces/moq_ts.imockoptions-1.html" class="tsd-signature-type">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -267,7 +240,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L86">projects/moq/src/lib/mock.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/core/mock-core.ts#L67">projects/moq/src/lib/core/mock-core.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -300,7 +273,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/moq_ts.imock-1.html">IMock</a>.<a href="../interfaces/moq_ts.imock-1.html#object">object</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L75">projects/moq/src/lib/mock.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/core/mock-core.ts#L55">projects/moq/src/lib/core/mock-core.ts:55</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -318,7 +291,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/moq_ts.imock-1.html">IMock</a>.<a href="../interfaces/moq_ts.imock-1.html#prototypeof">prototypeof</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L79">projects/moq/src/lib/mock.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/core/mock-core.ts#L59">projects/moq/src/lib/core/mock-core.ts:59</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -342,7 +315,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/moq_ts.imock-1.html">IMock</a>.<a href="../interfaces/moq_ts.imock-1.html#resolve">resolve</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L90">projects/moq/src/lib/mock.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/core/mock-core.ts#L39">projects/moq/src/lib/core/mock-core.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -351,7 +324,7 @@
 									<h4>S</h4>
 								</li>
 								<li>
-									<h4>R = <span class="tsd-signature-type">S</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">InjectionFactory</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">TypeOfInjectionFactory</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">S</span></h4>
+									<h4>R = <span class="tsd-signature-type">S</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">InjectionFactory</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">ReturnType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"factory"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">S</span></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -375,7 +348,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/moq_ts.imock-1.html">IMock</a>.<a href="../interfaces/moq_ts.imock-1.html#setup">setup</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L66">projects/moq/src/lib/mock.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/core/mock-core.ts#L43">projects/moq/src/lib/core/mock-core.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -401,14 +374,14 @@
 					<a name="verify" class="tsd-anchor"></a>
 					<h3>verify</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">verify<span class="tsd-signature-symbol">(</span>expression<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#iexpression" class="tsd-signature-type">IExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, times<span class="tsd-signature-symbol">?: </span><a href="moq_ts.times-1.html" class="tsd-signature-type">Times</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">verify<span class="tsd-signature-symbol">(</span>expression<span class="tsd-signature-symbol">: </span><a href="../modules/moq_ts.html#iexpression" class="tsd-signature-type">IExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, times<span class="tsd-signature-symbol">: </span><a href="moq_ts.times-1.html" class="tsd-signature-type">Times</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/moq_ts.imock-1.html">IMock</a>.<a href="../interfaces/moq_ts.imock-1.html#verify">verify</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/mock.ts#L71">projects/moq/src/lib/mock.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/a605a26/projects/moq/src/lib/core/mock-core.ts#L49">projects/moq/src/lib/core/mock-core.ts:49</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -417,7 +390,7 @@
 									<h5>expression: <a href="../modules/moq_ts.html#iexpression" class="tsd-signature-type">IExpression</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> times: <a href="moq_ts.times-1.html" class="tsd-signature-type">Times</a><span class="tsd-signature-symbol"> = Times.Once()</span></h5>
+									<h5>times: <a href="moq_ts.times-1.html" class="tsd-signature-type">Times</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/moq_ts.imock-1.html" class="tsd-signature-type">IMock</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -442,40 +415,37 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="moq_ts.mock-1.html" class="tsd-kind-icon">Mock</a>
+						<a href="moq_ts.mockcore.html" class="tsd-kind-icon">Mock<wbr>Core</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="moq_ts.mock-1.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="moq_ts.mockcore.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="moq_ts.mockcore.html#options" class="tsd-kind-icon">options</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="moq_ts.mockcore.html#tracker" class="tsd-kind-icon">tracker</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="moq_ts.mock-1.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="moq_ts.mock-1.html#options" class="tsd-kind-icon">options</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="moq_ts.mock-1.html#tracker" class="tsd-kind-icon">tracker</a>
-							</li>
-							<li class=" tsd-kind-accessor tsd-parent-kind-class tsd-is-static">
-								<a href="moq_ts.mock-1.html#options-1" class="tsd-kind-icon">options</a>
+								<a href="moq_ts.mockcore.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="moq_ts.mock-1.html#insequence" class="tsd-kind-icon">insequence</a>
+								<a href="moq_ts.mockcore.html#insequence" class="tsd-kind-icon">insequence</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="moq_ts.mock-1.html#object" class="tsd-kind-icon">object</a>
+								<a href="moq_ts.mockcore.html#object" class="tsd-kind-icon">object</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="moq_ts.mock-1.html#prototypeof" class="tsd-kind-icon">prototypeof</a>
+								<a href="moq_ts.mockcore.html#prototypeof" class="tsd-kind-icon">prototypeof</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="moq_ts.mock-1.html#resolve" class="tsd-kind-icon">resolve</a>
+								<a href="moq_ts.mockcore.html#resolve" class="tsd-kind-icon">resolve</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-								<a href="moq_ts.mock-1.html#setup" class="tsd-kind-icon">setup</a>
+								<a href="moq_ts.mockcore.html#setup" class="tsd-kind-icon">setup</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="moq_ts.mock-1.html#verify" class="tsd-kind-icon">verify</a>
+								<a href="moq_ts.mockcore.html#verify" class="tsd-kind-icon">verify</a>
 							</li>
 						</ul>
 					</li>
@@ -501,6 +471,7 @@
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
