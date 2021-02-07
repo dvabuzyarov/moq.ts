@@ -2,12 +2,15 @@ import { It } from "../lib/reflector/expression-predicates";
 import { GetPropertyExpression } from "../lib/reflector/expressions";
 import { Times } from "../lib/times";
 import { Mock } from "../lib/mock";
+import { nameof } from "../tests.components/nameof";
 
-interface ITestObject {
-    property: string;
-}
+describe("Read property", () => {
 
-describe("Mock: Get property", () => {
+    interface ITestObject {
+        property: string;
+
+        get(): string;
+    }
 
     it("Returns value with a simple setup", () => {
         const value = "value";

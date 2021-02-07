@@ -3,6 +3,9 @@ import { Times } from "./times";
 import { Interaction } from "./interactions";
 import { Tracker } from "./tracker/tracker";
 import { StaticProvider } from "./static.injector/interface/provider";
+import { InjectionFactory, TypeOfInjectionFactory } from "./injector/injection-factory";
+import { Type } from "./static.injector/type";
+import { InjectionToken } from "./static.injector/injection_token";
 
 export const enum PlayableUpdateReason {
     /**
@@ -219,7 +222,7 @@ export interface IMock<T> {
      * Asserts expected interactions with the mocked object.
      *
      * @param expression Expected expression
-     * @param times The default value is {@link Times.Once}
+     * @param times The default value is {@link Times.Once()}
      */
     verify(expression: IExpression<T>, times?: Times): IMock<T>;
 
@@ -246,6 +249,13 @@ export interface IMock<T> {
      * @hidden
      */
     insequence(sequence: ISequenceVerifier, expression: IExpression<T>): IMock<T>;
+
+    /**
+     * Retrieves an instance from the injector based on the provided token.
+     *
+     * @returns The instance from the injector if defined, otherwise null.
+     */
+    resolve<S, R = S extends InjectionFactory ? TypeOfInjectionFactory<S> : S>(token: Type<S> | InjectionToken<S>): R;
 }
 
 /**

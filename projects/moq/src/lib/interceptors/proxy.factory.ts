@@ -5,7 +5,7 @@ import { GetPrototypeOfTrap } from "./get-prototype-of.trap";
 import { SetPrototypeOfTrap } from "./set-prototype-of.trap";
 import { HasTrap } from "./has.trap";
 import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
-import { TypeofInjectionToken } from "../typeof-injection-token";
+import { TypeofInjectionToken } from "../injector/typeof-injection-token";
 import { ConstructTrap } from "./construct.trap";
 
 /**

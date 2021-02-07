@@ -1,6 +1,6 @@
 import { PrototypeStorage } from "../../interceptors/prototype.storage";
 import { PropertyDescriptorProvider } from "../members.explorer/property-descriptor.provider";
-import { TypeofInjectionToken } from "../../typeof-injection-token";
+import { TypeofInjectionToken } from "../../injector/typeof-injection-token";
 import { REFLECT_HAS } from "../reflect-has.injection-token";
 
 /**

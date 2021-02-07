@@ -6,8 +6,8 @@ import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-prop
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
 import { MoqAPI } from "../moq";
 import { Tracker } from "../tracker/tracker";
-import { TypeofInjectionToken } from "../typeof-injection-token";
-import { MOCK } from "../injector/moq.injection-token";
+import { TypeofInjectionToken } from "../injector/typeof-injection-token";
+import { MOCK } from "../injector/mock.injection-token";
 
 /**
  * @hidden

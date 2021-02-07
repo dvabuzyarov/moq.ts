@@ -1,137 +1,79 @@
 import { ExpressionReflector } from "./expression-reflector";
-import {
-    NewOperatorExpression,
-    GetPropertyExpression,
-    InOperatorExpression,
-    MethodExpression,
-    NamedMethodExpression,
-    SetPropertyExpression
-} from "./expressions";
-import { It } from "./expression-predicates";
-import { createInjector2, resolve2 } from "../../tests.components/resolve.builder";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { ReflectorProxyFactory } from "./reflector-proxy.factory";
+import { It, Mock } from "moq.ts";
+import * as local from "./expression-predicates";
+import { SetPropertyExpression } from "./expressions";
 
 describe("Expression Reflector", () => {
 
     beforeEach(() => {
-        createInjector2(ExpressionReflector, []);
+        createInjector2(ExpressionReflector, [ReflectorProxyFactory]);
     });
 
-    it("Resolves undefined expression", () => {
+    it("Returns expressions", () => {
+        const proxy = new Mock<typeof Proxy>()
+            .object();
+
+        let expressions;
+        resolveMock(ReflectorProxyFactory)
+            .setup(instance => instance.create(It.IsAny()))
+            .callback(({args: [first]}) => {
+                expressions = first;
+                return proxy;
+            });
+
+        const expression = new Mock<(instance) => undefined>()
+            .setup(instance => instance(proxy))
+            .returns(undefined)
+            .object();
+
         const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect(instance => undefined);
+        const actual = reflector.reflect(expression);
 
-        expect(actual).toBeUndefined();
+        expect(actual).toBe(expressions);
     });
 
-    it("Resolves empty expression", () => {
+    it("Returns expression predicate", () => {
+        const proxy = new Mock<typeof Proxy>()
+            .object();
+
+        resolveMock(ReflectorProxyFactory)
+            .setup(instance => instance.create(It.IsAny()))
+            .returns(proxy);
+
+        const expression = new Mock<(instance) => undefined>()
+            .setup(instance => instance(proxy))
+            .returns(local.It.IsAny())
+            .object();
+
         const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect(instance => instance);
+        const actual = reflector.reflect(expression);
 
-        expect(actual).toBeUndefined();
+        expect(actual).toEqual([jasmine.any(local.It)]);
     });
 
-    it("Resolves empty method call", () => {
+    it("Returns expressions when It predicate is being returned at the end", () => {
+        const interaction = new SetPropertyExpression(undefined, It.IsAny());
+        const proxy = new Mock<typeof Proxy>()
+            .object();
+
+        resolveMock(ReflectorProxyFactory)
+            .setup(instance => instance.create(It.IsAny()))
+            .callback(({args: [expressions]}) => {
+                expressions.push(interaction);
+                return proxy;
+            });
+
+        const expression = new Mock<(instance) => undefined>()
+            .setup(instance => instance(proxy))
+            .returns(local.It.IsAny())
+            .object();
+
         const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect<() => void>(instance => instance());
+        const actual = reflector.reflect(expression);
 
-        const expected = new MethodExpression([]);
-        expect(actual).toEqual(expected);
+        expect(actual).toEqual([interaction]);
     });
 
-    it("Resolves method call with argument", () => {
-        const arg = "argument";
-        const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect<any>(instance => instance(arg));
-
-        const expected = new MethodExpression([arg]);
-        expect(actual).toEqual(expected);
-    });
-
-    it("Resolves get property", () => {
-        const name = "member_name";
-        const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect(instance => instance[name]);
-
-        const expected = new GetPropertyExpression(name);
-        expect(actual).toEqual(expected);
-    });
-
-    it("Resolves in operator", () => {
-        const name = "member_name";
-        const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect(instance => name in (instance as any));
-
-        const expected = new InOperatorExpression(name);
-        expect(actual).toEqual(expected);
-    });
-
-    it("Resolves set property", () => {
-        const name = "member_name";
-        const arg = "argument";
-        const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect(instance => {
-            instance[name] = arg;
-        });
-
-        const expected = new SetPropertyExpression(name, arg);
-        expect(actual).toEqual(expected);
-    });
-
-    it("Resolves set property with it", () => {
-        const name = "member_name";
-        const arg = "argument";
-        const reflector = resolve2(ExpressionReflector);
-        const it = It.Is(value => value === arg);
-        const actual = reflector.reflect(instance => {
-            instance[name] = it;
-        });
-
-        const expected = new SetPropertyExpression(name, it);
-        expect(actual).toEqual(expected);
-    });
-
-    it("Resolves set property with it without braces", () => {
-        const name = "member_name";
-        const reflector = resolve2(ExpressionReflector);
-        const it = It.IsAny();
-        const actual = reflector.reflect(instance => instance[name] = it);
-
-        const expected = new SetPropertyExpression(name, it);
-        expect(actual).toEqual(expected);
-    });
-
-    it("Resolves named method call", () => {
-        const name = "member_name";
-        const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect(instance => instance[name]());
-
-        const expected = new NamedMethodExpression(name, []);
-        expect(actual).toEqual(expected);
-    });
-
-    it("Resolves named method call with argument", () => {
-        const name = "member_name";
-        const arg = "argument";
-        const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect(instance => instance[name](arg));
-
-        const expected = new NamedMethodExpression(name, [arg]);
-        expect(actual).toEqual(expected);
-    });
-
-    it("Resolves expression predicate", () => {
-        const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect(instance => It.Is(() => undefined));
-
-        expect(actual).toEqual(jasmine.any(It));
-    });
-
-    it("Resolves construct operator", () => {
-        const arg = "value";
-        const reflector = resolve2(ExpressionReflector);
-        const actual = reflector.reflect<(name: string) => void>(instance => new instance(arg));
-
-        const expected = new NewOperatorExpression([arg]);
-        expect(actual).toEqual(expected);
-    });
 });

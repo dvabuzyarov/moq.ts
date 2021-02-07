@@ -1,4 +1,4 @@
-import { GetPropertyInteraction, MethodInteraction, SetPropertyInteraction } from "../interactions";
+import { Interaction } from "../interactions";
 import { SequenceId } from "./sequence-id";
 
 /**
@@ -6,7 +6,7 @@ import { SequenceId } from "./sequence-id";
  */
 export interface TrackedAction {
     id: number;
-    expression: MethodInteraction | GetPropertyInteraction | SetPropertyInteraction;
+    expression: Interaction;
 }
 
 /**
@@ -22,7 +22,7 @@ export class Tracker {
     /**
      * @hidden
      */
-    public add(action: MethodInteraction | GetPropertyInteraction | SetPropertyInteraction): void {
+    public add(action: Interaction): void {
         const record = {id: this.sequenceId.next(), expression: action};
         this.log.push(record);
     }
@@ -32,5 +32,9 @@ export class Tracker {
      */
     public get(): TrackedAction[] {
         return [...this.log];
+    }
+
+    public interactions(): Interaction[] {
+        return this.get().map(record => record.expression);
     }
 }
