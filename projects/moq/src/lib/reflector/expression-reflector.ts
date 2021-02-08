@@ -35,6 +35,10 @@ export class ExpressionReflector {
      * Reflects the provided code as an expression tree.
      */
     public reflect<T>(expression: IExpression<T>): Expressions<T>[] {
+        if (expression instanceof It) {
+            return [expression];
+        }
+
         const expressions: Expressions<T>[] = [];
 
         const proxy = this.reflectorProxyFactory.create<T>(expressions);
