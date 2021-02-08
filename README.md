@@ -7,7 +7,6 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/moq.ts.svg)](https://www.npmjs.com/package/moq.ts)
-
 [![License](https://img.shields.io/hexpm/l/plug.svg)](https://www.npmjs.com/package/moq.ts)
 
 # moq.ts | [Documentation](https://dvabuzyarov.github.io/moq.ts/)
