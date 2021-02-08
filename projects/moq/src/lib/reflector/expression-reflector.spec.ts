@@ -76,4 +76,20 @@ describe("Expression Reflector", () => {
         expect(actual).toEqual([interaction]);
     });
 
+    it("Returns It when expression is It", () => {
+        const proxy = new Mock<typeof Proxy>()
+            .object();
+
+        resolveMock(ReflectorProxyFactory)
+            .setup(instance => instance.create(It.IsAny()))
+            .returns(proxy);
+
+        const expression = local.It.IsAny();
+
+        const reflector = resolve2(ExpressionReflector);
+        const actual = reflector.reflect(expression);
+
+        expect(actual).toEqual([expression]);
+    });
+
 });
