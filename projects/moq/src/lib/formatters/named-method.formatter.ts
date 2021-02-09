@@ -7,17 +7,17 @@ import { PropertyKeyFormatter } from "./property-key.formatter";
  */
 export class NamedMethodFormatter {
 
-    constructor(private constantFormatter: ConstantFormatter,
-                private propertyKeyFormatter: PropertyKeyFormatter) {
+    constructor(private readonly constantFormatter: ConstantFormatter,
+                private readonly propertyKeyFormatter: PropertyKeyFormatter) {
 
     }
 
     public format(expression: NamedMethodInteraction): string {
         const formatted: string[] = [];
 
-        expression.args.forEach(arg => {
+        for (const arg of expression.args) {
             formatted.push(this.constantFormatter.format(arg));
-        });
+        }
 
         const value = formatted.join(", ");
         const propertyKey = this.propertyKeyFormatter.format(expression.name);

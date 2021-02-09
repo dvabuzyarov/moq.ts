@@ -18,9 +18,13 @@ import { autoMockingProviders } from "../auto-mocking/auto-mocking.providers";
  * Provides the default configuration for an angular based injector that would be used internally by {@link Mock} instance.
  */
 export class DefaultInjectorConfig implements IInjectorConfig {
+    constructor(private readonly providers: StaticProvider[] = []) {
+    }
+
     get(options: IMockOptions<unknown>, providers: StaticProvider[]): StaticProvider[] {
         return [
             ...providers,
+            ...this.providers,
             ...mockOptionsProviders(options),
             ...trackerProviders,
             ...reflectorProviders,

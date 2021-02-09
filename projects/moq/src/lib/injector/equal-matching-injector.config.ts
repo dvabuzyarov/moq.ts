@@ -109,8 +109,9 @@ import { StaticProvider } from "../static.injector/interface/provider";
  *  ```
  */
 export class EqualMatchingInjectorConfig extends DefaultInjectorConfig {
-    constructor(private matchers: StaticProvider[] = []) {
-        super();
+    constructor(private matchers: StaticProvider[] = [],
+                providers: StaticProvider[] = []) {
+        super(providers);
     }
 
     get(options: IMockOptions<unknown>, providers: StaticProvider[]): StaticProvider[] {
