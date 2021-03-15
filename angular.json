@@ -100,12 +100,20 @@
                 "dest": "./dist/schematics"
               },
               {
-                "source": "./projects/schematics/src/internal-api/schema.d.ts",
-                "dest": "./dist/schematics/internal-api"
+                "source": "./projects/schematics/src/L10.features/L10.internal-api/schema.d.ts",
+                "dest": "./dist/schematics/L10.features/L10.internal-api"
               },
               {
-                "source": "./projects/schematics/src/internal-api/schema.json",
-                "dest": "./dist/schematics/internal-api"
+                "source": "./projects/schematics/src/L10.features/L10.internal-api/schema.json",
+                "dest": "./dist/schematics/L10.features/L10.internal-api"
+              },
+              {
+                "source": "./projects/schematics/src/L10.features/L10.public-api/schema.d.ts",
+                "dest": "./dist/schematics/L10.features/L10.public-api"
+              },
+              {
+                "source": "./projects/schematics/src/L10.features/L10.public-api/schema.json",
+                "dest": "./dist/schematics/L10.features/L10.public-api"
               }
             ]
           }

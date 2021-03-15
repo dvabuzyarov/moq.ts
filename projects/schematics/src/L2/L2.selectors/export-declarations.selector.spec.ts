@@ -1,4 +1,4 @@
-import { createMoqInjector, get, resolve } from "../../L1.unit-test.components/createMoqInjector";
+import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { StatementsSelector } from "./statements.selector";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
 import { ExportDeclaration, NodeArray, SourceFile, Statement, SyntaxKind } from "typescript";
@@ -10,7 +10,7 @@ describe("Export declarations selector", () => {
     });
 
     it("Should be resolved", () => {
-        const actual = get<ExportDeclarationsSelector>();
+        const actual = resolve<ExportDeclarationsSelector>();
         expect(actual).toEqual(jasmine.any(Function));
     });
 
@@ -20,11 +20,11 @@ describe("Export declarations selector", () => {
 
         const sourceFile = dataMock<SourceFile>({});
 
-        resolve(StatementsSelector)
+        resolveMock(StatementsSelector)
             .setup(instance => instance(sourceFile))
             .returns(statements);
 
-        const selector = get<ExportDeclarationsSelector>();
+        const selector = resolve<ExportDeclarationsSelector>();
         const actual = selector(sourceFile);
 
         expect(actual).toEqual([statement]);
@@ -36,11 +36,11 @@ describe("Export declarations selector", () => {
 
         const sourceFile = dataMock<SourceFile>({});
 
-        resolve(StatementsSelector)
+        resolveMock(StatementsSelector)
             .setup(instance => instance(sourceFile))
             .returns(statements);
 
-        const selector = get<ExportDeclarationsSelector>();
+        const selector = resolve<ExportDeclarationsSelector>();
         const actual = selector(sourceFile);
 
         expect(actual).toEqual([]);

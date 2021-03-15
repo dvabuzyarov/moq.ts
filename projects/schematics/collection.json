@@ -3,8 +3,13 @@
   "schematics": {
     "internal-api": {
       "description": "Exposes the internal units of moq.ts via internal_api.ts",
-      "factory": "./internal-api/index",
-      "schema": "./internal-api/schema.json"
+      "factory": "./L10.features/L10.internal-api/index",
+      "schema": "./L10.features/L10.internal-api/schema.json"
+    },
+    "public-api": {
+      "description": "Exposes the public units of moq.ts via public_api.ts",
+      "factory": "./L10.features/L10.public-api/index",
+      "schema": "./L10.features/L10.public-api/schema.json"
     }
   }
 }

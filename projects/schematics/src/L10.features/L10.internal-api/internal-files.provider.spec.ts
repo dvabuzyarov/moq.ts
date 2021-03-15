@@ -1,24 +1,24 @@
-import { createMoqInjector, get, resolve } from "../L1.unit-test.components/createMoqInjector";
+import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
-import { dataMock } from "../L1.unit-test.components/data-mock";
-import { TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
-import { AsyncReturnType } from "../L0/L0.promise/async-return-type";
-import { HOST } from "./injection-tokens/host.injection-token";
+import { dataMock } from "../../L1.unit-test.components/data-mock";
+import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
+import { AsyncReturnType } from "../../L0/L0.promise/async-return-type";
+import { HOST } from "../../L2/L2.injection-tokens/host.injection-token";
 import { Path } from "@angular-devkit/core";
-import { PrivateFilesProvider } from "./private-files.provider";
+import { InternalFilesProvider } from "./internal-files.provider";
 import { DirEntry } from "@angular-devkit/schematics";
-import { DirEntryPathsSelector } from "./selectors/dir-entry-paths.selector";
+import { DirEntryPathsSelector } from "../../L2/L2.selectors/dir-entry-paths.selector";
 import { PublicFilesProvider } from "./public-files.provider";
 
-describe("Private files provider", () => {
+describe("Internal files provider", () => {
     beforeEach(() => {
-        createMoqInjector(PrivateFilesProvider);
+        createMoqInjector(InternalFilesProvider);
     });
 
     it("Should be resolved", () => {
-        const actual = get<PrivateFilesProvider>();
-        expect(actual).toEqual(jasmine.any(PrivateFilesProvider));
+        const actual = resolve<InternalFilesProvider>();
+        expect(actual).toEqual(jasmine.any(InternalFilesProvider));
     });
 
     it("Returns private files paths", async () => {
@@ -34,20 +34,20 @@ describe("Private files provider", () => {
             .returns(sourceRoot)
             .object();
 
-        resolve(Options)
+        resolveMock(Options)
             .setup(() => It.IsAny())
             .mimics(Promise.resolve(options));
-        resolve(HOST)
+        resolveMock(HOST)
             .setup(instance => instance.getDir(libPath))
             .returns(dirEntry);
-        resolve(DirEntryPathsSelector)
+        resolveMock(DirEntryPathsSelector)
             .setup(instance => instance(dirEntry))
             .returns([path]);
-        resolve(PublicFilesProvider)
+        resolveMock(PublicFilesProvider)
             .setup(instance => instance.get())
             .returns(Promise.resolve(new Set()));
 
-        const provider = get<PrivateFilesProvider>();
+        const provider = resolve<InternalFilesProvider>();
         const actual = await provider.get();
 
         const expected = "./lib/dump";
@@ -67,20 +67,20 @@ describe("Private files provider", () => {
             .returns(sourceRoot)
             .object();
 
-        resolve(Options)
+        resolveMock(Options)
             .setup(() => It.IsAny())
             .mimics(Promise.resolve(options));
-        resolve(HOST)
+        resolveMock(HOST)
             .setup(instance => instance.getDir(libPath))
             .returns(dirEntry);
-        resolve(DirEntryPathsSelector)
+        resolveMock(DirEntryPathsSelector)
             .setup(instance => instance(dirEntry))
             .returns([path]);
-        resolve(PublicFilesProvider)
+        resolveMock(PublicFilesProvider)
             .setup(instance => instance.get())
             .returns(Promise.resolve(new Set()));
 
-        const provider = get<PrivateFilesProvider>();
+        const provider = resolve<InternalFilesProvider>();
         const actual = await provider.get();
 
         expect(actual).toEqual([]);
@@ -99,20 +99,20 @@ describe("Private files provider", () => {
             .returns(sourceRoot)
             .object();
 
-        resolve(Options)
+        resolveMock(Options)
             .setup(() => It.IsAny())
             .mimics(Promise.resolve(options));
-        resolve(HOST)
+        resolveMock(HOST)
             .setup(instance => instance.getDir(libPath))
             .returns(dirEntry);
-        resolve(DirEntryPathsSelector)
+        resolveMock(DirEntryPathsSelector)
             .setup(instance => instance(dirEntry))
             .returns([path]);
-        resolve(PublicFilesProvider)
+        resolveMock(PublicFilesProvider)
             .setup(instance => instance.get())
             .returns(Promise.resolve(new Set(["lib/dump" as Path])));
 
-        const provider = get<PrivateFilesProvider>();
+        const provider = resolve<InternalFilesProvider>();
         const actual = await provider.get();
 
         expect(actual).toEqual([]);

@@ -1,18 +1,18 @@
-import { InjectionFactory } from "../L0/L0.injection-factory/injection-factory";
+import { InjectionFactory, TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { Inject, Injectable } from "@angular/core";
-import { TypeofInjectionToken } from "../injector/typeof-injection-token";
+import { TypeofInjectionToken } from "../../injector/typeof-injection-token";
 import { OPTIONS } from "./injection-tokens/options.injection-token";
-import { GETWORKSPACE } from "./injection-tokens/get-workspace.injection-token";
-import { PATH_JOIN } from "./injection-tokens/join.injection-token";
+import { GetWorkspace } from "../../L2/L2.wrappers/get-workspace.service";
+import { JoinPath } from "../../L2/L2.wrappers/join-path.service";
 
 @Injectable()
 export class Options implements InjectionFactory {
     constructor(@Inject(OPTIONS)
                 private readonly options: TypeofInjectionToken<typeof OPTIONS>,
-                @Inject(GETWORKSPACE)
-                private readonly getWorkspace: TypeofInjectionToken<typeof GETWORKSPACE>,
-                @Inject(PATH_JOIN)
-                private readonly join: TypeofInjectionToken<typeof PATH_JOIN>) {
+                @Inject(GetWorkspace)
+                private readonly getWorkspace: TypeOfInjectionFactory<GetWorkspace>,
+                @Inject(JoinPath)
+                private readonly join: TypeOfInjectionFactory<JoinPath>) {
         return this.factory() as any;
     }
 
@@ -21,7 +21,7 @@ export class Options implements InjectionFactory {
         const {sourceRoot} = workspace.projects.get(this.options.project);
         return {
             internalApiPath: this.join(sourceRoot, "internal_api.ts"),
-            publicApiPath: this.join(sourceRoot, "public_api.ts"),
+            publicPath: this.join(sourceRoot, "public.ts"),
             libPath: this.join(sourceRoot, "/lib"),
             sourceRoot: `/${sourceRoot}`
         };

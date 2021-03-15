@@ -1,13 +1,13 @@
-import { HOST } from "./injection-tokens/host.injection-token";
-import { TypeofInjectionToken } from "../injector/typeof-injection-token";
-import { TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
+import { HOST } from "../../L2/L2.injection-tokens/host.injection-token";
+import { TypeofInjectionToken } from "../../injector/typeof-injection-token";
+import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { Options } from "./options";
 import { Inject } from "@angular/core";
-import { DirEntryPathsSelector } from "./selectors/dir-entry-paths.selector";
+import { DirEntryPathsSelector } from "../../L2/L2.selectors/dir-entry-paths.selector";
 import { normalize, Path, relative } from "@angular-devkit/core";
 import { PublicFilesProvider } from "./public-files.provider";
 
-export class PrivateFilesProvider {
+export class InternalFilesProvider {
     constructor(
         @Inject(HOST)
         private readonly tree: TypeofInjectionToken<typeof HOST>,

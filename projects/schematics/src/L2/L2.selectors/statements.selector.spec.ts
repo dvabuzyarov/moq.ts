@@ -1,4 +1,4 @@
-import { createMoqInjector, get } from "../../L1.unit-test.components/createMoqInjector";
+import { createMoqInjector, resolve } from "../../L1.unit-test.components/createMoqInjector";
 import { StatementsSelector } from "./statements.selector";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
 import { NodeArray, SourceFile, Statement } from "typescript";
@@ -9,7 +9,7 @@ describe("Statements selector", () => {
     });
 
     it("Should be resolved", () => {
-        const actual = get<StatementsSelector>();
+        const actual = resolve<StatementsSelector>();
         expect(actual).toEqual(jasmine.any(Function));
     });
 
@@ -17,7 +17,7 @@ describe("Statements selector", () => {
         const statements = dataMock<NodeArray<Statement>>([]);
         const sourceFile = dataMock<SourceFile>({statements});
 
-        const selector = get<StatementsSelector>();
+        const selector = resolve<StatementsSelector>();
         const actual = selector(sourceFile);
 
         expect(actual).toBe(statements);

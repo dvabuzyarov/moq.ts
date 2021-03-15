@@ -1,14 +1,14 @@
-import { createMoqInjector, get, resolve } from "../L1.unit-test.components/createMoqInjector";
+import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
-import { dataMock } from "../L1.unit-test.components/data-mock";
-import { TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
-import { AsyncReturnType } from "../L0/L0.promise/async-return-type";
+import { dataMock } from "../../L1.unit-test.components/data-mock";
+import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
+import { AsyncReturnType } from "../../L0/L0.promise/async-return-type";
 import { PublicFilesProvider } from "./public-files.provider";
-import { HOST } from "./injection-tokens/host.injection-token";
-import { SourceFileCreator } from "./source-file.creator";
+import { HOST } from "../../L2/L2.injection-tokens/host.injection-token";
+import { CreateEmptySourceFileOperator } from "../../L2/L2.operators/create-empty-source-file.operator";
 import { SourceFile } from "typescript";
-import { ModuleSpecifierTextSetSelector } from "./selectors/module-specifier-text-set.selector";
+import { ModuleSpecifierTextSetSelector } from "../../L2/L2.selectors/module-specifier-text-set.selector";
 import { Path } from "@angular-devkit/core";
 
 describe("Public files provider", () => {
@@ -17,35 +17,35 @@ describe("Public files provider", () => {
     });
 
     it("Should be resolved", () => {
-        const actual = get<PublicFilesProvider>();
+        const actual = resolve<PublicFilesProvider>();
         expect(actual).toEqual(jasmine.any(PublicFilesProvider));
     });
 
     it("Returns public files paths", async () => {
         const path = "./file/path" as Path;
-        const publicApiPath = "./public_api.ts";
+        const publicPath = "./public.ts";
         const sourceFile = dataMock<SourceFile>({});
         const buffer = dataMock<Buffer>({});
 
         const options = new Mock<AsyncReturnType<TypeOfInjectionFactory<Options>>>()
-            .setup(instance => instance.publicApiPath)
-            .returns(publicApiPath)
+            .setup(instance => instance.publicPath)
+            .returns(publicPath)
             .object();
 
-        resolve(Options)
+        resolveMock(Options)
             .setup(() => It.IsAny())
             .mimics(Promise.resolve(options));
-        resolve(HOST)
-            .setup(instance => instance.read(publicApiPath))
+        resolveMock(HOST)
+            .setup(instance => instance.read(publicPath))
             .returns(buffer);
-        resolve(SourceFileCreator)
+        resolveMock(CreateEmptySourceFileOperator)
             .setup(instance => instance(buffer))
             .returns(sourceFile);
-        resolve(ModuleSpecifierTextSetSelector)
+        resolveMock(ModuleSpecifierTextSetSelector)
             .setup(instance => instance(sourceFile))
             .returns(new Set([path]));
 
-        const provider = get<PublicFilesProvider>();
+        const provider = resolve<PublicFilesProvider>();
         const actual = await provider.get();
 
         expect(actual).toEqual(new Set([path]));

@@ -1,19 +1,19 @@
-import { createMoqInjector, get, resolve } from "../L1.unit-test.components/createMoqInjector";
+import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
-import { TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
-import { AsyncReturnType } from "../L0/L0.promise/async-return-type";
-import { HOST } from "./injection-tokens/host.injection-token";
+import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
+import { AsyncReturnType } from "../../L0/L0.promise/async-return-type";
+import { HOST } from "../../L2/L2.injection-tokens/host.injection-token";
 import { Path } from "@angular-devkit/core";
-import { PrivateFilesProvider } from "./private-files.provider";
+import { InternalFilesProvider } from "./internal-files.provider";
 import { InternalApiRule } from "./internal-api.rule";
-import { From } from "../L2/L2.hof/from";
-import { Pipe } from "../L2/L2.hof/pipe";
-import { CreateExportDeclarationOperator } from "./operators/create-export-declaration.operator";
-import { AddCommentOperator } from "./operators/add-comment.operator";
-import { CreateSourceFileOperator } from "./operators/create-source-file.operator";
-import { PrintSourceFileOperator } from "./operators/print-source-file.operator";
-import { UnaryFunction } from "../L2/L2.hof/unary-function";
+import { From } from "../../L2/L2.hof/from";
+import { Pipe } from "../../L2/L2.hof/pipe";
+import { UnaryFunction } from "../../L2/L2.hof/unary-function";
+import { AddCommentOperator } from "../../L2/L2.operators/add-comment.operator";
+import { CreateExportDeclarationOperator } from "../../L2/L2.operators/create-export-declaration.operator";
+import { CreateSourceFileOperator } from "../../L2/L2.operators/create-source-file.operator";
+import { PrintSourceFileOperator } from "../../L2/L2.operators/print-source-file.operator";
 
 describe("Internal api rule", () => {
     beforeEach(() => {
@@ -21,13 +21,13 @@ describe("Internal api rule", () => {
     });
 
     it("Should be resolved", () => {
-        const actual = get<InternalApiRule>();
+        const actual = resolve<InternalApiRule>();
         expect(actual).toEqual(jasmine.any(InternalApiRule));
     });
 
     it("Overwrites private_api.ts file", async () => {
         const internalApiPath = "/projects/moq/src/internal_api.ts" as Path;
-        const privateFilesPath = [];
+        const internalFilesPath = [];
         const fileContent = "";
 
         const options = new Mock<AsyncReturnType<TypeOfInjectionFactory<Options>>>()
@@ -38,35 +38,35 @@ describe("Internal api rule", () => {
             .object();
         const finalOperator = new Mock<UnaryFunction<string[], string>>()
             .object();
-        resolve(Options)
+        resolveMock(Options)
             .setup(() => It.IsAny())
             .mimics(Promise.resolve(options));
-        resolve(PrivateFilesProvider)
+        resolveMock(InternalFilesProvider)
             .setup(instance => instance.get())
-            .returns(Promise.resolve(privateFilesPath));
-        resolve(AddCommentOperator)
+            .returns(Promise.resolve(internalFilesPath));
+        resolveMock(AddCommentOperator)
             .setup(instance => instance("\n * Internal API Surface of moq.ts \n"))
             .returns(addCommentOperator);
-        resolve(Pipe)
+        resolveMock(Pipe)
             .setup(instance => instance(
-                get(CreateExportDeclarationOperator),
+                resolve(CreateExportDeclarationOperator),
                 addCommentOperator,
-                get(CreateSourceFileOperator),
-                get(PrintSourceFileOperator)
+                resolve(CreateSourceFileOperator),
+                resolve(PrintSourceFileOperator)
             ))
             .returns(finalOperator);
-        resolve(From)
-            .setup(instance => instance(privateFilesPath, finalOperator))
+        resolveMock(From)
+            .setup(instance => instance(internalFilesPath, finalOperator))
             .returns(fileContent);
-        resolve(HOST)
+        resolveMock(HOST)
             .setup(instance => instance.overwrite(It.IsAny(), It.IsAny()))
             .returns(undefined);
 
-        const provider = get<InternalApiRule>();
+        const provider = resolve<InternalApiRule>();
         const actual = await provider.apply();
 
-        expect(actual).toBe(get(HOST));
-        resolve(HOST)
+        expect(actual).toBe(resolve(HOST));
+        resolveMock(HOST)
             .verify(instance => instance.overwrite(internalApiPath, fileContent));
     });
 

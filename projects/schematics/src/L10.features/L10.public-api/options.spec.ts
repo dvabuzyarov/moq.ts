@@ -1,14 +1,14 @@
-import { createMoqInjector, get, resolve } from "../L1.unit-test.components/createMoqInjector";
+import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
-import { GETWORKSPACE } from "./injection-tokens/get-workspace.injection-token";
 import { It, Mock } from "moq.ts";
-import { dataMock } from "../L1.unit-test.components/data-mock";
-import { TypeOfInjectionFactory } from "../L0/L0.injection-factory/injection-factory";
-import { AsyncReturnType } from "../L0/L0.promise/async-return-type";
+import { dataMock } from "../../L1.unit-test.components/data-mock";
+import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
+import { AsyncReturnType } from "../../L0/L0.promise/async-return-type";
 import { OPTIONS } from "./injection-tokens/options.injection-token";
-import { PATH_JOIN } from "./injection-tokens/join.injection-token";
 import { AngularWorkspace } from "@angular/cli/utilities/config";
 import { ProjectDefinition, ProjectDefinitionCollection } from "@angular-devkit/core/src/workspace/definitions";
+import { GetWorkspace } from "../../L2/L2.wrappers/get-workspace.service";
+import { JoinPath } from "../../L2/L2.wrappers/join-path.service";
 
 describe("Options", () => {
     beforeEach(() => {
@@ -22,18 +22,17 @@ describe("Options", () => {
             .returns(project)
             .object();
         const workspace = dataMock<AngularWorkspace>({projects});
-        resolve(GETWORKSPACE)
+        resolveMock(GetWorkspace)
             .setup(instance => instance(It.IsAny()))
             .returns(Promise.resolve(workspace));
     });
 
     it("Should be resolved", () => {
-        const actual = get<Options>();
+        const actual = resolve<Options>();
         expect(actual).toEqual(jasmine.any(Promise));
     });
 
     it("Returns options", async () => {
-        const internalApiPath = "internal api path";
         const publicApiPath = "public api path";
         const libPath = "lib path";
         const sourceRoot = "source root";
@@ -49,25 +48,22 @@ describe("Options", () => {
             .returns(projects)
             .object();
 
-        resolve(GETWORKSPACE)
+        resolveMock(GetWorkspace)
             .setup(instance => instance("local"))
             .returns(Promise.resolve(workspace));
-        resolve(OPTIONS)
+        resolveMock(OPTIONS)
             .setup(instance => instance.project)
             .returns(projectName);
-        resolve(PATH_JOIN)
-            .setup(instance => instance(sourceRoot, "internal_api.ts"))
-            .returns(internalApiPath)
+        resolveMock(JoinPath)
             .setup(instance => instance(sourceRoot, "public_api.ts"))
             .returns(publicApiPath)
             .setup(instance => instance(sourceRoot, "/lib"))
             .returns(libPath);
 
 
-        const actual = await get<Options>();
+        const actual = await resolve<Options>();
 
         const expected = {
-            internalApiPath,
             publicApiPath,
             libPath,
             sourceRoot: `/${sourceRoot}`

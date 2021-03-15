@@ -1,4 +1,4 @@
-import { createMoqInjector, get, resolve } from "../../L1.unit-test.components/createMoqInjector";
+import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
 import { ExportDeclaration, SourceFile, StringLiteral } from "typescript";
 import { ExportDeclarationsSelector } from "./export-declarations.selector";
@@ -10,7 +10,7 @@ describe("Module specifier text set selector", () => {
     });
 
     it("Should be resolved", () => {
-        const actual = get<ModuleSpecifierTextSetSelector>();
+        const actual = resolve<ModuleSpecifierTextSetSelector>();
         expect(actual).toEqual(jasmine.any(Function));
     });
 
@@ -20,11 +20,11 @@ describe("Module specifier text set selector", () => {
         const statement = dataMock<ExportDeclaration>({moduleSpecifier});
         const sourceFile = dataMock<SourceFile>({});
 
-        resolve(ExportDeclarationsSelector)
+        resolveMock(ExportDeclarationsSelector)
             .setup(instance => instance(sourceFile))
             .returns([statement]);
 
-        const selector = get<ModuleSpecifierTextSetSelector>();
+        const selector = resolve<ModuleSpecifierTextSetSelector>();
         const actual = selector(sourceFile);
 
         expect(actual).toEqual(new Set([text]));
