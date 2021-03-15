@@ -21,8 +21,7 @@
     "commit": "git-cz",
     "commit-retry": "git cz --retry",
     "typedoc": "node ./dist/docs/public_api.js",
-    "serve:docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve",
-    "prepare": "husky install"
+    "serve:docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve"
   },
   "private": true,
   "devDependencies": {
@@ -118,7 +117,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run test && npm run schematics:test",
+      "pre-commit": "npm run lint && npm test && npm run schematics:test",
       "commit-msg": "commitlint --edit"
     }
   }
