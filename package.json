@@ -114,11 +114,5 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm test && npm run schematics:test",
-      "commit-msg": "commitlint --edit"
-    }
   }
 }
