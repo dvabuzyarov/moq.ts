@@ -19,7 +19,8 @@ export function createMoqInjector<T>(constructor: Type<T>, options: IMoqInjector
     return injector;
 }
 
-export function resolveMock<T, R = T extends InjectionFactory ? TypeOfInjectionFactory<T> : T>(token: Type<T> | InjectionToken<T>): IMock<R> {
+export function resolveMock<T, R = T extends InjectionFactory ? TypeOfInjectionFactory<T> : T>
+(token: Type<T> | InjectionToken<T>): IMock<R> {
     const object = injector.get(token) as unknown;
     return object[MoqAPI];
 }
