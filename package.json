@@ -21,7 +21,8 @@
     "commit": "git-cz",
     "commit-retry": "git cz --retry",
     "typedoc": "node ./dist/docs/public_api.js",
-    "serve:docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve"
+    "serve:docs": "rimraf docs/* && npm run build-docs && npm run typedoc && serve",
+    "prepare": "husky install"
   },
   "private": true,
   "devDependencies": {
