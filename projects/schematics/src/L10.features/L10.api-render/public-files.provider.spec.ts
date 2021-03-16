@@ -5,7 +5,7 @@ import { dataMock } from "../../L1.unit-test.components/data-mock";
 import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { AsyncReturnType } from "../../L0/L0.promise/async-return-type";
 import { PublicFilesProvider } from "./public-files.provider";
-import { HOST } from "../../L2/L2.injection-tokens/host.injection-token";
+import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 import { CreateEmptySourceFileOperator } from "../../L2/L2.operators/create-empty-source-file.operator";
 import { SourceFile } from "typescript";
 import { ModuleSpecifierTextSetSelector } from "../../L2/L2.selectors/module-specifier-text-set.selector";
@@ -28,7 +28,7 @@ describe("Public files provider", () => {
         const buffer = dataMock<Buffer>({});
 
         const options = new Mock<AsyncReturnType<TypeOfInjectionFactory<Options>>>()
-            .setup(instance => instance.publicPath)
+            .setup(instance => instance.publicTs)
             .returns(publicPath)
             .object();
 

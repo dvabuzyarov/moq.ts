@@ -1,26 +1,27 @@
 import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
-import { Options } from "./options";
 import { It, Mock } from "moq.ts";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
 import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { AsyncReturnType } from "../../L0/L0.promise/async-return-type";
+import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 import { Path } from "@angular-devkit/core";
-import { ProjectFilesProvider } from "./project-files.provider";
+import { InternalFilesProvider } from "./internal-files.provider";
 import { DirEntry } from "@angular-devkit/schematics";
 import { DirEntryPathsSelector } from "../../L2/L2.selectors/dir-entry-paths.selector";
-import { HOST } from "../../L2/L2.injection-tokens/host.injection-token";
+import { PublicFilesProvider } from "./public-files.provider";
+import { Options } from "./options";
 
-describe("Project files provider", () => {
+describe("Internal files provider", () => {
     beforeEach(() => {
-        createMoqInjector(ProjectFilesProvider);
+        createMoqInjector(InternalFilesProvider);
     });
 
     it("Should be resolved", () => {
-        const actual = resolve<ProjectFilesProvider>();
-        expect(actual).toEqual(jasmine.any(ProjectFilesProvider));
+        const actual = resolve<InternalFilesProvider>();
+        expect(actual).toEqual(jasmine.any(InternalFilesProvider));
     });
 
-    it("Returns project files paths", async () => {
+    it("Returns private files paths", async () => {
         const path = "/projects/moq/src/lib/dump.ts" as Path;
         const sourceRoot = "/projects/moq/src";
         const libPath = "projects/moq/src/lib";
@@ -42,8 +43,11 @@ describe("Project files provider", () => {
         resolveMock(DirEntryPathsSelector)
             .setup(instance => instance(dirEntry))
             .returns([path]);
+        resolveMock(PublicFilesProvider)
+            .setup(instance => instance.get())
+            .returns(Promise.resolve(new Set()));
 
-        const provider = resolve<ProjectFilesProvider>();
+        const provider = resolve<InternalFilesProvider>();
         const actual = await provider.get();
 
         const expected = "./lib/dump";
@@ -72,8 +76,43 @@ describe("Project files provider", () => {
         resolveMock(DirEntryPathsSelector)
             .setup(instance => instance(dirEntry))
             .returns([path]);
+        resolveMock(PublicFilesProvider)
+            .setup(instance => instance.get())
+            .returns(Promise.resolve(new Set()));
 
-        const provider = resolve<ProjectFilesProvider>();
+        const provider = resolve<InternalFilesProvider>();
+        const actual = await provider.get();
+
+        expect(actual).toEqual([]);
+    });
+
+    it("Does not return public files", async () => {
+        const path = "/projects/moq/src/lib/dump.ts" as Path;
+        const sourceRoot = "/projects/moq/src";
+        const libPath = "projects/moq/src/lib";
+        const dirEntry = dataMock<DirEntry>({});
+
+        const options = new Mock<AsyncReturnType<TypeOfInjectionFactory<Options>>>()
+            .setup(instance => instance.libPath)
+            .returns(libPath)
+            .setup(instance => instance.sourceRoot)
+            .returns(sourceRoot)
+            .object();
+
+        resolveMock(Options)
+            .setup(() => It.IsAny())
+            .mimics(Promise.resolve(options));
+        resolveMock(HOST)
+            .setup(instance => instance.getDir(libPath))
+            .returns(dirEntry);
+        resolveMock(DirEntryPathsSelector)
+            .setup(instance => instance(dirEntry))
+            .returns([path]);
+        resolveMock(PublicFilesProvider)
+            .setup(instance => instance.get())
+            .returns(Promise.resolve(new Set(["lib/dump" as Path])));
+
+        const provider = resolve<InternalFilesProvider>();
         const actual = await provider.get();
 
         expect(actual).toEqual([]);

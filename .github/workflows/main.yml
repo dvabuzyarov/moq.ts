@@ -42,8 +42,9 @@ jobs:
       - run: npm run schematics:test
       - run: npm run schematics:build
       - run: npm install -g @angular-devkit/schematics-cli
-      - run: npm run schematics:internal-api:run
+      - run: npm run schematics:api-render:run
       - run: npm run build:docs
       - run: npm run build
+      - run: schematics:package-patcher:run
       - run: npm run typedoc
       - run: npx semantic-release

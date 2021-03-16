@@ -20,8 +20,9 @@ export class Options implements InjectionFactory {
         const workspace = await this.getWorkspace("local");
         const {sourceRoot} = workspace.projects.get(this.options.project);
         return {
-            internalApiPath: this.join(sourceRoot, "internal_api.ts"),
-            publicPath: this.join(sourceRoot, "public.ts"),
+            publicTs: this.join(sourceRoot, "public.ts"),
+            publicApiTs: this.join(sourceRoot, "public_api.ts"),
+            internalApiTs: this.join(sourceRoot, "internal_api.ts"),
             libPath: this.join(sourceRoot, "/lib"),
             sourceRoot: `/${sourceRoot}`
         };

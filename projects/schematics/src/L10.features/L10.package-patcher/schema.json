@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "moq.ts/schematics/internal-api",
+  "id": "moq.ts/schematics/public-api",
   "type": "object",
   "properties": {
     "project": {

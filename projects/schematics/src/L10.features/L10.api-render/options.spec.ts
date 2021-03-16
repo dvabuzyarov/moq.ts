@@ -33,7 +33,9 @@ describe("Options", () => {
     });
 
     it("Returns options", async () => {
-        const publicApiPath = "public api path";
+        const publicApiTs = "../public_api.ts";
+        const publicTs = "../public_api.ts";
+        const internalApiTs = "../internal_api.ts";
         const libPath = "lib path";
         const sourceRoot = "source root";
         const projectName = "project name";
@@ -56,15 +58,20 @@ describe("Options", () => {
             .returns(projectName);
         resolveMock(JoinPath)
             .setup(instance => instance(sourceRoot, "public_api.ts"))
-            .returns(publicApiPath)
+            .returns(publicApiTs)
             .setup(instance => instance(sourceRoot, "/lib"))
-            .returns(libPath);
-
+            .returns(libPath)
+            .setup(instance => instance(sourceRoot, "internal_api.ts"))
+            .returns(internalApiTs)
+            .setup(instance => instance(sourceRoot, "public.ts"))
+            .returns(publicTs);
 
         const actual = await resolve<Options>();
 
         const expected = {
-            publicApiPath,
+            publicApiTs,
+            internalApiTs,
+            publicTs,
             libPath,
             sourceRoot: `/${sourceRoot}`
         } as AsyncReturnType<TypeOfInjectionFactory<Options>>;

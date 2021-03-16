@@ -9,7 +9,7 @@ import { CreateExportDeclarationOperator } from "../../L2/L2.operators/create-ex
 import { AddCommentOperator } from "../../L2/L2.operators/add-comment.operator";
 import { CreateSourceFileOperator } from "../../L2/L2.operators/create-source-file.operator";
 import { PrintSourceFileOperator } from "../../L2/L2.operators/print-source-file.operator";
-import { HOST } from "../../L2/L2.injection-tokens/host.injection-token";
+import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 
 export class PublicApiRule {
     constructor(
@@ -33,7 +33,7 @@ export class PublicApiRule {
     }
 
     async apply() {
-        const {publicApiPath} = await this.options;
+        const {publicApiTs} = await this.options;
         const projectFiles = await this.privateFilesProvider.get();
 
         const targetFile = this.from(
@@ -46,7 +46,7 @@ export class PublicApiRule {
             )
         );
 
-        this.tree.overwrite(publicApiPath, targetFile);
+        this.tree.overwrite(publicApiTs, targetFile);
         return this.tree;
     }
 }

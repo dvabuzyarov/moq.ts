@@ -13,7 +13,7 @@ export class DirEntryPathsSelector implements InjectionFactory {
         return createSelector(
             (source: DirEntry) => source,
             source => {
-                const paths = [];
+                const paths: string[] = [];
                 source.visit((path) => paths.push(path));
                 return paths;
             }

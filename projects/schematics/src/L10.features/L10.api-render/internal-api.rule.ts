@@ -1,8 +1,7 @@
 import { Inject } from "@angular/core";
-import { HOST } from "../../L2/L2.injection-tokens/host.injection-token";
+import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 import { TypeofInjectionToken } from "../../injector/typeof-injection-token";
 import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
-import { Options } from "./options";
 import { InternalFilesProvider } from "./internal-files.provider";
 import { From } from "../../L2/L2.hof/from";
 import { Pipe } from "../../L2/L2.hof/pipe";
@@ -10,6 +9,7 @@ import { CreateExportDeclarationOperator } from "../../L2/L2.operators/create-ex
 import { AddCommentOperator } from "../../L2/L2.operators/add-comment.operator";
 import { CreateSourceFileOperator } from "../../L2/L2.operators/create-source-file.operator";
 import { PrintSourceFileOperator } from "../../L2/L2.operators/print-source-file.operator";
+import { Options } from "./options";
 
 export class InternalApiRule {
     constructor(
@@ -33,7 +33,7 @@ export class InternalApiRule {
     }
 
     async apply() {
-        const {internalApiPath} = await this.options;
+        const {internalApiTs} = await this.options;
         const projectFiles = await this.privateFilesProvider.get();
 
         const internalApiFile = this.from(
@@ -46,7 +46,7 @@ export class InternalApiRule {
             )
         );
 
-        this.tree.overwrite(internalApiPath, internalApiFile);
+        this.tree.overwrite(internalApiTs, internalApiFile);
         return this.tree;
     }
 }

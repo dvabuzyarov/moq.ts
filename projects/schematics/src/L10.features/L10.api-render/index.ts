@@ -19,8 +19,14 @@ import { CreateExportDeclarationOperator } from "../../L2/L2.operators/create-ex
 import { AddCommentOperator } from "../../L2/L2.operators/add-comment.operator";
 import { CreateSourceFileOperator } from "../../L2/L2.operators/create-source-file.operator";
 import { PrintSourceFileOperator } from "../../L2/L2.operators/print-source-file.operator";
-import { CONTEXT } from "../../L2/L2.injection-tokens/context.injection-token";
-import { HOST } from "../../L2/L2.injection-tokens/host.injection-token";
+import { CONTEXT } from "../../L0/L0.injection-tokens/context.injection-token";
+import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
+import { InternalFilesProvider } from "./internal-files.provider";
+import { PublicFilesProvider } from "./public-files.provider";
+import { CreateEmptySourceFileOperator } from "../../L2/L2.operators/create-empty-source-file.operator";
+import { ModuleSpecifierTextSetSelector } from "../../L2/L2.selectors/module-specifier-text-set.selector";
+import { InternalApiRule } from "./internal-api.rule";
+import { HighOrderRule } from "./high-order.rule";
 
 export default (options: JsonObject & ISchema) => (host: Tree, context: SchematicContext) => {
     const injector = Injector.create({
@@ -53,8 +59,34 @@ export default (options: JsonObject & ISchema) => (host: Tree, context: Schemati
                     PrintSourceFileOperator
                 ]
             },
+            {
+                provide: InternalFilesProvider,
+                useClass: InternalFilesProvider,
+                deps: [HOST, Options, DirEntryPathsSelector, PublicFilesProvider]
+            },
+            {
+                provide: PublicFilesProvider,
+                useClass: PublicFilesProvider,
+                deps: [HOST, Options, CreateEmptySourceFileOperator, ModuleSpecifierTextSetSelector]
+            },
+            {
+                provide: InternalApiRule,
+                useClass: InternalApiRule,
+                deps: [
+                    HOST,
+                    InternalFilesProvider,
+                    Options,
+                    From,
+                    Pipe,
+                    CreateExportDeclarationOperator,
+                    AddCommentOperator,
+                    CreateSourceFileOperator,
+                    PrintSourceFileOperator
+                ]
+            },
+            {provide: HighOrderRule, useClass: HighOrderRule, deps: [PublicApiRule, InternalApiRule]},
         ]
     });
-    const rule = injector.get(PublicApiRule);
+    const rule = injector.get(HighOrderRule);
     return rule.apply();
 };

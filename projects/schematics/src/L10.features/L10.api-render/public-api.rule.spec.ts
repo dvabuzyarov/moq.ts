@@ -13,7 +13,7 @@ import { AddCommentOperator } from "../../L2/L2.operators/add-comment.operator";
 import { CreateExportDeclarationOperator } from "../../L2/L2.operators/create-export-declaration.operator";
 import { CreateSourceFileOperator } from "../../L2/L2.operators/create-source-file.operator";
 import { PrintSourceFileOperator } from "../../L2/L2.operators/print-source-file.operator";
-import { HOST } from "../../L2/L2.injection-tokens/host.injection-token";
+import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 
 describe("Public api rule", () => {
     beforeEach(() => {
@@ -27,11 +27,11 @@ describe("Public api rule", () => {
 
     it("Overwrites public_api.ts file", async () => {
         const publicApiPath = "/projects/moq/src/public_api.ts" as Path;
-        const internalFilesPath = [];
+        const projectFilesPath = [];
         const fileContent = "";
 
         const options = new Mock<AsyncReturnType<TypeOfInjectionFactory<Options>>>()
-            .setup(instance => instance.publicApiPath)
+            .setup(instance => instance.publicApiTs)
             .returns(publicApiPath)
             .object();
         const addCommentOperator = new Mock<ReturnType<TypeOfInjectionFactory<AddCommentOperator>>>()
@@ -43,7 +43,7 @@ describe("Public api rule", () => {
             .mimics(Promise.resolve(options));
         resolveMock(ProjectFilesProvider)
             .setup(instance => instance.get())
-            .returns(Promise.resolve(internalFilesPath));
+            .returns(Promise.resolve(projectFilesPath));
         resolveMock(AddCommentOperator)
             .setup(instance => instance("\n * Public API Surface of moq.ts \n"))
             .returns(addCommentOperator);
@@ -56,7 +56,7 @@ describe("Public api rule", () => {
             ))
             .returns(finalOperator);
         resolveMock(From)
-            .setup(instance => instance(internalFilesPath, finalOperator))
+            .setup(instance => instance(projectFilesPath, finalOperator))
             .returns(fileContent);
         resolveMock(HOST)
             .setup(instance => instance.overwrite(It.IsAny(), It.IsAny()))
