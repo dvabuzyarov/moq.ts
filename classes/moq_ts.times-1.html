@@ -79,7 +79,8 @@
 <span class="hljs-keyword">const</span> actual = times.test(<span class="hljs-number">2</span>);
 
 expect(actual).toBe(<span class="hljs-literal">false</span>);
-expect(times.message).toBe(<span class="hljs-string">`Should be called once`</span>);</code></pre>
+expect(times.message).toBe(<span class="hljs-string">`Should be called once`</span>);
+</code></pre>
 							<pre><code class="language-typescript">
 <span class="hljs-keyword">const</span> mockName = <span class="hljs-string">&#x27;mock name&#x27;</span>;
 <span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;(mockName);
@@ -89,7 +90,8 @@ expect(times.message).toBe(<span class="hljs-string">`Should be called once`</sp
 
 <span class="hljs-keyword">const</span> action = <span class="hljs-function">() =&gt;</span> mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.property, Times.AtLeast(<span class="hljs-number">2</span>));
 
-expect(action).toThrow();</code></pre>
+expect(action).toThrow();
+</code></pre>
 						</dd>
 					</dl>
 				</div>
@@ -147,7 +149,7 @@ expect(action).toThrow();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/508925c/projects/moq/src/lib/times.ts#L40">projects/moq/src/lib/times.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/8abda01/projects/moq/src/lib/times.ts#L40">projects/moq/src/lib/times.ts:40</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -203,7 +205,7 @@ expect(action).toThrow();</code></pre>
 					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/508925c/projects/moq/src/lib/times.ts#L49">projects/moq/src/lib/times.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/8abda01/projects/moq/src/lib/times.ts#L49">projects/moq/src/lib/times.ts:49</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -225,7 +227,7 @@ expect(action).toThrow();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/508925c/projects/moq/src/lib/times.ts#L134">projects/moq/src/lib/times.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/8abda01/projects/moq/src/lib/times.ts#L134">projects/moq/src/lib/times.ts:134</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -256,7 +258,7 @@ expect(action).toThrow();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/508925c/projects/moq/src/lib/times.ts#L58">projects/moq/src/lib/times.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/8abda01/projects/moq/src/lib/times.ts#L58">projects/moq/src/lib/times.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -287,7 +289,7 @@ expect(action).toThrow();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/508925c/projects/moq/src/lib/times.ts#L65">projects/moq/src/lib/times.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/8abda01/projects/moq/src/lib/times.ts#L65">projects/moq/src/lib/times.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -309,7 +311,7 @@ expect(action).toThrow();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/508925c/projects/moq/src/lib/times.ts#L74">projects/moq/src/lib/times.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/8abda01/projects/moq/src/lib/times.ts#L74">projects/moq/src/lib/times.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -340,7 +342,7 @@ expect(action).toThrow();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/508925c/projects/moq/src/lib/times.ts#L81">projects/moq/src/lib/times.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/8abda01/projects/moq/src/lib/times.ts#L81">projects/moq/src/lib/times.ts:81</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -362,7 +364,7 @@ expect(action).toThrow();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/508925c/projects/moq/src/lib/times.ts#L92">projects/moq/src/lib/times.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/8abda01/projects/moq/src/lib/times.ts#L92">projects/moq/src/lib/times.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -405,7 +407,7 @@ expect(action).toThrow();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/508925c/projects/moq/src/lib/times.ts#L109">projects/moq/src/lib/times.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/8abda01/projects/moq/src/lib/times.ts#L109">projects/moq/src/lib/times.ts:109</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -436,7 +438,7 @@ expect(action).toThrow();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/508925c/projects/moq/src/lib/times.ts#L118">projects/moq/src/lib/times.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/8abda01/projects/moq/src/lib/times.ts#L118">projects/moq/src/lib/times.ts:118</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -458,7 +460,7 @@ expect(action).toThrow();</code></pre>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/508925c/projects/moq/src/lib/times.ts#L125">projects/moq/src/lib/times.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/8abda01/projects/moq/src/lib/times.ts#L125">projects/moq/src/lib/times.ts:125</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
