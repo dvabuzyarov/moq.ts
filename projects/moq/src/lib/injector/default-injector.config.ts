@@ -23,7 +23,7 @@ export class DefaultInjectorConfig implements IInjectorConfig {
 
     get(options: IMockOptions<unknown>, providers: StaticProvider[]): StaticProvider[] {
         return [
-            ...this.providers,
+            ...providers,
             ...mockOptionsProviders(options),
             ...trackerProviders,
             ...reflectorProviders,
@@ -37,7 +37,7 @@ export class DefaultInjectorConfig implements IInjectorConfig {
             ...expressionMatchersProviders,
             ...typeExplorersProviders,
             ...mockCoreProviders,
-            ...providers
+            ...this.providers,
         ];
     }
 }

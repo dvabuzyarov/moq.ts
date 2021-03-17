@@ -23,7 +23,7 @@ export class Mock<T> implements IMock<T> {
             {provide: MOCK, useValue: this, deps: []},
             {provide: MOCK_CONSTRUCTOR, useValue: (opts: IMockOptions<unknown>) => new Mock(opts), deps: []},
         ];
-        const injector = injectorFactory(preOptions, providers);
+        const injector = injectorFactory(preOptions, ...providers);
         this.core = injector.get(MockCore);
     }
 

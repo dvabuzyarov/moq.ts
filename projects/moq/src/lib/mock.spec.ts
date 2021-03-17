@@ -141,7 +141,7 @@ describe("Mock", () => {
             {provide: MOCK, useValue: mock, deps: []},
             {provide: MOCK_CONSTRUCTOR, useValue: jasmine.any(Function), deps: []},
         ];
-        expect(injectorFactory.injectorFactory).toHaveBeenCalledWith(Mock.options, providers);
+        expect(injectorFactory.injectorFactory).toHaveBeenCalledWith(Mock.options, ...providers);
     });
 
     it("Invokes injectorFactory with overridden static options", () => {
@@ -163,7 +163,7 @@ describe("Mock", () => {
             name,
             target,
             injectorConfig
-        }, providers);
+        }, ...providers);
     });
 
     it("Invokes injectorFactory with overridden instance options", () => {
@@ -181,6 +181,6 @@ describe("Mock", () => {
             name,
             target,
             injectorConfig
-        }, providers);
+        }, ...providers);
     });
 });
