@@ -1,10 +1,15 @@
 {
   "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
-    "internal-api": {
-      "description": "Exposes the internal units of moq.ts via internal_api.ts",
-      "factory": "./internal-api/index",
-      "schema": "./internal-api/schema.json"
+    "api-render": {
+      "description": "Renders public_api.ts and internal_api.ts files",
+      "factory": "./L10.features/L10.api-render/index",
+      "schema": "./L10.features/L10.api-render/schema.json"
+    },
+    "package-patcher": {
+      "description": "Patches final packages so the internal provides access to the public types",
+      "factory": "./L10.features/L10.package-patcher/index",
+      "schema": "./L10.features/L10.package-patcher/schema.json"
     }
   }
 }
