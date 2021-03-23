@@ -7,6 +7,8 @@ import { InjectionFactory, TypeOfInjectionFactory } from "./injector/injection-f
 import { Type } from "./static.injector/type";
 import { InjectionToken } from "./static.injector/injection_token";
 
+export type PromisedType<T> = T extends Promise<infer P> ? P : never;
+
 export const enum PlayableUpdateReason {
     /**
      * The playable is update because it's setup is about to be played
@@ -75,9 +77,21 @@ export interface IPresetBuilder<T, TValue = any> {
     returns(value: TValue): IMock<T>;
 
     /**
+     * Returns the provided value with a resolved Promise as a result of invocation an asynchronous function
+     *
+     * @param value The value
+     */
+    returnsAsync(value: PromisedType<TValue>): IMock<T>;
+
+    /**
      * Throws the provided exception.
      */
     throws<TException>(exception: TException): IMock<T>;
+
+    /**
+     * Returns the provided value with a rejected Promise as a result of interaction with an asynchronous function.
+     */
+    throwsAsync<TException>(exception: TException): IMock<T>;
 
     /**
      * @param callback A callback function that will intercept the interaction.

@@ -31,3 +31,5 @@ export * from "./lib/auto-mocking/auto-mock.factory";
 export * from "./lib/auto-mocking/auto-mock-injector.config";
 export * from "./lib/auto-mocking/auto-mock-options.builder";
 export * from "./lib/injector/typeof-injection-token";
+export * from "./lib/presets/resolved-promise.factory";
+export * from "./lib/presets/rejected-promise.factory";

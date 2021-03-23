@@ -9,7 +9,7 @@ import { AutoMockProvider } from "../auto-mocking/auto-mock.provider";
  */
 export class SetupFactory<T> {
     constructor(
-        private readonly presetBuilderFactory: TypeOfInjectionFactory<PresetBuilderFactory>,
+        private readonly presetBuilderFactory: TypeOfInjectionFactory<PresetBuilderFactory<T>>,
         private readonly autoMockProvider: AutoMockProvider) {
 
     }
