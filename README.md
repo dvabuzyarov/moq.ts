@@ -33,6 +33,7 @@ out [tests.integration](https://github.com/dvabuzyarov/moq.ts/blob/master/projec
 - [Mocking writing property setting](#mocking-writing-property)
 - [Mocking functions](#mocking-functions)
 - [Auto mocking](#auto-mocking)
+- [async/await](#async-await)
 - [Type Discovering](#type-discovering)
 - [Mock behavior](#mock-behavior)
     - [Injector config](#injector-config)
@@ -232,8 +233,9 @@ const actual = root.child.get();
 
 expect(actual).toBe(value);
 ```
-We have to create a child mock in order to set up "child" property of the root object. With auto mocking 
-this case could be rewritten as following:
+
+We have to create a child mock in order to set up "child" property of the root object. With auto mocking this case could
+be rewritten as following:
 
 ```typescript
 
@@ -247,6 +249,84 @@ const actual = root.child.get();
 
 expect(actual).toBe(value);
 ```
+
+## async/await
+
+The library supports asynchronous function with a promise-based wrappers. There are two overloading:
+
+* returnsAsync - returns a Promise which will be resolved with the provided value;
+* throwsAsync - returns a Promise which will be rejected with the provided exception;
+
+```typescript
+async function fn(input: number) {
+    return input;
+}
+
+const exception = new Error();
+const mock = new Mock<typeof fn>()
+    .setup(instance => instance(1))
+    .returnsAsync(2)
+    // equal to
+    // .returns(Promise.resolve(2))
+    .setup(instance => instance(2))
+    .throwsAsync(exception)
+    // equal to
+    // .returns(Promise.reject(exception))
+    .object();
+
+const actual = await mock(1);
+expect(actual).toBe(2);
+
+try {
+    await mock(2);
+} catch (e) {
+    expect(e).toBe(exception);
+}
+```
+
+#### ESLint [@typescript-eslint/promise-function-async](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/promise-function-async.md) rule
+
+This rule will ask you to write setup with async keyword.
+
+```typescript
+const mock = new Mock<typeof fn>()
+    .setup(async instance => instance(1))
+    .returnsAsync(2)
+    .setup(async instance => instance(2))
+    .throwsAsync(exception)
+    .object();
+```
+
+That will interfere the auto-mocking feature. You can disable the auto-mocking feature with a custom implementation
+of [ExpressionReflector](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-reflector.ts)
+or override the returnsAsync and throwsAsync implementation.
+
+```typescript
+import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
+
+Mock.options = {
+    injectorConfig: new EqualMatchingInjectorConfig([], [
+        {
+            provide: ReturnsAsyncPresetFactory,
+            useClass: MimicsResolvedAsyncPresetFactory,
+            deps: [RootMockProvider, Presets, ResolvedPromiseFactory]
+        },
+        {
+            provide: ThrowsAsyncPresetFactory,
+            useClass: MimicsRejectedAsyncPresetFactory,
+            deps: [RootMockProvider, Presets, RejectedPromiseFactory]
+        },
+    ])
+};
+```
+With this config you can use async keyword in setup sections.
+### Promise adapters
+Due to the fact that some environments are not using the native Promise object the library provides adapters for
+resolved/rejected promise that could be overridden.
+See [ResolvedPromiseFactory](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/presets/resolved-promise.factory.ts)
+,
+[RejectedPromiseFactory](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/presets/rejected-promise.factory.ts)
+.
 
 ## Type Discovering
 
