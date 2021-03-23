@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>PlayableNever | moq.ts | documentation</title>
+	<title>ResolvedPromiseFactory | moq.ts | documentation</title>
 	<meta name="description" content="Documentation for moq.ts | documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../modules/moq_ts.html">moq.ts</a>
 				</li>
 				<li>
-					<a href="moq_ts.playablenever-1.html">PlayableNever</a>
+					<a href="moq_ts.resolvedpromisefactory-1.html">ResolvedPromiseFactory</a>
 				</li>
 			</ul>
-			<h1>Class PlayableNever</h1>
+			<h1>Class ResolvedPromiseFactory</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The configured setup will be never applied to invocations.</p>
+						<p>This service is an adapter for a resolved promise.</p>
 					</div>
 				</div>
 			</section>
@@ -78,14 +78,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">PlayableNever</span>
+						<span class="target">ResolvedPromiseFactory</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/moq_ts.iplayable-1.html" class="tsd-signature-type">IPlayable</a></li>
+					<li><a href="../interfaces/moq_ts.injectionfactory-1.html" class="tsd-signature-type">InjectionFactory</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -93,49 +93,56 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="moq_ts.resolvedpromisefactory-1.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.playablenever-1.html#isplayable" class="tsd-kind-icon">is<wbr>Playable</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.playablenever-1.html#update" class="tsd-kind-icon">update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="moq_ts.resolvedpromisefactory-1.html#factory" class="tsd-kind-icon">factory</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="isplayable" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> is<wbr>Playable</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Playable<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Resolved<wbr>Promise<wbr>Factory<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="moq_ts.resolvedpromisefactory-1.html" class="tsd-signature-type">ResolvedPromiseFactory</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/moq_ts.iplayable-1.html">IPlayable</a>.<a href="../interfaces/moq_ts.iplayable-1.html#isplayable">isPlayable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b2c0cb8/projects/moq/src/lib/playables/playable-never.ts#L8">projects/moq/src/lib/playables/playable-never.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b2c0cb8/projects/moq/src/lib/presets/resolved-promise.factory.ts#L6">projects/moq/src/lib/presets/resolved-promise.factory.ts:6</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="moq_ts.resolvedpromisefactory-1.html" class="tsd-signature-type">ResolvedPromiseFactory</a></h4>
 						</li>
 					</ul>
 				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="update" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> update</h3>
+					<a name="factory" class="tsd-anchor"></a>
+					<h3>factory</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">factory<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b2c0cb8/projects/moq/src/lib/playables/playable-never.ts#L7">projects/moq/src/lib/playables/playable-never.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/b2c0cb8/projects/moq/src/lib/presets/resolved-promise.factory.ts#L11">projects/moq/src/lib/presets/resolved-promise.factory.ts:11</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -157,13 +164,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="moq_ts.playablenever-1.html" class="tsd-kind-icon">Playable<wbr>Never</a>
+						<a href="moq_ts.resolvedpromisefactory-1.html" class="tsd-kind-icon">Resolved<wbr>Promise<wbr>Factory</a>
 						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="moq_ts.playablenever-1.html#isplayable" class="tsd-kind-icon">is<wbr>Playable</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="moq_ts.resolvedpromisefactory-1.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="moq_ts.playablenever-1.html#update" class="tsd-kind-icon">update</a>
+								<a href="moq_ts.resolvedpromisefactory-1.html#factory" class="tsd-kind-icon">factory</a>
 							</li>
 						</ul>
 					</li>
@@ -188,6 +195,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
