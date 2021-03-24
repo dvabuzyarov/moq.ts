@@ -4,7 +4,7 @@ import { NamedMethodInteraction } from "../interactions";
 import { NamedMethodExpressionMatcher } from "./instance-method.matcher";
 import { NamedMethodExpression } from "../reflector/expressions";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
-import { Times } from "moq.ts";
+import { Mock, Times } from "moq.ts";
 
 describe("Named method expression matcher", () => {
 
@@ -23,6 +23,19 @@ describe("Named method expression matcher", () => {
         resolveMock(ArgumentsMatcher)
             .setup(instance => instance.matched(arguments1, arguments2))
             .returns(true);
+
+        const matcher = resolve2(NamedMethodExpressionMatcher);
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(true);
+    });
+
+    it("Returns true when right is predicate that returns true", () => {
+        const left = new NamedMethodInteraction("name", []);
+        const right = new Mock<It<any>>({target: It.prototype})
+            .setup(instance => instance.test(left))
+            .returns(true)
+            .object();
 
         const matcher = resolve2(NamedMethodExpressionMatcher);
         const actual = matcher.matched(left, right);
@@ -57,6 +70,19 @@ describe("Named method expression matcher", () => {
         resolveMock(ArgumentsMatcher)
             .setup(instance => instance.matched(args, args))
             .returns(true);
+
+        const matcher = resolve2(NamedMethodExpressionMatcher);
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(false);
+    });
+
+    it("Returns false when right is predicate that returns false", () => {
+        const left = new NamedMethodInteraction("name", []);
+        const right = new Mock<It<any>>({target: It.prototype})
+            .setup(instance => instance.test(left))
+            .returns(false)
+            .object();
 
         const matcher = resolve2(NamedMethodExpressionMatcher);
         const actual = matcher.matched(left, right);

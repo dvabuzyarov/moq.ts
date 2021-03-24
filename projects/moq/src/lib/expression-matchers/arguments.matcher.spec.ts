@@ -1,18 +1,21 @@
 import { ArgumentsMatcher } from "./arguments.matcher";
 import { ConstantMatcher } from "./constant.matcher";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
-import { It } from "moq.ts";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 
 describe("Arguments matcher", () => {
     beforeEach(() => {
-        createInjector2(ArgumentsMatcher, [ConstantMatcher]);
+        const constantMatcher = jasmine.createSpyObj<ConstantMatcher>("", ["matched"]);
+        createInjector([
+            {provide: ConstantMatcher, useValue: constantMatcher, deps: []},
+            {provide: ArgumentsMatcher, useClass: ArgumentsMatcher, deps: [ConstantMatcher]},
+        ]);
     });
 
     it("Returns true when both are undefined", () => {
         const left = undefined;
         const right = undefined;
 
-        const matcher = resolve2(ArgumentsMatcher);
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -22,7 +25,7 @@ describe("Arguments matcher", () => {
         const left = null;
         const right = null;
 
-        const matcher = resolve2(ArgumentsMatcher);
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -31,7 +34,7 @@ describe("Arguments matcher", () => {
     it("Returns true when both are same object", () => {
         const value = [];
 
-        const matcher = resolve2(ArgumentsMatcher);
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched(value, value);
 
         expect(actual).toBe(true);
@@ -41,11 +44,10 @@ describe("Arguments matcher", () => {
         const left = "left value";
         const right = "right value";
 
-        resolveMock(ConstantMatcher)
-            .setup(instance => instance.matched(left, right))
-            .returns(true);
+        resolve(ConstantMatcher)
+            .matched.withArgs(left, right).and.returnValue(true);
 
-        const matcher = resolve2(ArgumentsMatcher);
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched([left], [right]);
 
         expect(actual).toBe(true);
@@ -56,7 +58,7 @@ describe("Arguments matcher", () => {
         const left = [];
         const right = [1];
 
-        const matcher = resolve2(ArgumentsMatcher);
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -68,11 +70,10 @@ describe("Arguments matcher", () => {
         const left = "left value";
         const right = "right value";
 
-        resolveMock(ConstantMatcher)
-            .setup(instance => instance.matched(It.IsAny(), It.IsAny()))
-            .returns(false);
+        resolve(ConstantMatcher)
+            .matched.and.returnValue(false);
 
-        const matcher = resolve2(ArgumentsMatcher);
+        const matcher = resolve(ArgumentsMatcher);
         const actual = matcher.matched([value, left], [value, right]);
 
         expect(actual).toBe(false);

@@ -1,16 +1,20 @@
-import { GetPropertyInteraction } from "../interactions";
-import { GetPropertyExpression } from "../reflector/expressions";
-import { GetPropertyEqualityComparer } from "../expression.equality-comparers/get-property.equality-comparer";
+import {GetPropertyInteraction} from "../interactions";
+import {It} from "../reflector/expression-predicates";
+import {GetPropertyExpression} from "../reflector/expressions";
 
 /**
  * @hidden
  */
 export class GetPropertyExpressionMatcher {
 
-    constructor(private readonly getPropertyEqualityComparer: GetPropertyEqualityComparer) {
-    }
+    public matched(left: GetPropertyInteraction, right: GetPropertyExpression|It<any>): boolean {
+        if (right instanceof It) {
+            return (right as It<any>).test(left);
+        }
 
-    public matched(left: GetPropertyInteraction, right: GetPropertyExpression): boolean {
-        return this.getPropertyEqualityComparer.equals(left, right);
+        const rightExpression = right as GetPropertyExpression;
+        if (left.name === rightExpression.name) return true;
+
+        return false;
     }
 }

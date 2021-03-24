@@ -3,19 +3,19 @@ import { AutoMockedStorage } from "./auto-mock.storage";
 import { Expressions } from "../reflector/expressions";
 import { It } from "moq.ts";
 import { IMock } from "../moq";
+import { ExpressionsMatcher } from "./expressions.matcher";
 import { AutoMockFactory } from "./auto-mock.factory";
 import { AutoMockProvider } from "./auto-mock.provider";
 import { Mock } from "../mock";
-import { ExpressionEqualityComparer } from "./expression.equality-comparer";
 
 describe("Auto mock provider", () => {
 
     beforeEach(() => {
-        createInjector2(AutoMockProvider, [AutoMockedStorage, ExpressionEqualityComparer, AutoMockFactory]);
+        createInjector2(AutoMockProvider, [AutoMockedStorage, ExpressionsMatcher, AutoMockFactory]);
     });
 
     beforeEach(() => {
-        resolveMock(ExpressionEqualityComparer).prototypeof(ExpressionEqualityComparer.prototype);
+        resolveMock(ExpressionsMatcher).prototypeof(ExpressionsMatcher.prototype);
         resolveMock(AutoMockFactory).prototypeof(AutoMockFactory.prototype);
     });
 
@@ -28,8 +28,8 @@ describe("Auto mock provider", () => {
             .setup(() => It.IsAny())
             .mimics(new Map([[key, mock]]));
 
-        resolveMock(ExpressionEqualityComparer)
-            .setup(instance => instance.equals(expression, key))
+        resolveMock(ExpressionsMatcher)
+            .setup(instance => instance.matched(expression, key))
             .returns(true);
 
         const provider = resolve2(AutoMockProvider);
@@ -52,8 +52,8 @@ describe("Auto mock provider", () => {
             .setup(instance => instance.create(expression))
             .returns(mock);
 
-        resolveMock(ExpressionEqualityComparer)
-            .setup(instance => instance.equals(expression, It.IsAny()))
+        resolveMock(ExpressionsMatcher)
+            .setup(instance => instance.matched(expression, It.IsAny()))
             .returns(false);
 
         const provider = resolve2(AutoMockProvider);

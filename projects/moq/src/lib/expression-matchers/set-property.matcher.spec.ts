@@ -2,12 +2,16 @@
 import { SetPropertyExpressionMatcher } from "./set-property.matcher";
 import { SetPropertyExpression } from "../reflector/expressions";
 import { ConstantMatcher } from "./constant.matcher";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { It } from "../reflector/expression-predicates";
+import { createInjector, resolve } from "../../tests.components/resolve.builder";
 
 describe("Set property expression matcher", () => {
-
     beforeEach(() => {
-        createInjector2(SetPropertyExpressionMatcher, [ConstantMatcher]);
+        const constantMatcher = jasmine.createSpyObj<ConstantMatcher>("", ["matched"]);
+        createInjector([
+            {provide: ConstantMatcher, useValue: constantMatcher, deps: []},
+            {provide: SetPropertyExpressionMatcher, useClass: SetPropertyExpressionMatcher, deps: [ConstantMatcher]},
+        ]);
     });
 
     it("Returns true when they are equal", () => {
@@ -16,11 +20,24 @@ describe("Set property expression matcher", () => {
         const left = new SetPropertyInteraction(name, value);
         const right = new SetPropertyExpression(name, value);
 
-        resolveMock(ConstantMatcher)
-            .setup(instance => instance.matched(value, value))
-            .returns(true);
+        resolve(ConstantMatcher)
+            .matched.withArgs(value, value).and.returnValue(true);
 
-        const matcher = resolve2(SetPropertyExpressionMatcher);
+        const matcher = resolve(SetPropertyExpressionMatcher);
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(true);
+    });
+
+    it("Returns true when right is predicate that returns true", () => {
+        const left = new SetPropertyInteraction("name", "value");
+
+        const right = It.Is((value) => {
+            expect(value).toBe(left);
+            return true;
+        });
+
+        const matcher = resolve(SetPropertyExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -31,11 +48,10 @@ describe("Set property expression matcher", () => {
         const left = new SetPropertyInteraction("left name", value);
         const right = new SetPropertyExpression("right name", value);
 
-        resolveMock(ConstantMatcher)
-            .setup(instance => instance.matched(value, value))
-            .returns(true);
+        resolve(ConstantMatcher)
+            .matched.withArgs(left, right).and.returnValue(true);
 
-        const matcher = resolve2(SetPropertyExpressionMatcher);
+        const matcher = resolve(SetPropertyExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -49,13 +65,26 @@ describe("Set property expression matcher", () => {
         const left = new SetPropertyInteraction(name, leftValue);
         const right = new SetPropertyExpression(name, rightValue);
 
-        resolveMock(ConstantMatcher)
-            .setup(instance => instance.matched(leftValue, rightValue))
-            .returns(false);
+        resolve(ConstantMatcher)
+            .matched.withArgs(leftValue, rightValue).and.returnValue(false);
 
-        const matcher = resolve2(SetPropertyExpressionMatcher);
+        const matcher = resolve(SetPropertyExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
     });
+
+    it("Returns false when right is predicate that returns false", () => {
+        const left = new SetPropertyInteraction("name", "value");
+        const right = It.Is((value) => {
+            expect(value).toBe(left);
+            return false;
+        });
+
+        const matcher = resolve(SetPropertyExpressionMatcher);
+        const actual = matcher.matched(left, right);
+
+        expect(actual).toBe(false);
+    });
+
 });

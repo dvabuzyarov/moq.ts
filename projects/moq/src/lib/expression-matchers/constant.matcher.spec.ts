@@ -1,17 +1,13 @@
-import { ConstantMatcher } from "./constant.matcher";
-import { It } from "../reflector/expression-predicates";
-import { createInjector2, resolve2 } from "../../tests.components/resolve.builder";
+import {ConstantMatcher} from "./constant.matcher";
+import {It} from "../reflector/expression-predicates";
 
 describe("Constant matcher", () => {
-    beforeEach(() => {
-        createInjector2(ConstantMatcher, []);
-    });
 
     it("Returns true when both are undefined", () => {
         const left = undefined;
         const right = undefined;
 
-        const matcher = resolve2(ConstantMatcher);
+        const matcher = new ConstantMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -21,7 +17,7 @@ describe("Constant matcher", () => {
         const left = null;
         const right = null;
 
-        const matcher = resolve2(ConstantMatcher);
+        const matcher = new ConstantMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -31,7 +27,7 @@ describe("Constant matcher", () => {
         const left = 1;
         const right = 1;
 
-        const matcher = resolve2(ConstantMatcher);
+        const matcher = new ConstantMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -45,7 +41,7 @@ describe("Constant matcher", () => {
             return true;
         });
 
-        const matcher = resolve2(ConstantMatcher);
+        const matcher = new ConstantMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -56,7 +52,7 @@ describe("Constant matcher", () => {
         const left = {};
         const right = {};
 
-        const matcher = resolve2(ConstantMatcher);
+        const matcher = new ConstantMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -70,7 +66,7 @@ describe("Constant matcher", () => {
             return false;
         });
 
-        const matcher = resolve2(ConstantMatcher);
+        const matcher = new ConstantMatcher();
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
