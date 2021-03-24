@@ -96,7 +96,7 @@
 					<li><a href="#mocking-writing-property">Mocking writing property setting</a></li>
 					<li><a href="#mocking-functions">Mocking functions</a></li>
 					<li><a href="#auto-mocking">Auto mocking</a></li>
-					<li><a href="#async-await">async/await</a></li>
+					<li><a href="#asyncawait">async/await</a></li>
 					<li><a href="#type-discovering">Type Discovering</a></li>
 					<li><a href="#mock-behavior">Mock behavior</a><ul>
 							<li><a href="#injector-config">Injector config</a><ul>
@@ -758,7 +758,7 @@ it(<span class="hljs-string">&quot;Returns new object with returns&quot;</span>,
 					<h2>MoqAPI symbol</h2>
 				</a>
 				<p>In some scenarios it is necessary to get Moq API from mocked object. For this purposes the library provides a predefined
-				symbol MoqAPI. Mocked objects in their turns exposes a symbol property to access to its Moq API.</p>
+				symbol MoqAPI. Mocked objects in their turn expose a symbol property to access to its Moq API.</p>
 				<p>Since this property makes sense only in context of the moq library and is not specific for mocked types it is not
 				possible to define an interaction behaviour with Setup API.</p>
 				<p>The property is read only and trackabel, so it possible to use for verification.</p>
@@ -773,7 +773,7 @@ func[MoqAPI]
 
 expect(actual).toBe(<span class="hljs-number">12</span>);
 </code></pre>
-				<p>In operator does not sees this property until it is used in setups.</p>
+				<p>In operator does not see this property until it is used in setups.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = <span class="hljs-keyword">new</span> Mock&lt;{}&gt;()
     .object();
 
