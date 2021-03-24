@@ -1,13 +1,12 @@
 ﻿import { SetPropertyInteraction } from "../interactions";
-import { SetPropertyExpressionMatcher } from "./set-property.matcher";
 import { SetPropertyExpression } from "../reflector/expressions";
-import { ConstantMatcher } from "./constant.matcher";
+import { ConstantEqualityComparer } from "./constant.equality-comparer";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { SetPropertyEqualityComparer } from "./set-property.equality-comparer";
 
-describe("Set property expression matcher", () => {
-
+describe("Set property expression equality comparer", () => {
     beforeEach(() => {
-        createInjector2(SetPropertyExpressionMatcher, [ConstantMatcher]);
+        createInjector2(SetPropertyEqualityComparer, [ConstantEqualityComparer]);
     });
 
     it("Returns true when they are equal", () => {
@@ -16,12 +15,12 @@ describe("Set property expression matcher", () => {
         const left = new SetPropertyInteraction(name, value);
         const right = new SetPropertyExpression(name, value);
 
-        resolveMock(ConstantMatcher)
-            .setup(instance => instance.matched(value, value))
+        resolveMock(ConstantEqualityComparer)
+            .setup(instance => instance.equals(value, value))
             .returns(true);
 
-        const matcher = resolve2(SetPropertyExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const matcher = resolve2(SetPropertyEqualityComparer);
+        const actual = matcher.equals(left, right);
 
         expect(actual).toBe(true);
     });
@@ -31,12 +30,12 @@ describe("Set property expression matcher", () => {
         const left = new SetPropertyInteraction("left name", value);
         const right = new SetPropertyExpression("right name", value);
 
-        resolveMock(ConstantMatcher)
-            .setup(instance => instance.matched(value, value))
+        resolveMock(ConstantEqualityComparer)
+            .setup(instance => instance.equals(value, value))
             .returns(true);
 
-        const matcher = resolve2(SetPropertyExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const matcher = resolve2(SetPropertyEqualityComparer);
+        const actual = matcher.equals(left, right);
 
         expect(actual).toBe(false);
     });
@@ -49,12 +48,12 @@ describe("Set property expression matcher", () => {
         const left = new SetPropertyInteraction(name, leftValue);
         const right = new SetPropertyExpression(name, rightValue);
 
-        resolveMock(ConstantMatcher)
-            .setup(instance => instance.matched(leftValue, rightValue))
+        resolveMock(ConstantEqualityComparer)
+            .setup(instance => instance.equals(leftValue, rightValue))
             .returns(false);
 
-        const matcher = resolve2(SetPropertyExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const matcher = resolve2(SetPropertyEqualityComparer);
+        const actual = matcher.equals(left, right);
 
         expect(actual).toBe(false);
     });

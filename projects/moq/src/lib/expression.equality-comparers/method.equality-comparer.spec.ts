@@ -1,13 +1,13 @@
-import { ArgumentsMatcher } from "./arguments.matcher";
+import { ArgumentsEqualityComparer } from "./arguments.equality-comparer";
 import { MethodInteraction } from "../interactions";
 import { MethodExpression } from "../reflector/expressions";
-import { MethodExpressionMatcher } from "./method.matcher";
+import { MethodEqualityComparer } from "./method.equality-comparer";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
-describe("Method expression matcher", () => {
+describe("Method expression equality comparer", () => {
 
     beforeEach(() => {
-        createInjector2(MethodExpressionMatcher, [ArgumentsMatcher]);
+        createInjector2(MethodEqualityComparer, [ArgumentsEqualityComparer]);
     });
 
     it("Returns true when they are equal", () => {
@@ -17,12 +17,12 @@ describe("Method expression matcher", () => {
         const left = new MethodInteraction(arguments1);
         const right = new MethodExpression(arguments2);
 
-        resolveMock(ArgumentsMatcher)
-            .setup(instance => instance.matched(arguments1, arguments2))
+        resolveMock(ArgumentsEqualityComparer)
+            .setup(instance => instance.equals(arguments1, arguments2))
             .returns(true);
 
-        const matcher = resolve2(MethodExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const comparer = resolve2(MethodEqualityComparer);
+        const actual = comparer.equals(left, right);
 
         expect(actual).toBe(true);
     });
@@ -34,12 +34,12 @@ describe("Method expression matcher", () => {
         const left = new MethodInteraction(arguments1);
         const right = new MethodExpression(arguments2);
 
-        resolveMock(ArgumentsMatcher)
-            .setup(instance => instance.matched(arguments1, arguments2))
+        resolveMock(ArgumentsEqualityComparer)
+            .setup(instance => instance.equals(arguments1, arguments2))
             .returns(false);
 
-        const matcher = resolve2(MethodExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const comparer = resolve2(MethodEqualityComparer);
+        const actual = comparer.equals(left, right);
 
         expect(actual).toBe(false);
     });

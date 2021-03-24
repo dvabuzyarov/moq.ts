@@ -1,31 +1,24 @@
-import {GetPropertyInteraction} from "../interactions";
-import {GetPropertyExpressionMatcher} from "./get-property.matcher";
-import {It} from "../reflector/expression-predicates";
-import {GetPropertyExpression} from "../reflector/expressions";
+import { GetPropertyInteraction } from "../interactions";
+import { GetPropertyExpressionMatcher } from "./get-property.matcher";
+import { GetPropertyExpression } from "../reflector/expressions";
+import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { GetPropertyEqualityComparer } from "../expression.equality-comparers/get-property.equality-comparer";
 
 describe("Get property expression matcher", () => {
+    beforeEach(() => {
+        createInjector2(GetPropertyExpressionMatcher, [GetPropertyEqualityComparer]);
+    });
 
     it("Returns true when they are equal", () => {
         const name = "name";
         const left = new GetPropertyInteraction(name);
         const right = new GetPropertyExpression(name);
 
-        const matcher = new GetPropertyExpressionMatcher();
-        const actual = matcher.matched(left, right);
+        resolveMock(GetPropertyEqualityComparer)
+            .setup(instance => instance.equals(left, right))
+            .returns(true);
 
-        expect(actual).toBe(true);
-    });
-
-    it("Returns true when right is predicate that returns true", () => {
-        const name = "name";
-        const left = new GetPropertyInteraction(name);
-
-        const right = It.Is((value) => {
-            expect(value).toBe(left);
-            return true;
-        });
-
-        const matcher = new GetPropertyExpressionMatcher();
+        const matcher = resolve2(GetPropertyExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -35,21 +28,11 @@ describe("Get property expression matcher", () => {
         const left = new GetPropertyInteraction("left name");
         const right = new GetPropertyExpression("right name");
 
-        const matcher = new GetPropertyExpressionMatcher();
-        const actual = matcher.matched(left, right);
+        resolveMock(GetPropertyEqualityComparer)
+            .setup(instance => instance.equals(left, right))
+            .returns(false);
 
-        expect(actual).toBe(false);
-    });
-
-    it("Returns false when right is predicate that returns false", () => {
-        const name = "name";
-        const left = new GetPropertyInteraction(name);
-        const right = It.Is((value) => {
-            expect(value).toBe(left);
-            return false;
-        });
-
-        const matcher = new GetPropertyExpressionMatcher();
+        const matcher = resolve2(GetPropertyExpressionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);

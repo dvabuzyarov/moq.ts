@@ -1,15 +1,15 @@
-import { ArgumentsMatcher } from "./arguments.matcher";
+import { ArgumentsEqualityComparer } from "./arguments.equality-comparer";
 import { It } from "../reflector/expression-predicates";
 import { NamedMethodInteraction } from "../interactions";
-import { NamedMethodExpressionMatcher } from "./instance-method.matcher";
+import { InstanceMethodEqualityComparer } from "./instance-method.equality-comparer";
 import { NamedMethodExpression } from "../reflector/expressions";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { Times } from "moq.ts";
 
-describe("Named method expression matcher", () => {
+describe("Instance method expression equality comparer", () => {
 
     beforeEach(() => {
-        createInjector2(NamedMethodExpressionMatcher, [ArgumentsMatcher]);
+        createInjector2(InstanceMethodEqualityComparer, [ArgumentsEqualityComparer]);
     });
 
     it("Returns true when they are equal", () => {
@@ -20,12 +20,12 @@ describe("Named method expression matcher", () => {
         const left = new NamedMethodInteraction(name, arguments1);
         const right = new NamedMethodExpression(name, arguments2);
 
-        resolveMock(ArgumentsMatcher)
-            .setup(instance => instance.matched(arguments1, arguments2))
+        resolveMock(ArgumentsEqualityComparer)
+            .setup(instance => instance.equals(arguments1, arguments2))
             .returns(true);
 
-        const matcher = resolve2(NamedMethodExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const comparer = resolve2(InstanceMethodEqualityComparer);
+        const actual = comparer.equals(left, right);
 
         expect(actual).toBe(true);
     });
@@ -38,12 +38,12 @@ describe("Named method expression matcher", () => {
         const left = new NamedMethodInteraction(name, arguments1);
         const right = new NamedMethodExpression(name, arguments2);
 
-        resolveMock(ArgumentsMatcher)
-            .setup(instance => instance.matched(arguments1, arguments2))
+        resolveMock(ArgumentsEqualityComparer)
+            .setup(instance => instance.equals(arguments1, arguments2))
             .returns(false);
 
-        const matcher = resolve2(NamedMethodExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const comparer = resolve2(InstanceMethodEqualityComparer);
+        const actual = comparer.equals(left, right);
 
         expect(actual).toBe(false);
     });
@@ -54,12 +54,12 @@ describe("Named method expression matcher", () => {
         const left = new NamedMethodInteraction("left name", args);
         const right = new NamedMethodExpression("right name", args);
 
-        resolveMock(ArgumentsMatcher)
-            .setup(instance => instance.matched(args, args))
+        resolveMock(ArgumentsEqualityComparer)
+            .setup(instance => instance.equals(args, args))
             .returns(true);
 
-        const matcher = resolve2(NamedMethodExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const comparer = resolve2(InstanceMethodEqualityComparer);
+        const actual = comparer.equals(left, right);
 
         expect(actual).toBe(false);
     });
@@ -70,12 +70,12 @@ describe("Named method expression matcher", () => {
         const left = new NamedMethodInteraction("left name", args);
         const right = new NamedMethodExpression("right name", args);
 
-        const matcher = resolve2(NamedMethodExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const comparer = resolve2(InstanceMethodEqualityComparer);
+        const actual = comparer.equals(left, right);
 
         expect(actual).toBe(false);
-        resolveMock(ArgumentsMatcher)
-            .verify(instance => instance.matched(It.IsAny(), It.IsAny()), Times.Never());
+        resolveMock(ArgumentsEqualityComparer)
+            .verify(instance => instance.equals(It.IsAny(), It.IsAny()), Times.Never());
     });
 
 });

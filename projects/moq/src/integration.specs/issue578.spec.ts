@@ -8,6 +8,7 @@ import { MimicsResolvedAsyncPresetFactory } from "../lib/presets/factories/mimic
 import { ThrowsAsyncPresetFactory } from "../lib/presets/factories/throws-async-preset.factory";
 import { MimicsRejectedAsyncPresetFactory } from "../lib/presets/factories/mimics-rejected-async-preset.factory";
 import { RejectedPromiseFactory } from "../lib/presets/rejected-promise.factory";
+import { It } from "../lib/reflector/expression-predicates";
 
 describe("#578 support async functions", () => {
 
@@ -95,5 +96,37 @@ describe("#578 support async functions", () => {
         }
 
         expect(actual).toBe(exception);
+    });
+
+    it("respects precedence", async () => {
+        interface IUserManager {
+            getUser(name: string): Promise<string>;
+        }
+
+        const injectorConfig = new EqualMatchingInjectorConfig([], [
+            {
+                provide: ReturnsAsyncPresetFactory,
+                useClass: MimicsResolvedAsyncPresetFactory,
+                deps: [RootMockProvider, Presets, ResolvedPromiseFactory]
+            },
+            {
+                provide: ThrowsAsyncPresetFactory,
+                useClass: MimicsRejectedAsyncPresetFactory,
+                deps: [RootMockProvider, Presets, RejectedPromiseFactory]
+            },
+        ]);
+
+        const value = "user";
+        const name = "some-example@example.com";
+
+        const manager = new Mock<IUserManager>({injectorConfig})
+            .setup(async x => x.getUser(It.IsAny()))
+            .returnsAsync(null)
+            .setup(async x => x.getUser(name))
+            .returnsAsync(value)
+            .object();
+
+        const actual = await manager.getUser("");
+        expect(actual).toBe(null);
     });
 });
