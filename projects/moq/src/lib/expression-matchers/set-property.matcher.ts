@@ -1,6 +1,5 @@
 import { SetPropertyExpression } from "../reflector/expressions";
 import { SetPropertyInteraction } from "../interactions";
-import { It } from "../reflector/expression-predicates";
 import { ConstantMatcher } from "./constant.matcher";
 
 /**
@@ -8,18 +7,11 @@ import { ConstantMatcher } from "./constant.matcher";
  */
 export class SetPropertyExpressionMatcher {
 
-    constructor(private constantMatcher: ConstantMatcher) {
+    constructor(private readonly constantMatcher: ConstantMatcher) {
 
     }
 
-    public matched(left: SetPropertyInteraction, right: SetPropertyExpression | It<any>): boolean {
-        if (right instanceof It) {
-            return (right as It<any>).test(left);
-        }
-
-        const rightExpression = right as SetPropertyExpression;
-        if (left.name === rightExpression.name && this.constantMatcher.matched(left.value, rightExpression.value)) return true;
-
-        return false;
+    public matched(left: SetPropertyInteraction, right: SetPropertyExpression): boolean {
+        return left.name === right.name && this.constantMatcher.matched(left.value, right.value);
     }
 }

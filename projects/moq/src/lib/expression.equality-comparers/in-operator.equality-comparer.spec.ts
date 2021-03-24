@@ -1,12 +1,12 @@
 import { InOperatorInteraction } from "../interactions";
 import { InOperatorExpression } from "../reflector/expressions";
-import { InOperatorExpressionMatcher } from "./in-operator.matcher";
+import { InOperatorEqualityComparer } from "./in-operator.equality-comparer";
 import { createInjector2, resolve2 } from "../../tests.components/resolve.builder";
 
-describe("In operator expression matcher", () => {
+describe("In operator expression equality comparer", () => {
 
     beforeEach(() => {
-        createInjector2(InOperatorExpressionMatcher, []);
+        createInjector2(InOperatorEqualityComparer, []);
     });
 
     it("Returns true when they are equal", () => {
@@ -14,8 +14,8 @@ describe("In operator expression matcher", () => {
         const left = new InOperatorInteraction(name);
         const right = new InOperatorExpression(name);
 
-        const matcher = resolve2(InOperatorExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const comparer = resolve2(InOperatorEqualityComparer);
+        const actual = comparer.equals(left, right);
 
         expect(actual).toBe(true);
     });
@@ -24,8 +24,8 @@ describe("In operator expression matcher", () => {
         const left = new InOperatorInteraction("left name");
         const right = new InOperatorExpression("right name");
 
-        const matcher = resolve2(InOperatorExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const comparer = resolve2(InOperatorEqualityComparer);
+        const actual = comparer.equals(left, right);
 
         expect(actual).toBe(false);
     });

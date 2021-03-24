@@ -5,7 +5,7 @@ import { ConstantMatcher } from "./constant.matcher";
  * @hidden
  */
 export class ArgumentsMatcher  {
-    constructor(private constantMatcher: ConstantMatcher) {
+    constructor(private readonly constantMatcher: ConstantMatcher) {
 
     }
 
