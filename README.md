@@ -33,7 +33,7 @@ out [tests.integration](https://github.com/dvabuzyarov/moq.ts/blob/master/projec
 - [Mocking writing property setting](#mocking-writing-property)
 - [Mocking functions](#mocking-functions)
 - [Auto mocking](#auto-mocking)
-- [async/await](#async-await)
+- [async/await](#asyncawait)
 - [Type Discovering](#type-discovering)
 - [Mock behavior](#mock-behavior)
     - [Injector config](#injector-config)
@@ -764,7 +764,7 @@ it("Returns new object with returns", () => {
 ## MoqAPI symbol
 
 In some scenarios it is necessary to get Moq API from mocked object. For this purposes the library provides a predefined
-symbol MoqAPI. Mocked objects in their turns exposes a symbol property to access to its Moq API.
+symbol MoqAPI. Mocked objects in their turn expose a symbol property to access to its Moq API.
 
 Since this property makes sense only in context of the moq library and is not specific for mocked types it is not
 possible to define an interaction behaviour with Setup API.
@@ -784,7 +784,7 @@ const actual = func();
 expect(actual).toBe(12);
 ```
 
-In operator does not sees this property until it is used in setups.
+In operator does not see this property until it is used in setups.
 
 ```typescript
 const object = new Mock<{}>()

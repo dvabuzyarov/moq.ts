@@ -1,13 +1,13 @@
-import { ArgumentsMatcher } from "./arguments.matcher";
+import { ArgumentsEqualityComparer } from "./arguments.equality-comparer";
 import { NewOperatorInteraction } from "../interactions";
 import { NewOperatorExpression } from "../reflector/expressions";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
-import { NewOperatorExpressionMatcher } from "./new-operator.matcher";
+import { NewOperatorEqualityComparer } from "./new-operator.equality-comparer";
 
-describe("new operator expression matcher", () => {
+describe("new operator expression equality comparer", () => {
 
     beforeEach(() => {
-        createInjector2(NewOperatorExpressionMatcher, [ArgumentsMatcher]);
+        createInjector2(NewOperatorEqualityComparer, [ArgumentsEqualityComparer]);
     });
 
     it("Returns true when they are equal", () => {
@@ -17,12 +17,12 @@ describe("new operator expression matcher", () => {
         const left = new NewOperatorInteraction(arguments1);
         const right = new NewOperatorExpression(arguments2);
 
-        resolveMock(ArgumentsMatcher)
-            .setup(instance => instance.matched(arguments1, arguments2))
+        resolveMock(ArgumentsEqualityComparer)
+            .setup(instance => instance.equals(arguments1, arguments2))
             .returns(true);
 
-        const matcher = resolve2(NewOperatorExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const comparer = resolve2(NewOperatorEqualityComparer);
+        const actual = comparer.equals(left, right);
 
         expect(actual).toBe(true);
     });
@@ -34,12 +34,12 @@ describe("new operator expression matcher", () => {
         const left = new NewOperatorInteraction(arguments1);
         const right = new NewOperatorExpression(arguments2);
 
-        resolveMock(ArgumentsMatcher)
-            .setup(instance => instance.matched(arguments1, arguments2))
+        resolveMock(ArgumentsEqualityComparer)
+            .setup(instance => instance.equals(arguments1, arguments2))
             .returns(false);
 
-        const matcher = resolve2(NewOperatorExpressionMatcher);
-        const actual = matcher.matched(left, right);
+        const comparer = resolve2(NewOperatorEqualityComparer);
+        const actual = comparer.equals(left, right);
 
         expect(actual).toBe(false);
     });
