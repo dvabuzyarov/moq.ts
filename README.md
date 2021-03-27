@@ -205,6 +205,20 @@ mock.verify(instance => instance(It.Is(value => value === 1)), Times.Exactly(1))
 
 ## Auto mocking
 
+>  By default, in version 8 this feature is disabled as causes conflicts with support for async/await keywords.
+
+```typescript
+// activation of the auto-mocking feature
+const injectorConfig = new EqualMatchingInjectorConfig([], [
+    {
+        provide: EXPRESSION_REFLECTOR,
+        useExisting: FullExpressionReflector,
+        deps: []
+    },
+]);
+Mock.options = {injectorConfig};
+```
+
 The library support auto mocking for deep members. Consider this case:
 
 ```typescript
@@ -297,9 +311,8 @@ const mock = new Mock<typeof fn>()
     .object();
 ```
 
-That will interfere the auto-mocking feature. You can disable the auto-mocking feature with a custom implementation
-of [ExpressionReflector](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-reflector.ts)
-or override the returnsAsync and throwsAsync implementation.
+That will interfere the auto-mocking feature. You can override the returnsAsync and throwsAsync implementation.
+> The auto-mocking feature is disabled by default in version 8
 
 ```typescript
 import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
@@ -319,8 +332,11 @@ Mock.options = {
     ])
 };
 ```
-With this config you can use async keyword in setup sections.
-### Promise adapters
+
+With this config you can use async keyword in setup and verify sections.
+
+#### Promise adapters
+
 Due to the fact that some environments are not using the native Promise object the library provides adapters for
 resolved/rejected promise that could be overridden.
 See [ResolvedPromiseFactory](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/presets/resolved-promise.factory.ts)

@@ -1,13 +1,11 @@
 import { ISequenceVerifier } from "../moq";
 import { Times } from "../times";
-import { ExpressionReflector } from "../reflector/expression-reflector";
 import { Tracker } from "../tracker/tracker";
 import { ProxyFactory } from "../interceptors/proxy.factory";
 import { Verifier } from "../verification/verifier";
 import { Expressions } from "../reflector/expressions";
 import { PrototypeStorage } from "../interceptors/prototype.storage";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
-import { MethodInteraction } from "../interactions";
 import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
 import { MOCK } from "../injector/mock.injection-token";
 import { MockCore } from "./mock-core";
@@ -16,6 +14,7 @@ import * as moq from "moq.ts";
 import { SetupFactory } from "../presets/setup.factory";
 import { StaticInjector } from "../static.injector/injector";
 import { InjectionToken } from "../static.injector/injection_token";
+import { EXPRESSION_REFLECTOR } from "../reflector/expression-reflector";
 
 describe("Mock core", () => {
     beforeEach(() => {
@@ -23,7 +22,7 @@ describe("Mock core", () => {
             MOCK_OPTIONS,
             Tracker,
             StaticInjector,
-            ExpressionReflector,
+            EXPRESSION_REFLECTOR,
             ProxyFactory,
             Verifier,
             PrototypeStorage,
@@ -86,7 +85,7 @@ describe("Mock core", () => {
         const expressions = [];
         const expression = instance => instance["property"];
 
-        resolveMock(ExpressionReflector)
+        resolveMock(EXPRESSION_REFLECTOR)
             .setup(instance => instance.reflect(expression))
             .returns(expressions);
 
@@ -103,7 +102,7 @@ describe("Mock core", () => {
         const expression = instance => instance["property"];
         const expectedExpression = {} as Expressions<unknown>;
 
-        resolveMock(ExpressionReflector)
+        resolveMock(EXPRESSION_REFLECTOR)
             .setup(instance => instance.reflect(expression))
             .returns([expectedExpression]);
         resolveMock(SetupFactory)
