@@ -261,6 +261,19 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 				<a href="#auto-mocking" id="auto-mocking" style="color: inherit; text-decoration: none;">
 					<h2>Auto mocking</h2>
 				</a>
+				<blockquote>
+					<p> By default, in version 8 this feature is disabled as causes conflicts with support for async/await keywords.</p>
+				</blockquote>
+				<pre><code class="language-typescript"><span class="hljs-comment">// activation of the auto-mocking feature</span>
+<span class="hljs-keyword">const</span> injectorConfig = <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig([], [
+    {
+        <span class="hljs-attr">provide</span>: EXPRESSION_REFLECTOR,
+        <span class="hljs-attr">useExisting</span>: FullExpressionReflector,
+        <span class="hljs-attr">deps</span>: []
+    },
+]);
+Mock.options = {injectorConfig};
+</code></pre>
 				<p>The library support auto mocking for deep members. Consider this case:</p>
 				<pre><code class="language-typescript">
 <span class="hljs-keyword">interface</span> IChild {
@@ -344,9 +357,10 @@ expect(actual).toBe(<span class="hljs-number">2</span>);
     .throwsAsync(exception)
     .object();
 </code></pre>
-				<p>That will interfere the auto-mocking feature. You can disable the auto-mocking feature with a custom implementation
-					of <a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-reflector.ts">ExpressionReflector</a>
-				or override the returnsAsync and throwsAsync implementation.</p>
+				<p>That will interfere the auto-mocking feature. You can override the returnsAsync and throwsAsync implementation.</p>
+				<blockquote>
+					<p>The auto-mocking feature is disabled by default in version 8</p>
+				</blockquote>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts&quot;</span>;
 
 Mock.options = {
@@ -364,9 +378,9 @@ Mock.options = {
     ])
 };
 </code></pre>
-				<p>With this config you can use async keyword in setup sections.</p>
+				<p>With this config you can use async keyword in setup and verify sections.</p>
 				<a href="#promise-adapters" id="promise-adapters" style="color: inherit; text-decoration: none;">
-					<h3>Promise adapters</h3>
+					<h4>Promise adapters</h4>
 				</a>
 				<p>Due to the fact that some environments are not using the native Promise object the library provides adapters for
 					resolved/rejected promise that could be overridden.
