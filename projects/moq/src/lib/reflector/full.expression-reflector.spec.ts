@@ -1,14 +1,14 @@
-import { ExpressionReflector } from "./expression-reflector";
+import { FullExpressionReflector } from "./full.expression-reflector";
 import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { ReflectorProxyFactory } from "./reflector-proxy.factory";
 import { It, Mock } from "moq.ts";
 import * as local from "./expression-predicates";
 import { SetPropertyExpression } from "./expressions";
 
-describe("Expression Reflector", () => {
+describe("Full expression reflector", () => {
 
     beforeEach(() => {
-        createInjector2(ExpressionReflector, [ReflectorProxyFactory]);
+        createInjector2(FullExpressionReflector, [ReflectorProxyFactory]);
     });
 
     it("Returns expressions", () => {
@@ -28,7 +28,7 @@ describe("Expression Reflector", () => {
             .returns(undefined)
             .object();
 
-        const reflector = resolve2(ExpressionReflector);
+        const reflector = resolve2(FullExpressionReflector);
         const actual = reflector.reflect(expression);
 
         expect(actual).toBe(expressions);
@@ -47,7 +47,7 @@ describe("Expression Reflector", () => {
             .returns(local.It.IsAny())
             .object();
 
-        const reflector = resolve2(ExpressionReflector);
+        const reflector = resolve2(FullExpressionReflector);
         const actual = reflector.reflect(expression);
 
         expect(actual).toEqual([jasmine.any(local.It)]);
@@ -70,7 +70,7 @@ describe("Expression Reflector", () => {
             .returns(local.It.IsAny())
             .object();
 
-        const reflector = resolve2(ExpressionReflector);
+        const reflector = resolve2(FullExpressionReflector);
         const actual = reflector.reflect(expression);
 
         expect(actual).toEqual([interaction]);
@@ -86,7 +86,7 @@ describe("Expression Reflector", () => {
 
         const expression = local.It.IsAny();
 
-        const reflector = resolve2(ExpressionReflector);
+        const reflector = resolve2(FullExpressionReflector);
         const actual = reflector.reflect(expression);
 
         expect(actual).toEqual([expression]);

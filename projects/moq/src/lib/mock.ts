@@ -1,4 +1,4 @@
-import { IExpression } from "./reflector/expression-reflector";
+import { IExpression } from "./reflector/full.expression-reflector";
 import { IMock, IMockOptions, IPresetBuilder, ISequenceVerifier } from "./moq";
 import { Times } from "./times";
 import { injectorFactory } from "./injector/injector.factory";

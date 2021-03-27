@@ -1,4 +1,4 @@
-import { ExpressionReflector, IExpression } from "../reflector/expression-reflector";
+import { IExpression } from "../reflector/full.expression-reflector";
 import { ProxyFactory } from "../interceptors/proxy.factory";
 import { IMock, IPresetBuilder, ISequenceVerifier } from "../moq";
 import { Times } from "../times";
@@ -14,6 +14,8 @@ import { InjectionFactory } from "../injector/injection-factory";
 import { InjectionToken } from "../static.injector/injection_token";
 import { Type } from "../static.injector/type";
 import { Injector } from "../static.injector/injector";
+import { EXPRESSION_REFLECTOR } from "../reflector/expression-reflector";
+
 
 /**
  * The internal core of {@link Mock} class.
@@ -23,7 +25,7 @@ export class MockCore<T> implements IMock<T> {
         public readonly options: TypeofInjectionToken<typeof MOCK_OPTIONS>,
         public readonly tracker: Tracker,
         private readonly injector: Injector,
-        private readonly reflector: ExpressionReflector,
+        private readonly reflector: TypeofInjectionToken<typeof EXPRESSION_REFLECTOR>,
         private readonly interceptor: ProxyFactory<T>,
         private readonly verifier: Verifier<T>,
         private readonly prototypeStorage: PrototypeStorage,

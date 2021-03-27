@@ -1,4 +1,4 @@
-import { IExpression } from "./reflector/expression-reflector";
+import { IExpression } from "./reflector/full.expression-reflector";
 import { Times } from "./times";
 import { Interaction } from "./interactions";
 import { Tracker } from "./tracker/tracker";
