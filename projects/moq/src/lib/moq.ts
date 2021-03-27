@@ -1,4 +1,3 @@
-import { IExpression } from "./reflector/full.expression-reflector";
 import { Times } from "./times";
 import { Interaction } from "./interactions";
 import { Tracker } from "./tracker/tracker";
@@ -6,6 +5,7 @@ import { StaticProvider } from "./static.injector/interface/provider";
 import { InjectionFactory, TypeOfInjectionFactory } from "./injector/injection-factory";
 import { Type } from "./static.injector/type";
 import { InjectionToken } from "./static.injector/injection_token";
+import { IExpression } from "./reflector/expression-reflector";
 
 export type PromisedType<T> = T extends Promise<infer P> ? P : never;
 

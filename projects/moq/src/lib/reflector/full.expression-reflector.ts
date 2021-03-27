@@ -1,14 +1,7 @@
 ﻿import { It } from "./expression-predicates";
 import { Expressions } from "./expressions";
 import { ReflectorProxyFactory } from "./reflector-proxy.factory";
-import { ExpressionReflector } from "./expression-reflector";
-
-/**
- * A function that accepts a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
- * and either plays expected interaction or returns a predicate function.
- * See {@link IMock.setup} function and {@link It} class for more details.
- */
-export type IExpression<T> = (instance: T) => void | any | It<T>;
+import { ExpressionReflector, IExpression } from "./expression-reflector";
 
 /**
  * This class reflects an expression to an expression tree representation.

@@ -1,4 +1,3 @@
-import { IExpression } from "../reflector/full.expression-reflector";
 import { ProxyFactory } from "../interceptors/proxy.factory";
 import { IMock, IPresetBuilder, ISequenceVerifier } from "../moq";
 import { Times } from "../times";
@@ -14,7 +13,7 @@ import { InjectionFactory } from "../injector/injection-factory";
 import { InjectionToken } from "../static.injector/injection_token";
 import { Type } from "../static.injector/type";
 import { Injector } from "../static.injector/injector";
-import { EXPRESSION_REFLECTOR } from "../reflector/expression-reflector";
+import { EXPRESSION_REFLECTOR, IExpression } from "../reflector/expression-reflector";
 
 
 /**

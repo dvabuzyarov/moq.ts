@@ -1,6 +1,6 @@
 ﻿import { Expressions } from "./expressions";
-import { FullExpressionReflector, IExpression } from "./full.expression-reflector";
-import { ExpressionReflector } from "./expression-reflector";
+import { FullExpressionReflector } from "./full.expression-reflector";
+import { ExpressionReflector, IExpression } from "./expression-reflector";
 
 /**
  * This class reflects an expression to the first expression representation.
