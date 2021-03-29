@@ -54,7 +54,7 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "32.3.0",
     "eslint-plugin-prefer-arrow": "1.2.3",
-    "husky": "5.2.0",
+    "husky": "6.0.0",
     "jasmine": "3.7.0",
     "jasmine-core": "3.7.1",
     "moq.ts": "7.2.0",
