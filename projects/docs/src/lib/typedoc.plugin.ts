@@ -71,7 +71,7 @@ export class MoqPlugin extends ConverterComponent {
             // Now that all the children have been relocated to the mergeTarget, delete the empty module
             // Make sure the module being renamed doesn't have children, or they will be deleted
             if (renaming.children) renaming.children.length = 0;
-            CommentPlugin.removeReflection(context.project, renaming);
+            // CommentPlugin.removeReflection(context.project, renaming);
         });
     }
 }
