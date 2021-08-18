@@ -11,6 +11,7 @@ import { GetWorkspace } from "../../L2/L2.wrappers/get-workspace.service";
 import { JoinPath } from "../../L2/L2.wrappers/join-path.service";
 import { JsonParseService } from "../../L2/L2.wrappers/json-parse.service";
 import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
+import { workspaces } from "@angular-devkit/core";
 
 describe("Options", () => {
     beforeEach(() => {
@@ -56,9 +57,15 @@ describe("Options", () => {
         const internalEsm2015Folder = "dist/moq/esm2015/";
 
         const project = dataMock<ProjectDefinition>({sourceRoot});
-        const workspace = new Mock<AngularWorkspace>()
-            .setup(instance => instance.projects.get(projectName))
+
+        const projects = new Mock<workspaces.ProjectDefinitionCollection>()
+            .setup(instance => instance.get(projectName))
             .returns(project)
+            .object();
+
+        const workspace = new Mock<AngularWorkspace>()
+            .setup(instance => instance.projects)
+            .returns(projects)
             .object();
 
         resolveMock(GetWorkspace)

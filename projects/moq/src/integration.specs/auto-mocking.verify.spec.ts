@@ -54,4 +54,24 @@ describe("Auto mocking verify", () => {
         expect(actual).toBe(undefined);
         mock.verify(instance => instance.shallow(It.IsAny()).deep);
     });
+
+    it("verifies invocation with async", async () => {
+        interface IUserManager {
+            getUser(name: string): Promise<string>;
+        }
+
+        const value = "user";
+        const name = "some-example@example.com";
+
+        const managerMock = new Mock<IUserManager>()
+            .setup(async x => x.getUser(It.IsAny()))
+            .returnsAsync(null)
+            .setup(async x => x.getUser(name))
+            .returnsAsync(value);
+
+        const actual = await managerMock.object().getUser(name);
+
+        expect(actual).toBe(value);
+        managerMock.verify(async instance => instance.getUser(name));
+    });
 });

@@ -6,6 +6,7 @@ export * from "./lib/times";
 export * from "./lib/playables/play-times";
 export * from "./lib/reflector/expressions";
 export * from "./lib/reflector/expression-predicates";
+export * from "./lib/reflector/expression-reflector";
 export * from "./lib/reflector/full.expression-reflector";
 export * from "./lib/reflector/single.expression-reflector";
 export * from "./lib/playables/play-times";
