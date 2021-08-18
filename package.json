@@ -60,7 +60,7 @@
     "moq.ts": "7.3.4",
     "ng-auto-moq": "4.0.4",
     "ng-packagr": "12.2.0",
-    "rxjs": "6.6.7",
+    "rxjs": "7.3.0",
     "semantic-release": "17.4.5",
     "serve": "12.0.0",
     "ts-node": "10.2.1",
