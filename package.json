@@ -44,7 +44,7 @@
     "@qiwi/semantic-release-gh-pages-plugin": "5.2.0",
     "@semantic-release/changelog": "5.0.1",
     "@testdozer/ng-cmd-builder": "1.2.5",
-    "@types/jasmine": "3.10.1",
+    "@types/jasmine": "3.10.2",
     "@types/node": "16.11.6",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
