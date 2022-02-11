@@ -15,5 +15,5 @@ export class PlayableExactly implements IPlayable {
         }
     };
 
-    readonly isPlayable = () => this.invoked <= this.count;
+    readonly isPlayable = () => this.invoked < this.count;
 }
