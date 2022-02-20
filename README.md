@@ -36,6 +36,7 @@ out [tests.integration](https://github.com/dvabuzyarov/moq.ts/blob/master/projec
 - [async/await](#asyncawait)
 - [Type Discovering](#type-discovering)
 - [Mock behavior](#mock-behavior)
+    - [Play times](#setup-play-times)
     - [Injector config](#injector-config)
         - [DefaultInjectorConfig](#defaultinjectorconfig)
         - [EqualMatchingInjectorConfig and custom matchers](#equalmatchinginjectorconfig)
@@ -458,7 +459,7 @@ mock.setup(() => It.IsAny())
     .throws(new Error("setup is missed"));
 ```
 #### Setup play times
-It is possible to define a predicate that define when provided setup can handle an interaction.
+It is possible to define a predicate that defines if provided setup can handle an interaction.
 
 ```typescript
 import { PlayTimes } from "moq.ts";
@@ -475,7 +476,8 @@ const object = new Mock<Prototype>()
     .returns(4)
     
     .setup(instance => instance.method())
-    .play(PlayTimes.Once()) // <-- could be any predefined funtion of PlayTimes or a custom function
+    // it could be any predefined funtion of PlayTimes or a custom function
+    .play(PlayTimes.Once()) 
     .returns(2)
     
     .object();
