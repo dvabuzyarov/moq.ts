@@ -11,12 +11,17 @@ import { ThrowsAsyncPresetFactory } from "./factories/throws-async-preset.factor
 import { ThrowsPresetFactory } from "./factories/throws-preset.factory";
 import { ResolvedPromiseFactory } from "./resolved-promise.factory";
 import { RejectedPromiseFactory } from "./rejected-promise.factory";
+import { ComplexExpressionGuard } from "../auto-mocking/expression.guards/complex-expression.guard";
 
 /**
  * @hidden
  */
 export const presetsProviders = [
-    {provide: SetupFactory, useClass: SetupFactory, deps: [PresetBuilderFactory, AutoMockProvider]},
+    {
+        provide: SetupFactory,
+        useClass: SetupFactory,
+        deps: [PresetBuilderFactory, AutoMockProvider, ComplexExpressionGuard]
+    },
     {provide: Presets, useClass: Presets, deps: []},
     {provide: ResolvedPromiseFactory, useClass: ResolvedPromiseFactory, deps: []},
     {provide: RejectedPromiseFactory, useClass: RejectedPromiseFactory, deps: []},

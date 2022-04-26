@@ -1,9 +1,9 @@
-import { Interaction } from "../interactions";
+import { Expression } from "../reflector/expressions";
 import { CallbackPresetPlayer } from "./callback-preset.player";
 
 describe("Callback preset player", () => {
 
-    class TestInteraction extends Interaction {
+    class TestInteraction extends Expression {
         constructor() {
             super(undefined, undefined);
         }

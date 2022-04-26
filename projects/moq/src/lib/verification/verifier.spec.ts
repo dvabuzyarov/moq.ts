@@ -3,7 +3,7 @@ import { Times } from "../times";
 import { Mock, Times as moqTimes } from "moq.ts";
 import { CallCounter } from "./call-counter";
 import { Expressions } from "../reflector/expressions";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { VerificationTester } from "./verification-tester";
 import { AutoMockProvider } from "../auto-mocking/auto-mock.provider";
 import { IMock } from "../moq";
@@ -11,7 +11,7 @@ import { IMock } from "../moq";
 describe("Verifier", () => {
 
     beforeEach(() => {
-        createInjector2(Verifier, [CallCounter, VerificationTester, AutoMockProvider]);
+        createInjector(Verifier, [CallCounter, VerificationTester, AutoMockProvider]);
     });
 
     beforeEach(() => {

@@ -1,4 +1,4 @@
-import { InOperatorInteraction } from "../interactions";
+import { InOperatorExpression } from "../reflector/expressions";
 import { PropertyKeyFormatter } from "./property-key.formatter";
 
 /**
@@ -9,7 +9,7 @@ export class InOperatorFormatter {
 
     }
 
-    public format(expression: InOperatorInteraction): string {
+    public format(expression: InOperatorExpression): string {
         const propertyKey = this.propertyKeyFormatter.format(expression.name);
         return `In operator for \'${propertyKey}\'`;
     }

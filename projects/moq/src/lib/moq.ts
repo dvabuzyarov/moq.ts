@@ -1,5 +1,5 @@
 import { Times } from "./times";
-import { Interaction } from "./interactions";
+import { Expression } from "./reflector/expressions";
 import { Tracker } from "./tracker/tracker";
 import { StaticProvider } from "./static.injector/interface/provider";
 import { InjectionFactory, TypeOfInjectionFactory } from "./injector/injection-factory";
@@ -104,7 +104,7 @@ export interface IPresetBuilder<T, TValue = any> {
      *     .callback(({args: [channel, listener]}) => listener(undefined, response));
      * ```
      */
-    callback(callback: (interaction: Interaction) => TValue): IMock<T>;
+    callback(callback: (interaction: Expression) => TValue): IMock<T>;
 
     /**
      * Plays the setup on target invocation when predicate returns true otherwise the setup will be ignored.

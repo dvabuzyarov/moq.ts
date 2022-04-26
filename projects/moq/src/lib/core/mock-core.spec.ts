@@ -5,7 +5,7 @@ import { ProxyFactory } from "../interceptors/proxy.factory";
 import { Verifier } from "../verification/verifier";
 import { Expressions } from "../reflector/expressions";
 import { PrototypeStorage } from "../interceptors/prototype.storage";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
 import { MOCK } from "../injector/mock.injection-token";
 import { MockCore } from "./mock-core";
@@ -18,7 +18,7 @@ import { EXPRESSION_REFLECTOR } from "../reflector/expression-reflector";
 
 describe("Mock core", () => {
     beforeEach(() => {
-        createInjector2(MockCore, [
+        createInjector(MockCore, [
             MOCK_OPTIONS,
             Tracker,
             StaticInjector,

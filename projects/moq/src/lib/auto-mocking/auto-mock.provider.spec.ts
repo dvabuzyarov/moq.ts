@@ -1,4 +1,4 @@
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { AutoMockedStorage } from "./auto-mock.storage";
 import { Expressions } from "../reflector/expressions";
 import { It } from "moq.ts";
@@ -6,12 +6,12 @@ import { IMock } from "../moq";
 import { AutoMockFactory } from "./auto-mock.factory";
 import { AutoMockProvider } from "./auto-mock.provider";
 import { Mock } from "../mock";
-import { ExpressionEqualityComparer } from "./expression.equality-comparer";
+import { ExpressionEqualityComparer } from "../expression.equality-comparers/expression.equality-comparer";
 
 describe("Auto mock provider", () => {
 
     beforeEach(() => {
-        createInjector2(AutoMockProvider, [AutoMockedStorage, ExpressionEqualityComparer, AutoMockFactory]);
+        createInjector(AutoMockProvider, [AutoMockedStorage, ExpressionEqualityComparer, AutoMockFactory]);
     });
 
     beforeEach(() => {

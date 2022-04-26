@@ -1,10 +1,10 @@
 import { NamePrefixProvider } from "./name-prefix.provider";
-import { createInjector2, resolve2 } from "../../../tests.components/resolve.builder";
+import { createInjector, resolve2 } from "../../../tests.components/resolve.builder";
 
 describe("Name prefix provider", () => {
 
     beforeEach(() => {
-        createInjector2(NamePrefixProvider, []);
+        createInjector(NamePrefixProvider, []);
     });
 
     it("Returns name", () => {

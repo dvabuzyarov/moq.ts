@@ -1,5 +1,5 @@
 import { IInjectorConfig, IMock, IPresetBuilder, ISequenceVerifier } from "./moq";
-import { createInjector2, resolveMock } from "../tests.components/resolve.builder";
+import { createInjector, resolveMock } from "../tests.components/resolve.builder";
 import { MOCK } from "./injector/mock.injection-token";
 import { DefaultInjectorConfig } from "./injector/default-injector.config";
 import * as injectorFactory from "./injector/injector.factory";
@@ -12,7 +12,7 @@ import { MOCK_CONSTRUCTOR } from "./injector/mock-constructor.injection-token";
 
 describe("Mock", () => {
     beforeEach(() => {
-        const injector = createInjector2(Mock, [MockCore]);
+        const injector = createInjector(Mock, [MockCore]);
         spyOn(injectorFactory, "injectorFactory").and.returnValue(injector);
     });
 

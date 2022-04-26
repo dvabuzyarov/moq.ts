@@ -1,4 +1,4 @@
-import { GetPropertyInteraction } from "../interactions";
+import { GetPropertyExpression } from "../reflector/expressions";
 import { PropertyKeyFormatter } from "./property-key.formatter";
 
 /**
@@ -9,7 +9,7 @@ export class GetPropertyFormatter {
 
     }
 
-    public format(interaction: GetPropertyInteraction): string {
+    public format(interaction: GetPropertyExpression): string {
         const propertyKey = this.propertyKeyFormatter.format(interaction.name);
         return `Getter of \'${propertyKey}\'`;
     }

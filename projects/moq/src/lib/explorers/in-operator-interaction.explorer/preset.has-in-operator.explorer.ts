@@ -1,5 +1,4 @@
 import { IPreset } from "../../presets/presets/preset";
-import { InOperatorInteraction } from "../../interactions";
 import { InOperatorExpression } from "../../reflector/expressions";
 import { It } from "../../reflector/expression-predicates";
 
@@ -19,7 +18,7 @@ export class PresetHasInOperatorExplorer {
         }
 
         if (preset.target instanceof It) {
-            return preset.target.test(new InOperatorInteraction(name));
+            return preset.target.test(new InOperatorExpression(name));
         }
 
         return false;

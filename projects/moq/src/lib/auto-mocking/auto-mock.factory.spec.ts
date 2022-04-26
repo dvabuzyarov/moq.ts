@@ -1,4 +1,4 @@
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { AutoMockFactory } from "./auto-mock.factory";
 import { MOCK_CONSTRUCTOR } from "../injector/mock-constructor.injection-token";
 import { AutoMockOptionsBuilder } from "./auto-mock-options.builder";
@@ -8,7 +8,7 @@ import { IMock, IMockOptions } from "../moq";
 describe("Auto mock factory", () => {
 
     beforeEach(() => {
-        createInjector2(AutoMockFactory, [MOCK_CONSTRUCTOR, AutoMockOptionsBuilder]);
+        createInjector(AutoMockFactory, [MOCK_CONSTRUCTOR, AutoMockOptionsBuilder]);
     });
 
     it("Returns a new instance of mock", () => {

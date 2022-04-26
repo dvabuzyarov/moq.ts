@@ -1,5 +1,5 @@
 import { MembersPropertyExplorer } from "./members-property.explorer";
-import { createInjector, resolve } from "../../../tests.components/resolve.builder";
+import { createInjectorFromProviders, resolve } from "../../../tests.components/resolve.builder";
 import { PrototypeStorage } from "../../interceptors/prototype.storage";
 import { PropertyDescriptorProvider } from "./property-descriptor.provider";
 import { REFLECT_HAS } from "../reflect-has.injection-token";
@@ -9,7 +9,7 @@ describe("Members property explorer", () => {
         const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>(["get"]);
         const propertyDescriptorProvider = jasmine.createSpyObj<PropertyDescriptorProvider>(["get"]);
         const reflectHas = jasmine.createSpy<typeof Reflect.has>("Reflect.has");
-        createInjector([
+        createInjectorFromProviders([
             {
                 provide: MembersPropertyExplorer,
                 useClass: MembersPropertyExplorer,

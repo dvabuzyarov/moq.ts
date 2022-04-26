@@ -2,7 +2,7 @@ import { TypeOfInjectionFactory } from "../injector/injection-factory";
 import { AutoMockFactory } from "./auto-mock.factory";
 import { Expressions } from "../reflector/expressions";
 import { AutoMockedStorage } from "./auto-mock.storage";
-import { ExpressionEqualityComparer } from "./expression.equality-comparer";
+import { ExpressionEqualityComparer } from "../expression.equality-comparers/expression.equality-comparer";
 
 /**
  * @hidden

@@ -1,4 +1,4 @@
-import { createInjector, resolve } from "../../../tests.components/resolve.builder";
+import { createInjectorFromProviders, resolve } from "../../../tests.components/resolve.builder";
 import { PrototypeStorage } from "../../interceptors/prototype.storage";
 import { REFLECT_HAS } from "../reflect-has.injection-token";
 import { PropertyIsReadOnlyTester } from "./property-is-read-only.tester";
@@ -9,7 +9,7 @@ describe("Property is read only tester", () => {
         const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>(["get"]);
         const propertyDescriptorProvider = jasmine.createSpyObj<PropertyDescriptorProvider>(["get"]);
         const reflectHas = jasmine.createSpy<typeof Reflect.has>("Reflect.has");
-        createInjector([
+        createInjectorFromProviders([
             {
                 provide: PropertyIsReadOnlyTester,
                 useClass: PropertyIsReadOnlyTester,

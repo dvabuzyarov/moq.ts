@@ -1,18 +1,20 @@
-import { It } from "../reflector/expression-predicates";
 import { EqualMatcher } from "./equal.matcher";
+import { ConstantEqualityComparer } from "../expression.equality-comparers/constant.equality-comparer";
+import { ItEqualityComparer } from "../expression.equality-comparers/it.equality-comparer";
 
 /**
  * @hidden
  */
-export class EqualConstantMatcher {
-    constructor(private equalMatcher: EqualMatcher) {
+// @ts-ignore TS2720
+export class EqualConstantMatcher implements ConstantEqualityComparer {
+    constructor(
+        private readonly itEqualityComparer: ItEqualityComparer,
+        private readonly equalMatcher: EqualMatcher) {
     }
 
-    public matched(left: any, right: any | It<any>): boolean {
-        if (right instanceof It) {
-            return (right as It<any>).test(left);
-        }
-        return this.equalMatcher.matched(left, right);
+    equals(left: any, right: any): boolean {
+        const actual = this.itEqualityComparer.equals(left, right);
+        return actual === undefined ? this.equalMatcher.matched(left, right) : actual;
     }
 }
 

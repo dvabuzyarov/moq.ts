@@ -2,14 +2,14 @@ import { Times } from "../times";
 import { Expressions } from "../reflector/expressions";
 import { VerifyFormatter } from "../formatters/verify.formatter";
 import { VerifyError } from "./verify-error";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { It } from "moq.ts";
 import { VerificationTester } from "./verification-tester";
 
 describe("Verification tester", () => {
 
     beforeEach(() => {
-        createInjector2(VerificationTester, [VerifyFormatter]);
+        createInjector(VerificationTester, [VerifyFormatter]);
     });
 
     it("Throws VerifyException when the expected expression has not been called expected times", () => {

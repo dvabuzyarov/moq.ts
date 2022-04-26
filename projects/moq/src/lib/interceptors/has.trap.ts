@@ -1,5 +1,5 @@
 import { Tracker } from "../tracker/tracker";
-import { InOperatorInteraction } from "../interactions";
+import { InOperatorExpression } from "../reflector/expressions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
@@ -12,18 +12,18 @@ import { PresetPlayablesUpdater } from "../playables/preset-playables.updater";
  */
 export class HasTrap {
     constructor(
-        private tracker: Tracker,
-        private propertiesValueStorage: PropertiesValueStorage,
-        private interactionPlayer: InteractionPlayer,
-        private inOperatorInteractionExplorer: InOperatorInteractionExplorer,
-        private hasPropertyExplorer: HasPropertyExplorer,
-        private hasMethodExplorer: HasMethodExplorer,
-        private presetPlayablesUpdater: PresetPlayablesUpdater) {
+        private readonly tracker: Tracker,
+        private readonly propertiesValueStorage: PropertiesValueStorage,
+        private readonly interactionPlayer: InteractionPlayer,
+        private readonly inOperatorInteractionExplorer: InOperatorInteractionExplorer,
+        private readonly hasPropertyExplorer: HasPropertyExplorer,
+        private readonly hasMethodExplorer: HasMethodExplorer,
+        private readonly presetPlayablesUpdater: PresetPlayablesUpdater) {
 
     }
 
     public intercept(property: PropertyKey): any {
-        const interaction = new InOperatorInteraction(property);
+        const interaction = new InOperatorExpression(property);
         this.tracker.add(interaction);
 
         if (this.propertiesValueStorage.has(property)) {

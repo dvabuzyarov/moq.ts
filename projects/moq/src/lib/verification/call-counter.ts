@@ -1,6 +1,6 @@
 import { Expressions } from "../reflector/expressions";
-import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
 import { Tracker } from "../tracker/tracker";
+import { ExpressionEqualityComparer } from "../expression.equality-comparers/expression.equality-comparer";
 
 /**
  * @hidden
@@ -8,7 +8,7 @@ import { Tracker } from "../tracker/tracker";
 export class CallCounter {
 
     constructor(
-        private readonly expressionMatcher: ExpressionMatcher,
+        private readonly comparer: ExpressionEqualityComparer,
         private readonly tracker: Tracker) {
 
     }
@@ -16,7 +16,7 @@ export class CallCounter {
     public count<T>(expected: Expressions<T>): number {
         let count = 0;
         for (const expression of this.tracker.interactions()) {
-            if (this.expressionMatcher.matched(expression, expected) === true) {
+            if (this.comparer.equals(expression, expected) === true) {
                 count += 1;
             }
         }

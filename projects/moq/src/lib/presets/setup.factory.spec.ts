@@ -1,20 +1,22 @@
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { SetupFactory } from "./setup.factory";
 import { PresetBuilderFactory } from "./preset-builder.factory";
 import { Expressions } from "../reflector/expressions";
 import { PresetBuilder } from "./preset-builder";
-import { Mock } from "moq.ts";
+import { It, Mock, Times } from "moq.ts";
 import { IMock } from "../moq";
 import { AutoMockProvider } from "../auto-mocking/auto-mock.provider";
+import { ComplexExpressionGuard } from "../auto-mocking/expression.guards/complex-expression.guard";
 
 describe("Setup factory", () => {
 
     beforeEach(() => {
-        createInjector2(SetupFactory, [PresetBuilderFactory, AutoMockProvider]);
+        createInjector(SetupFactory, [PresetBuilderFactory, AutoMockProvider, ComplexExpressionGuard]);
     });
 
     beforeEach(() => {
         resolveMock(AutoMockProvider).prototypeof(AutoMockProvider.prototype);
+        resolveMock(ComplexExpressionGuard).prototypeof(ComplexExpressionGuard.prototype);
     });
 
     it("Returns a preset builder for a shallow expression", () => {
@@ -65,4 +67,17 @@ describe("Setup factory", () => {
         expect(actual).toBe(autoMockedPresetBuilder);
     });
 
+    it("Throws exception when expressions are not safe", () => {
+        const shallow = {} as Expressions<undefined>;
+        const rest = {} as Expressions<undefined>;
+        const exception = new Error("Not safe");
+
+        resolveMock(ComplexExpressionGuard)
+            .setup(instance => instance.verify([shallow, rest]))
+            .throws(exception);
+
+        const factory = resolve2(SetupFactory);
+        expect(() => factory.create([shallow, rest])).toThrow(exception);
+        resolveMock(PresetBuilderFactory).verify(instance => instance(It.IsAny()), Times.Never());
+    });
 });

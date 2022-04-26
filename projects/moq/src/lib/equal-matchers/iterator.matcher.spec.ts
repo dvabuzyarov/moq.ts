@@ -1,37 +1,32 @@
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { IteratorMatcher } from "./iterator.matcher";
 import { IterableTester } from "./iterable.tester";
-import { ConstantMatcher } from "../expression-matchers/constant.matcher";
-import { Injector } from "../static.injector/injector";
+import { StaticInjector } from "../static.injector/injector";
+import { Mock } from "moq.ts";
+import { ConstantEqualityComparer } from "../expression.equality-comparers/constant.equality-comparer";
 
 describe("Iterator matcher", () => {
 
     beforeEach(() => {
-        const constantMatcher = jasmine.createSpyObj<ConstantMatcher>("", ["matched"]);
-        const iterableTester = jasmine.createSpyObj<IterableTester>("", ["verify"]);
-
-        createInjector([
-            {provide: ConstantMatcher, useValue: constantMatcher, deps: []},
-            {provide: IterableTester, useValue: iterableTester, deps: []},
-            {
-                provide: IteratorMatcher,
-                useClass: IteratorMatcher,
-                deps: [Injector, IterableTester]
-            }
-        ]);
+        createInjector(IteratorMatcher, [StaticInjector, IterableTester]);
     });
 
     it("Returns true", () => {
         const left = [2];
         const right = [1];
 
-        resolve(IterableTester)
-            .verify.withArgs(left, right).and.returnValue(true);
+        const constantEqualityComparer = new Mock<ConstantEqualityComparer>()
+            .setup(instance => instance.equals(2, 1))
+            .returns(true)
+            .object();
+        resolveMock(StaticInjector)
+            .setup(instance => instance.get(ConstantEqualityComparer))
+            .returns(constantEqualityComparer);
+        resolveMock(IterableTester)
+            .setup(instance => instance.verify(left, right))
+            .returns(true);
 
-        resolve(ConstantMatcher)
-            .matched.withArgs(2, 1).and.returnValue(true);
-
-        const provider = resolve(IteratorMatcher);
+        const provider = resolve2(IteratorMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(true);
@@ -41,10 +36,11 @@ describe("Iterator matcher", () => {
         const left = [];
         const right = {};
 
-        resolve(IterableTester)
-            .verify.withArgs(left, right).and.returnValue(false);
+        resolveMock(IterableTester)
+            .setup(instance => instance.verify(left, right))
+            .returns(false);
 
-        const provider = resolve(IteratorMatcher);
+        const provider = resolve2(IteratorMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(undefined);
@@ -54,10 +50,11 @@ describe("Iterator matcher", () => {
         const left = [];
         const right = [1];
 
-        resolve(IterableTester)
-            .verify.withArgs(left, right).and.returnValue(true);
+        resolveMock(IterableTester)
+            .setup(instance => instance.verify(left, right))
+            .returns(true);
 
-        const provider = resolve(IteratorMatcher);
+        const provider = resolve2(IteratorMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(false);
@@ -67,13 +64,18 @@ describe("Iterator matcher", () => {
         const left = [2];
         const right = [1];
 
-        resolve(IterableTester)
-            .verify.withArgs(left, right).and.returnValue(true);
+        const constantEqualityComparer = new Mock<ConstantEqualityComparer>()
+            .setup(instance => instance.equals(2, 1))
+            .returns(false)
+            .object();
+        resolveMock(StaticInjector)
+            .setup(instance => instance.get(ConstantEqualityComparer))
+            .returns(constantEqualityComparer);
+        resolveMock(IterableTester)
+            .setup(instance => instance.verify(left, right))
+            .returns(true);
 
-        resolve(ConstantMatcher)
-            .matched.withArgs(2, 1).and.returnValue(false);
-
-        const provider = resolve(IteratorMatcher);
+        const provider = resolve2(IteratorMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(false);

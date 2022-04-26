@@ -101,9 +101,7 @@ describe("#578 support async functions", () => {
         const name = "some-example@example.com";
 
         const managerMock = new Mock<IUserManager>()
-            .setup(async x => x.getUser(It.IsAny()))
-            .returnsAsync(null)
-            .setup(async x => x.getUser(name))
+            .setup(async x => await x.getUser(name))
             .returnsAsync(value);
 
         const actual = await managerMock.object().getUser(name);

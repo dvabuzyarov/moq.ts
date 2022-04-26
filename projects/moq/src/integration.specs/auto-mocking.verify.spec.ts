@@ -1,8 +1,7 @@
-/*eslint-disable max-classes-per-file*/
 import { Mock } from "../lib/mock";
 import { EqualMatchingInjectorConfig } from "../lib/injector/equal-matching-injector.config";
 import { EXPRESSION_REFLECTOR } from "../lib/reflector/expression-reflector";
-import { FullExpressionReflector } from "../lib/reflector/full.expression-reflector";
+import { SyncExpressionReflector } from "../lib/reflector/sync-expression.reflector";
 import { It } from "../lib/reflector/expression-predicates";
 import { PlayTimes } from "../lib/playables/play-times";
 
@@ -10,7 +9,7 @@ describe("Auto mocking verify", () => {
     const injectorConfig = new EqualMatchingInjectorConfig([], [
         {
             provide: EXPRESSION_REFLECTOR,
-            useExisting: FullExpressionReflector,
+            useExisting: SyncExpressionReflector,
             deps: []
         },
     ]);
@@ -42,20 +41,22 @@ describe("Auto mocking verify", () => {
         expect(() => mock.verify(instance => instance.shallow.deep)).toThrow();
     });
 
-    xit("Verifies a deep expression within several setups", () => {
+    it("Verifies a deep expression within several setups", () => {
         const mock = new Mock<{ shallow(param: string): { deep: string } }>({injectorConfig})
-            .setup(instance => instance.shallow(It.IsAny()).deep)
+            .setup(instance => instance.shallow("some").deep)
             .returns(undefined)
             .setup(instance => instance.shallow("hello").deep)
             .play(PlayTimes.Once())
-            .returns(undefined);
+            .returns("hello");
 
         const actual = mock.object().shallow("some").deep;
         expect(actual).toBe(undefined);
+
+        mock.verify(instance => instance.shallow("some").deep);
         mock.verify(instance => instance.shallow(It.IsAny()).deep);
     });
 
-    it("verifies invocation with async", async () => {
+    it("Verifies invocation with async", async () => {
         interface IUserManager {
             getUser(name: string): Promise<string>;
         }
@@ -64,9 +65,9 @@ describe("Auto mocking verify", () => {
         const name = "some-example@example.com";
 
         const managerMock = new Mock<IUserManager>()
-            .setup(async x => x.getUser(It.IsAny()))
+            .setup(async instance => instance.getUser(It.IsAny()))
             .returnsAsync(null)
-            .setup(async x => x.getUser(name))
+            .setup(async instance => instance.getUser(name))
             .returnsAsync(value);
 
         const actual = await managerMock.object().getUser(name);

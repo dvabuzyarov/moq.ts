@@ -1,15 +1,16 @@
 import { ExpressionHasMethodExplorer } from "./expression.has-method.explorer";
-import { Expressions, NamedMethodExpression } from "../../reflector/expressions";
-import { createInjector2, resolve2 } from "../../../tests.components/resolve.builder";
+import { Expressions } from "../../reflector/expressions";
+import { createInjector, resolve2 } from "../../../tests.components/resolve.builder";
+import { MethodExpression } from "../../reflector/expressions";
 
 describe("Expression has instance method explorer", () => {
     beforeEach(() => {
-        createInjector2(ExpressionHasMethodExplorer, []);
+        createInjector(ExpressionHasMethodExplorer, []);
     });
 
     it("Returns true when expression is instance method interaction", () => {
         const name = "name";
-        const expression = new NamedMethodExpression(name, undefined);
+        const expression = new MethodExpression(name, undefined);
 
         const explorer = resolve2(ExpressionHasMethodExplorer);
         const actual = explorer.has(name, expression);
@@ -19,7 +20,7 @@ describe("Expression has instance method explorer", () => {
 
     it("Returns false when expression is instance method interaction with different name", () => {
         const name = "name";
-        const expression = new NamedMethodExpression("other name", undefined);
+        const expression = new MethodExpression("other name", undefined);
 
         const explorer = resolve2(ExpressionHasMethodExplorer);
         const actual = explorer.has(name, expression);

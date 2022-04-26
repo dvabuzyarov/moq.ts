@@ -1,7 +1,7 @@
 import { IterableTester } from "./iterable.tester";
-import { ConstantMatcher } from "../expression-matchers/constant.matcher";
 import { IObjectMatcher } from "./object-matcher.type";
 import { Injector } from "../static.injector/injector";
+import { ConstantEqualityComparer } from "../expression.equality-comparers/constant.equality-comparer";
 
 /**
  * Matches objects that support Iterable protocol
@@ -9,8 +9,8 @@ import { Injector } from "../static.injector/injector";
 export class IteratorMatcher implements IObjectMatcher {
 
     constructor(
-        private injector: Injector,
-        private iterableTester: IterableTester) {
+        private readonly injector: Injector,
+        private readonly iterableTester: IterableTester) {
     }
 
     /*eslint-disable-next-line @typescript-eslint/ban-types*/
@@ -20,11 +20,11 @@ export class IteratorMatcher implements IObjectMatcher {
             const rightIterator = [...right[Symbol.iterator]()];
             if (leftIterator.length !== rightIterator.length) return false;
 
-            const constantMatcher = this.injector.get(ConstantMatcher);
+            const constantMatcher = this.injector.get(ConstantEqualityComparer);
             for (let i = 0; i < leftIterator.length; i++) {
                 const leftValue = leftIterator[i];
                 const rightValue = rightIterator[i];
-                if (constantMatcher.matched(leftValue, rightValue) === false) {
+                if (constantMatcher.equals(leftValue, rightValue) === false) {
                     return false;
                 }
             }

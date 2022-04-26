@@ -1,9 +1,8 @@
 import { Mock } from "../lib/mock";
 import { It } from "../lib/reflector/expression-predicates";
-import { NamedMethodExpression } from "../lib/reflector/expressions";
 import { Times } from "../lib/times";
 import { nameof } from "../tests.components/nameof";
-import { NamedMethodInteraction } from "../lib/interactions";
+import { MethodExpression } from "../lib/reflector/expressions";
 
 interface ITestObject {
     method(arg: number): string;
@@ -31,7 +30,7 @@ describe("Instance method", () => {
         Object.defineProperty(target, name, {value: () => undefined});
 
         const object = new Mock<ITestObject>({target: Object.create(target)})
-            .setup(() => It.Is((expression: NamedMethodExpression) =>
+            .setup(() => It.Is((expression: MethodExpression) =>
                 expression.name === "method" && expression.args[0] === 1))
             .returns(value)
             .object();
@@ -41,7 +40,6 @@ describe("Instance method", () => {
         expect(actual).toBe(value);
     });
 
-    // todo: it will work strict mode only if prototype has the method
     it("Returns value with a predicated setup", () => {
         const methodName = "method";
         const value = "value";
@@ -50,7 +48,7 @@ describe("Instance method", () => {
 
         const object = new Mock<ITestObject>()
             .prototypeof(prototype)
-            .setup(() => It.Is((expression: NamedMethodExpression) =>
+            .setup(() => It.Is((expression: MethodExpression) =>
                 expression.name === methodName && expression.args[0] === 1))
             .returns(value)
             .object();
@@ -60,15 +58,14 @@ describe("Instance method", () => {
         expect(actual).toBe(value);
     });
 
-    it("Throws TypeError exception when call an unset method in strict mode", () => {
-        const value = "value";
+    it("Throws TypeError exception when call an unset method", () => {
         const object = new Mock<ITestObject>()
             .object();
 
         expect(() => object.method(1)).toThrow(jasmine.any(TypeError));
     });
 
-    it("Returns undefined when call an unset method in loose mode", () => {
+    it("Returns undefined when call an unset method", () => {
         const target = {};
         const name = nameof<ITestObject>("method");
         Object.defineProperty(target, name, {value: () => undefined});
@@ -95,7 +92,7 @@ describe("Instance method", () => {
         const actual = object.method(1);
 
         expect(actual).toBe(value);
-        expect(callback).toHaveBeenCalledWith(new NamedMethodInteraction(nameof<ITestObject>("method"), [1]));
+        expect(callback).toHaveBeenCalledWith(new MethodExpression(nameof<ITestObject>("method"), [1]));
     });
 
     it("Returns callback result", () => {

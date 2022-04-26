@@ -3,7 +3,7 @@ import { IMock, IPlayable } from "../../moq";
 import { Presets } from "../presets";
 import { Expressions } from "../../reflector/expressions";
 import { CallbacksPreset } from "../presets/callbacks.preset";
-import { Interaction } from "../../interactions";
+import { Expression } from "../../reflector/expressions";
 
 /**
  * @Hidden
@@ -15,7 +15,7 @@ export class CallbackPresetFactory<T, TValue = any> implements InjectionFactory 
     }
 
     factory() {
-        return (target: Expressions<T>, playable: IPlayable, callback: (interaction: Interaction) => TValue) => {
+        return (target: Expressions<T>, playable: IPlayable, callback: (interaction: Expression) => TValue) => {
             const preset = new CallbacksPreset(playable, target, callback);
             this.presets.add(preset);
             return this.rootMock;

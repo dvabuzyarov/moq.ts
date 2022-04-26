@@ -1,18 +1,17 @@
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2 } from "../../tests.components/resolve.builder";
 import { FunctionMatcher } from "./function.matcher";
 
 describe("Function matcher", () => {
+
     beforeEach(() => {
-        createInjector([
-            {provide: FunctionMatcher, useClass: FunctionMatcher, deps: []},
-        ]);
+        createInjector(FunctionMatcher, []);
     });
 
     it("Returns true when the compared values is the same function", () => {
         const left = () => undefined;
         const right = left;
 
-        const matcher = resolve(FunctionMatcher);
+        const matcher = resolve2(FunctionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -22,7 +21,7 @@ describe("Function matcher", () => {
         const left = () => undefined;
         const right = () => undefined;
 
-        const matcher = resolve(FunctionMatcher);
+        const matcher = resolve2(FunctionMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);

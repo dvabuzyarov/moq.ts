@@ -1,5 +1,5 @@
 import { ArgumentsEqualityComparer } from "./arguments.equality-comparer";
-import { MethodExpression } from "../reflector/expressions";
+import { FunctionExpression } from "../reflector/expressions";
 
 /**
  * @hidden
@@ -10,7 +10,7 @@ export class MethodEqualityComparer {
 
     }
 
-    public equals(left: MethodExpression, right: MethodExpression): boolean {
+    public equals(left: FunctionExpression, right: FunctionExpression): boolean {
         return this.argumentsMatcher.equals(left.args, right.args);
     }
 }

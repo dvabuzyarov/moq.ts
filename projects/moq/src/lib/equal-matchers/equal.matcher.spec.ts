@@ -1,4 +1,4 @@
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { CommonTypeProvider } from "./common-type.provider";
 import { TypesMatcher } from "./types.matcher";
 import { PrimitiveMatcher } from "./primitive.matcher";
@@ -9,34 +9,18 @@ import { EqualMatcher } from "./equal.matcher";
 describe("Equal matcher", () => {
 
     beforeEach(() => {
-        const typesMatcher = jasmine.createSpyObj<TypesMatcher>("", ["matched"]);
-        const commonTypeProvider = jasmine.createSpyObj<CommonTypeProvider>("", ["ofType"]);
-        const primitiveMatcher = jasmine.createSpyObj<PrimitiveMatcher>("", ["matched"]);
-        const objectMatcher = jasmine.createSpyObj<ObjectMatcher>("", ["matched"]);
-        const functionMatcher = jasmine.createSpyObj<FunctionMatcher>("", ["matched"]);
-
-        createInjector([
-            {provide: TypesMatcher, useValue: typesMatcher, deps: []},
-            {provide: PrimitiveMatcher, useValue: primitiveMatcher, deps: []},
-            {provide: CommonTypeProvider, useValue: commonTypeProvider, deps: []},
-            {provide: ObjectMatcher, useValue: objectMatcher, deps: []},
-            {provide: FunctionMatcher, useValue: functionMatcher, deps: []},
-            {
-                provide: EqualMatcher,
-                useClass: EqualMatcher,
-                deps: [TypesMatcher, CommonTypeProvider, PrimitiveMatcher, ObjectMatcher, FunctionMatcher]
-            },
-        ]);
+        createInjector(EqualMatcher, [TypesMatcher, CommonTypeProvider, PrimitiveMatcher, ObjectMatcher, FunctionMatcher]);
     });
 
     it("Returns false when compared values have different type", () => {
         const left = {};
         const right = {};
 
-        resolve(TypesMatcher)
-            .matched.withArgs(left, right).and.returnValue(false);
+        resolveMock(TypesMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(false);
 
-        const provider = resolve(EqualMatcher);
+        const provider = resolve2(EqualMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(false);
@@ -46,14 +30,17 @@ describe("Equal matcher", () => {
         const left = undefined;
         const right = undefined;
 
-        resolve(TypesMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
-        resolve(CommonTypeProvider)
-            .ofType.withArgs(left, right).and.returnValue("undefined");
-        resolve(PrimitiveMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
+        resolveMock(TypesMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
+        resolveMock(CommonTypeProvider)
+            .setup(instance => instance.ofType(left, right))
+            .returns("undefined");
+        resolveMock(PrimitiveMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
 
-        const provider = resolve(EqualMatcher);
+        const provider = resolve2(EqualMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(true);
@@ -63,14 +50,17 @@ describe("Equal matcher", () => {
         const left = {};
         const right = {};
 
-        resolve(TypesMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
-        resolve(CommonTypeProvider)
-            .ofType.withArgs(left, right).and.returnValue("object");
-        resolve(ObjectMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
+        resolveMock(TypesMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
+        resolveMock(CommonTypeProvider)
+            .setup(instance => instance.ofType(left, right))
+            .returns("object");
+        resolveMock(ObjectMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
 
-        const provider = resolve(EqualMatcher);
+        const provider = resolve2(EqualMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(true);
@@ -80,14 +70,17 @@ describe("Equal matcher", () => {
         const left = true;
         const right = false;
 
-        resolve(TypesMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
-        resolve(CommonTypeProvider)
-            .ofType.withArgs(left, right).and.returnValue("boolean");
-        resolve(PrimitiveMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
+        resolveMock(TypesMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
+        resolveMock(CommonTypeProvider)
+            .setup(instance => instance.ofType(left, right))
+            .returns("boolean");
+        resolveMock(PrimitiveMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
 
-        const provider = resolve(EqualMatcher);
+        const provider = resolve2(EqualMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(true);
@@ -97,14 +90,17 @@ describe("Equal matcher", () => {
         const left = 1;
         const right = 2;
 
-        resolve(TypesMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
-        resolve(CommonTypeProvider)
-            .ofType.withArgs(left, right).and.returnValue("number");
-        resolve(PrimitiveMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
+        resolveMock(TypesMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
+        resolveMock(CommonTypeProvider)
+            .setup(instance => instance.ofType(left, right))
+            .returns("number");
+        resolveMock(PrimitiveMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
 
-        const provider = resolve(EqualMatcher);
+        const provider = resolve2(EqualMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(true);
@@ -114,14 +110,17 @@ describe("Equal matcher", () => {
         const left = "1";
         const right = "2";
 
-        resolve(TypesMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
-        resolve(CommonTypeProvider)
-            .ofType.withArgs(left, right).and.returnValue("string");
-        resolve(PrimitiveMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
+        resolveMock(TypesMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
+        resolveMock(CommonTypeProvider)
+            .setup(instance => instance.ofType(left, right))
+            .returns("string");
+        resolveMock(PrimitiveMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
 
-        const provider = resolve(EqualMatcher);
+        const provider = resolve2(EqualMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(true);
@@ -131,14 +130,17 @@ describe("Equal matcher", () => {
         const left = () => undefined;
         const right = () => 1;
 
-        resolve(TypesMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
-        resolve(CommonTypeProvider)
-            .ofType.withArgs(left, right).and.returnValue("function");
-        resolve(FunctionMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
+        resolveMock(TypesMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
+        resolveMock(CommonTypeProvider)
+            .setup(instance => instance.ofType(left, right))
+            .returns("function");
+        resolveMock(FunctionMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
 
-        const provider = resolve(EqualMatcher);
+        const provider = resolve2(EqualMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(true);
@@ -148,14 +150,17 @@ describe("Equal matcher", () => {
         const left = Symbol("a");
         const right = Symbol("b");
 
-        resolve(TypesMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
-        resolve(CommonTypeProvider)
-            .ofType.withArgs(left, right).and.returnValue("symbol");
-        resolve(PrimitiveMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
+        resolveMock(TypesMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
+        resolveMock(CommonTypeProvider)
+            .setup(instance => instance.ofType(left, right))
+            .returns("symbol");
+        resolveMock(PrimitiveMatcher)
+            .setup(instance => instance.matched(left, right as any))
+            .returns(true);
 
-        const provider = resolve(EqualMatcher);
+        const provider = resolve2(EqualMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(true);
@@ -165,14 +170,17 @@ describe("Equal matcher", () => {
         const left = BigInt(1);
         const right = BigInt(2);
 
-        resolve(TypesMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
-        resolve(CommonTypeProvider)
-            .ofType.withArgs(left, right).and.returnValue("bigint");
-        resolve(PrimitiveMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
+        resolveMock(TypesMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
+        resolveMock(CommonTypeProvider)
+            .setup(instance => instance.ofType(left, right))
+            .returns("bigint");
+        resolveMock(PrimitiveMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(true);
 
-        const provider = resolve(EqualMatcher);
+        const provider = resolve2(EqualMatcher);
         const actual = provider.matched(left, right);
 
         expect(actual).toBe(true);

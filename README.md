@@ -30,10 +30,14 @@ out [tests.integration](https://github.com/dvabuzyarov/moq.ts/blob/master/projec
 
 - [Mocking functions of objects](#mocking-functions-of-objects)
 - [Mocking reading properties](#mocking-reading-properties)
-- [Mocking writing property setting](#mocking-writing-property)
+- [Mocking writing property setting](#mocking-writing-properties)
 - [Mocking functions](#mocking-functions)
 - [Auto mocking](#auto-mocking)
+  - [Limitations](#limitations)
 - [async/await](#asyncawait)
+  - [ESLint [@typescript-eslint/promise-function-async]](#eslint-typescript-eslintpromise-function-asynchttpsgithubcomtypescript-eslinttypescript-eslintblobmasterpackageseslint-plugindocsrulespromise-function-asyncmd-rule)
+  - [Setup reactions](#setup-reactions)
+  - [Promise adapters](#promise-adapters)
 - [Type Discovering](#type-discovering)
 - [Mock behavior](#mock-behavior)
     - [Injector config](#injector-config)
@@ -204,20 +208,7 @@ mock.verify(instance => instance(It.Is(value => value === 1)), Times.Exactly(1))
 ```
 
 ## Auto mocking
-
->  By default, in version 8 this feature is disabled as causes conflicts with support for async/await keywords.
-
-```typescript
-// activation of the auto-mocking feature
-const injectorConfig = new EqualMatchingInjectorConfig([], [
-    {
-        provide: EXPRESSION_REFLECTOR,
-        useExisting: FullExpressionReflector,
-        deps: []
-    },
-]);
-Mock.options = {injectorConfig};
-```
+>  The feature does not support async/await expressions.
 
 The library support auto mocking for deep members. Consider this case:
 
@@ -264,10 +255,62 @@ const actual = root.child.get();
 expect(actual).toBe(value);
 ```
 
+#### Limitations
+At this moment [It predicates](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-predicates.ts) are forbidden, except the last part of an expression.
+Consider this case:
+
+```typescript
+        const a = "a";
+        const b = "b";
+        const c = "c";
+        
+        const object = new Mock<{ get(arg: string): { a: string; b: string; c: string } }>({injectorConfig})
+            .setup(instance => instance.get("a").a)
+            .returns(a)
+            .setup(instance => instance.get("b").b)
+            .returns(a)
+            .setup(instance => instance.get(It.IsAny()).c)
+            .returns(b)
+            .object();
+```
+In this example a root object has method 'get' that returns an object with 3 properties.
+The library would create a mock as a result of get method and save it in an internal map, where the expression is a key.
+
+```typescript
+import { MethodExpression } from "./expressions";
+
+new Map<Expression, Mock>([
+    [new MethodExpression("get", ["a"]), new Mock()],
+    [new MethodExpression("get", ["b"]), new Mock()],
+    [new MethodExpression("get", [It.IsAny()]), new Mock()],
+])  
+```
+In the provided example there are 2 issues:
+1. It is not clear to what mock add the third setup with It notation.
+2. In order to find the third mock in the map it needs to use the same function as a key.
+
+Those issues are not obvious and could lead to a hard detected behaviour. To prevent it and to give developers clean and robust API
+[It predicates](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-predicates.ts) is forbidden in the auto-mocking feature.
 ## async/await
 
-The library supports asynchronous function with a promise-based wrappers. There are two overloading:
 
+The library supports asynchronous function with a promise-based wrappers. 
+>  async/await expressions are not supported in the auto-mocking feature.
+
+#### ESLint [@typescript-eslint/promise-function-async](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/promise-function-async.md) rule
+
+This rule will ask you to write expressions with async keyword.
+
+```typescript
+const mock = new Mock<typeof fn>()
+    .setup(async instance => instance(1))
+    .returnsAsync(2)
+    .setup(async instance => instance(2))
+    .throwsAsync(exception)
+    .object();
+```
+
+#### Setup reactions
 * returnsAsync - returns a Promise which will be resolved with the provided value;
 * throwsAsync - returns a Promise which will be rejected with the provided exception;
 
@@ -298,51 +341,13 @@ try {
 }
 ```
 
-#### ESLint [@typescript-eslint/promise-function-async](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/promise-function-async.md) rule
-
-This rule will ask you to write setup with async keyword.
-
-```typescript
-const mock = new Mock<typeof fn>()
-    .setup(async instance => instance(1))
-    .returnsAsync(2)
-    .setup(async instance => instance(2))
-    .throwsAsync(exception)
-    .object();
-```
-
-That will interfere the auto-mocking feature. You can override the returnsAsync and throwsAsync implementation.
-> The auto-mocking feature is disabled by default in version 8
-
-```typescript
-import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
-
-Mock.options = {
-    injectorConfig: new EqualMatchingInjectorConfig([], [
-        {
-            provide: ReturnsAsyncPresetFactory,
-            useClass: MimicsResolvedAsyncPresetFactory,
-            deps: [RootMockProvider, Presets, ResolvedPromiseFactory]
-        },
-        {
-            provide: ThrowsAsyncPresetFactory,
-            useClass: MimicsRejectedAsyncPresetFactory,
-            deps: [RootMockProvider, Presets, RejectedPromiseFactory]
-        },
-    ])
-};
-```
-
-With this config you can use async keyword in setup and verify sections.
-
 #### Promise adapters
 
 Due to the fact that some environments are not using the native Promise object the library provides adapters for
 resolved/rejected promise that could be overridden.
 See [ResolvedPromiseFactory](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/presets/resolved-promise.factory.ts)
 ,
-[RejectedPromiseFactory](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/presets/rejected-promise.factory.ts)
-.
+[RejectedPromiseFactory](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/presets/rejected-promise.factory.ts).
 
 ## Type Discovering
 

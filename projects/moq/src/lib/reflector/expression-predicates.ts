@@ -51,7 +51,7 @@ export type IPredicate<T> = (instance: T) => boolean;
  * ```
  */
 export class It<P> {
-    constructor(public predicate: IPredicate<P>) {
+    constructor(public readonly predicate: IPredicate<P>) {
 
     }
 
@@ -94,11 +94,13 @@ export class It<P> {
      * ```
      */
     public static IsAny<T>(): It<T> | any {
-        return new It(() => true);
+        return new It(It.isAnyPredicate);
     }
 
+    private static readonly isAnyPredicate = (): boolean => true;
+
     /**
-     * @hidden
+     * Exams if the instance matches the predicate.
      */
     public test(instance?: P): boolean {
         try {

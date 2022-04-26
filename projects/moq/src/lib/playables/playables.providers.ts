@@ -1,10 +1,10 @@
 import { PresetPlayablesUpdater } from "./preset-playables.updater";
 import { Presets } from "../presets/presets";
-import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
+import { ExpressionEqualityComparer } from "../expression.equality-comparers/expression.equality-comparer";
 
 /**
  * @hidden
  */
 export const playablesProviders = [
-    {provide: PresetPlayablesUpdater, useClass: PresetPlayablesUpdater, deps: [Presets, ExpressionMatcher]}
+    {provide: PresetPlayablesUpdater, useClass: PresetPlayablesUpdater, deps: [Presets, ExpressionEqualityComparer]}
 ];

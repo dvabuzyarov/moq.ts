@@ -11,18 +11,21 @@ import { OBJECT_MATCHERS } from "./object-matchers.injection-token";
 import { POJOMatcher } from "./pojo.matcher";
 import { ObjectMapProvider } from "./object-map.provider";
 import { MapMatcher } from "./map.matcher";
-import { ConstantMatcher } from "../expression-matchers/constant.matcher";
 import { Injector } from "../static.injector/injector";
+import { ConstantEqualityComparer } from "../expression.equality-comparers/constant.equality-comparer";
+import { ItEqualityComparer } from "../expression.equality-comparers/it.equality-comparer";
 
 /**
  * @hidden
  */
 export const equalMatchersProviders = [
+    {provide: ConstantEqualityComparer, useExisting: EqualConstantMatcher},
+    {provide: EqualConstantMatcher, useClass: EqualConstantMatcher, deps: [ItEqualityComparer, EqualMatcher]},
     {provide: CommonTypeProvider, useClass: CommonTypeProvider, deps: []},
-    {provide: EqualConstantMatcher, useClass: EqualConstantMatcher, deps: [EqualMatcher]},
-    {provide: ConstantMatcher, useExisting: EqualConstantMatcher},
     {
-        provide: EqualMatcher, useClass: EqualMatcher, deps: [
+        provide: EqualMatcher,
+        useClass: EqualMatcher,
+        deps: [
             TypesMatcher,
             CommonTypeProvider,
             PrimitiveMatcher,
@@ -33,7 +36,9 @@ export const equalMatchersProviders = [
     {provide: FunctionMatcher, useClass: FunctionMatcher, deps: []},
     {provide: IterableTester, useClass: IterableTester, deps: []},
     {
-        provide: IteratorMatcher, useClass: IteratorMatcher, deps: [
+        provide: IteratorMatcher,
+        useClass: IteratorMatcher,
+        deps: [
             Injector,
             IterableTester
         ]

@@ -1,17 +1,22 @@
 import { ConstantEqualityComparer } from "./constant.equality-comparer";
-import { createInjector2, resolve2 } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { ItEqualityComparer } from "./it.equality-comparer";
 
 describe("Constant equality comparer", () => {
     beforeEach(() => {
-        createInjector2(ConstantEqualityComparer, []);
+        createInjector(ConstantEqualityComparer, [ItEqualityComparer]);
     });
 
     it("Returns true when both are undefined", () => {
         const left = undefined;
         const right = undefined;
 
-        const comparer = resolve2(ConstantEqualityComparer);
-        const actual = comparer.equals(left, right);
+        resolveMock(ItEqualityComparer)
+            .setup(instance => instance.equals(left, right))
+            .returns(undefined);
+
+        const matcher = resolve2(ConstantEqualityComparer);
+        const actual = matcher.equals(left, right);
 
         expect(actual).toBe(true);
     });
@@ -20,8 +25,12 @@ describe("Constant equality comparer", () => {
         const left = null;
         const right = null;
 
-        const comparer = resolve2(ConstantEqualityComparer);
-        const actual = comparer.equals(left, right);
+        resolveMock(ItEqualityComparer)
+            .setup(instance => instance.equals(left, right))
+            .returns(undefined);
+
+        const matcher = resolve2(ConstantEqualityComparer);
+        const actual = matcher.equals(left, right);
 
         expect(actual).toBe(true);
     });
@@ -30,8 +39,12 @@ describe("Constant equality comparer", () => {
         const left = 1;
         const right = 1;
 
-        const comparer = resolve2(ConstantEqualityComparer);
-        const actual = comparer.equals(left, right);
+        resolveMock(ItEqualityComparer)
+            .setup(instance => instance.equals(left, right))
+            .returns(undefined);
+
+        const matcher = resolve2(ConstantEqualityComparer);
+        const actual = matcher.equals(left, right);
 
         expect(actual).toBe(true);
     });
@@ -41,9 +54,30 @@ describe("Constant equality comparer", () => {
         const left = {};
         const right = {};
 
-        const comparer = resolve2(ConstantEqualityComparer);
-        const actual = comparer.equals(left, right);
+        resolveMock(ItEqualityComparer)
+            .setup(instance => instance.equals(left, right))
+            .returns(undefined);
+
+        const matcher = resolve2(ConstantEqualityComparer);
+        const actual = matcher.equals(left, right);
 
         expect(actual).toBe(false);
+    });
+
+
+    it("Returns value from It matcher when it is not undefined", () => {
+        const left = "left";
+        const right = {};
+
+        const expected = true;
+        resolveMock(ItEqualityComparer)
+            .setup(instance => instance.equals(left, right))
+            .returns(expected);
+
+
+        const matcher = resolve2(ConstantEqualityComparer);
+        const actual = matcher.equals(left, right);
+
+        expect(actual).toBe(expected);
     });
 });

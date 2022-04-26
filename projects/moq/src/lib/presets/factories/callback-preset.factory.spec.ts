@@ -1,5 +1,5 @@
 import { InjectionToken } from "../../static.injector/injection_token";
-import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import { Presets } from "../presets";
 import { IMock } from "../../moq";
 import { Expressions } from "../../reflector/expressions";
@@ -11,7 +11,7 @@ describe("Callback preset factory", () => {
     const Mock = new InjectionToken<IMock<unknown>>("mock");
 
     beforeEach(() => {
-        createInjector2(CallbackPresetFactory, [Mock, Presets]);
+        createInjector(CallbackPresetFactory, [Mock, Presets]);
     });
 
     beforeEach(() => {

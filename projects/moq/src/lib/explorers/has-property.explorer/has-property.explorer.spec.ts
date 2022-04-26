@@ -2,12 +2,12 @@ import { HasPropertyExplorer } from "./has-property.explorer";
 import { PresetHasPropertyExplorer } from "./preset-has-property.explorer";
 import { IPreset } from "../../presets/presets/preset";
 import { Presets } from "../../presets/presets";
-import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import { MembersPropertyExplorer } from "../members.explorer/members-property.explorer";
 
 describe("Has property explorer", () => {
     beforeEach(() => {
-        createInjector2(HasPropertyExplorer, [Presets, MembersPropertyExplorer, PresetHasPropertyExplorer]);
+        createInjector(HasPropertyExplorer, [Presets, MembersPropertyExplorer, PresetHasPropertyExplorer]);
     });
 
     it("Returns true when there is a member", () => {

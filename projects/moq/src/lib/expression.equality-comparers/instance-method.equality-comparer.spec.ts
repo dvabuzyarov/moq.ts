@@ -1,15 +1,15 @@
 import { ArgumentsEqualityComparer } from "./arguments.equality-comparer";
 import { It } from "../reflector/expression-predicates";
-import { NamedMethodInteraction } from "../interactions";
+import { MethodExpression } from "../reflector/expressions";
 import { InstanceMethodEqualityComparer } from "./instance-method.equality-comparer";
-import { NamedMethodExpression } from "../reflector/expressions";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { Times } from "moq.ts";
+import { ConstantEqualityComparer } from "./constant.equality-comparer";
 
 describe("Instance method expression equality comparer", () => {
 
     beforeEach(() => {
-        createInjector2(InstanceMethodEqualityComparer, [ArgumentsEqualityComparer]);
+        createInjector(InstanceMethodEqualityComparer, [ArgumentsEqualityComparer]);
     });
 
     it("Returns true when they are equal", () => {
@@ -17,8 +17,8 @@ describe("Instance method expression equality comparer", () => {
         const arguments2 = [];
 
         const name = "name";
-        const left = new NamedMethodInteraction(name, arguments1);
-        const right = new NamedMethodExpression(name, arguments2);
+        const left = new MethodExpression(name, arguments1);
+        const right = new MethodExpression(name, arguments2);
 
         resolveMock(ArgumentsEqualityComparer)
             .setup(instance => instance.equals(arguments1, arguments2))
@@ -35,8 +35,8 @@ describe("Instance method expression equality comparer", () => {
         const arguments2 = [];
 
         const name = "name";
-        const left = new NamedMethodInteraction(name, arguments1);
-        const right = new NamedMethodExpression(name, arguments2);
+        const left = new MethodExpression(name, arguments1);
+        const right = new MethodExpression(name, arguments2);
 
         resolveMock(ArgumentsEqualityComparer)
             .setup(instance => instance.equals(arguments1, arguments2))
@@ -51,8 +51,8 @@ describe("Instance method expression equality comparer", () => {
     it("Returns false when left does not equal to right by name", () => {
         const args = [];
 
-        const left = new NamedMethodInteraction("left name", args);
-        const right = new NamedMethodExpression("right name", args);
+        const left = new MethodExpression("left name", args);
+        const right = new MethodExpression("right name", args);
 
         resolveMock(ArgumentsEqualityComparer)
             .setup(instance => instance.equals(args, args))
@@ -67,8 +67,8 @@ describe("Instance method expression equality comparer", () => {
     it("Does not call args matcher when names are not equal", () => {
         const args = [];
 
-        const left = new NamedMethodInteraction("left name", args);
-        const right = new NamedMethodExpression("right name", args);
+        const left = new MethodExpression("left name", args);
+        const right = new MethodExpression("right name", args);
 
         const comparer = resolve2(InstanceMethodEqualityComparer);
         const actual = comparer.equals(left, right);

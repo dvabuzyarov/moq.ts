@@ -1,12 +1,12 @@
-import { GetPropertyInteraction, MethodInteraction } from "../interactions";
+import { GetPropertyExpression, FunctionExpression } from "../reflector/expressions";
 import { SequenceId } from "./sequence-id";
 import { Tracker } from "./tracker";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { PlayTimes } from "moq.ts";
 
 describe("Mock tracker", () => {
     beforeEach(() => {
-        createInjector2(Tracker, [SequenceId]);
+        createInjector(Tracker, [SequenceId]);
     });
 
     it("Returns log of intercepted operations in historical order", () => {
@@ -19,8 +19,8 @@ describe("Mock tracker", () => {
             .returns(1);
 
         const tracker = resolve2(Tracker);
-        const action1 = new MethodInteraction([]);
-        const action2 = new GetPropertyInteraction("property name");
+        const action1 = new FunctionExpression([]);
+        const action2 = new GetPropertyExpression("property name");
 
         tracker.add(action1);
         tracker.add(action2);

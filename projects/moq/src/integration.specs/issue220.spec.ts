@@ -1,7 +1,7 @@
 import { Mock } from "../lib/mock";
 
 describe("#220 type discovering invokes get property", () => {
-    it("the bug", () => {
+    it("The bug", () => {
         class Foo {
             get value(): string {
                 throw new Error("Not Implemented");

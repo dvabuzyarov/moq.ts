@@ -1,5 +1,6 @@
-import { Expressions, InOperatorExpression } from "../expressions";
+import { Expressions } from "../expressions";
 import { InjectionFactory } from "../../injector/injection-factory";
+import { InOperatorExpression } from "../expressions";
 
 export class HasReflectorTrap implements InjectionFactory {
     constructor(

@@ -1,6 +1,6 @@
 /*eslint-disable max-classes-per-file, @typescript-eslint/no-extraneous-class, @typescript-eslint/no-empty-function*/
 import { ProxyFactory } from "./proxy.factory";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { GetTrap } from "./get.trap";
 import { SetTrap } from "./set.trap";
 import { ApplyTrap } from "./apply.trap";
@@ -13,7 +13,7 @@ import { ConstructTrap } from "./construct.trap";
 describe("Proxy factory", () => {
 
     beforeEach(() => {
-        createInjector2(ProxyFactory, [
+        createInjector(ProxyFactory, [
             MOCK_OPTIONS,
             GetTrap,
             SetTrap,

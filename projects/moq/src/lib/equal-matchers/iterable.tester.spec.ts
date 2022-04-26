@@ -1,18 +1,18 @@
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2 } from "../../tests.components/resolve.builder";
 import { IterableTester } from "./iterable.tester";
+import { ItEqualityComparer } from "../expression.equality-comparers/it.equality-comparer";
 
 describe("Iterable tester", () => {
+
     beforeEach(() => {
-        createInjector([
-            {provide: IterableTester, useClass: IterableTester, deps: []},
-        ]);
+        createInjector(IterableTester, [ItEqualityComparer]);
     });
 
     it("Returns true", () => {
         const left = [2];
         const right = [1];
 
-        const provider = resolve(IterableTester);
+        const provider = resolve2(IterableTester);
         const actual = provider.verify(left, right);
 
         expect(actual).toBe(true);
@@ -22,7 +22,7 @@ describe("Iterable tester", () => {
         const left = {};
         const right = [1];
 
-        const provider = resolve(IterableTester);
+        const provider = resolve2(IterableTester);
         const actual = provider.verify(left, right);
 
         expect(actual).toBe(false);
@@ -32,7 +32,7 @@ describe("Iterable tester", () => {
         const left = {[Symbol.iterator]: 1};
         const right = [1];
 
-        const provider = resolve(IterableTester);
+        const provider = resolve2(IterableTester);
         const actual = provider.verify(left, right);
 
         expect(actual).toBe(false);
@@ -42,7 +42,7 @@ describe("Iterable tester", () => {
         const left = [1];
         const right = {};
 
-        const provider = resolve(IterableTester);
+        const provider = resolve2(IterableTester);
         const actual = provider.verify(left, right);
 
         expect(actual).toBe(false);
@@ -52,7 +52,7 @@ describe("Iterable tester", () => {
         const left = [1];
         const right = {[Symbol.iterator]: 1};
 
-        const provider = resolve(IterableTester);
+        const provider = resolve2(IterableTester);
         const actual = provider.verify(left, right);
 
         expect(actual).toBe(false);

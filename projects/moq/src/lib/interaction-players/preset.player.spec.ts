@@ -1,4 +1,4 @@
-import { Interaction } from "../interactions";
+import { Expression } from "../reflector/expressions";
 import { PresetPlayer } from "./preset.player";
 import { ReturnsPreset } from "../presets/presets/returns.preset";
 import { CallbacksPreset } from "../presets/presets/callbacks.preset";
@@ -6,15 +6,15 @@ import { CallbackPresetPlayer } from "./callback-preset.player";
 import { ThrowsPreset } from "../presets/presets/throws.preset";
 import { MimicsPreset } from "../presets/presets/mimics.preset";
 import { MimicsPresetPlayer } from "./mimics-preset.player";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("Preset player", () => {
     beforeEach(() => {
-        createInjector2(PresetPlayer, [CallbackPresetPlayer, MimicsPresetPlayer]);
+        createInjector(PresetPlayer, [CallbackPresetPlayer, MimicsPresetPlayer]);
     });
 
     it("Plays returns preset and returns result", () => {
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const value = "value";
         const preset = new ReturnsPreset<unknown, string>(undefined, undefined, value);
@@ -26,7 +26,7 @@ describe("Preset player", () => {
     });
 
     it("Plays callback preset and returns result", () => {
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const value = "value";
         const callback = jasmine.createSpy();
@@ -43,7 +43,7 @@ describe("Preset player", () => {
     });
 
     it("Plays mimics preset and returns result", () => {
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const origin = {};
         const value = "value";
@@ -60,7 +60,7 @@ describe("Preset player", () => {
     });
 
     it("Throws value of throw preset", () => {
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const value = new Error();
         const preset = new ThrowsPreset<unknown, unknown>(undefined, undefined, value);

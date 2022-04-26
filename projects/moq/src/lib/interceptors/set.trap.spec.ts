@@ -1,9 +1,9 @@
 import { Tracker } from "../tracker/tracker";
-import { SetPropertyInteraction } from "../interactions";
+import { SetPropertyExpression } from "../reflector/expressions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { SetTrap } from "./set.trap";
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjectorFromProviders, resolve } from "../../tests.components/resolve.builder";
 import { MoqAPI } from "../moq";
 import { PropertyIsReadOnlyTester } from "../explorers/has-property.explorer/property-is-read-only.tester";
 
@@ -13,12 +13,16 @@ describe("Set trap", () => {
         const tracker = jasmine.createSpyObj<Tracker>("", ["add"]);
         const interactionPlayer = jasmine.createSpyObj<InteractionPlayer>("", ["play"]);
         const propertyIsReadOnlyTester = jasmine.createSpyObj<PropertyIsReadOnlyTester>("", ["isReadOnly"]);
-        createInjector([
+        createInjectorFromProviders([
             {provide: PropertiesValueStorage, useValue: storage, deps: []},
             {provide: Tracker, useValue: tracker, deps: []},
             {provide: InteractionPlayer, useValue: interactionPlayer, deps: []},
             {provide: PropertyIsReadOnlyTester, useValue: propertyIsReadOnlyTester, deps: []},
-            {provide: SetTrap, useClass: SetTrap, deps: [Tracker, PropertiesValueStorage, InteractionPlayer, PropertyIsReadOnlyTester]},
+            {
+                provide: SetTrap,
+                useClass: SetTrap,
+                deps: [Tracker, PropertiesValueStorage, InteractionPlayer, PropertyIsReadOnlyTester]
+            },
         ]);
     });
 
@@ -29,7 +33,7 @@ describe("Set trap", () => {
         const trap = resolve(SetTrap);
         trap.intercept(undefined, propertyName, value);
 
-        expect(resolve(Tracker).add).toHaveBeenCalledWith(new SetPropertyInteraction(propertyName, value));
+        expect(resolve(Tracker).add).toHaveBeenCalledWith(new SetPropertyExpression(propertyName, value));
     });
 
     it("Tracks set MoqAPI call", () => {
@@ -38,7 +42,7 @@ describe("Set trap", () => {
         const trap = resolve(SetTrap);
         trap.intercept(undefined, MoqAPI, value);
 
-        expect(resolve(Tracker).add).toHaveBeenCalledWith(new SetPropertyInteraction(MoqAPI, value));
+        expect(resolve(Tracker).add).toHaveBeenCalledWith(new SetPropertyExpression(MoqAPI, value));
     });
 
     it("Assigns new value to property when interaction returns true", () => {
@@ -46,7 +50,7 @@ describe("Set trap", () => {
         const propertyName = "property name";
 
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(true);
+            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(true);
 
         const trap = resolve(SetTrap);
         trap.intercept(undefined, propertyName, value);
@@ -59,7 +63,7 @@ describe("Set trap", () => {
         const propertyName = "property name";
 
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(undefined);
+            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(undefined);
 
         const trap = resolve(SetTrap);
         trap.intercept(undefined, propertyName, value);
@@ -72,7 +76,7 @@ describe("Set trap", () => {
         const propertyName = "property name";
 
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(false);
+            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(false);
 
         const trap = resolve(SetTrap);
         trap.intercept(undefined, propertyName, value);
@@ -94,7 +98,7 @@ describe("Set trap", () => {
         const propertyName = "property name";
 
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(undefined);
+            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(undefined);
 
         const trap = resolve(SetTrap);
         const actual = trap.intercept(undefined, propertyName, value);
@@ -107,7 +111,7 @@ describe("Set trap", () => {
         const propertyName = "property name";
 
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(true);
+            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(true);
 
         const trap = resolve(SetTrap);
         const actual = trap.intercept(undefined, propertyName, value);
@@ -120,7 +124,7 @@ describe("Set trap", () => {
         const propertyName = "property name";
 
         resolve(InteractionPlayer)
-            .play.withArgs(new SetPropertyInteraction(propertyName, value)).and.returnValue(false);
+            .play.withArgs(new SetPropertyExpression(propertyName, value)).and.returnValue(false);
 
         const trap = resolve(SetTrap);
         const actual = trap.intercept(undefined, propertyName, value);

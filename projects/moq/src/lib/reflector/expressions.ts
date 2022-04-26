@@ -1,64 +1,84 @@
 /*eslint-disable max-classes-per-file*/
 import { It } from "./expression-predicates";
-import {
-    GetPropertyInteraction,
-    InOperatorInteraction,
-    MethodInteraction,
-    NamedMethodInteraction,
-    NewOperatorInteraction,
-    SetPropertyInteraction
-} from "../interactions";
 
-/**
- * See {@link NamedMethodInteraction}
- */
-export class NamedMethodExpression extends NamedMethodInteraction {
+export abstract class Expression {
+    protected constructor(
+        public readonly name: PropertyKey,
+        public readonly args: any[]) {
 
+    }
 }
 
 /**
- * See {@link MethodInteraction}
+ * This class represents an invocation of an instance method.
+ * It provides access to the name of it and the parameters.
  */
-export class MethodExpression extends MethodInteraction {
-
+export class MethodExpression extends Expression {
+    constructor(name: PropertyKey,
+                args: any[]) {
+        super(name, args);
+    }
 }
 
 /**
- * See {@link GetPropertyInteraction}
+ * This class represents an invocation of a function.
+ * It provides access to the parameters.
  */
-export class GetPropertyExpression extends GetPropertyInteraction {
-
+export class FunctionExpression extends Expression {
+    constructor(args: any[]) {
+        super(undefined, args);
+    }
 }
 
 /**
- * See {@link SetPropertyInteraction}
+ * This class represents a property accessing.
+ * It provides access to the name of property.
  */
-export class SetPropertyExpression extends SetPropertyInteraction {
-
+export class GetPropertyExpression extends Expression {
+    constructor(name: PropertyKey) {
+        super(name, undefined);
+    }
 }
 
 /**
- * See {@link InOperatorInteraction}
+ * This class represents a property write interaction.
+ * It provides access to the name of property and the value.
  */
-export class InOperatorExpression extends InOperatorInteraction {
-
+export class SetPropertyExpression extends Expression {
+    constructor(name: PropertyKey,
+                public readonly value: any) {
+        super(name, [value]);
+    }
 }
 
 /**
- * See {@link NewOperatorInteraction}
+ * This class represents applying of [in operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in).
+ * It provides access to the name of property.
  */
-export class NewOperatorExpression extends NewOperatorInteraction {
-
+export class InOperatorExpression extends Expression {
+    constructor(name: PropertyKey) {
+        super(name, undefined);
+    }
 }
 
 /**
- * This types are special sub types of expressions that are used in an expectation context.
+ * This class represents applying of [new operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new).
+ * It provides access to the arguments of the constructor.
+ */
+export class NewOperatorExpression extends Expression {
+    constructor(args: any[]) {
+        super(undefined, args);
+    }
+}
+
+/**
+ * Union of the expressions and It type.
  */
 export type Expressions<T> =
-    MethodExpression
+    FunctionExpression
     | GetPropertyExpression
     | SetPropertyExpression
     | InOperatorExpression
-    | NamedMethodExpression
+    | MethodExpression
     | NewOperatorExpression
     | It<T>;
