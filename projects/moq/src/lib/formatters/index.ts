@@ -16,7 +16,7 @@ import { Tracker } from "../tracker/tracker";
 /**
  * @hidden
  */
-export const formattersProviders = [
+export default [
     {
         provide: VerifyFormatter,
         useClass: VerifyFormatter,

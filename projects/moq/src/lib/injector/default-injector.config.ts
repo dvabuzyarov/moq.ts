@@ -1,16 +1,16 @@
 import { IInjectorConfig, IMockOptions } from "../moq";
-import { trackerProviders } from "../tracker/tracker.providers";
+import trackerProviders from "../tracker";
 import reflectorProviders from "../reflector";
-import { presetsProviders } from "../presets/presets.providers";
-import { verificationProviders } from "../verification/verification.providers";
+import presetsProviders from "../presets";
+import verificationProviders from "../verification";
 import interceptorsProviders from "../interceptors";
-import { playablesProviders } from "../playables/playables.providers";
-import { interactionPlayersProviders } from "../interaction-players/interaction-players.providers";
-import { formattersProviders } from "../formatters/formatters.providers";
-import { typeExplorersProviders } from "../explorers/type-explorers.providers";
+import playablesProviders from "../playables";
+import interactionPlayersProviders from "../interaction-players";
+import formattersProviders from "../formatters";
+import typeExplorersProviders from "../explorers";
 import { mockOptionsProviders } from "../mock-options/mock-options.providers";
 import { StaticProvider } from "../static.injector/interface/provider";
-import { mockCoreProviders } from "../core/mock-core.providers";
+import mockCoreProviders from "../core";
 import autoMockingProviders from "../auto-mocking";
 import expressionEqualityComparersProviders from "../expression.equality-comparers";
 

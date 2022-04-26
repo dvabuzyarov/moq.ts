@@ -11,7 +11,7 @@ import { ExpressionEqualityComparer } from "../expression.equality-comparers/exp
 /**
  * @hidden
  */
-export const interactionPlayersProviders = [
+export default [
     {provide: REFLECT_APPLY, useValue: Reflect.apply, deps: []},
     {provide: PresetPlayer, useClass: PresetPlayer, deps: [CallbackPresetPlayer, MimicsPresetPlayer]},
     {provide: PlayablePresetProvider, useClass: PlayablePresetProvider, deps: [Presets, ExpressionEqualityComparer]},
