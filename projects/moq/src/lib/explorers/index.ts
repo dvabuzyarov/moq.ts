@@ -19,7 +19,7 @@ import { PropertyIsReadOnlyTester } from "./has-property.explorer/property-is-re
 /**
  * @hidden
  */
-export const typeExplorersProviders = [
+export default [
     {provide: ExpressionHasMethodExplorer, useClass: ExpressionHasMethodExplorer, deps: []},
     {
         provide: HasMethodExplorer,

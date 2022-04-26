@@ -9,7 +9,7 @@ import { ExpressionEqualityComparer } from "../expression.equality-comparers/exp
 /**
  * @hidden
  */
-export const verificationProviders = [
+export default [
     {provide: Verifier, useClass: Verifier, deps: [CallCounter, VerificationTester, AutoMockProvider]},
     {provide: CallCounter, useClass: CallCounter, deps: [ExpressionEqualityComparer, Tracker]},
     {provide: VerificationTester, useClass: VerificationTester, deps: [VerifyFormatter]},

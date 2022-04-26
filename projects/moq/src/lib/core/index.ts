@@ -12,7 +12,7 @@ import { EXPRESSION_REFLECTOR } from "../reflector/expression-reflector";
 /**
  * @hidden
  */
-export const mockCoreProviders = [
+export default [
     {
         provide: MockCore, useClass: MockCore, deps: [
             MOCK_OPTIONS,

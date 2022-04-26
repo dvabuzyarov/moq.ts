@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "ng serve",
-    "build": "ng build moq --prod && cpx README.md dist/moq/",
+    "build": "ng build moq --configuration production && cpx README.md dist/moq/",
     "build:docs": "tsc -p ./projects/docs/tsconfig.lib.prod.json",
     "build:tests": "tsc -p ./projects/moq/tsconfig.spec.json",
     "test": "npm run build:tests && node ./specs/moq/index.specs.js",

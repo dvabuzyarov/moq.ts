@@ -1,4 +1,4 @@
-import { equalMatchersProviders } from "../../lib/equal-matchers/equal-matchers.providers";
+import equalMatchersProviders from "../../lib/equal-matchers";
 import { OBJECT_MATCHERS } from "../../lib/equal-matchers/object-matchers.injection-token";
 import { DateMatcher } from "../../lib/equal-matchers/date.matcher";
 import { IteratorMatcher } from "../../lib/equal-matchers/iterator.matcher";

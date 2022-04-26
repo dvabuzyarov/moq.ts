@@ -18,7 +18,7 @@ import { ItEqualityComparer } from "../expression.equality-comparers/it.equality
 /**
  * @hidden
  */
-export const equalMatchersProviders = [
+export default [
     {provide: ConstantEqualityComparer, useExisting: EqualConstantMatcher},
     {provide: EqualConstantMatcher, useClass: EqualConstantMatcher, deps: [ItEqualityComparer, EqualMatcher]},
     {provide: CommonTypeProvider, useClass: CommonTypeProvider, deps: []},

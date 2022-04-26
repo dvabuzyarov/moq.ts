@@ -5,6 +5,6 @@ import { ExpressionEqualityComparer } from "../expression.equality-comparers/exp
 /**
  * @hidden
  */
-export const playablesProviders = [
+export default [
     {provide: PresetPlayablesUpdater, useClass: PresetPlayablesUpdater, deps: [Presets, ExpressionEqualityComparer]}
 ];

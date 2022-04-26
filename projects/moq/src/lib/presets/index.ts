@@ -16,7 +16,7 @@ import { ComplexExpressionGuard } from "../auto-mocking/expression.guards/comple
 /**
  * @hidden
  */
-export const presetsProviders = [
+export default [
     {
         provide: SetupFactory,
         useClass: SetupFactory,
