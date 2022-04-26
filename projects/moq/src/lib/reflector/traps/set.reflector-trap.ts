@@ -1,5 +1,6 @@
-import { Expressions, SetPropertyExpression } from "../expressions";
+import { Expressions } from "../expressions";
 import { InjectionFactory } from "../../injector/injection-factory";
+import { SetPropertyExpression } from "../expressions";
 
 export class SetReflectorTrap implements InjectionFactory {
     constructor(

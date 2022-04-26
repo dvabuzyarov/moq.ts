@@ -1,14 +1,13 @@
-import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
-import { EXPRESSIONS } from "../expressions.injection-token";
-import { GetPropertyExpression, MethodExpression, NamedMethodExpression } from "../expressions";
-import { ReflectorProxy } from "../reflector-proxy";
+import { createInjector, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
+import { ReflectingProxyFactory } from "../reflecting-proxy.factory";
 import { ApplyReflectorTrap } from "./apply.reflector-trap";
 import { It } from "moq.ts";
-import { Interaction } from "../../interactions";
+import { GetPropertyExpression, Expression, FunctionExpression, MethodExpression } from "../expressions";
+import { EXPRESSIONS } from "../expression-reflector";
 
 describe("Apply reflector-trap", () => {
     beforeEach(() => {
-        createInjector2(ApplyReflectorTrap, [ReflectorProxy, EXPRESSIONS]);
+        createInjector(ApplyReflectorTrap, [ReflectingProxyFactory, EXPRESSIONS]);
     });
 
     it("Logs method expression", () => {
@@ -16,8 +15,8 @@ describe("Apply reflector-trap", () => {
         const proxy = {};
         const expressions = [];
 
-        resolveMock(ReflectorProxy)
-            .setup(instance => instance.factory())
+        resolveMock(ReflectingProxyFactory)
+            .setup(instance => instance.create())
             .returns(proxy);
 
         resolveMock(EXPRESSIONS)
@@ -28,16 +27,16 @@ describe("Apply reflector-trap", () => {
         const actual = trap(undefined, undefined, args);
 
         expect(actual).toBe(proxy);
-        expect(expressions).toEqual([new MethodExpression(args)]);
+        expect(expressions).toEqual([new FunctionExpression(args)]);
     });
 
     it("Adds method expression to the log", () => {
         const args = [];
         const proxy = {};
-        const expressions = [{} as Interaction];
+        const expressions = [{} as Expression];
 
-        resolveMock(ReflectorProxy)
-            .setup(instance => instance.factory())
+        resolveMock(ReflectingProxyFactory)
+            .setup(instance => instance.create())
             .returns(proxy);
 
         resolveMock(EXPRESSIONS)
@@ -48,7 +47,7 @@ describe("Apply reflector-trap", () => {
         const actual = trap(undefined, undefined, args);
 
         expect(actual).toBe(proxy);
-        expect(expressions).toEqual([{} as Interaction, new MethodExpression(args)]);
+        expect(expressions).toEqual([{} as Expression, new FunctionExpression(args)]);
     });
 
     it("Replaces the last get property expression with named method expression inside the log", () => {
@@ -58,8 +57,8 @@ describe("Apply reflector-trap", () => {
 
         const expressions = [new GetPropertyExpression(name)];
 
-        resolveMock(ReflectorProxy)
-            .setup(instance => instance.factory())
+        resolveMock(ReflectingProxyFactory)
+            .setup(instance => instance.create())
             .returns(proxy);
 
         resolveMock(EXPRESSIONS)
@@ -70,6 +69,6 @@ describe("Apply reflector-trap", () => {
         const actual = trap(undefined, undefined, args);
 
         expect(actual).toBe(proxy);
-        expect(expressions).toEqual([new NamedMethodExpression(name, args)]);
+        expect(expressions).toEqual([new MethodExpression(name, args)]);
     });
 });

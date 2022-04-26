@@ -1,21 +1,20 @@
 import { ArgumentsEqualityComparer } from "./arguments.equality-comparer";
-import { MethodInteraction } from "../interactions";
-import { MethodExpression } from "../reflector/expressions";
+import { FunctionExpression } from "../reflector/expressions";
 import { MethodEqualityComparer } from "./method.equality-comparer";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("Method expression equality comparer", () => {
 
     beforeEach(() => {
-        createInjector2(MethodEqualityComparer, [ArgumentsEqualityComparer]);
+        createInjector(MethodEqualityComparer, [ArgumentsEqualityComparer]);
     });
 
     it("Returns true when they are equal", () => {
         const arguments1 = [];
         const arguments2 = [];
 
-        const left = new MethodInteraction(arguments1);
-        const right = new MethodExpression(arguments2);
+        const left = new FunctionExpression(arguments1);
+        const right = new FunctionExpression(arguments2);
 
         resolveMock(ArgumentsEqualityComparer)
             .setup(instance => instance.equals(arguments1, arguments2))
@@ -31,8 +30,8 @@ describe("Method expression equality comparer", () => {
         const arguments1 = [];
         const arguments2 = [];
 
-        const left = new MethodInteraction(arguments1);
-        const right = new MethodExpression(arguments2);
+        const left = new FunctionExpression(arguments1);
+        const right = new FunctionExpression(arguments2);
 
         resolveMock(ArgumentsEqualityComparer)
             .setup(instance => instance.equals(arguments1, arguments2))

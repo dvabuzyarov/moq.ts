@@ -1,4 +1,4 @@
-import { NewOperatorInteraction } from "../interactions";
+import { NewOperatorExpression } from "../reflector/expressions";
 import { ConstantFormatter } from "./constant.formatter";
 
 /**
@@ -10,7 +10,7 @@ export class NewOperatorFormatter {
 
     }
 
-    public format(expression: NewOperatorInteraction): string {
+    public format(expression: NewOperatorExpression): string {
         const value = this.constantFormatter.format(expression.args);
         return `new constructor(${value})`;
     }

@@ -1,12 +1,12 @@
-import { GetPropertyInteraction } from "../interactions";
+import { GetPropertyExpression } from "../reflector/expressions";
 import { InteractionFormatter } from "./interaction.formatter";
 import { ExpressionsFormatter } from "./expressions.formatter";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
 
 describe("Expressions formatter", () => {
     beforeEach(() => {
-        createInjector2(ExpressionsFormatter, [InteractionFormatter, MOCK_OPTIONS]);
+        createInjector(ExpressionsFormatter, [InteractionFormatter, MOCK_OPTIONS]);
     });
 
     it("Returns formatted description for verify message with mock name", () => {
@@ -15,7 +15,7 @@ describe("Expressions formatter", () => {
         const haveBeenCalledTimes = 2;
         const expressionDescription = "expression description";
 
-        const expression = new GetPropertyInteraction("name");
+        const expression = new GetPropertyExpression("name");
 
         resolveMock(MOCK_OPTIONS)
             .setup(instance => instance.name)
@@ -37,7 +37,7 @@ describe("Expressions formatter", () => {
         const timesMessage = "Should be called once";
         const haveBeenCalledTimes = 2;
         const expressionDescription = "expression description";
-        const expression = new GetPropertyInteraction("name");
+        const expression = new GetPropertyExpression("name");
 
         resolveMock(InteractionFormatter)
             .setup(instance => instance.format(expression))

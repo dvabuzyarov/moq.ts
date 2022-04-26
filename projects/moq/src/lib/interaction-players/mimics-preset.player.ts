@@ -1,12 +1,12 @@
 import {
-    GetPropertyInteraction,
-    InOperatorInteraction,
-    Interaction,
-    MethodInteraction,
-    NamedMethodInteraction,
-    NewOperatorInteraction,
-    SetPropertyInteraction
-} from "../interactions";
+    GetPropertyExpression,
+    InOperatorExpression,
+    Expression,
+    FunctionExpression,
+    MethodExpression,
+    NewOperatorExpression,
+    SetPropertyExpression
+} from "../reflector/expressions";
 import { REFLECT_APPLY } from "./reflect-apply.injection-token";
 import { TypeofInjectionToken } from "../injector/typeof-injection-token";
 
@@ -19,26 +19,26 @@ export class MimicsPresetPlayer {
 
     }
 
-    public play(origin: any, interaction: Interaction): any {
-        if (interaction instanceof GetPropertyInteraction) {
+    public play(origin: any, interaction: Expression): any {
+        if (interaction instanceof GetPropertyExpression) {
             return origin[interaction.name];
         }
-        if (interaction instanceof SetPropertyInteraction) {
+        if (interaction instanceof SetPropertyExpression) {
             origin[interaction.name] = interaction.value;
             return true;
         }
-        if (interaction instanceof NamedMethodInteraction) {
+        if (interaction instanceof MethodExpression) {
             const method = origin[interaction.name];
             return this.apply(method, origin, interaction.args);
         }
-        if (interaction instanceof MethodInteraction) {
+        if (interaction instanceof FunctionExpression) {
             return this.apply(origin, undefined, interaction.args);
         }
-        if (interaction instanceof InOperatorInteraction) {
+        if (interaction instanceof InOperatorExpression) {
             return interaction.name in origin;
         }
 
-        if (interaction instanceof NewOperatorInteraction) {
+        if (interaction instanceof NewOperatorExpression) {
             return new origin(...interaction.args);
         }
     }

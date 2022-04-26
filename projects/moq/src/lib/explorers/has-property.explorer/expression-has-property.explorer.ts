@@ -1,10 +1,6 @@
-import {
-    Expressions,
-    InOperatorExpression,
-    MethodExpression,
-    NamedMethodExpression
-} from "../../reflector/expressions";
+import { Expressions } from "../../reflector/expressions";
 import { It } from "../../reflector/expression-predicates";
+import { InOperatorExpression, FunctionExpression, MethodExpression } from "../../reflector/expressions";
 
 /**
  * @hidden
@@ -12,8 +8,8 @@ import { It } from "../../reflector/expression-predicates";
 export class ExpressionHasPropertyExplorer {
     public has(name: PropertyKey, expression: Expressions<unknown>): boolean {
         if (expression instanceof It
+            || expression instanceof FunctionExpression
             || expression instanceof MethodExpression
-            || expression instanceof NamedMethodExpression
             || expression instanceof InOperatorExpression) {
             return false;
         }

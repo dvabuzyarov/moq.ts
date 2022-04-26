@@ -1,11 +1,11 @@
 import { PrototypeStorage } from "./prototype.storage";
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjectorFromProviders, resolve } from "../../tests.components/resolve.builder";
 import { SetPrototypeOfTrap } from "./set-prototype-of.trap";
 
 describe("Set prototype of trap", () => {
     beforeEach(() => {
         const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>("", ["set"]);
-        createInjector([
+        createInjectorFromProviders([
             {provide: PrototypeStorage, useValue: prototypeStorage, deps: []},
             {provide: SetPrototypeOfTrap, useClass: SetPrototypeOfTrap, deps: [PrototypeStorage]},
         ]);

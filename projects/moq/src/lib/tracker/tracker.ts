@@ -1,4 +1,4 @@
-import { Interaction } from "../interactions";
+import { Expression } from "../reflector/expressions";
 import { SequenceId } from "./sequence-id";
 
 /**
@@ -6,7 +6,7 @@ import { SequenceId } from "./sequence-id";
  */
 export interface TrackedAction {
     id: number;
-    expression: Interaction;
+    expression: Expression;
 }
 
 /**
@@ -22,7 +22,7 @@ export class Tracker {
     /**
      * @hidden
      */
-    public add(action: Interaction): void {
+    public add(action: Expression): void {
         const record = {id: this.sequenceId.next(), expression: action};
         this.log.push(record);
     }
@@ -34,7 +34,7 @@ export class Tracker {
         return [...this.log];
     }
 
-    public interactions(): Interaction[] {
+    public interactions(): Expression[] {
         return this.get().map(record => record.expression);
     }
 }

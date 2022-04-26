@@ -1,7 +1,7 @@
 /*eslint-disable max-classes-per-file*/
 import { Mock } from "../lib/mock";
 import { It } from "../lib/reflector/expression-predicates";
-import { Interaction } from "../lib/interactions";
+import { Expression } from "../lib/reflector/expressions";
 
 class SimpleMimic {
 
@@ -18,7 +18,7 @@ describe("#76 Prototypeof & mimics do not respect each other", () => {
         const mock = new Mock<Dummy>()
             .prototypeof(Dummy.prototype)
             .setup(() => It.Is(expression => {
-                if (expression instanceof Interaction) {
+                if (expression instanceof Expression) {
                     return Reflect.has(SimpleMimic.prototype, expression.name);
                 }
                 return false;

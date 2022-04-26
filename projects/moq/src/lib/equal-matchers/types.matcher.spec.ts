@@ -1,19 +1,17 @@
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2 } from "../../tests.components/resolve.builder";
 import { TypesMatcher } from "./types.matcher";
 
 describe("Types matcher", () => {
 
     beforeEach(() => {
-        createInjector([
-            {provide: TypesMatcher, useClass: TypesMatcher, deps: []},
-        ]);
+        createInjector(TypesMatcher, []);
     });
 
     it("Returns true when the compared values have the same type", () => {
         const left = {};
         const right = {};
 
-        const matcher = resolve(TypesMatcher);
+        const matcher = resolve2(TypesMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -23,7 +21,7 @@ describe("Types matcher", () => {
         const left = {};
         const right = 1;
 
-        const matcher = resolve(TypesMatcher);
+        const matcher = resolve2(TypesMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);

@@ -1,20 +1,19 @@
 import { ArgumentsEqualityComparer } from "./arguments.equality-comparer";
-import { NewOperatorInteraction } from "../interactions";
 import { NewOperatorExpression } from "../reflector/expressions";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { NewOperatorEqualityComparer } from "./new-operator.equality-comparer";
 
 describe("new operator expression equality comparer", () => {
 
     beforeEach(() => {
-        createInjector2(NewOperatorEqualityComparer, [ArgumentsEqualityComparer]);
+        createInjector(NewOperatorEqualityComparer, [ArgumentsEqualityComparer]);
     });
 
     it("Returns true when they are equal", () => {
         const arguments1 = [];
         const arguments2 = [];
 
-        const left = new NewOperatorInteraction(arguments1);
+        const left = new NewOperatorExpression(arguments1);
         const right = new NewOperatorExpression(arguments2);
 
         resolveMock(ArgumentsEqualityComparer)
@@ -31,7 +30,7 @@ describe("new operator expression equality comparer", () => {
         const arguments1 = [];
         const arguments2 = [];
 
-        const left = new NewOperatorInteraction(arguments1);
+        const left = new NewOperatorExpression(arguments1);
         const right = new NewOperatorExpression(arguments2);
 
         resolveMock(ArgumentsEqualityComparer)

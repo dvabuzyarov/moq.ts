@@ -1,22 +1,22 @@
-import { Interaction } from "../interactions";
+import { Expression } from "../reflector/expressions";
 import { InteractionPlayer } from "./interaction.player";
 import { PlayablePresetProvider } from "./playable-preset.provider";
 import { IPreset } from "../presets/presets/preset";
 import { PresetPlayer } from "./preset.player";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { PresetPlayablesUpdater } from "../playables/preset-playables.updater";
 import { It, Times } from "moq.ts";
 
 describe("Interaction player", () => {
     beforeEach(() => {
-        createInjector2(InteractionPlayer, [PlayablePresetProvider, PresetPlayablesUpdater, PresetPlayer]);
+        createInjector(InteractionPlayer, [PlayablePresetProvider, PresetPlayablesUpdater, PresetPlayer]);
     });
     beforeEach(() => {
         resolveMock(PresetPlayablesUpdater)
             .prototypeof(PresetPlayablesUpdater.prototype);
     });
 
-    class TestInteraction extends Interaction {
+    class TestInteraction extends Expression {
         constructor() {
             super(undefined, undefined);
         }

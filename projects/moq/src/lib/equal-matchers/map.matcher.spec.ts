@@ -1,22 +1,24 @@
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { MapMatcher } from "./map.matcher";
-import { ConstantMatcher } from "../expression-matchers/constant.matcher";
-import { Injector } from "../static.injector/injector";
+import { StaticInjector } from "../static.injector/injector";
+import { Mock } from "moq.ts";
+import { ConstantEqualityComparer } from "../expression.equality-comparers/constant.equality-comparer";
 
 describe("Map matcher", () => {
+
     beforeEach(() => {
-        const constantMatcher = jasmine.createSpyObj<ConstantMatcher>("", ["matched"]);
-        createInjector([
-            {provide: ConstantMatcher, useValue: constantMatcher},
-            {provide: MapMatcher, useClass: MapMatcher, deps: [Injector]},
-        ]);
+        createInjector(MapMatcher, [StaticInjector]);
+    });
+
+    beforeEach(() => {
+        resolveMock(StaticInjector).prototypeof(StaticInjector.prototype);
     });
 
     it("Returns true when the compared values are equal", () => {
         const left = new Map();
         const right = new Map();
 
-        const matcher = resolve(MapMatcher);
+        const matcher = resolve2(MapMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -26,7 +28,7 @@ describe("Map matcher", () => {
         const left = new Map([["prop1", 1]]);
         const right = new Map();
 
-        const matcher = resolve(MapMatcher);
+        const matcher = resolve2(MapMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -36,10 +38,15 @@ describe("Map matcher", () => {
         const left = new Map([["prop1", 1]]);
         const right = new Map([["prop1", 1]]);
 
-        resolve(ConstantMatcher)
-            .matched.withArgs(1, 1).and.returnValue(false);
+        const constantEqualityComparer = new Mock<ConstantEqualityComparer>()
+            .setup(instance => instance.equals(1, 1))
+            .returns(false)
+            .object();
+        resolveMock(StaticInjector)
+            .setup(instance => instance.get(ConstantEqualityComparer))
+            .returns(constantEqualityComparer);
 
-        const matcher = resolve(MapMatcher);
+        const matcher = resolve2(MapMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -49,7 +56,7 @@ describe("Map matcher", () => {
         const left = null;
         const right = new Map();
 
-        const matcher = resolve(MapMatcher);
+        const matcher = resolve2(MapMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(undefined);
@@ -59,7 +66,7 @@ describe("Map matcher", () => {
         const left = new Map();
         const right = null;
 
-        const matcher = resolve(MapMatcher);
+        const matcher = resolve2(MapMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(undefined);
@@ -69,7 +76,7 @@ describe("Map matcher", () => {
         const left = null;
         const right = null;
 
-        const matcher = resolve(MapMatcher);
+        const matcher = resolve2(MapMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(undefined);

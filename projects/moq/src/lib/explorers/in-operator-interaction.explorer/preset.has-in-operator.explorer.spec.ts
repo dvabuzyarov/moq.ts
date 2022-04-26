@@ -1,14 +1,15 @@
 import { PresetHasInOperatorExplorer } from "./preset.has-in-operator.explorer";
 import { IPreset } from "../../presets/presets/preset";
-import { Expressions, InOperatorExpression } from "../../reflector/expressions";
+import { Expressions } from "../../reflector/expressions";
 import { It } from "../../reflector/expression-predicates";
 import { IPlayable } from "../../moq";
-import { createInjector2, resolve2 } from "../../../tests.components/resolve.builder";
+import { createInjector, resolve2 } from "../../../tests.components/resolve.builder";
+import { InOperatorExpression } from "../../reflector/expressions";
 
 describe("Preset has in operator explorer", () => {
 
     beforeEach(() => {
-        createInjector2(PresetHasInOperatorExplorer, []);
+        createInjector(PresetHasInOperatorExplorer, []);
     });
 
     class Preset implements IPreset<unknown> {
@@ -29,7 +30,7 @@ describe("Preset has in operator explorer", () => {
         expect(actual).toBe(false);
     });
 
-    it("Returns true when target of preset is InOperatorExpression and has the same name", () => {
+    it("Returns true when target of preset is InOperatorInteraction and has the same name", () => {
         const name = "name";
         const expression = new InOperatorExpression(name);
         const preset = new Preset({isPlayable: () => true, update: undefined}, expression);

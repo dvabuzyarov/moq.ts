@@ -1,6 +1,6 @@
 import { IMock, IPlayable, IPresetBuilder, PromisedType } from "../moq";
 import { Expressions } from "../reflector/expressions";
-import { Interaction } from "../interactions";
+import { Expression } from "../reflector/expressions";
 import { PlayTimes } from "../playables/play-times";
 import { TypeOfInjectionFactory } from "../injector/injection-factory";
 import { ReturnsPresetFactory } from "./factories/returns-preset.factory";
@@ -50,7 +50,7 @@ export class PresetBuilder<T, TValue = any> implements IPresetBuilder<T> {
         return this.throwsPresetFactory(this.target, this.playable, exception);
     }
 
-    public callback(callback: (interaction: Interaction) => TValue): IMock<T> {
+    public callback(callback: (interaction: Expression) => TValue): IMock<T> {
         return this.callbackPresetFactory(this.target, this.playable, callback);
     }
 

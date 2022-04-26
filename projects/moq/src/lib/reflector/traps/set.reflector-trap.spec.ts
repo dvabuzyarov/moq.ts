@@ -1,11 +1,11 @@
-import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import { SetReflectorTrap } from "./set.reflector-trap";
-import { EXPRESSIONS } from "../expressions.injection-token";
+import { EXPRESSIONS } from "../expression-reflector";
 import { SetPropertyExpression } from "../expressions";
 
 describe("Set reflector-trap", () => {
     beforeEach(() => {
-        createInjector2(SetReflectorTrap, [EXPRESSIONS]);
+        createInjector(SetReflectorTrap, [EXPRESSIONS]);
     });
 
     beforeEach(() => {

@@ -1,19 +1,19 @@
 import {
-    GetPropertyInteraction,
-    InOperatorInteraction,
-    MethodInteraction,
-    NamedMethodInteraction,
-    NewOperatorInteraction,
-    SetPropertyInteraction
-} from "../interactions";
+    GetPropertyExpression,
+    InOperatorExpression,
+    FunctionExpression,
+    MethodExpression,
+    NewOperatorExpression,
+    SetPropertyExpression
+} from "../reflector/expressions";
 import { MimicsPresetPlayer } from "./mimics-preset.player";
 import { nameof } from "../../tests.components/nameof";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { REFLECT_APPLY } from "./reflect-apply.injection-token";
 
 describe("Mimics preset player", () => {
     beforeEach(() => {
-        createInjector2(MimicsPresetPlayer, [REFLECT_APPLY]);
+        createInjector(MimicsPresetPlayer, [REFLECT_APPLY]);
     });
 
     it("Plays property read interaction", () => {
@@ -24,7 +24,7 @@ describe("Mimics preset player", () => {
         target[propertyName] = value;
 
         const player = resolve2(MimicsPresetPlayer);
-        const actual = player.play(target, new GetPropertyInteraction(propertyName));
+        const actual = player.play(target, new GetPropertyExpression(propertyName));
 
         expect(actual).toBe(value);
     });
@@ -36,7 +36,7 @@ describe("Mimics preset player", () => {
         const target = {};
 
         const player = resolve2(MimicsPresetPlayer);
-        const actual = player.play(target, new SetPropertyInteraction(propertyName, value));
+        const actual = player.play(target, new SetPropertyExpression(propertyName, value));
 
         expect(actual).toBe(true);
         expect(target[propertyName]).toBe(value);
@@ -56,7 +56,7 @@ describe("Mimics preset player", () => {
             .returns(result);
 
         const player = resolve2(MimicsPresetPlayer);
-        const actual = player.play(target, new NamedMethodInteraction(propertyName, [arg]));
+        const actual = player.play(target, new MethodExpression(propertyName, [arg]));
 
         expect(actual).toBe(result);
     });
@@ -71,7 +71,7 @@ describe("Mimics preset player", () => {
             .returns(result);
 
         const player = resolve2(MimicsPresetPlayer);
-        const actual = player.play(target, new MethodInteraction([arg]));
+        const actual = player.play(target, new FunctionExpression([arg]));
 
         expect(actual).toBe(result);
     });
@@ -81,7 +81,7 @@ describe("Mimics preset player", () => {
         const target = {name};
 
         const player = resolve2(MimicsPresetPlayer);
-        const actual = player.play(target, new InOperatorInteraction(nameof<typeof target>("name")));
+        const actual = player.play(target, new InOperatorExpression(nameof<typeof target>("name")));
 
         expect(actual).toBe(true);
     });
@@ -96,7 +96,7 @@ describe("Mimics preset player", () => {
         const name = "value";
 
         const player = resolve2(MimicsPresetPlayer);
-        const actual = player.play(TestClass, new NewOperatorInteraction([name]));
+        const actual = player.play(TestClass, new NewOperatorExpression([name]));
 
         expect(actual).toEqual(new TestClass(name));
     });

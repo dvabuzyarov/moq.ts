@@ -1,7 +1,7 @@
 import { IMock, IPlayable } from "../moq";
 import { PresetBuilder } from "./preset-builder";
 import { Expressions } from "../reflector/expressions";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { PlayTimes } from "../playables/play-times";
 import { InjectionToken } from "../static.injector/injection_token";
 import { ReturnsPresetFactory } from "./factories/returns-preset.factory";
@@ -15,7 +15,7 @@ describe("Preset builder", () => {
     const Target = new InjectionToken<Expressions<any>>("target");
 
     beforeEach(() => {
-        createInjector2(PresetBuilder, [
+        createInjector(PresetBuilder, [
             ReturnsPresetFactory,
             ThrowsPresetFactory,
             MimicsPresetFactory,

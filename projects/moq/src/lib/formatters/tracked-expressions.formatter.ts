@@ -1,5 +1,5 @@
 import { InteractionFormatter } from "./interaction.formatter";
-import { Interaction } from "../interactions";
+import { Expression } from "../reflector/expressions";
 
 /**
  * @hidden
@@ -10,7 +10,7 @@ export class TrackedExpressionsFormatter {
 
     }
 
-    public format(trackedExpressions: Interaction[]): string {
+    public format(trackedExpressions: Expression[]): string {
         let result = "";
         for (const expression of trackedExpressions) {
             result += `${this.interactionFormatter.format(expression)}\n`;

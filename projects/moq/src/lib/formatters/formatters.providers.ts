@@ -5,8 +5,8 @@ import { InteractionFormatter } from "./interaction.formatter";
 import { SetPropertyFormatter } from "./set-property.formatter";
 import { ConstantFormatter } from "./constant.formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
-import { NamedMethodFormatter } from "./named-method.formatter";
 import { MethodFormatter } from "./method.formatter";
+import { FunctionFormatter } from "./function.formatter";
 import { InOperatorFormatter } from "./in-operator.formatter";
 import { GetPropertyFormatter } from "./get-property.formatter";
 import { NewOperatorFormatter } from "./new-operator.formatter";
@@ -25,8 +25,8 @@ export const formattersProviders = [
     {provide: TrackedExpressionsFormatter, useClass: TrackedExpressionsFormatter, deps: [InteractionFormatter]},
     {provide: SetPropertyFormatter, useClass: SetPropertyFormatter, deps: [ConstantFormatter, PropertyKeyFormatter]},
     {provide: PropertyKeyFormatter, useClass: PropertyKeyFormatter, deps: []},
-    {provide: NamedMethodFormatter, useClass: NamedMethodFormatter, deps: [ConstantFormatter, PropertyKeyFormatter]},
-    {provide: MethodFormatter, useClass: MethodFormatter, deps: [ConstantFormatter]},
+    {provide: MethodFormatter, useClass: MethodFormatter, deps: [ConstantFormatter, PropertyKeyFormatter]},
+    {provide: FunctionFormatter, useClass: FunctionFormatter, deps: [ConstantFormatter]},
     {provide: InOperatorFormatter, useClass: InOperatorFormatter, deps: [PropertyKeyFormatter]},
     {provide: GetPropertyFormatter, useClass: GetPropertyFormatter, deps: [PropertyKeyFormatter]},
     {provide: ExpressionsFormatter, useClass: ExpressionsFormatter, deps: [InteractionFormatter, MOCK_OPTIONS]},
@@ -38,8 +38,8 @@ export const formattersProviders = [
         deps: [
             GetPropertyFormatter,
             SetPropertyFormatter,
+            FunctionFormatter,
             MethodFormatter,
-            NamedMethodFormatter,
             ConstantFormatter,
             InOperatorFormatter,
             NewOperatorFormatter

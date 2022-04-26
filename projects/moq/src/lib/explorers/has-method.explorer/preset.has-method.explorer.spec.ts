@@ -4,13 +4,13 @@ import { Expressions } from "../../reflector/expressions";
 import { ExpressionHasMethodExplorer } from "./expression.has-method.explorer";
 import { ObjectHasMethodExplorer } from "./object.has-method.explorer";
 import { MimicsPreset } from "../../presets/presets/mimics.preset";
-import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import { It } from "moq.ts";
 
 describe("Preset has instance method explorer", () => {
 
     beforeEach(() => {
-        createInjector2(PresetHasMethodExplorer, [ExpressionHasMethodExplorer, ObjectHasMethodExplorer]);
+        createInjector(PresetHasMethodExplorer, [ExpressionHasMethodExplorer, ObjectHasMethodExplorer]);
     });
 
     it("Returns true when preset expression has instance method", () => {

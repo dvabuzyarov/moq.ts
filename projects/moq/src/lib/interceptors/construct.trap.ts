@@ -1,5 +1,5 @@
 import { Tracker } from "../tracker/tracker";
-import { NewOperatorInteraction } from "../interactions";
+import { NewOperatorExpression } from "../reflector/expressions";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 
 /**
@@ -13,7 +13,7 @@ export class ConstructTrap {
     }
 
     public intercept(args: any[]): any {
-        const interaction = new NewOperatorInteraction(args);
+        const interaction = new NewOperatorExpression(args);
         this.tracker.add(interaction);
         return this.interactionPlayer.play(interaction);
     }

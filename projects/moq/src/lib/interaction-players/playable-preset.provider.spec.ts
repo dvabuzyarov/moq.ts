@@ -1,16 +1,16 @@
 import { Expressions } from "../reflector/expressions";
-import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
-import { Interaction } from "../interactions";
+import { Expression } from "../reflector/expressions";
 import { Presets } from "../presets/presets";
 import { PlayablePresetProvider } from "./playable-preset.provider";
 import { IPreset } from "../presets/presets/preset";
 import { IPlayable } from "../moq";
-import { createInjector2, resolve2, resolveMock, SpiedObject } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock, SpiedObject } from "../../tests.components/resolve.builder";
+import { ExpressionEqualityComparer } from "../expression.equality-comparers/expression.equality-comparer";
 
 describe("Playable preset provider", () => {
 
     beforeEach(() => {
-        createInjector2(PlayablePresetProvider, [Presets, ExpressionMatcher]);
+        createInjector(PlayablePresetProvider, [Presets, ExpressionEqualityComparer]);
     });
 
     function createPreset(target: Expressions<unknown>): SpiedObject<IPreset<unknown>> {
@@ -20,13 +20,13 @@ describe("Playable preset provider", () => {
 
     it("Returns playable preset by expression", () => {
         const expectedExpression = {} as Expressions<unknown>;
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const preset = createPreset(expectedExpression);
         preset.playable.isPlayable.and.returnValue(true);
 
-        resolveMock(ExpressionMatcher)
-            .setup(instance => instance.matched(expression, expectedExpression))
+        resolveMock(ExpressionEqualityComparer)
+            .setup(instance => instance.equals(expression, expectedExpression))
             .returns(true);
         resolveMock(Presets)
             .setup(instance => instance.get())
@@ -40,7 +40,7 @@ describe("Playable preset provider", () => {
 
     it("Returns the first playable preset", () => {
         const expectedExpression = {} as Expressions<unknown>;
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const preset1 = createPreset(expectedExpression);
         preset1.playable.isPlayable.and.returnValue(true);
@@ -48,8 +48,8 @@ describe("Playable preset provider", () => {
         const preset2 = createPreset(expectedExpression);
         preset2.playable.isPlayable.and.returnValue(true);
 
-        resolveMock(ExpressionMatcher)
-            .setup(instance => instance.matched(expression, expectedExpression))
+        resolveMock(ExpressionEqualityComparer)
+            .setup(instance => instance.equals(expression, expectedExpression))
             .returns(true);
         resolveMock(Presets)
             .setup(instance => instance.get())
@@ -63,13 +63,13 @@ describe("Playable preset provider", () => {
 
     it("Skips unplayable preset by expression and returns undefined", () => {
         const expectedExpression = {} as Expressions<unknown>;
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const preset = createPreset(expectedExpression);
         preset.playable.isPlayable.and.returnValue(false);
 
-        resolveMock(ExpressionMatcher)
-            .setup(instance => instance.matched(expression, expectedExpression))
+        resolveMock(ExpressionEqualityComparer)
+            .setup(instance => instance.equals(expression, expectedExpression))
             .returns(true);
 
         resolveMock(Presets)
@@ -84,13 +84,13 @@ describe("Playable preset provider", () => {
 
     it("Skips preset that expected expression does not match to the interaction expression", () => {
         const expectedExpression = {} as Expressions<unknown>;
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const preset = createPreset(expectedExpression);
         preset.playable.isPlayable.and.returnValue(true);
 
-        resolveMock(ExpressionMatcher)
-            .setup(instance => instance.matched(expression, expectedExpression))
+        resolveMock(ExpressionEqualityComparer)
+            .setup(instance => instance.equals(expression, expectedExpression))
             .returns(false);
         resolveMock(Presets)
             .setup(instance => instance.get())
@@ -104,13 +104,13 @@ describe("Playable preset provider", () => {
 
     it("Does not check playability of a preset when its expected expression does not match to the interaction expression", () => {
         const expectedExpression = {} as Expressions<unknown>;
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const preset = jasmine.createSpyObj<IPreset<unknown>>(["playable"]);
         (preset as any).target = expectedExpression;
 
-        resolveMock(ExpressionMatcher)
-            .setup(instance => instance.matched(expression, expectedExpression))
+        resolveMock(ExpressionEqualityComparer)
+            .setup(instance => instance.equals(expression, expectedExpression))
             .returns(false);
 
         resolveMock(Presets)

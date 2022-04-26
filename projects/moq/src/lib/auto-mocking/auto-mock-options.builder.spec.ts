@@ -1,4 +1,4 @@
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { Expressions } from "../reflector/expressions";
 import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
 import { AutoMockOptionsBuilder } from "./auto-mock-options.builder";
@@ -9,7 +9,7 @@ import { IMockOptions } from "../moq";
 describe("Auto mock options builder", () => {
 
     beforeEach(() => {
-        createInjector2(AutoMockOptionsBuilder, [MOCK_OPTIONS, AutoMockNameFormatter, AutoMockInjectorConfig]);
+        createInjector(AutoMockOptionsBuilder, [MOCK_OPTIONS, AutoMockNameFormatter, AutoMockInjectorConfig]);
     });
 
     beforeEach(() => {

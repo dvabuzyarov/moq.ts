@@ -1,4 +1,4 @@
-import { createInjector, resolve } from "../../../tests.components/resolve.builder";
+import { createInjectorFromProviders, resolve } from "../../../tests.components/resolve.builder";
 import { PrototypeStorage } from "../../interceptors/prototype.storage";
 import { MembersMethodExplorer } from "./members-method.explorer";
 import { PropertyDescriptorProvider } from "./property-descriptor.provider";
@@ -9,7 +9,7 @@ describe("Members method explorer", () => {
         const prototypeStorage = jasmine.createSpyObj<PrototypeStorage>(["get"]);
         const propertyDescriptorProvider = jasmine.createSpyObj<PropertyDescriptorProvider>(["get"]);
         const reflectHas = jasmine.createSpy<typeof Reflect.has>("Reflect.has");
-        createInjector([
+        createInjectorFromProviders([
             {
                 provide: MembersMethodExplorer,
                 useClass: MembersMethodExplorer,

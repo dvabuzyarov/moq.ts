@@ -1,10 +1,11 @@
-import { Expressions, NewOperatorExpression } from "../expressions";
-import { ReflectorProxy } from "../reflector-proxy";
+import { Expressions } from "../expressions";
 import { InjectionFactory } from "../../injector/injection-factory";
+import { IReturnValueFactory } from "../expression-reflector";
+import { NewOperatorExpression } from "../expressions";
 
 export class ConstructReflectorTrap implements InjectionFactory {
     constructor(
-        private readonly proxy: ReflectorProxy,
+        private readonly returnValueFactory: IReturnValueFactory,
         private readonly expressions: Expressions<unknown>[]) {
         return this.factory() as any;
     }
@@ -12,7 +13,7 @@ export class ConstructReflectorTrap implements InjectionFactory {
     factory() {
         return (target: any, args: any) => {
             this.expressions.push(new NewOperatorExpression(args));
-            return this.proxy.factory();
+            return this.returnValueFactory.create();
         };
     }
 }

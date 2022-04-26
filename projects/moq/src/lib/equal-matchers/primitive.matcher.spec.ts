@@ -1,18 +1,17 @@
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2 } from "../../tests.components/resolve.builder";
 import { PrimitiveMatcher } from "./primitive.matcher";
 
 describe("Primitive matcher", () => {
+
     beforeEach(() => {
-        createInjector([
-            {provide: PrimitiveMatcher, useClass: PrimitiveMatcher, deps: []},
-        ]);
+        createInjector(PrimitiveMatcher, []);
     });
 
     it("Returns true when the compared values are equal", () => {
         const left = 1;
         const right = 1;
 
-        const matcher = resolve(PrimitiveMatcher);
+        const matcher = resolve2(PrimitiveMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -22,7 +21,7 @@ describe("Primitive matcher", () => {
         const left = 1;
         const right = 2;
 
-        const matcher = resolve(PrimitiveMatcher);
+        const matcher = resolve2(PrimitiveMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);

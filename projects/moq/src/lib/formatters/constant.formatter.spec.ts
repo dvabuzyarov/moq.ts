@@ -1,11 +1,11 @@
 import { ConstantFormatter } from "./constant.formatter";
 import { It } from "../reflector/expression-predicates";
-import { createInjector2, resolve2 } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2 } from "../../tests.components/resolve.builder";
 
 describe("Constant formatter", () => {
 
     beforeEach(() => {
-        createInjector2(ConstantFormatter, []);
+        createInjector(ConstantFormatter, []);
     });
 
     it("Returns formatted description for undefined", () => {

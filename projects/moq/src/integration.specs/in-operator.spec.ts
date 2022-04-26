@@ -138,7 +138,7 @@ describe("Mock: In operator", () => {
     it("Returns result of callback", () => {
         const object = new Mock<ITestObject>()
             .setup(instance => nameof<ITestObject>("property") in instance)
-            .callback(() => true )
+            .callback(() => true)
             .object();
 
         expect(nameof<ITestObject>("property") in object).toBe(true);
@@ -155,6 +155,17 @@ describe("Mock: In operator", () => {
 
         expect(nameof<ITestObject>("property") in object).toBe(true);
         expect(nameof<ITestObject>("method") in object).toBe(true);
+    });
+
+    it("Returns false for an arbitrary property for setup with It notation", () => {
+        const object = new Mock<ITestObject>()
+            // HasTrap converts it to '[object Object]' string
+            .setup(instance => It.IsAny() in instance)
+            .returns(true)
+            .object();
+
+        expect("method" in object).toBe(false);
+        expect("anything else" in object).toBe(false);
     });
 
     it("Verifies", () => {

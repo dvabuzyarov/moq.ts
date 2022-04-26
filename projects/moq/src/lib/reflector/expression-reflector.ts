@@ -23,3 +23,30 @@ export interface ExpressionReflector {
  * Injection token for an expression reflector
  */
 export const EXPRESSION_REFLECTOR = new InjectionToken<ExpressionReflector>("Expression reflector");
+
+/**
+ * @hidden
+ */
+export const EXPRESSIONS = new InjectionToken<Expressions<unknown>[]>("reflected expressions");
+
+/**
+ * @hidden
+ */
+export interface IReturnValueFactory {
+    create(): any;
+}
+
+/**
+ * @hidden
+ */
+export const GET_RETURN_VALUE = new InjectionToken<IReturnValueFactory>("return value factory for the get trap");
+
+/**
+ * @hidden
+ */
+export const APPLY_RETURN_VALUE = new InjectionToken<IReturnValueFactory>("return value factory for the apply trap");
+
+/**
+ * @hidden
+ */
+export const CONSTRUCT_RETURN_VALUE = new InjectionToken<IReturnValueFactory>("return value factory for the construct trap");

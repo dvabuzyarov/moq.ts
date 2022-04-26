@@ -1,11 +1,11 @@
 import { ArgumentsEqualityComparer } from "./arguments.equality-comparer";
 import { ConstantEqualityComparer } from "./constant.equality-comparer";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("Arguments equality comparer", () => {
 
     beforeEach(() => {
-        createInjector2(ArgumentsEqualityComparer, [ConstantEqualityComparer]);
+        createInjector(ArgumentsEqualityComparer, [ConstantEqualityComparer]);
     });
 
     it("Returns true when both are undefined", () => {

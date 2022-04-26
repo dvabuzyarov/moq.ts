@@ -1,31 +1,32 @@
 import { AutoMockNameFormatter } from "./auto-mock-name.formatter";
-import { MethodFormatter } from "../../formatters/method.formatter";
+import { FunctionFormatter } from "../../formatters/function.formatter";
 import { PropertyKeyFormatter } from "../../formatters/property-key.formatter";
-import { NamedMethodFormatter } from "../../formatters/named-method.formatter";
+import { MethodFormatter } from "../../formatters/method.formatter";
 import { ConstantFormatter } from "../../formatters/constant.formatter";
 import { NamePrefixProvider } from "./name-prefix.provider";
+import { createInjector, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import {
+    FunctionExpression,
     GetPropertyExpression,
     MethodExpression,
-    NamedMethodExpression,
-    NewOperatorExpression, SetPropertyExpression
+    NewOperatorExpression,
+    SetPropertyExpression
 } from "../../reflector/expressions";
-import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 
 describe("Auto mock name formatter", () => {
 
     beforeEach(() => {
-        createInjector2(AutoMockNameFormatter, [
+        createInjector(AutoMockNameFormatter, [
             NamePrefixProvider,
-            MethodFormatter,
+            FunctionFormatter,
             PropertyKeyFormatter,
-            NamedMethodFormatter,
+            MethodFormatter,
             ConstantFormatter
         ]);
     });
 
     it("Returns mock name for MethodExpression", () => {
-        const expression = new MethodExpression(undefined);
+        const expression = new FunctionExpression(undefined);
         const name = "mock name";
         const prefix = "instance";
         const postfix = "postfix";
@@ -34,14 +35,14 @@ describe("Auto mock name formatter", () => {
             .setup(instance => instance.get(name))
             .returns(prefix);
 
-        resolveMock(MethodFormatter)
+        resolveMock(FunctionFormatter)
             .setup(instance => instance.format(expression))
             .returns(postfix);
 
         const provider = resolve2(AutoMockNameFormatter);
         const actual = provider.format(name, expression);
 
-        expect(actual).toEqual(`${prefix}.${postfix}`);
+        expect(actual).toEqual(`${prefix}${postfix}`);
     });
 
     it("Returns mock name for GetPropertyExpression", () => {
@@ -66,7 +67,7 @@ describe("Auto mock name formatter", () => {
     });
 
     it("Returns mock name for NamedMethodExpression", () => {
-        const expression = new NamedMethodExpression(undefined, undefined);
+        const expression = new MethodExpression(undefined, undefined);
         const name = "mock name";
         const prefix = "instance";
         const postfix = "postfix";
@@ -75,7 +76,7 @@ describe("Auto mock name formatter", () => {
             .setup(instance => instance.get(name))
             .returns(prefix);
 
-        resolveMock(NamedMethodFormatter)
+        resolveMock(MethodFormatter)
             .setup(instance => instance.format(expression))
             .returns(postfix);
 
@@ -85,7 +86,7 @@ describe("Auto mock name formatter", () => {
         expect(actual).toEqual(`${prefix}.${postfix}`);
     });
 
-    it("Returns mock name for NewOperatorExpression", () => {
+    it("Returns mock name for NewOperatorInteraction", () => {
         const args = [];
         const expression = new NewOperatorExpression(args);
         const name = "mock name";

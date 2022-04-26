@@ -1,18 +1,18 @@
-import { GetPropertyInteraction } from "../interactions";
+import { GetPropertyExpression } from "../reflector/expressions";
 import { GetPropertyFormatter } from "./get-property.formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("Get property formatter", () => {
     beforeEach(() => {
-        createInjector2(GetPropertyFormatter, [PropertyKeyFormatter]);
+        createInjector(GetPropertyFormatter, [PropertyKeyFormatter]);
     });
 
     it("Returns formatted description for get property expression", () => {
         const name = "name";
         const nameDescription = "name description";
 
-        const expression = new GetPropertyInteraction(name);
+        const expression = new GetPropertyExpression(name);
 
         resolveMock(PropertyKeyFormatter)
             .setup(instance => instance.format(name))

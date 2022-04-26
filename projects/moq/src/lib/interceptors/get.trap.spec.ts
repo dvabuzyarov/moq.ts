@@ -1,12 +1,12 @@
 import { Tracker } from "../tracker/tracker";
 import { GetTrap } from "./get.trap";
-import { GetPropertyInteraction } from "../interactions";
+import { GetPropertyExpression } from "../reflector/expressions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
 import { SpyFunctionProvider } from "./spy-function.provider";
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjectorFromProviders, resolve } from "../../tests.components/resolve.builder";
 import { MoqAPI } from "../moq";
 import { MOCK } from "../injector/mock.injection-token";
 import { Mock } from "../mock";
@@ -20,7 +20,7 @@ describe("Get trap", () => {
         const hasPropertyExplorer = jasmine.createSpyObj<HasPropertyExplorer>("", ["has"]);
         const hasMethodExplorer = jasmine.createSpyObj<HasMethodExplorer>("", ["has"]);
         const spyFunctionProvider = jasmine.createSpyObj<SpyFunctionProvider>("", ["get"]);
-        createInjector([
+        createInjectorFromProviders([
             {provide: MOCK, useValue: mock, deps: []},
             {provide: PropertiesValueStorage, useValue: storage, deps: []},
             {provide: Tracker, useValue: tracker, deps: []},
@@ -47,14 +47,14 @@ describe("Get trap", () => {
         const trap = resolve(GetTrap);
         trap.intercept(propertyName);
 
-        expect(resolve(Tracker).add).toHaveBeenCalledWith(new GetPropertyInteraction(propertyName));
+        expect(resolve(Tracker).add).toHaveBeenCalledWith(new GetPropertyExpression(propertyName));
     });
 
     it("Tracks get property call for MoqAPI", () => {
         const trap = resolve(GetTrap);
         trap.intercept(MoqAPI);
 
-        expect(resolve(Tracker).add).toHaveBeenCalledWith(new GetPropertyInteraction(MoqAPI));
+        expect(resolve(Tracker).add).toHaveBeenCalledWith(new GetPropertyExpression(MoqAPI));
     });
 
     it("Returns MoqAPI", () => {
@@ -88,7 +88,7 @@ describe("Get trap", () => {
         resolve(HasPropertyExplorer)
             .has.withArgs(propertyName).and.returnValue(true);
         resolve(InteractionPlayer)
-            .play.withArgs(new GetPropertyInteraction(propertyName)).and.returnValue(value);
+            .play.withArgs(new GetPropertyExpression(propertyName)).and.returnValue(value);
 
         const trap = resolve(GetTrap);
         const actual = trap.intercept(propertyName);
@@ -124,7 +124,7 @@ describe("Get trap", () => {
         resolve(HasPropertyExplorer)
             .has.withArgs(propertyName).and.returnValue(false);
         resolve(InteractionPlayer)
-            .play.withArgs(new GetPropertyInteraction(propertyName)).and.returnValue(value);
+            .play.withArgs(new GetPropertyExpression(propertyName)).and.returnValue(value);
 
         const trap = resolve(GetTrap);
         const actual = trap.intercept(propertyName);

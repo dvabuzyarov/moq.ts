@@ -4,13 +4,14 @@ import { MoqAPI } from "../lib/moq";
 import { AutoMockInjectorConfig } from "../lib/auto-mocking/auto-mock-injector.config";
 import { EqualMatchingInjectorConfig } from "../lib/injector/equal-matching-injector.config";
 import { EXPRESSION_REFLECTOR } from "../lib/reflector/expression-reflector";
-import { FullExpressionReflector } from "../lib/reflector/full.expression-reflector";
+import { CompositeExpressionReflector } from "../lib/reflector/composite-expression.reflector";
+import { It } from "../lib/reflector/expression-predicates";
 
 describe("Auto mocking", () => {
     const injectorConfig = new EqualMatchingInjectorConfig([], [
         {
             provide: EXPRESSION_REFLECTOR,
-            useExisting: FullExpressionReflector,
+            useExisting: CompositeExpressionReflector,
             deps: []
         },
     ]);
@@ -126,5 +127,15 @@ describe("Auto mocking", () => {
 
         expect(actual[MoqAPI].options.injectorConfig).toEqual(jasmine.any(AutoMockInjectorConfig));
         expect(actual[MoqAPI].name).toEqual("instance.shallow");
+    });
+
+    it("Throws exception for It predicate in setup complex expression", () => {
+        interface T { get(name: string): { prop: number } }
+        expect(() => new Mock<T>({injectorConfig}).setup(instance => instance.get(It.IsAny()).prop)).toThrow();
+    });
+
+    it("Does not throw exception for It predicate in setup expression", () => {
+        interface T { get(name: string): { prop: number } }
+        expect(() => new Mock<T>({injectorConfig}).setup(instance => instance.get(It.IsAny()))).not.toThrow();
     });
 });
