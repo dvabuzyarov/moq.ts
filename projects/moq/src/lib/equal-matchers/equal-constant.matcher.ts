@@ -5,8 +5,7 @@ import { ItEqualityComparer } from "../expression.equality-comparers/it.equality
 /**
  * @hidden
  */
-// @ts-ignore TS2720
-export class EqualConstantMatcher implements ConstantEqualityComparer {
+export class EqualConstantMatcher implements Readonly<ConstantEqualityComparer> {
     constructor(
         private readonly itEqualityComparer: ItEqualityComparer,
         private readonly equalMatcher: EqualMatcher) {

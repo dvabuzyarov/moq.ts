@@ -265,7 +265,7 @@ Consider this case:
         const b = "b";
         const c = "c";
         
-        const object = new Mock<{ get(arg: string): { a: string; b: string; c: string } }>({injectorConfig})
+        const object = new Mock<{ get(arg: string): { a: string; b: string; c: string } }>()
             .setup(instance => instance.get("a").a)
             .returns(a)
             .setup(instance => instance.get("b").b)
@@ -274,8 +274,7 @@ Consider this case:
             .returns(b)
             .object();
 ```
-In this example a root object has method 'get' that returns an object with 3 properties.
-The library would create a mock as a result of get method and save it in an internal map, where the expression is a key.
+The library would create a brand new mock for every each setup and save it in an internal map, where the expression is a key.
 
 ```typescript
 import { MethodExpression } from "./expressions";
@@ -286,12 +285,38 @@ new Map<Expression, Mock>([
     [new MethodExpression("get", [It.IsAny()]), new Mock()],
 ])  
 ```
-In the provided example there are 2 issues:
-1. It is not clear to what mock add the third setup with It notation.
+And here are 2 issues:
+1. It is not obvious how the third setup should behave. Should it create a new mock, or it should extend the previous two?
 2. In order to find the third mock in the map it needs to use the same function as a key.
 
 Those issues are not obvious and could lead to a hard detected behaviour. To prevent it and to give developers clean and robust API
 [It predicates](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-predicates.ts) is forbidden in the auto-mocking feature.
+
+However, in some cases it makes sense to disabled it:
+```typescript
+import { ComplexExpressionGuard } from "moq.ts/internal";
+const injectorConfig = new EqualMatchingInjectorConfig([], [{
+  provide: ComplexExpressionGuard,
+  useValue: {verify: () => undefined} as Readonly<ComplexExpressionGuard>,
+  deps: []
+}]);
+const svg = new Mock<Selection<SVGSVGElement, unknown, HTMLElement, any>>({injectorConfig})
+  .setup(instance => instance
+    .append("g")
+    .attr("fill", "none")
+    .attr("stroke-width", 1.5)
+    .attr("stroke-linejoin", "round")
+    .attr("stroke-linecap", "round")
+    .selectAll("g")
+    .data(data)
+    .join("g")
+    .append("path")
+    .attr("class", It.IsAny())
+    .attr("d", It.IsAny()))
+  .returns(path)
+  .object();
+```
+
 ## async/await
 
 
