@@ -1,0 +1,326 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>EqualMatchingInjectorConfig | moq.ts | documentation</title>
+	<meta name="description" content="Documentation for moq.ts | documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">moq.ts | documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">moq.ts | documentation</a>
+				</li>
+				<li>
+					<a href="EqualMatchingInjectorConfig.html">EqualMatchingInjectorConfig</a>
+				</li>
+			</ul>
+			<h1>Class EqualMatchingInjectorConfig</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Provides the configuration for Angular based injector that would use equal logic for matching values.
+							By default, all values are matched with
+							<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness">Equality comparisons and sameness</a>
+							that is limited in matching objects. On the other hand developers are using so called &quot;deep equal comparison&quot; approach,
+							where objects are matched by its properties and values. This configuration changes the way how expressions are matched
+						and introduce deep equal comparison logic as well as an extension point for custom matchers.</p>
+					</div>
+					<pre><code class="language-typescript"><span style="color: #000000"> </span><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EqualMatchingInjectorConfig</span><span style="color: #000000">, </span><span style="color: #001080">Mock</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;(</span><span style="color: #001080">args</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">[]) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">number</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000"> .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">([</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">]))</span>
+<span style="color: #000000"> .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+
+<span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+
+<span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #795E26">object</span><span style="color: #000000">([</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">]);</span>
+
+<span style="color: #000000"> </span><span style="color: #008000">// since the default comparisons logic sees [2, 1] and [2, 1] as different objects the provided setup would not work</span>
+<span style="color: #000000"> </span><span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">undefined</span><span style="color: #000000">);</span>
+</code></pre>
+					<p> and compare with</p>
+					<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EqualMatchingInjectorConfig</span><span style="color: #000000">, </span><span style="color: #001080">Mock</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;(</span><span style="color: #001080">args</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">[]) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">number</span><span style="color: #000000">&gt;({</span><span style="color: #001080">injectorConfig:</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EqualMatchingInjectorConfig</span><span style="color: #000000">()})</span>
+<span style="color: #000000">.</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">([</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">]))</span>
+<span style="color: #000000">.</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #795E26">object</span><span style="color: #000000">([</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">]);</span>
+
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+</code></pre>
+					<p> Internally the equal comparision logic implemented as a collection of object matchers that implement <a href="../interfaces/IObjectMatcher.html">IObjectMatcher</a> interface.</p>
+					<p> Matchers with the most specific logic should come first in the collection and if they are not able to match the objects
+					then more general matchers would be invoked.</p>
+					<p> The library comes with the following matchers:
+					0. Custom matchers</p>
+					<ol>
+						<li>DateMatcher - matches <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a> objects</li>
+						<li>MapMatcher - matches <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> objects</li>
+						<li>IteratorMatcher - matches objects that supports
+						<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">Iterator protocol</a></li>
+						<li>POJOMatcher - as the last resort matches objects as <a href="https://en.wikipedia.org/wiki/Plain_old_Java_object">POJO</a> objects.</li>
+					</ol>
+					<p> if you need a custom matcher it will come at index 1. Here is an example of a custom matcher that matches Moment and Date objects.</p>
+					<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EqualMatchingInjectorConfig</span><span style="color: #000000">, </span><span style="color: #001080">IObjectMatcher</span><span style="color: #000000">, </span><span style="color: #001080">Mock</span><span style="color: #000000">, </span><span style="color: #001080">OBJECT_MATCHERS</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">isMoment</span><span style="color: #000000">, </span><span style="color: #001080">utc</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moment&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MomentDateMatcher</span><span style="color: #000000"> </span><span style="color: #0000FF">implements</span><span style="color: #000000"> </span><span style="color: #267F99">IObjectMatcher</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #795E26">matched</span><span style="color: #000000">&lt;</span><span style="color: #267F99">T</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">object</span><span style="color: #000000">&gt;(</span><span style="color: #001080">left</span><span style="color: #000000">: </span><span style="color: #267F99">T</span><span style="color: #000000">, </span><span style="color: #001080">right</span><span style="color: #000000">: </span><span style="color: #267F99">T</span><span style="color: #000000">): </span><span style="color: #267F99">boolean</span><span style="color: #000000"> | </span><span style="color: #267F99">undefined</span><span style="color: #000000"> {</span>
+<span style="color: #000000">       </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">left</span><span style="color: #000000"> </span><span style="color: #0000FF">instanceof</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000"> &amp;&amp; </span><span style="color: #795E26">isMoment</span><span style="color: #000000">(</span><span style="color: #001080">right</span><span style="color: #000000">)) {</span>
+<span style="color: #000000">           </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">left</span><span style="color: #000000">.</span><span style="color: #795E26">valueOf</span><span style="color: #000000">() === </span><span style="color: #001080">right</span><span style="color: #000000">.</span><span style="color: #795E26">valueOf</span><span style="color: #000000">();</span>
+<span style="color: #000000">       }</span>
+<span style="color: #000000">       </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">undefined</span><span style="color: #000000">;</span>
+<span style="color: #000000">   }</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">moment</span><span style="color: #000000"> = </span><span style="color: #795E26">utc</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">injectorConfig</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EqualMatchingInjectorConfig</span><span style="color: #000000">([{</span>
+<span style="color: #000000">   </span><span style="color: #001080">provide:</span><span style="color: #000000"> </span><span style="color: #0070C1">OBJECT_MATCHERS</span><span style="color: #000000">,</span>
+<span style="color: #000000">   </span><span style="color: #001080">useClass:</span><span style="color: #000000"> </span><span style="color: #001080">MomentDateMatcher</span><span style="color: #000000">,</span>
+<span style="color: #000000">   </span><span style="color: #001080">multi:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">   </span><span style="color: #001080">deps:</span><span style="color: #000000"> []</span>
+<span style="color: #000000">}]);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;(</span><span style="color: #001080">args</span><span style="color: #000000">: </span><span style="color: #267F99">any</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">number</span><span style="color: #000000">&gt;({</span><span style="color: #001080">injectorConfig</span><span style="color: #000000">})</span>
+<span style="color: #000000">.</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #001080">moment</span><span style="color: #000000">))</span>
+<span style="color: #000000">.</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #795E26">object</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">));</span>
+
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+</code></pre>
+					<p> The matching logic of EqualMatchingInjectorConfig supports <a href="It.html">It</a>.
+					So you can do a partial comparision.</p>
+					<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EqualMatchingInjectorConfig</span><span style="color: #000000">, </span><span style="color: #001080">It</span><span style="color: #000000">, </span><span style="color: #001080">Mock</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #795E26">func</span><span style="color: #000000"> = () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0000FF">undefined</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">injectorConfig</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EqualMatchingInjectorConfig</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;(</span><span style="color: #001080">args</span><span style="color: #000000">: </span><span style="color: #267F99">any</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">number</span><span style="color: #000000">&gt;({</span><span style="color: #001080">injectorConfig</span><span style="color: #000000">})</span>
+<span style="color: #000000">.</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">({</span><span style="color: #001080">func:</span><span style="color: #000000"> </span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">IsAny</span><span style="color: #000000">()})) </span><span style="color: #008000">// &lt;-- func property will be matched with It delegate</span>
+<span style="color: #000000">.</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #795E26">object</span><span style="color: #000000">({</span><span style="color: #001080">func</span><span style="color: #000000">});</span>
+
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+</code></pre>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="DefaultInjectorConfig.html" class="tsd-signature-type" data-tsd-kind="Class">DefaultInjectorConfig</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">EqualMatchingInjectorConfig</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="EqualMatchingInjectorConfig.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="EqualMatchingInjectorConfig.html#get" class="tsd-kind-icon">get</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Equal<wbr>Matching<wbr>Injector<wbr>Config<span class="tsd-signature-symbol">(</span>matchers<span class="tsd-signature-symbol">?: </span><a href="../modules.html#StaticProvider" class="tsd-signature-type" data-tsd-kind="Type alias">StaticProvider</a><span class="tsd-signature-symbol">[]</span>, providers<span class="tsd-signature-symbol">?: </span><a href="../modules.html#StaticProvider" class="tsd-signature-type" data-tsd-kind="Type alias">StaticProvider</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="EqualMatchingInjectorConfig.html" class="tsd-signature-type" data-tsd-kind="Class">EqualMatchingInjectorConfig</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="DefaultInjectorConfig.html">DefaultInjectorConfig</a>.<a href="DefaultInjectorConfig.html#constructor">constructor</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/204d3af/projects/moq/src/lib/injector/equal-matching-injector.config.ts#L112">projects/moq/src/lib/injector/equal-matching-injector.config.ts:112</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>matchers: <a href="../modules.html#StaticProvider" class="tsd-signature-type" data-tsd-kind="Type alias">StaticProvider</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></h5>
+								</li>
+								<li>
+									<h5>providers: <a href="../modules.html#StaticProvider" class="tsd-signature-type" data-tsd-kind="Type alias">StaticProvider</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="EqualMatchingInjectorConfig.html" class="tsd-signature-type" data-tsd-kind="Class">EqualMatchingInjectorConfig</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="get" class="tsd-anchor"></a>
+					<h3>get</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/IMockOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span>, providers<span class="tsd-signature-symbol">: </span><a href="../modules.html#StaticProvider" class="tsd-signature-type" data-tsd-kind="Type alias">StaticProvider</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules.html#StaticProvider" class="tsd-signature-type" data-tsd-kind="Type alias">StaticProvider</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="DefaultInjectorConfig.html">DefaultInjectorConfig</a>.<a href="DefaultInjectorConfig.html#get">get</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/dvabuzyarov/moq.ts/blob/204d3af/projects/moq/src/lib/injector/equal-matching-injector.config.ts#L117">projects/moq/src/lib/injector/equal-matching-injector.config.ts:117</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns array of StaticProviders to construct an angular based injector.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <a href="../interfaces/IMockOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IMockOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>providers: <a href="../modules.html#StaticProvider" class="tsd-signature-type" data-tsd-kind="Type alias">StaticProvider</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../modules.html#StaticProvider" class="tsd-signature-type" data-tsd-kind="Type alias">StaticProvider</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
+						<a href="EqualMatchingInjectorConfig.html" class="tsd-kind-icon">Equal<wbr>Matching<wbr>Injector<wbr>Config</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="EqualMatchingInjectorConfig.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="EqualMatchingInjectorConfig.html#get" class="tsd-kind-icon">get</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

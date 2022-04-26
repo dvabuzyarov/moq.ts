@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for moq.ts | documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -49,11 +50,6 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
 			<h1>moq.ts | documentation</h1>
 		</div>
 	</div>
@@ -93,12 +89,21 @@
 				<ul>
 					<li><a href="#mocking-functions-of-objects">Mocking functions of objects</a></li>
 					<li><a href="#mocking-reading-properties">Mocking reading properties</a></li>
-					<li><a href="#mocking-writing-property">Mocking writing property setting</a></li>
+					<li><a href="#mocking-writing-properties">Mocking writing property setting</a></li>
 					<li><a href="#mocking-functions">Mocking functions</a></li>
-					<li><a href="#auto-mocking">Auto mocking</a></li>
-					<li><a href="#asyncawait">async/await</a></li>
+					<li><a href="#auto-mocking">Auto mocking</a><ul>
+							<li><a href="#limitations">Limitations</a></li>
+						</ul>
+					</li>
+					<li><a href="#asyncawait">async/await</a><ul>
+							<li><a href="#eslint-typescript-eslintpromise-function-asynchttpsgithubcomtypescript-eslinttypescript-eslintblobmasterpackageseslint-plugindocsrulespromise-function-asyncmd-rule">ESLint [@typescript-eslint/promise-function-async]</a></li>
+							<li><a href="#setup-reactions">Setup reactions</a></li>
+							<li><a href="#promise-adapters">Promise adapters</a></li>
+						</ul>
+					</li>
 					<li><a href="#type-discovering">Type Discovering</a></li>
 					<li><a href="#mock-behavior">Mock behavior</a><ul>
+							<li><a href="#setup-play-times">Play times</a></li>
 							<li><a href="#injector-config">Injector config</a><ul>
 									<li><a href="#defaultinjectorconfig">DefaultInjectorConfig</a></li>
 									<li><a href="#equalmatchinginjectorconfig">EqualMatchingInjectorConfig and custom matchers</a></li>
@@ -120,265 +125,275 @@
 					<h2>Mocking functions of objects</h2>
 				</a>
 				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/instance-method.spec.ts">instance-method.spec.ts</a></p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Mock, It, Times } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Mock</span><span style="color: #000000">, </span><span style="color: #001080">It</span><span style="color: #000000">, </span><span style="color: #001080">Times</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">interface</span> ITestObject {
-   method(arg1: <span class="hljs-built_in">number</span>, <span class="hljs-attr">arg2</span>: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">Date</span>;
-}
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ITestObject</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #795E26">method</span><span style="color: #000000">(</span><span style="color: #001080">arg1</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">, </span><span style="color: #001080">arg2</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">): </span><span style="color: #267F99">Date</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> values = [<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>];
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">values</span><span style="color: #000000"> = [</span><span style="color: #A31515">&quot;a&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;b&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;c&quot;</span><span style="color: #000000">];</span>
 
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
-   .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(<span class="hljs-number">1</span>, values[<span class="hljs-number">0</span>]))
-   .returns(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2016</span>))
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ITestObject</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">   .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #001080">values</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">]))</span>
+<span style="color: #000000">   .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #098658">2016</span><span style="color: #000000">))</span>
 
-   .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(It.Is(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === <span class="hljs-number">2</span>), values[<span class="hljs-number">1</span>]))
-   .callback(<span class="hljs-function">(<span class="hljs-params">{args: [arg1, arg2]}</span>) =&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2017</span> + arg1))
+<span style="color: #000000">   .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">(</span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">Is</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">value</span><span style="color: #000000"> === </span><span style="color: #098658">2</span><span style="color: #000000">), </span><span style="color: #001080">values</span><span style="color: #000000">[</span><span style="color: #098658">1</span><span style="color: #000000">]))</span>
+<span style="color: #000000">   .</span><span style="color: #795E26">callback</span><span style="color: #000000">(({</span><span style="color: #001080">args</span><span style="color: #000000">: [</span><span style="color: #001080">arg1</span><span style="color: #000000">, </span><span style="color: #001080">arg2</span><span style="color: #000000">]}) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #098658">2017</span><span style="color: #000000"> + </span><span style="color: #001080">arg1</span><span style="color: #000000">))</span>
 
-   .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(<span class="hljs-number">3</span>, It.Is(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === values[<span class="hljs-number">2</span>])))
-   .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&quot;Invoking method with 3 and c&quot;</span>));
+<span style="color: #000000">   .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">(</span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">Is</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">value</span><span style="color: #000000"> === </span><span style="color: #001080">values</span><span style="color: #000000">[</span><span style="color: #098658">2</span><span style="color: #000000">])))</span>
+<span style="color: #000000">   .</span><span style="color: #795E26">throws</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Invoking method with 3 and c&quot;</span><span style="color: #000000">));</span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock.object();
-<span class="hljs-keyword">const</span> actual = <span class="hljs-built_in">object</span>.method(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;a&quot;</span>);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #001080">object</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;a&quot;</span><span style="color: #000000">);</span>
 
-mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;a&quot;</span>), Times.Never());
+<span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">verify</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;a&quot;</span><span style="color: #000000">), </span><span style="color: #001080">Times</span><span style="color: #000000">.</span><span style="color: #795E26">Never</span><span style="color: #000000">());</span>
 </code></pre>
 				<a href="#mocking-reading-properties" id="mocking-reading-properties" style="color: inherit; text-decoration: none;">
 					<h2>Mocking reading properties</h2>
 				</a>
 				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/read-property.spec.ts">read-property.spec.ts</a></p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Mock, It, Times, GetPropertyExpression } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Mock</span><span style="color: #000000">, </span><span style="color: #001080">It</span><span style="color: #000000">, </span><span style="color: #001080">Times</span><span style="color: #000000">, </span><span style="color: #001080">GetPropertyExpression</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">interface</span> ITestObject {
-    <span class="hljs-attr">property1</span>: <span class="hljs-built_in">number</span>;
-    property2: <span class="hljs-built_in">number</span>;
-    property3: <span class="hljs-built_in">number</span>;
-    property4: <span class="hljs-built_in">number</span>;
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ITestObject</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">property1</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #001080">property2</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #001080">property3</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #001080">property4</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">;</span>
 
-    method(): <span class="hljs-built_in">void</span>;
-}
+<span style="color: #000000">    </span><span style="color: #795E26">method</span><span style="color: #000000">(): </span><span style="color: #267F99">void</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> property4Name = <span class="hljs-string">&quot;property4&quot;</span>;
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.property1)
-    .returns(<span class="hljs-number">1</span>)
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">property4Name</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;property4&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ITestObject</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">property1</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">)</span>
 
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function">(<span class="hljs-params">expression: GetPropertyExpression</span>) =&gt;</span> expression.name === <span class="hljs-string">&quot;property2&quot;</span>))
-    .returns(<span class="hljs-number">100</span>)
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">Is</span><span style="color: #000000">((</span><span style="color: #001080">expression</span><span style="color: #000000">: </span><span style="color: #267F99">GetPropertyExpression</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">expression</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000"> === </span><span style="color: #A31515">&quot;property2&quot;</span><span style="color: #000000">))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">100</span><span style="color: #000000">)</span>
 
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.property3)
-    .callback(<span class="hljs-function">() =&gt;</span> <span class="hljs-number">10</span> + <span class="hljs-number">10</span>)
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">property3</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">callback</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #098658">10</span><span style="color: #000000"> + </span><span style="color: #098658">10</span><span style="color: #000000">)</span>
 
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance[property4Name])
-    .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&quot;property4 access&quot;</span>))
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">[</span><span style="color: #001080">property4Name</span><span style="color: #000000">])</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">throws</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;property4 access&quot;</span><span style="color: #000000">))</span>
 
-    <span class="hljs-comment">//since a method is a property that holds a pointer to a function</span>
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method)
-    .returns(<span class="hljs-function">() =&gt;</span> {
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;The method was called&quot;</span>)
-    });
+<span style="color: #000000">    </span><span style="color: #008000">//since a method is a property that holds a pointer to a function</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">method</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;The method was called&quot;</span><span style="color: #000000">)</span>
+<span style="color: #000000">    });</span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock.object();
-<span class="hljs-built_in">object</span>.method();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+<span style="color: #001080">object</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">();</span>
 
-mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.property1, Times.Never());
+<span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">verify</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">property1</span><span style="color: #000000">, </span><span style="color: #001080">Times</span><span style="color: #000000">.</span><span style="color: #795E26">Never</span><span style="color: #000000">());</span>
 </code></pre>
 				<a href="#mocking-writing-properties" id="mocking-writing-properties" style="color: inherit; text-decoration: none;">
 					<h2>Mocking writing properties</h2>
 				</a>
 				<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set">The documentation on returned value from &quot;set hook&quot; on Proxy object</a></p>
 				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/set.property.spec.ts">set-property.spec.ts</a></p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Mock, It, Times, SetPropertyExpression } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Mock</span><span style="color: #000000">, </span><span style="color: #001080">It</span><span style="color: #000000">, </span><span style="color: #001080">Times</span><span style="color: #000000">, </span><span style="color: #001080">SetPropertyExpression</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">interface</span> ITestObject {
-    <span class="hljs-attr">property</span>: <span class="hljs-built_in">number</span> | <span class="hljs-built_in">any</span>;
-}
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ITestObject</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">property</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000"> | </span><span style="color: #267F99">any</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> value = {<span class="hljs-attr">field</span>: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()};
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value</span><span style="color: #000000"> = {</span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">()};</span>
 
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> {
-        instance.property = <span class="hljs-number">1</span>
-    })
-    <span class="hljs-comment">//true - allows the write operation</span>
-    .returns(<span class="hljs-literal">true</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">any</span>)
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ITestObject</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">property</span><span style="color: #000000"> = </span><span style="color: #098658">1</span>
+<span style="color: #000000">    })</span>
+<span style="color: #000000">    </span><span style="color: #008000">//true - allows the write operation</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #267F99">any</span><span style="color: #000000">)</span>
 
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> It.Is(<span class="hljs-function">(<span class="hljs-params">expression: SetPropertyExpression</span>) =&gt;</span> expression.name === <span class="hljs-string">&quot;property&quot;</span> &amp;&amp; expression.value === <span class="hljs-number">2</span>))
-    <span class="hljs-comment">//false - denies the write operation</span>
-    .returns(<span class="hljs-literal">false</span>)
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">Is</span><span style="color: #000000">((</span><span style="color: #001080">expression</span><span style="color: #000000">: </span><span style="color: #267F99">SetPropertyExpression</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">expression</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000"> === </span><span style="color: #A31515">&quot;property&quot;</span><span style="color: #000000"> &amp;&amp; </span><span style="color: #001080">expression</span><span style="color: #000000">.</span><span style="color: #001080">value</span><span style="color: #000000"> === </span><span style="color: #098658">2</span><span style="color: #000000">))</span>
+<span style="color: #000000">    </span><span style="color: #008000">//false - denies the write operation</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #0000FF">false</span><span style="color: #000000">)</span>
 
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> {
-        instance.property = It.Is(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === <span class="hljs-number">3</span>)
-    })
-    <span class="hljs-comment">// allows the write operation</span>
-    .callback(<span class="hljs-function">() =&gt;</span> <span class="hljs-literal">true</span>)
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">property</span><span style="color: #000000"> = </span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">Is</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">value</span><span style="color: #000000"> === </span><span style="color: #098658">3</span><span style="color: #000000">)</span>
+<span style="color: #000000">    })</span>
+<span style="color: #000000">    </span><span style="color: #008000">// allows the write operation</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">callback</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">)</span>
 
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> {
-        instance.property = value
-    })
-    .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&quot;an object has been written into property&quot;</span>));
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">property</span><span style="color: #000000"> = </span><span style="color: #001080">value</span>
+<span style="color: #000000">    })</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">throws</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;an object has been written into property&quot;</span><span style="color: #000000">));</span>
 
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock.object();
-<span class="hljs-built_in">object</span>.property = <span class="hljs-number">1</span>;
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+<span style="color: #001080">object</span><span style="color: #000000">.</span><span style="color: #001080">property</span><span style="color: #000000"> = </span><span style="color: #098658">1</span><span style="color: #000000">;</span>
 
-mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> {
-    instance.property = <span class="hljs-number">1</span>
-}, Times.Once());
+<span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">verify</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">property</span><span style="color: #000000"> = </span><span style="color: #098658">1</span>
+<span style="color: #000000">}, </span><span style="color: #001080">Times</span><span style="color: #000000">.</span><span style="color: #795E26">Once</span><span style="color: #000000">());</span>
 </code></pre>
 				<a href="#mocking-functions" id="mocking-functions" style="color: inherit; text-decoration: none;">
 					<h2>Mocking functions</h2>
 				</a>
 				<p><a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/integration.specs/method.spec.ts">mock-method.property.IntegrationTests.ts</a></p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Mock, It, Times } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Mock</span><span style="color: #000000">, </span><span style="color: #001080">It</span><span style="color: #000000">, </span><span style="color: #001080">Times</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">interface</span> ITestFunction {
-    (arg: <span class="hljs-built_in">number</span> | <span class="hljs-built_in">any</span>): <span class="hljs-built_in">string</span>;
-}
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ITestFunction</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    (</span><span style="color: #001080">arg</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000"> | </span><span style="color: #267F99">any</span><span style="color: #000000">): </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> value = {<span class="hljs-attr">field</span>: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()};
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value</span><span style="color: #000000"> = {</span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">()};</span>
 
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestFunction&gt;()
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(<span class="hljs-number">1</span>))
-    .returns(<span class="hljs-string">&quot;called with 1&quot;</span>)
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ITestFunction</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;called with 1&quot;</span><span style="color: #000000">)</span>
 
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(<span class="hljs-number">2</span>))
-    .callback(<span class="hljs-function">(<span class="hljs-params">{args: [argument]}</span>) =&gt;</span> argument === <span class="hljs-number">2</span> ? <span class="hljs-string">&quot;called with 2&quot;</span> : <span class="hljs-string">`called with <span class="hljs-subst">${argument}</span>`</span>)
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">callback</span><span style="color: #000000">(({</span><span style="color: #001080">args</span><span style="color: #000000">: [</span><span style="color: #001080">argument</span><span style="color: #000000">]}) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">argument</span><span style="color: #000000"> === </span><span style="color: #098658">2</span><span style="color: #000000"> ? </span><span style="color: #A31515">&quot;called with 2&quot;</span><span style="color: #000000"> : </span><span style="color: #A31515">`called with </span><span style="color: #0000FF">${</span><span style="color: #001080">argument</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">)</span>
 
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(value))
-    .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&quot;Argument is object with date&quot;</span>))
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">throws</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Argument is object with date&quot;</span><span style="color: #000000">))</span>
 
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(It.Is(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === <span class="hljs-number">4</span>)))
-    .returns(<span class="hljs-string">&quot;called with 4&quot;</span>);
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">Is</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">value</span><span style="color: #000000"> === </span><span style="color: #098658">4</span><span style="color: #000000">)))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;called with 4&quot;</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> method = mock.object();
-<span class="hljs-keyword">const</span> actual = method(<span class="hljs-number">1</span>);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">method</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #795E26">method</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
 
-mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(<span class="hljs-number">1</span>), Times.Once());
-mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(It.Is(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === <span class="hljs-number">1</span>)), Times.Exactly(<span class="hljs-number">1</span>));
+<span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">verify</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">), </span><span style="color: #001080">Times</span><span style="color: #000000">.</span><span style="color: #795E26">Once</span><span style="color: #000000">());</span>
+<span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">verify</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">Is</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">value</span><span style="color: #000000"> === </span><span style="color: #098658">1</span><span style="color: #000000">)), </span><span style="color: #001080">Times</span><span style="color: #000000">.</span><span style="color: #795E26">Exactly</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">));</span>
+
 
 </code></pre>
 				<a href="#auto-mocking" id="auto-mocking" style="color: inherit; text-decoration: none;">
 					<h2>Auto mocking</h2>
 				</a>
 				<blockquote>
-					<p> By default, in version 8 this feature is disabled as causes conflicts with support for async/await keywords.</p>
+					<p> The feature does not support async/await expressions.</p>
 				</blockquote>
-				<pre><code class="language-typescript"><span class="hljs-comment">// activation of the auto-mocking feature</span>
-<span class="hljs-keyword">const</span> injectorConfig = <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig([], [
-    {
-        <span class="hljs-attr">provide</span>: EXPRESSION_REFLECTOR,
-        <span class="hljs-attr">useExisting</span>: FullExpressionReflector,
-        <span class="hljs-attr">deps</span>: []
-    },
-]);
-Mock.options = {injectorConfig};
-</code></pre>
 				<p>The library support auto mocking for deep members. Consider this case:</p>
 				<pre><code class="language-typescript">
-<span class="hljs-keyword">interface</span> IChild {
-    get(): <span class="hljs-built_in">string</span>;
-}
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">IChild</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">get</span><span style="color: #000000">(): </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">interface</span> IRoot {
-    <span class="hljs-attr">child</span>: IChild;
-}
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">IRoot</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">child</span><span style="color: #000000">: </span><span style="color: #267F99">IChild</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> value = <span class="hljs-string">&quot;value&quot;</span>;
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;value&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> child = <span class="hljs-keyword">new</span> Mock&lt;IChild&gt;()
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.get())
-    .returns(value)
-    .object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">child</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">IChild</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">())</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> root = <span class="hljs-keyword">new</span> Mock&lt;IRoot&gt;()
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.child)
-    .returns(child)
-    .object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">root</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">IRoot</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">child</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #001080">child</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual = root.child.get();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #001080">root</span><span style="color: #000000">.</span><span style="color: #001080">child</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">();</span>
 
-expect(actual).toBe(value);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
 </code></pre>
 				<p>We have to create a child mock in order to set up &quot;child&quot; property of the root object. With auto mocking this case could
 				be rewritten as following:</p>
 				<pre><code class="language-typescript">
-<span class="hljs-keyword">const</span> root = <span class="hljs-keyword">new</span> Mock&lt;IRoot&gt;()
-    <span class="hljs-comment">// The root mock automatically creates a mock for the child property</span>
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.child.get())
-    .returns(value)
-    .object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">root</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">IRoot</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    </span><span style="color: #008000">// The root mock automatically creates a mock for the child property</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">child</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">())</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual = root.child.get();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #001080">root</span><span style="color: #000000">.</span><span style="color: #001080">child</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">();</span>
 
-expect(actual).toBe(value);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
 </code></pre>
+				<a href="#limitations" id="limitations" style="color: inherit; text-decoration: none;">
+					<h4>Limitations</h4>
+				</a>
+				<p>At this moment <a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-predicates.ts">It predicates</a> are forbidden, except the last part of an expression.
+				Consider this case:</p>
+				<pre><code class="language-typescript"><span style="color: #000000">        </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">a</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;a&quot;</span><span style="color: #000000">;</span>
+<span style="color: #000000">        </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">b</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;b&quot;</span><span style="color: #000000">;</span>
+<span style="color: #000000">        </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">c</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;c&quot;</span><span style="color: #000000">;</span>
+<span style="color: #000000">        </span>
+<span style="color: #000000">        </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;{ </span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">arg</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">): { </span><span style="color: #001080">a</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">; </span><span style="color: #001080">b</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">; </span><span style="color: #001080">c</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000"> } }&gt;({</span><span style="color: #001080">injectorConfig</span><span style="color: #000000">})</span>
+<span style="color: #000000">            .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;a&quot;</span><span style="color: #000000">).</span><span style="color: #001080">a</span><span style="color: #000000">)</span>
+<span style="color: #000000">            .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #001080">a</span><span style="color: #000000">)</span>
+<span style="color: #000000">            .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;b&quot;</span><span style="color: #000000">).</span><span style="color: #001080">b</span><span style="color: #000000">)</span>
+<span style="color: #000000">            .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #001080">a</span><span style="color: #000000">)</span>
+<span style="color: #000000">            .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">IsAny</span><span style="color: #000000">()).</span><span style="color: #001080">c</span><span style="color: #000000">)</span>
+<span style="color: #000000">            .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #001080">b</span><span style="color: #000000">)</span>
+<span style="color: #000000">            .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+</code></pre>
+				<p>In this example a root object has method &#39;get&#39; that returns an object with 3 properties.
+				The library would create a mock as a result of get method and save it in an internal map, where the expression is a key.</p>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">MethodExpression</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;./expressions&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Map</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Expression</span><span style="color: #000000">, </span><span style="color: #267F99">Mock</span><span style="color: #000000">&gt;([</span>
+<span style="color: #000000">    [</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MethodExpression</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;get&quot;</span><span style="color: #000000">, [</span><span style="color: #A31515">&quot;a&quot;</span><span style="color: #000000">]), </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">()],</span>
+<span style="color: #000000">    [</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MethodExpression</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;get&quot;</span><span style="color: #000000">, [</span><span style="color: #A31515">&quot;b&quot;</span><span style="color: #000000">]), </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">()],</span>
+<span style="color: #000000">    [</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MethodExpression</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;get&quot;</span><span style="color: #000000">, [</span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">IsAny</span><span style="color: #000000">()]), </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">()],</span>
+<span style="color: #000000">])  </span>
+</code></pre>
+				<p>In the provided example there are 2 issues:</p>
+				<ol>
+					<li>It is not clear to what mock add the third setup with It notation.</li>
+					<li>In order to find the third mock in the map it needs to use the same function as a key.</li>
+				</ol>
+				<p>Those issues are not obvious and could lead to a hard detected behaviour. To prevent it and to give developers clean and robust API
+				<a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-predicates.ts">It predicates</a> is forbidden in the auto-mocking feature.</p>
 				<a href="#asyncawait" id="asyncawait" style="color: inherit; text-decoration: none;">
 					<h2>async/await</h2>
 				</a>
-				<p>The library supports asynchronous function with a promise-based wrappers. There are two overloading:</p>
+				<p>The library supports asynchronous function with a promise-based wrappers. </p>
+				<blockquote>
+					<p> async/await expressions are not supported in the auto-mocking feature.</p>
+				</blockquote>
+				<a href="#eslint-typescript-eslintpromise-function-async-rule" id="eslint-typescript-eslintpromise-function-async-rule" style="color: inherit; text-decoration: none;">
+					<h4>ESLint <a href="https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/promise-function-async.md">@typescript-eslint/promise-function-async</a> rule</h4>
+				</a>
+				<p>This rule will ask you to write expressions with async keyword.</p>
+				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">fn</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returnsAsync</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">throwsAsync</span><span style="color: #000000">(</span><span style="color: #001080">exception</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+</code></pre>
+				<a href="#setup-reactions" id="setup-reactions" style="color: inherit; text-decoration: none;">
+					<h4>Setup reactions</h4>
+				</a>
 				<ul>
 					<li>returnsAsync - returns a Promise which will be resolved with the provided value;</li>
 					<li>throwsAsync - returns a Promise which will be rejected with the provided exception;</li>
 				</ul>
-				<pre><code class="language-typescript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params">input: <span class="hljs-built_in">number</span></span>) </span>{
-    <span class="hljs-keyword">return</span> input;
-}
+				<pre><code class="language-typescript"><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">fn</span><span style="color: #000000">(</span><span style="color: #001080">input</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">input</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> exception = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>();
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-keyword">typeof</span> fn&gt;()
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(<span class="hljs-number">1</span>))
-    .returnsAsync(<span class="hljs-number">2</span>)
-    <span class="hljs-comment">// equal to</span>
-    <span class="hljs-comment">// .returns(Promise.resolve(2))</span>
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(<span class="hljs-number">2</span>))
-    .throwsAsync(exception)
-    <span class="hljs-comment">// equal to</span>
-    <span class="hljs-comment">// .returns(Promise.reject(exception))</span>
-    .object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">exception</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">fn</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returnsAsync</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">)</span>
+<span style="color: #000000">    </span><span style="color: #008000">// equal to</span>
+<span style="color: #000000">    </span><span style="color: #008000">// .returns(Promise.resolve(2))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">throwsAsync</span><span style="color: #000000">(</span><span style="color: #001080">exception</span><span style="color: #000000">)</span>
+<span style="color: #000000">    </span><span style="color: #008000">// equal to</span>
+<span style="color: #000000">    </span><span style="color: #008000">// .returns(Promise.reject(exception))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual = <span class="hljs-keyword">await</span> mock(<span class="hljs-number">1</span>);
-expect(actual).toBe(<span class="hljs-number">2</span>);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">mock</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">try</span> {
-    <span class="hljs-keyword">await</span> mock(<span class="hljs-number">2</span>);
-} <span class="hljs-keyword">catch</span> (e) {
-    expect(e).toBe(exception);
-}
+<span style="color: #AF00DB">try</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">mock</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">catch</span><span style="color: #000000"> (</span><span style="color: #001080">e</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">e</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #001080">exception</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
 </code></pre>
-				<a href="#eslint-typescript-eslintpromise-function-async-rule" id="eslint-typescript-eslintpromise-function-async-rule" style="color: inherit; text-decoration: none;">
-					<h4>ESLint <a href="https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/promise-function-async.md">@typescript-eslint/promise-function-async</a> rule</h4>
-				</a>
-				<p>This rule will ask you to write setup with async keyword.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-keyword">typeof</span> fn&gt;()
-    .setup(<span class="hljs-keyword">async</span> instance =&gt; instance(<span class="hljs-number">1</span>))
-    .returnsAsync(<span class="hljs-number">2</span>)
-    .setup(<span class="hljs-keyword">async</span> instance =&gt; instance(<span class="hljs-number">2</span>))
-    .throwsAsync(exception)
-    .object();
-</code></pre>
-				<p>That will interfere the auto-mocking feature. You can override the returnsAsync and throwsAsync implementation.</p>
-				<blockquote>
-					<p>The auto-mocking feature is disabled by default in version 8</p>
-				</blockquote>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts&quot;</span>;
-
-Mock.options = {
-    <span class="hljs-attr">injectorConfig</span>: <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig([], [
-        {
-            <span class="hljs-attr">provide</span>: ReturnsAsyncPresetFactory,
-            <span class="hljs-attr">useClass</span>: MimicsResolvedAsyncPresetFactory,
-            <span class="hljs-attr">deps</span>: [RootMockProvider, Presets, ResolvedPromiseFactory]
-        },
-        {
-            <span class="hljs-attr">provide</span>: ThrowsAsyncPresetFactory,
-            <span class="hljs-attr">useClass</span>: MimicsRejectedAsyncPresetFactory,
-            <span class="hljs-attr">deps</span>: [RootMockProvider, Presets, RejectedPromiseFactory]
-        },
-    ])
-};
-</code></pre>
-				<p>With this config you can use async keyword in setup and verify sections.</p>
 				<a href="#promise-adapters" id="promise-adapters" style="color: inherit; text-decoration: none;">
 					<h4>Promise adapters</h4>
 				</a>
@@ -386,8 +401,7 @@ Mock.options = {
 					resolved/rejected promise that could be overridden.
 					See <a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/presets/resolved-promise.factory.ts">ResolvedPromiseFactory</a>
 					,
-					<a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/presets/rejected-promise.factory.ts">RejectedPromiseFactory</a>
-				.</p>
+				<a href="https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/presets/rejected-promise.factory.ts">RejectedPromiseFactory</a>.</p>
 				<a href="#type-discovering" id="type-discovering" style="color: inherit; text-decoration: none;">
 					<h2>Type Discovering</h2>
 				</a>
@@ -395,18 +409,18 @@ Mock.options = {
 					time. At the runtime phase the type is not available and Moq library relays on other ways to discover the type
 				information. It is required to implement correct behaviour of mocked object.</p>
 				<p>Consider this case:</p>
-				<pre><code class="language-typescript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Prototype</span> </span>{
-    method(): <span class="hljs-built_in">void</span> {
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&quot;Not Implemented&quot;</span>);
-    }
-}
+				<pre><code class="language-typescript"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Prototype</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">method</span><span style="color: #000000">(): </span><span style="color: #267F99">void</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">throw</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Not Implemented&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;()
-    .object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Prototype</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual = <span class="hljs-built_in">object</span>.method(); <span class="hljs-comment">// throws TypeError: object.method is not a function</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #001080">object</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">(); </span><span style="color: #008000">// throws TypeError: object.method is not a function</span>
 
-expect(actual).toBe(<span class="hljs-literal">undefined</span>);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">undefined</span><span style="color: #000000">);</span>
 </code></pre>
 				<p>It happens because at runtime the mock does not know that method is a part of the mocked type. So at the moment there
 				are 3 ways how type could be discovered at runtime.</p>
@@ -417,91 +431,121 @@ expect(actual).toBe(<span class="hljs-literal">undefined</span>);
 				operator. The prototype of the target will be used for type discovering and fixing instanceof operator.</p>
 				<p>By default, a mock is instantiated as Function object, so at runtime the mock &quot;knows&quot; about Function inherited
 				properties and methods.</p>
-				<pre><code class="language-typescript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Prototype</span> </span>{
-    method(): <span class="hljs-built_in">void</span> {
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&quot;Not Implemented&quot;</span>);
-    }
-}
+				<pre><code class="language-typescript"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Prototype</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">method</span><span style="color: #000000">(): </span><span style="color: #267F99">void</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">throw</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Not Implemented&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;({<span class="hljs-attr">target</span>: <span class="hljs-keyword">new</span> Prototype()})
-    .object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Prototype</span><span style="color: #000000">&gt;({</span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Prototype</span><span style="color: #000000">()})</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual = <span class="hljs-built_in">object</span>.method();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #001080">object</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">();</span>
 
-expect(actual).toBe(<span class="hljs-literal">undefined</span>);
-expect(<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">object</span>).toBe(<span class="hljs-string">&quot;object&quot;</span>);
-expect(<span class="hljs-built_in">object</span> <span class="hljs-keyword">instanceof</span> Prototype).toBe(<span class="hljs-literal">true</span>);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">undefined</span><span style="color: #000000">);</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">object</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;object&quot;</span><span style="color: #000000">);</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">object</span><span style="color: #000000"> </span><span style="color: #0000FF">instanceof</span><span style="color: #000000"> </span><span style="color: #267F99">Prototype</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000">);</span>
 </code></pre>
 				<a href="#prototype" id="prototype" style="color: inherit; text-decoration: none;">
 					<h4>Prototype</h4>
 				</a>
 				<p>Another way to deal with type discovering is to provide a prototype object.</p>
-				<pre><code class="language-typescript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Prototype</span> </span>{
-    method(): <span class="hljs-built_in">void</span> {
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&quot;Not Implemented&quot;</span>);
-    }
-}
+				<pre><code class="language-typescript"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Prototype</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">method</span><span style="color: #000000">(): </span><span style="color: #267F99">void</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">throw</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Not Implemented&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;()
-    .prototypeof(Prototype.prototype)
-    .object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Prototype</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">prototypeof</span><span style="color: #000000">(</span><span style="color: #267F99">Prototype</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual = <span class="hljs-built_in">object</span>.method();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #001080">object</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">();</span>
 
-expect(actual).toBe(<span class="hljs-literal">undefined</span>);
-expect(<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">object</span>).toBe(<span class="hljs-string">&quot;function&quot;</span>);
-expect(<span class="hljs-built_in">object</span> <span class="hljs-keyword">instanceof</span> Prototype).toBe(<span class="hljs-literal">true</span>);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">undefined</span><span style="color: #000000">);</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">object</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;function&quot;</span><span style="color: #000000">);</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">object</span><span style="color: #000000"> </span><span style="color: #0000FF">instanceof</span><span style="color: #000000"> </span><span style="color: #267F99">Prototype</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000">);</span>
 </code></pre>
 				<a href="#setup-examination" id="setup-examination" style="color: inherit; text-decoration: none;">
 					<h4>Setup examination</h4>
 				</a>
 				<p>In some cases Moq library can discover type information from provided setup information.</p>
-				<pre><code class="language-typescript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Prototype</span> </span>{
-    method(): <span class="hljs-built_in">number</span> {
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&quot;Not Implemented&quot;</span>);
-    }
-}
+				<pre><code class="language-typescript"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Prototype</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">method</span><span style="color: #000000">(): </span><span style="color: #267F99">number</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">throw</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Not Implemented&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = <span class="hljs-keyword">new</span> Mock&lt;Prototype&gt;()
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method()) <span class="hljs-comment">// this would be used for type discovering</span>
-    .returns(<span class="hljs-number">2</span>)
-    .object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Prototype</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">()) </span><span style="color: #008000">// this would be used for type discovering</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual = <span class="hljs-built_in">object</span>.method();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #001080">object</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">();</span>
 
-expect(actual).toBe(<span class="hljs-number">2</span>);
-expect(<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">object</span>).toBe(<span class="hljs-string">&quot;function&quot;</span>);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">object</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;function&quot;</span><span style="color: #000000">);</span>
 </code></pre>
 				<a href="#mock-behavior" id="mock-behavior" style="color: inherit; text-decoration: none;">
 					<h2>Mock behavior</h2>
 				</a>
 				<p>A mocked object is a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy">Proxy</a>,
 					that configured to track any read and write operations on properties. If you write a value to an arbitrary property the
-				mocked object will keep it and you can read it later on. By default, the prototype of mocked object is Function.</p>
+				mocked object will keep it, and you can read it later on. By default, the prototype of mocked object is Function.</p>
 				<p>Accessing to an unset property or a method will return undefined, or a pointer to a spy function if it exists on
 				prototype; You can call this function, and it will be tracked.</p>
 				<p>The default behaviour has the lowest precedence. The latest setup has the highest precedence.</p>
 				<p>You can control mock behavior when accessing to a property without a corresponding setup.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;();
-mock.setup(<span class="hljs-function">() =&gt;</span> It.IsAny())
-    .throws(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&quot;setup is missed&quot;</span>));
+				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ITestObject</span><span style="color: #000000">&gt;();</span>
+<span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">setup</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">IsAny</span><span style="color: #000000">())</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">throws</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;setup is missed&quot;</span><span style="color: #000000">));</span>
 </code></pre>
+				<a href="#setup-play-times" id="setup-play-times" style="color: inherit; text-decoration: none;">
+					<h4>Setup play times</h4>
+				</a>
+				<p>It is possible to define a predicate that defines if provided setup can handle an interaction.</p>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">PlayTimes</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Prototype</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">method</span><span style="color: #000000">(): </span><span style="color: #267F99">number</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">throw</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Not Implemented&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Prototype</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    </span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">())</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">4</span><span style="color: #000000">)</span>
+<span style="color: #000000">    </span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">())</span>
+<span style="color: #000000">    </span><span style="color: #008000">// it could be any predefined funtion of PlayTimes or a custom function</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">play</span><span style="color: #000000">(</span><span style="color: #001080">PlayTimes</span><span style="color: #000000">.</span><span style="color: #795E26">Once</span><span style="color: #000000">()) </span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">)</span>
+<span style="color: #000000">    </span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+
+
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">object</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">()).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">object</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">()).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">4</span><span style="color: #000000">);</span>
+</code></pre>
+				<p>The latest setup has the highest precedence. And it says that it could handle only one interaction. After
+				that the setup will be ignored and next setup would be taken.</p>
 				<a href="#injector-config" id="injector-config" style="color: inherit; text-decoration: none;">
 					<h4>Injector config</h4>
 				</a>
 				<p>Internally the library is using an injector that implementation is based
 					on <a href="https://angular.io/guide/dependency-injection-providers">Angular injector</a> to create and configure every each Mock
 				object that is created with its constructor.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">new</span> Mock() <span class="hljs-comment">// &lt;-- calls angular based injector internally to create all dependencies </span>
+				<pre><code class="language-typescript"><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">() </span><span style="color: #008000">// &lt;-- calls angular based injector internally to create all dependencies </span>
 </code></pre>
 				<p>The library provides an extension point to change the way how mocks are configured internally. It is available through
 				IMockOptions.injectorConfig that could be applied globally or per mock instance at the instancing phase.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EqualMatchingInjectorConfig</span><span style="color: #000000">, </span><span style="color: #001080">Mock</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// The global configuration that would be overridden with instance options </span>
-Mock.options = {<span class="hljs-attr">injectorConfig</span>: <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig()};
-<span class="hljs-comment">// or per instance</span>
-<span class="hljs-keyword">new</span> Mock({<span class="hljs-attr">injectorConfig</span>: <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig()})
+<span style="color: #008000">// The global configuration that would be overridden with instance options </span>
+<span style="color: #001080">Mock</span><span style="color: #000000">.</span><span style="color: #001080">options</span><span style="color: #000000"> = {</span><span style="color: #001080">injectorConfig:</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EqualMatchingInjectorConfig</span><span style="color: #000000">()};</span>
+<span style="color: #008000">// or per instance</span>
+<span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">({</span><span style="color: #001080">injectorConfig:</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EqualMatchingInjectorConfig</span><span style="color: #000000">()})</span>
 </code></pre>
 				<p>Out of the box there are 2 available configurations that change the way how a mock compares expressions.</p>
 				<a href="#defaultinjectorconfig" id="defaultinjectorconfig" style="color: inherit; text-decoration: none;">
@@ -516,31 +560,31 @@ Mock.options = {<span class="hljs-attr">injectorConfig</span>: <span class="hljs
 					that is limited in matching objects. On the other hand developers are using so called &quot;deep equal comparison&quot; approach,
 					where objects are matched by its properties and values. This configuration changes the way how expressions are matched
 				and introduce deep equal comparison logic as well as an extension point for custom matchers.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Mock</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function">(<span class="hljs-params">args: <span class="hljs-built_in">number</span>[]</span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt;()
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance([<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]))
-    .returns(<span class="hljs-number">2</span>);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;(</span><span style="color: #001080">args</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">[]) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">number</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">([</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">]))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock.object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual = <span class="hljs-built_in">object</span>([<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #795E26">object</span><span style="color: #000000">([</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">]);</span>
 
-<span class="hljs-comment">// since the default comparisons logic sees [2, 1] and [2, 1] as different objects the provided setup would not work</span>
-expect(actual).toBe(<span class="hljs-literal">undefined</span>);
+<span style="color: #008000">// since the default comparisons logic sees [2, 1] and [2, 1] as different objects the provided setup would not work</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">undefined</span><span style="color: #000000">);</span>
 </code></pre>
 				<p>and compare with</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EqualMatchingInjectorConfig</span><span style="color: #000000">, </span><span style="color: #001080">Mock</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function">(<span class="hljs-params">args: <span class="hljs-built_in">number</span>[]</span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt;({<span class="hljs-attr">injectorConfig</span>: <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig()})
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance([<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]))
-    .returns(<span class="hljs-number">2</span>);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;(</span><span style="color: #001080">args</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">[]) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">number</span><span style="color: #000000">&gt;({</span><span style="color: #001080">injectorConfig:</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EqualMatchingInjectorConfig</span><span style="color: #000000">()})</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">([</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">]))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock.object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual = <span class="hljs-built_in">object</span>([<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #795E26">object</span><span style="color: #000000">([</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">]);</span>
 
-expect(actual).toBe(<span class="hljs-number">2</span>);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
 </code></pre>
 				<p>Internally the equal comparision logic implemented as a collection of object matchers that implement IObjectMatcher
 				interface.</p>
@@ -559,53 +603,53 @@ expect(actual).toBe(<span class="hljs-number">2</span>);
 					objects.</li>
 				</ol>
 				<p>Here is an example of a custom matcher that matches Moment and Date objects.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, IObjectMatcher, Mock, OBJECT_MATCHERS } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts&quot;</span>;
-<span class="hljs-keyword">import</span> { isMoment, utc } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moment&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EqualMatchingInjectorConfig</span><span style="color: #000000">, </span><span style="color: #001080">IObjectMatcher</span><span style="color: #000000">, </span><span style="color: #001080">Mock</span><span style="color: #000000">, </span><span style="color: #001080">OBJECT_MATCHERS</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">isMoment</span><span style="color: #000000">, </span><span style="color: #001080">utc</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moment&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MomentDateMatcher</span> <span class="hljs-title">implements</span> <span class="hljs-title">IObjectMatcher</span> </span>{
-    matched&lt;T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">object</span>&gt;(left: T, <span class="hljs-attr">right</span>: T): <span class="hljs-built_in">boolean</span> | <span class="hljs-literal">undefined</span> {
-        <span class="hljs-keyword">if</span> (left <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Date</span> &amp;&amp; isMoment(right)) {
-            <span class="hljs-keyword">return</span> left.valueOf() === right.valueOf();
-        }
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>;
-    }
-}
+<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MomentDateMatcher</span><span style="color: #000000"> </span><span style="color: #0000FF">implements</span><span style="color: #000000"> </span><span style="color: #267F99">IObjectMatcher</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">matched</span><span style="color: #000000">&lt;</span><span style="color: #267F99">T</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">object</span><span style="color: #000000">&gt;(</span><span style="color: #001080">left</span><span style="color: #000000">: </span><span style="color: #267F99">T</span><span style="color: #000000">, </span><span style="color: #001080">right</span><span style="color: #000000">: </span><span style="color: #267F99">T</span><span style="color: #000000">): </span><span style="color: #267F99">boolean</span><span style="color: #000000"> | </span><span style="color: #267F99">undefined</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">left</span><span style="color: #000000"> </span><span style="color: #0000FF">instanceof</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000"> &amp;&amp; </span><span style="color: #795E26">isMoment</span><span style="color: #000000">(</span><span style="color: #001080">right</span><span style="color: #000000">)) {</span>
+<span style="color: #000000">            </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">left</span><span style="color: #000000">.</span><span style="color: #795E26">valueOf</span><span style="color: #000000">() === </span><span style="color: #001080">right</span><span style="color: #000000">.</span><span style="color: #795E26">valueOf</span><span style="color: #000000">();</span>
+<span style="color: #000000">        }</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">undefined</span><span style="color: #000000">;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> moment = utc(<span class="hljs-number">1</span>);
-<span class="hljs-keyword">const</span> injectorConfig = <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig([{
-    <span class="hljs-attr">provide</span>: OBJECT_MATCHERS,
-    <span class="hljs-attr">useClass</span>: MomentDateMatcher,
-    <span class="hljs-attr">multi</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">deps</span>: []
-}]);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">moment</span><span style="color: #000000"> = </span><span style="color: #795E26">utc</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">injectorConfig</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EqualMatchingInjectorConfig</span><span style="color: #000000">([{</span>
+<span style="color: #000000">    </span><span style="color: #001080">provide:</span><span style="color: #000000"> </span><span style="color: #0070C1">OBJECT_MATCHERS</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">useClass:</span><span style="color: #000000"> </span><span style="color: #001080">MomentDateMatcher</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">multi:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">deps:</span><span style="color: #000000"> []</span>
+<span style="color: #000000">}]);</span>
 
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function">(<span class="hljs-params">args: <span class="hljs-built_in">any</span></span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt;({injectorConfig})
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance(moment))
-    .returns(<span class="hljs-number">2</span>);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;(</span><span style="color: #001080">args</span><span style="color: #000000">: </span><span style="color: #267F99">any</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">number</span><span style="color: #000000">&gt;({</span><span style="color: #001080">injectorConfig</span><span style="color: #000000">})</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #001080">moment</span><span style="color: #000000">))</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock.object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual = <span class="hljs-built_in">object</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">1</span>));
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #795E26">object</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">));</span>
 
-expect(actual).toBe(<span class="hljs-number">2</span>);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
 </code></pre>
 				<p>The matching logic of EqualMatchingInjectorConfig
 					supports <a href="https://raw.githubusercontent.com/dvabuzyarov/moq.ts/master/projects/moq/src/lib/expected-expressions/expression-predicates.ts">It notation</a>
 				. So you can do a partial comparision.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EqualMatchingInjectorConfig, It, Mock } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EqualMatchingInjectorConfig</span><span style="color: #000000">, </span><span style="color: #001080">It</span><span style="color: #000000">, </span><span style="color: #001080">Mock</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> func = <span class="hljs-function">() =&gt;</span> <span class="hljs-literal">undefined</span>;
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #795E26">func</span><span style="color: #000000"> = () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0000FF">undefined</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> injectorConfig = <span class="hljs-keyword">new</span> EqualMatchingInjectorConfig();
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function">(<span class="hljs-params">args: <span class="hljs-built_in">any</span></span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt;({injectorConfig})
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance({<span class="hljs-attr">func</span>: It.IsAny()})) <span class="hljs-comment">// &lt;-- func property will be matched with It delegate</span>
-    .returns(<span class="hljs-number">2</span>);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">injectorConfig</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EqualMatchingInjectorConfig</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;(</span><span style="color: #001080">args</span><span style="color: #000000">: </span><span style="color: #267F99">any</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">number</span><span style="color: #000000">&gt;({</span><span style="color: #001080">injectorConfig</span><span style="color: #000000">})</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">({</span><span style="color: #001080">func:</span><span style="color: #000000"> </span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">IsAny</span><span style="color: #000000">()})) </span><span style="color: #008000">// &lt;-- func property will be matched with It delegate</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock.object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual = <span class="hljs-built_in">object</span>({func});
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #795E26">object</span><span style="color: #000000">({</span><span style="color: #001080">func</span><span style="color: #000000">});</span>
 
-expect(actual).toBe(<span class="hljs-number">2</span>);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
 </code></pre>
 				<a href="#internal-api" id="internal-api" style="color: inherit; text-decoration: none;">
 					<h4>Internal API</h4>
@@ -618,7 +662,7 @@ expect(actual).toBe(<span class="hljs-number">2</span>);
 				<p>The core units are public and are available directly from the moq.ts package. Changes in those units
 					follow <a href="https://semver.org">Semantic Versioning</a>, while changes in the internal units do not
 				follow <a href="https://semver.org">Semantic Versioning</a> and could produce all types of version increments.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;moq.ts/internal&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;moq.ts/internal&quot;</span><span style="color: #000000">;</span>
 </code></pre>
 				<blockquote>
 					<p>Internal API access provides wide opportunities to customize the library behavior. However,
@@ -632,40 +676,40 @@ expect(actual).toBe(<span class="hljs-number">2</span>);
 					use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf</a>
 					or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf">Object.setPrototypeOf</a>
 				functions on mocked object.</p>
-				<pre><code class="language-typescript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestObject</span> <span class="hljs-title">implements</span> <span class="hljs-title">ITestObject</span> </span>{
+				<pre><code class="language-typescript"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">TestObject</span><span style="color: #000000"> </span><span style="color: #0000FF">implements</span><span style="color: #000000"> </span><span style="color: #267F99">ITestObject</span><span style="color: #000000"> {</span>
 
-}
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
-    .prototypeof(TestObject.prototype)
-    .object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ITestObject</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">prototypeof</span><span style="color: #000000">(</span><span style="color: #267F99">TestObject</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-mock.object() <span class="hljs-keyword">instanceof</span> TestObject;<span class="hljs-comment">// true</span>
+<span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">() </span><span style="color: #0000FF">instanceof</span><span style="color: #000000"> </span><span style="color: #267F99">TestObject</span><span style="color: #000000">;</span><span style="color: #008000">// true</span>
 </code></pre>
 				<a href="#mimics" id="mimics" style="color: inherit; text-decoration: none;">
 					<h2>Mimics</h2>
 				</a>
 				<p>If you need to replicate behaviour of an existing object you can reflect mock&#39;s interactions on the object.</p>
-				<pre><code class="language-typescript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Origin</span> </span>{
-    <span class="hljs-keyword">public</span> property = <span class="hljs-number">0</span>;
+				<pre><code class="language-typescript"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Origin</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #001080">property</span><span style="color: #000000"> = </span><span style="color: #098658">0</span><span style="color: #000000">;</span>
 
-    <span class="hljs-keyword">public</span> method(input: <span class="hljs-built_in">number</span>): <span class="hljs-built_in">number</span> {
-        <span class="hljs-keyword">return</span> input * <span class="hljs-built_in">this</span>.property;
-    }
-}
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #795E26">method</span><span style="color: #000000">(</span><span style="color: #001080">input</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">): </span><span style="color: #267F99">number</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">input</span><span style="color: #000000"> * </span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">property</span><span style="color: #000000">;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> origin = <span class="hljs-keyword">new</span> Origin();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">origin</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Origin</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;Origin&gt;()
-    .setup(<span class="hljs-function">() =&gt;</span> It.IsAny())
-    .mimics(origin);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Origin</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">It</span><span style="color: #000000">.</span><span style="color: #795E26">IsAny</span><span style="color: #000000">())</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">mimics</span><span style="color: #000000">(</span><span style="color: #001080">origin</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> mocked = mock.object();
-mocked.property = <span class="hljs-number">3</span>;
-<span class="hljs-keyword">const</span> actual = mocked.method(<span class="hljs-number">2</span>);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mocked</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
+<span style="color: #001080">mocked</span><span style="color: #000000">.</span><span style="color: #001080">property</span><span style="color: #000000"> = </span><span style="color: #098658">3</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #001080">mocked</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
 
-expect(actual).toBe(<span class="hljs-number">6</span>);
-mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance.method(<span class="hljs-number">2</span>));
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">6</span><span style="color: #000000">);</span>
+<span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">verify</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">method</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">));</span>
 </code></pre>
 				<a href="#typeof-operator" id="typeof-operator" style="color: inherit; text-decoration: none;">
 					<h2>typeof operator</h2>
@@ -673,14 +717,14 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 				<p>Some operations are not possible to trap in order to keep the language consistent, one of them is typeof. The type of
 					the proxy object will be the same as the proxy target. So at the moment the only available options is to provider target
 				option as a create mock parameter.</p>
-				<pre><code class="language-typescript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Origin</span> </span>{
-}
+				<pre><code class="language-typescript"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Origin</span><span style="color: #000000"> {</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> origin = <span class="hljs-keyword">new</span> Origin();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">origin</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Origin</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;Origin&gt;({<span class="hljs-attr">target</span>: <span class="hljs-keyword">new</span> Origin()});
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Origin</span><span style="color: #000000">&gt;({</span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Origin</span><span style="color: #000000">()});</span>
 
-expect(<span class="hljs-keyword">typeof</span> mock.object()).toBe(<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">new</span> Origin());
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">()).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Origin</span><span style="color: #000000">());</span>
 </code></pre>
 				<a href="#in-operator" id="in-operator" style="color: inherit; text-decoration: none;">
 					<h2>in operator</h2>
@@ -688,44 +732,44 @@ expect(<span class="hljs-keyword">typeof</span> mock.object()).toBe(<span class=
 				<p>The library supports <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in">in operator</a>. More
 					examples could be
 				found <a href="https://raw.githubusercontent.com/dvabuzyarov/moq.ts/master/projects/moq/src/integration.specs/in-operator.spec.ts">here</a></p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> name = <span class="hljs-string">&quot;arbitrary name&quot;</span>;
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = <span class="hljs-keyword">new</span> Mock&lt;{}&gt;()
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> name <span class="hljs-keyword">in</span> instance)
-    .returns(<span class="hljs-literal">true</span>)
-    .object();
+				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">name</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;arbitrary name&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;{}&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">name</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-expect(name <span class="hljs-keyword">in</span> <span class="hljs-built_in">object</span>).toBe(<span class="hljs-literal">true</span>);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">name</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">object</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000">);</span>
 </code></pre>
-				<pre><code class="language-typescript"><span class="hljs-keyword">interface</span> ITestObject {
-    <span class="hljs-attr">property</span>: <span class="hljs-built_in">string</span>;
+				<pre><code class="language-typescript"><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">ITestObject</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">property</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
 
-    method(): <span class="hljs-built_in">void</span>;
-}
+<span style="color: #000000">    </span><span style="color: #795E26">method</span><span style="color: #000000">(): </span><span style="color: #267F99">void</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestObject</span> <span class="hljs-title">implements</span> <span class="hljs-title">ITestObject</span> </span>{
-    <span class="hljs-attr">property</span>: <span class="hljs-built_in">string</span>;
+<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">TestObject</span><span style="color: #000000"> </span><span style="color: #0000FF">implements</span><span style="color: #000000"> </span><span style="color: #267F99">ITestObject</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">property</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
 
-    method(): <span class="hljs-built_in">void</span> {
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>;
-    }
-}
+<span style="color: #000000">    </span><span style="color: #795E26">method</span><span style="color: #000000">(): </span><span style="color: #267F99">void</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">undefined</span><span style="color: #000000">;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;()
-    .prototypeof(TestObject.prototype)
-    .object();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ITestObject</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">prototypeof</span><span style="color: #000000">(</span><span style="color: #267F99">TestObject</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-comment">// because &quot;property&quot; in new TestObject() === false</span>
-expect(<span class="hljs-string">&quot;property&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">object</span>).toBe(<span class="hljs-literal">false</span>);
-expect(<span class="hljs-string">&quot;method&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">object</span>).toBe(<span class="hljs-literal">true</span>);
+<span style="color: #008000">// because &quot;property&quot; in new TestObject() === false</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;property&quot;</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">object</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">false</span><span style="color: #000000">);</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;method&quot;</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">object</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000">);</span>
 </code></pre>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;{}&gt;();
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock.object();
+				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;{}&gt;();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> actual1 = <span class="hljs-string">&quot;property&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">object</span>;
-<span class="hljs-keyword">const</span> actual2 = <span class="hljs-string">&quot;method&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">object</span>;
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual1</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;property&quot;</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">object</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual2</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;method&quot;</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">object</span><span style="color: #000000">;</span>
 
-mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> <span class="hljs-string">&quot;property&quot;</span> <span class="hljs-keyword">in</span> instance, Times.Once());
-mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> <span class="hljs-string">&quot;method&quot;</span> <span class="hljs-keyword">in</span> instance, Times.Once());
+<span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">verify</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;property&quot;</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">, </span><span style="color: #001080">Times</span><span style="color: #000000">.</span><span style="color: #795E26">Once</span><span style="color: #000000">());</span>
+<span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">verify</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;method&quot;</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">, </span><span style="color: #001080">Times</span><span style="color: #000000">.</span><span style="color: #795E26">Once</span><span style="color: #000000">());</span>
 </code></pre>
 				<a href="#new-operator" id="new-operator" style="color: inherit; text-decoration: none;">
 					<h2>new operator</h2>
@@ -738,35 +782,35 @@ mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span
 						the target used to initialize the proxy must itself have a [[Construct]] internal method
 					(i.e. new target must be valid)](<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/construct">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/construct</a>).</p>
 				</blockquote>
-				<pre><code class="language-typescript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestObject</span> </span>{
-    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> arg</span>)</span> {
-    }
-}
+				<pre><code class="language-typescript"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">TestObject</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">constructor</span><span style="color: #000000">(</span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">arg</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
 </code></pre>
-				<pre><code class="language-typescript">    it(<span class="hljs-string">&quot;Returns new object with callback&quot;</span>, <span class="hljs-function">() =&gt;</span> {
-    <span class="hljs-keyword">const</span> value = <span class="hljs-string">&quot;value&quot;</span>;
-    <span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-keyword">typeof</span> TestObject&gt;({<span class="hljs-attr">target</span>: TestObject})
-        .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> <span class="hljs-keyword">new</span> instance(value))
-        .callback(<span class="hljs-function">(<span class="hljs-params">{args: [name]}</span>) =&gt;</span> <span class="hljs-keyword">new</span> TestObject(name));
-    <span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock.object();
+				<pre><code class="language-typescript"><span style="color: #000000">    </span><span style="color: #795E26">it</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Returns new object with callback&quot;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;value&quot;</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">TestObject</span><span style="color: #000000">&gt;({</span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #001080">TestObject</span><span style="color: #000000">})</span>
+<span style="color: #000000">        .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">))</span>
+<span style="color: #000000">        .</span><span style="color: #795E26">callback</span><span style="color: #000000">(({</span><span style="color: #001080">args</span><span style="color: #000000">: [</span><span style="color: #001080">name</span><span style="color: #000000">]}) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">TestObject</span><span style="color: #000000">(</span><span style="color: #001080">name</span><span style="color: #000000">));</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-    <span class="hljs-keyword">const</span> actual = <span class="hljs-keyword">new</span> <span class="hljs-built_in">object</span>(value);
-    expect(actual).toEqual(<span class="hljs-keyword">new</span> TestObject(value));
-    mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> <span class="hljs-keyword">new</span> instance(value));
-});
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">object</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toEqual</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">TestObject</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">));</span>
+<span style="color: #000000">    </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">verify</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">));</span>
+<span style="color: #000000">});</span>
 
-it(<span class="hljs-string">&quot;Returns new object with returns&quot;</span>, <span class="hljs-function">() =&gt;</span> {
-    <span class="hljs-keyword">const</span> value = <span class="hljs-string">&quot;value&quot;</span>;
-    <span class="hljs-keyword">const</span> expected = <span class="hljs-keyword">new</span> TestObject(value);
-    <span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-keyword">typeof</span> TestObject&gt;({<span class="hljs-attr">target</span>: TestObject})
-        .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> <span class="hljs-keyword">new</span> instance(value))
-        .returns(expected);
-    <span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock.object();
+<span style="color: #795E26">it</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Returns new object with returns&quot;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;value&quot;</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">expected</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">TestObject</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #0000FF">typeof</span><span style="color: #000000"> </span><span style="color: #001080">TestObject</span><span style="color: #000000">&gt;({</span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #001080">TestObject</span><span style="color: #000000">})</span>
+<span style="color: #000000">        .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">))</span>
+<span style="color: #000000">        .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #001080">expected</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-    <span class="hljs-keyword">const</span> actual = <span class="hljs-keyword">new</span> <span class="hljs-built_in">object</span>(value);
-    expect(actual).toBe(expected);
-    mock.verify(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> <span class="hljs-keyword">new</span> instance(value));
-});
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">object</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #001080">expected</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #001080">mock</span><span style="color: #000000">.</span><span style="color: #795E26">verify</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">));</span>
+<span style="color: #000000">});</span>
 </code></pre>
 				<a href="#moqapi-symbol" id="moqapi-symbol" style="color: inherit; text-decoration: none;">
 					<h2>MoqAPI symbol</h2>
@@ -776,32 +820,32 @@ it(<span class="hljs-string">&quot;Returns new object with returns&quot;</span>,
 				<p>Since this property makes sense only in context of the moq library and is not specific for mocked types it is not
 				possible to define an interaction behaviour with Setup API.</p>
 				<p>The property is read only and trackabel, so it possible to use for verification.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> func = <span class="hljs-keyword">new</span> Mock&lt;<span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span>&gt;()
-    .object();
+				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">func</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">void</span><span style="color: #000000">&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-func[MoqAPI]
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance())
-    .returns(<span class="hljs-number">12</span>);
+<span style="color: #001080">func</span><span style="color: #000000">[</span><span style="color: #001080">MoqAPI</span><span style="color: #000000">]</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">instance</span><span style="color: #000000">())</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #098658">12</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> actual = func();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">actual</span><span style="color: #000000"> = </span><span style="color: #795E26">func</span><span style="color: #000000">();</span>
 
-expect(actual).toBe(<span class="hljs-number">12</span>);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">actual</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #098658">12</span><span style="color: #000000">);</span>
 </code></pre>
 				<p>In operator does not see this property until it is used in setups.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = <span class="hljs-keyword">new</span> Mock&lt;{}&gt;()
-    .object();
+				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;{}&gt;()</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-expect(MoqAPI <span class="hljs-keyword">in</span> <span class="hljs-built_in">object</span>).toBe(<span class="hljs-literal">false</span>);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">MoqAPI</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">object</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">false</span><span style="color: #000000">);</span>
 </code></pre>
 				<p>BUT</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> mock = <span class="hljs-keyword">new</span> Mock&lt;ITestObject&gt;();
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">object</span> = mock
-    .setup(<span class="hljs-function"><span class="hljs-params">instance</span> =&gt;</span> instance[MoqAPI])
-    .returns(<span class="hljs-literal">undefined</span>)
-    .object();
+				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mock</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Mock</span><span style="color: #000000">&lt;</span><span style="color: #267F99">ITestObject</span><span style="color: #000000">&gt;();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">object</span><span style="color: #000000"> = </span><span style="color: #001080">mock</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setup</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">[</span><span style="color: #001080">MoqAPI</span><span style="color: #000000">])</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">returns</span><span style="color: #000000">(</span><span style="color: #0000FF">undefined</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">object</span><span style="color: #000000">();</span>
 
-expect(MoqAPI <span class="hljs-keyword">in</span> <span class="hljs-built_in">object</span>).toBe(<span class="hljs-literal">true</span>);
-expect(<span class="hljs-built_in">object</span>[MoqAPI]).toBe(mock);
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">MoqAPI</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">object</span><span style="color: #000000">).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000">);</span>
+<span style="color: #795E26">expect</span><span style="color: #000000">(</span><span style="color: #001080">object</span><span style="color: #000000">[</span><span style="color: #001080">MoqAPI</span><span style="color: #000000">]).</span><span style="color: #795E26">toBe</span><span style="color: #000000">(</span><span style="color: #001080">mock</span><span style="color: #000000">);</span>
 </code></pre>
 				<blockquote>
 					<p><a href="https://www.2bit.ch">Sponsored by 2BIT GmbH</a></p>
@@ -811,16 +855,400 @@ expect(<span class="hljs-built_in">object</span>[MoqAPI]).toBe(mock);
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/moq_ts.html">moq.ts</a>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/InjectFlags.html" class="tsd-kind-icon">Inject<wbr>Flags</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/PlayableUpdateReason.html" class="tsd-kind-icon">Playable<wbr>Update<wbr>Reason</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/Range.html" class="tsd-kind-icon">Range</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ApplyReflectorTrap.html" class="tsd-kind-icon">Apply<wbr>Reflector<wbr>Trap</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/AsyncExpressionDetector.html" class="tsd-kind-icon">Async<wbr>Expression<wbr>Detector</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/AsyncExpressionReflector.html" class="tsd-kind-icon">Async<wbr>Expression<wbr>Reflector</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/AsyncReflectingProxyInjectorFactory.html" class="tsd-kind-icon">Async<wbr>Reflecting<wbr>Proxy<wbr>Injector<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/AutoMockFactory.html" class="tsd-kind-icon">Auto<wbr>Mock<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/AutoMockInjectorConfig.html" class="tsd-kind-icon">Auto<wbr>Mock<wbr>Injector<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/AutoMockOptionsBuilder.html" class="tsd-kind-icon">Auto<wbr>Mock<wbr>Options<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/AutoMockedStorage.html" class="tsd-kind-icon">Auto<wbr>Mocked<wbr>Storage</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/CallbacksPreset.html" class="tsd-kind-icon">Callbacks<wbr>Preset</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ComplexExpressionErrorFormatter.html" class="tsd-kind-icon">Complex<wbr>Expression<wbr>Error<wbr>Formatter</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ComplexExpressionGuard.html" class="tsd-kind-icon">Complex<wbr>Expression<wbr>Guard</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ComplexExpressionValidator.html" class="tsd-kind-icon">Complex<wbr>Expression<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/CompositeExpressionReflector.html" class="tsd-kind-icon">Composite<wbr>Expression<wbr>Reflector</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ConstructReflectorTrap.html" class="tsd-kind-icon">Construct<wbr>Reflector<wbr>Trap</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/DateMatcher.html" class="tsd-kind-icon">Date<wbr>Matcher</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/DefaultInjectorConfig.html" class="tsd-kind-icon">Default<wbr>Injector<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/EqualMatchingInjectorConfig.html" class="tsd-kind-icon">Equal<wbr>Matching<wbr>Injector<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/Expression.html" class="tsd-kind-icon">Expression</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ExpressionFormatter.html" class="tsd-kind-icon">Expression<wbr>Formatter</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ExpressionGuardExceptionFactory.html" class="tsd-kind-icon">Expression<wbr>Guard<wbr>Exception<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ExpressionValidator.html" class="tsd-kind-icon">Expression<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/FunctionExpression.html" class="tsd-kind-icon">Function<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/FunctionExpressionValidator.html" class="tsd-kind-icon">Function<wbr>Expression<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/GetPropertyExpression.html" class="tsd-kind-icon">Get<wbr>Property<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/GetPropertyExpressionValidator.html" class="tsd-kind-icon">Get<wbr>Property<wbr>Expression<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/GetReflectorTrap.html" class="tsd-kind-icon">Get<wbr>Reflector<wbr>Trap</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/HasReflectorTrap.html" class="tsd-kind-icon">Has<wbr>Reflector<wbr>Trap</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/Host.html" class="tsd-kind-icon">Host</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/InOperatorExpression.html" class="tsd-kind-icon">In<wbr>Operator<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/InOperatorExpressionValidator.html" class="tsd-kind-icon">In<wbr>Operator<wbr>Expression<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/InjectionToken.html" class="tsd-kind-icon">Injection<wbr>Token</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/Injector.html" class="tsd-kind-icon">Injector</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/InstanceMethodExpressionValidator.html" class="tsd-kind-icon">Instance<wbr>Method<wbr>Expression<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/It.html" class="tsd-kind-icon">It</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/IteratorMatcher.html" class="tsd-kind-icon">Iterator<wbr>Matcher</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/MapMatcher.html" class="tsd-kind-icon">Map<wbr>Matcher</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/MethodExpression.html" class="tsd-kind-icon">Method<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/MethodOnlyReflectingProxyFactory.html" class="tsd-kind-icon">Method<wbr>Only<wbr>Reflecting<wbr>Proxy<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/MethodReflectingProxyFactory.html" class="tsd-kind-icon">Method<wbr>Reflecting<wbr>Proxy<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/MethodReflectorTrap.html" class="tsd-kind-icon">Method<wbr>Reflector<wbr>Trap</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/MimicsPreset.html" class="tsd-kind-icon">Mimics<wbr>Preset</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/Mock.html" class="tsd-kind-icon">Mock</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/MockCore.html" class="tsd-kind-icon">Mock<wbr>Core</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/NewOperatorExpression.html" class="tsd-kind-icon">New<wbr>Operator<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/NewOperatorExpressionValidator.html" class="tsd-kind-icon">New<wbr>Operator<wbr>Expression<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/NullInjector.html" class="tsd-kind-icon">Null<wbr>Injector</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/Optional.html" class="tsd-kind-icon">Optional</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/POJOMatcher.html" class="tsd-kind-icon">POJOMatcher</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/PlayTimes.html" class="tsd-kind-icon">Play<wbr>Times</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/PlayableAlways.html" class="tsd-kind-icon">Playable<wbr>Always</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/PlayableExactly.html" class="tsd-kind-icon">Playable<wbr>Exactly</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/PlayableNever.html" class="tsd-kind-icon">Playable<wbr>Never</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/PlayableOnce.html" class="tsd-kind-icon">Playable<wbr>Once</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/PlayableSequence.html" class="tsd-kind-icon">Playable<wbr>Sequence</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/PropertiesValueStorage.html" class="tsd-kind-icon">Properties<wbr>Value<wbr>Storage</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ReflectingProxyFactory.html" class="tsd-kind-icon">Reflecting<wbr>Proxy<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ReflectingProxyInjectorFactory.html" class="tsd-kind-icon">Reflecting<wbr>Proxy<wbr>Injector<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/RejectedPromiseFactory.html" class="tsd-kind-icon">Rejected<wbr>Promise<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ResolvedPromiseFactory.html" class="tsd-kind-icon">Resolved<wbr>Promise<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/ReturnsPreset.html" class="tsd-kind-icon">Returns<wbr>Preset</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/Self.html" class="tsd-kind-icon">Self</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/SetPropertyExpression.html" class="tsd-kind-icon">Set<wbr>Property<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/SetPropertyExpressionValidator.html" class="tsd-kind-icon">Set<wbr>Property<wbr>Expression<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/SetReflectorTrap.html" class="tsd-kind-icon">Set<wbr>Reflector<wbr>Trap</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/SkipSelf.html" class="tsd-kind-icon">Skip<wbr>Self</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/StaticInjector.html" class="tsd-kind-icon">Static<wbr>Injector</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/StringErrorStyler.html" class="tsd-kind-icon">String<wbr>Error<wbr>Styler</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/SyncExpressionReflector.html" class="tsd-kind-icon">Sync<wbr>Expression<wbr>Reflector</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/ThrowsPreset.html" class="tsd-kind-icon">Throws<wbr>Preset</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/Times.html" class="tsd-kind-icon">Times</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/Tracker.html" class="tsd-kind-icon">Tracker</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/VerifyError.html" class="tsd-kind-icon">Verify<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/AbstractType.html" class="tsd-kind-icon">Abstract<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ClassProvider.html" class="tsd-kind-icon">Class<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ClassSansProvider.html" class="tsd-kind-icon">Class<wbr>Sans<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ConstructorProvider.html" class="tsd-kind-icon">Constructor<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ConstructorSansProvider.html" class="tsd-kind-icon">Constructor<wbr>Sans<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ExistingProvider.html" class="tsd-kind-icon">Existing<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ExistingSansProvider.html" class="tsd-kind-icon">Existing<wbr>Sans<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ExpressionReflector.html" class="tsd-kind-icon">Expression<wbr>Reflector</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/FactoryProvider.html" class="tsd-kind-icon">Factory<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/FactorySansProvider.html" class="tsd-kind-icon">Factory<wbr>Sans<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IInjectorConfig.html" class="tsd-kind-icon">IInjector<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IMock.html" class="tsd-kind-icon">IMock</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IMockOptions.html" class="tsd-kind-icon">IMock<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IObjectMatcher.html" class="tsd-kind-icon">IObject<wbr>Matcher</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IPlayable.html" class="tsd-kind-icon">IPlayable</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IPreset.html" class="tsd-kind-icon">IPreset</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IPresetBuilder.html" class="tsd-kind-icon">IPreset<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/InjectionFactory.html" class="tsd-kind-icon">Injection<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/StaticClassProvider.html" class="tsd-kind-icon">Static<wbr>Class<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/StaticClassSansProvider.html" class="tsd-kind-icon">Static<wbr>Class<wbr>Sans<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/TrackedAction.html" class="tsd-kind-icon">Tracked<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ValueProvider.html" class="tsd-kind-icon">Value<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ValueSansProvider.html" class="tsd-kind-icon">Value<wbr>Sans<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#Expressions" class="tsd-kind-icon">Expressions</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#ForwardRefFn" class="tsd-kind-icon">Forward<wbr>Ref<wbr>Fn</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#IExpression" class="tsd-kind-icon">IExpression</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#IPredicate" class="tsd-kind-icon">IPredicate</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#PromisedType" class="tsd-kind-icon">Promised<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#Provider" class="tsd-kind-icon">Provider</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#StaticProvider" class="tsd-kind-icon">Static<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#Type" class="tsd-kind-icon">Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#TypeOfInjectionFactory" class="tsd-kind-icon">Type<wbr>OfInjection<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#TypeProvider" class="tsd-kind-icon">Type<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#TypeofInjectionToken" class="tsd-kind-icon">Typeof<wbr>Injection<wbr>Token</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#EXPRESSION_REFLECTOR" class="tsd-kind-icon">EXPRESSION_<wbr>REFLECTOR</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#INJECTOR" class="tsd-kind-icon">INJECTOR</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#MoqAPI" class="tsd-kind-icon">MoqAPI</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#NG_TEMP_TOKEN_PATH" class="tsd-kind-icon">NG_<wbr>TEMP_<wbr>TOKEN_<wbr>PATH</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#NO_NEW_LINE" class="tsd-kind-icon">NO_<wbr>NEW_<wbr>LINE</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#OBJECT_MATCHERS" class="tsd-kind-icon">OBJECT_<wbr>MATCHERS</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#SOURCE" class="tsd-kind-icon">SOURCE</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#THROW_IF_NOT_FOUND" class="tsd-kind-icon">THROW_<wbr>IF_<wbr>NOT_<wbr>FOUND</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#Type" class="tsd-kind-icon">Type</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#USE_VALUE" class="tsd-kind-icon">USE_<wbr>VALUE</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#INJECTOR_IMPL" class="tsd-kind-icon">INJECTOR_<wbr>IMPL</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#catchInjectorError" class="tsd-kind-icon">catch<wbr>Injector<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#dump" class="tsd-kind-icon">dump</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#formatError" class="tsd-kind-icon">format<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#forwardRef" class="tsd-kind-icon">forward<wbr>Ref</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#getClosureSafeProperty" class="tsd-kind-icon">get<wbr>Closure<wbr>Safe<wbr>Property</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#injectorFactory" class="tsd-kind-icon">injector<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isForwardRef" class="tsd-kind-icon">is<wbr>Forward<wbr>Ref</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#resolveForwardRef" class="tsd-kind-icon">resolve<wbr>Forward<wbr>Ref</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#stringify" class="tsd-kind-icon">stringify</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -831,22 +1259,23 @@ expect(<span class="hljs-built_in">object</span>[MoqAPI]).toBe(mock);
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
 			</ul>
 		</div>
 	</div>
