@@ -40,6 +40,7 @@ out [tests.integration](https://github.com/dvabuzyarov/moq.ts/blob/master/projec
   - [Promise adapters](#promise-adapters)
 - [Type Discovering](#type-discovering)
 - [Mock behavior](#mock-behavior)
+    - [Play times](#setup-play-times)
     - [Injector config](#injector-config)
         - [DefaultInjectorConfig](#defaultinjectorconfig)
         - [EqualMatchingInjectorConfig and custom matchers](#equalmatchinginjectorconfig)
@@ -448,7 +449,7 @@ expect(typeof object).toBe("function");
 
 A mocked object is a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy),
 that configured to track any read and write operations on properties. If you write a value to an arbitrary property the
-mocked object will keep it and you can read it later on. By default, the prototype of mocked object is Function.
+mocked object will keep it, and you can read it later on. By default, the prototype of mocked object is Function.
 
 Accessing to an unset property or a method will return undefined, or a pointer to a spy function if it exists on
 prototype; You can call this function, and it will be tracked.
@@ -462,6 +463,37 @@ const mock = new Mock<ITestObject>();
 mock.setup(() => It.IsAny())
     .throws(new Error("setup is missed"));
 ```
+#### Setup play times
+It is possible to define a predicate that defines if provided setup can handle an interaction.
+
+```typescript
+import { PlayTimes } from "moq.ts";
+
+class Prototype {
+    method(): number {
+        throw new Error("Not Implemented");
+    }
+}
+
+const object = new Mock<Prototype>()
+    
+    .setup(instance => instance.method())
+    .returns(4)
+    
+    .setup(instance => instance.method())
+    // it could be any predefined funtion of PlayTimes or a custom function
+    .play(PlayTimes.Once()) 
+    .returns(2)
+    
+    .object();
+
+
+expect(object.method()).toBe(2);
+expect(object.method()).toBe(4);
+```
+
+The latest setup has the highest precedence. And it says that it could handle only one interaction. After
+that the setup will be ignored and next setup would be taken.
 
 #### Injector config
 
