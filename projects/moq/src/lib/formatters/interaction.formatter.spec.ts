@@ -1,30 +1,30 @@
 import { InteractionFormatter } from "./interaction.formatter";
 import {
-    GetPropertyInteraction,
-    InOperatorInteraction,
-    MethodInteraction,
-    NamedMethodInteraction,
-    NewOperatorInteraction,
-    SetPropertyInteraction
-} from "../interactions";
+    GetPropertyExpression,
+    InOperatorExpression,
+    FunctionExpression,
+    MethodExpression,
+    NewOperatorExpression,
+    SetPropertyExpression
+} from "../reflector/expressions";
 import { GetPropertyFormatter } from "./get-property.formatter";
 import { SetPropertyFormatter } from "./set-property.formatter";
-import { NamedMethodFormatter } from "./named-method.formatter";
 import { MethodFormatter } from "./method.formatter";
+import { FunctionFormatter } from "./function.formatter";
 import { It } from "../reflector/expression-predicates";
 import { ConstantFormatter } from "./constant.formatter";
 import { InOperatorFormatter } from "./in-operator.formatter";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { NewOperatorFormatter } from "./new-operator.formatter";
 
 describe("Expression formatter", () => {
 
     beforeEach(() => {
-        createInjector2(InteractionFormatter, [
+        createInjector(InteractionFormatter, [
             GetPropertyFormatter,
             SetPropertyFormatter,
+            FunctionFormatter,
             MethodFormatter,
-            NamedMethodFormatter,
             ConstantFormatter,
             InOperatorFormatter,
             NewOperatorFormatter
@@ -32,7 +32,7 @@ describe("Expression formatter", () => {
     });
 
     it("Returns formatted description for GetPropertyExpression", () => {
-        const expression = new GetPropertyInteraction("name");
+        const expression = new GetPropertyExpression("name");
         const expected = "get property description";
 
         resolveMock(GetPropertyFormatter)
@@ -47,7 +47,7 @@ describe("Expression formatter", () => {
 
 
     it("Returns formatted description for SetPropertyExpression", () => {
-        const expression = new SetPropertyInteraction("name", "value");
+        const expression = new SetPropertyExpression("name", "value");
         const expected = "set property description";
 
         resolveMock(SetPropertyFormatter)
@@ -61,7 +61,7 @@ describe("Expression formatter", () => {
     });
 
     it("Returns formatted description for InOperatorInteraction", () => {
-        const expression = new InOperatorInteraction("name");
+        const expression = new InOperatorExpression("name");
         const expected = "get property description";
 
         resolveMock(InOperatorFormatter)
@@ -75,10 +75,10 @@ describe("Expression formatter", () => {
     });
 
     it("Returns formatted description for MethodExpression", () => {
-        const expression = new MethodInteraction(["value"]);
+        const expression = new FunctionExpression(["value"]);
         const expected = "method description";
 
-        resolveMock(MethodFormatter)
+        resolveMock(FunctionFormatter)
             .setup(instance => instance.format(expression))
             .returns(expected);
 
@@ -89,10 +89,10 @@ describe("Expression formatter", () => {
     });
 
     it("Returns formatted description for NamedMethodExpression", () => {
-        const expression = new NamedMethodInteraction("name", ["value"]);
+        const expression = new MethodExpression("name", ["value"]);
         const expected = "named method description";
 
-        resolveMock(NamedMethodFormatter)
+        resolveMock(MethodFormatter)
             .setup(instance => instance.format(expression))
             .returns(expected);
 
@@ -117,7 +117,7 @@ describe("Expression formatter", () => {
     });
 
     it("Returns formatted description for NewOperatorInteraction", () => {
-        const expression = new NewOperatorInteraction(["name"]);
+        const expression = new NewOperatorExpression(["name"]);
         const expected = "new construct description";
 
         resolveMock(NewOperatorFormatter)

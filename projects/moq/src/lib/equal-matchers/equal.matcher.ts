@@ -10,11 +10,11 @@ import { FunctionMatcher } from "./function.matcher";
 export class EqualMatcher {
 
     constructor(
-        private typesMatcher: TypesMatcher,
-        private commonTypeProvider: CommonTypeProvider,
-        private primitiveMatcher: PrimitiveMatcher,
-        private objectMatcher: ObjectMatcher,
-        private functionMatcher: FunctionMatcher) {
+        private readonly typesMatcher: TypesMatcher,
+        private readonly commonTypeProvider: CommonTypeProvider,
+        private readonly primitiveMatcher: PrimitiveMatcher,
+        private readonly objectMatcher: ObjectMatcher,
+        private readonly functionMatcher: FunctionMatcher) {
     }
 
     public matched(left: any, right: any): boolean {

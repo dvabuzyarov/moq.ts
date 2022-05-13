@@ -1,18 +1,17 @@
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2 } from "../../tests.components/resolve.builder";
 import { DateMatcher } from "./date.matcher";
 
 describe("Date matcher", () => {
+
     beforeEach(() => {
-        createInjector([
-            {provide: DateMatcher, useClass: DateMatcher, deps: []},
-        ]);
+        createInjector(DateMatcher, []);
     });
 
     it("Returns true when the compared values are equal", () => {
         const left = new Date(2020, 4, 10);
         const right = new Date(2020, 4, 10);
 
-        const matcher = resolve(DateMatcher);
+        const matcher = resolve2(DateMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(true);
@@ -22,7 +21,7 @@ describe("Date matcher", () => {
         const left = new Date(2020, 4, 10);
         const right = new Date(2019, 4, 10);
 
-        const matcher = resolve(DateMatcher);
+        const matcher = resolve2(DateMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(false);
@@ -32,7 +31,7 @@ describe("Date matcher", () => {
         const left = null;
         const right = new Date(2019, 4, 10);
 
-        const matcher = resolve(DateMatcher);
+        const matcher = resolve2(DateMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(undefined);
@@ -42,7 +41,7 @@ describe("Date matcher", () => {
         const left = new Date(2019, 4, 10);
         const right = null;
 
-        const matcher = resolve(DateMatcher);
+        const matcher = resolve2(DateMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(undefined);
@@ -52,7 +51,7 @@ describe("Date matcher", () => {
         const left = null;
         const right = null;
 
-        const matcher = resolve(DateMatcher);
+        const matcher = resolve2(DateMatcher);
         const actual = matcher.matched(left, right);
 
         expect(actual).toBe(undefined);

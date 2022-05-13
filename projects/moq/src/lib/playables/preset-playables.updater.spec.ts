@@ -1,15 +1,15 @@
 import { Expressions } from "../reflector/expressions";
-import { ExpressionMatcher } from "../expression-matchers/expression.matcher";
-import { Interaction } from "../interactions";
+import { Expression } from "../reflector/expressions";
 import { Presets } from "../presets/presets";
 import { PresetPlayablesUpdater } from "./preset-playables.updater";
 import { IPreset } from "../presets/presets/preset";
-import { createInjector2, resolve2, resolveMock, SpiedObject } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock, SpiedObject } from "../../tests.components/resolve.builder";
 import { IPlayable, PlayableUpdateReason } from "../moq";
+import { ExpressionEqualityComparer } from "../expression.equality-comparers/expression.equality-comparer";
 
 describe("Presets playable updater", () => {
     beforeEach(() => {
-        createInjector2(PresetPlayablesUpdater, [Presets, ExpressionMatcher]);
+        createInjector(PresetPlayablesUpdater, [Presets, ExpressionEqualityComparer]);
     });
 
     const createPreset = (target: Expressions<unknown>): SpiedObject<IPreset<unknown>> => {
@@ -19,12 +19,12 @@ describe("Presets playable updater", () => {
 
     it("Updates playable preset", () => {
         const target = {} as Expressions<unknown>;
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const preset = createPreset(target);
 
-        resolveMock(ExpressionMatcher)
-            .setup(instance => instance.matched(expression, target))
+        resolveMock(ExpressionEqualityComparer)
+            .setup(instance => instance.equals(expression, target))
             .returns(true);
 
         resolveMock(Presets)
@@ -39,12 +39,12 @@ describe("Presets playable updater", () => {
 
     it("Updates preset", () => {
         const target = {} as Expressions<unknown>;
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const preset = createPreset(target);
 
-        resolveMock(ExpressionMatcher)
-            .setup(instance => instance.matched(expression, target))
+        resolveMock(ExpressionEqualityComparer)
+            .setup(instance => instance.equals(expression, target))
             .returns(true);
 
         resolveMock(Presets)
@@ -59,12 +59,12 @@ describe("Presets playable updater", () => {
 
     it("Does not update preset", () => {
         const target = {} as Expressions<unknown>;
-        const expression = {} as Interaction;
+        const expression = {} as Expression;
 
         const preset = createPreset(target);
 
-        resolveMock(ExpressionMatcher)
-            .setup(instance => instance.matched(expression, target))
+        resolveMock(ExpressionEqualityComparer)
+            .setup(instance => instance.equals(expression, target))
             .returns(false);
 
         resolveMock(Presets)

@@ -1,17 +1,17 @@
 import { Tracker } from "../tracker/tracker";
-import { InOperatorInteraction } from "../interactions";
+import { InOperatorExpression } from "../reflector/expressions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 import { HasPropertyExplorer } from "../explorers/has-property.explorer/has-property.explorer";
 import { HasMethodExplorer } from "../explorers/has-method.explorer/has-method.explorer";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { HasTrap } from "./has.trap";
 import { InOperatorInteractionExplorer } from "../explorers/in-operator-interaction.explorer/in-operator-interaction.explorer";
 import { PresetPlayablesUpdater } from "../playables/preset-playables.updater";
 
 describe("Has trap", () => {
     beforeEach(() => {
-        createInjector2(HasTrap, [
+        createInjector(HasTrap, [
             Tracker,
             PropertiesValueStorage,
             InteractionPlayer,
@@ -38,7 +38,7 @@ describe("Has trap", () => {
         trap.intercept(propertyName);
 
         resolveMock(Tracker)
-            .verify(instance => instance.add(new InOperatorInteraction(propertyName)));
+            .verify(instance => instance.add(new InOperatorExpression(propertyName)));
     });
 
     it("Returns true if property exists in the values storage", () => {
@@ -64,7 +64,7 @@ describe("Has trap", () => {
             .setup(instance => instance.has(propertyName))
             .returns(true);
         resolveMock(InteractionPlayer)
-            .setup(instance => instance.play(new InOperatorInteraction(propertyName)))
+            .setup(instance => instance.play(new InOperatorExpression(propertyName)))
             .returns(true);
 
         const trap = resolve2(HasTrap);
@@ -80,7 +80,7 @@ describe("Has trap", () => {
             .setup(instance => instance.has(propertyName))
             .returns(false);
         resolveMock(InteractionPlayer)
-            .setup(instance => instance.play(new InOperatorInteraction(propertyName)))
+            .setup(instance => instance.play(new InOperatorExpression(propertyName)))
             .returns(false);
         resolveMock(HasPropertyExplorer)
             .setup(instance => instance.has(propertyName))
@@ -99,14 +99,14 @@ describe("Has trap", () => {
             .setup(instance => instance.has(propertyName))
             .returns(false);
         resolveMock(InteractionPlayer)
-            .setup(instance => instance.play(new InOperatorInteraction(propertyName)))
+            .setup(instance => instance.play(new InOperatorExpression(propertyName)))
             .returns(false);
 
         const trap = resolve2(HasTrap);
         trap.intercept(propertyName);
 
         resolveMock(PresetPlayablesUpdater)
-            .verify(instance => instance.update(new InOperatorInteraction(propertyName), undefined));
+            .verify(instance => instance.update(new InOperatorExpression(propertyName), undefined));
     });
 
     it("Returns true if method explorer sees it", () => {
@@ -116,7 +116,7 @@ describe("Has trap", () => {
             .setup(instance => instance.has(propertyName))
             .returns(false);
         resolveMock(InteractionPlayer)
-            .setup(instance => instance.play(new InOperatorInteraction(propertyName)))
+            .setup(instance => instance.play(new InOperatorExpression(propertyName)))
             .returns(false);
         resolveMock(HasPropertyExplorer)
             .setup(instance => instance.has(propertyName))
@@ -138,7 +138,7 @@ describe("Has trap", () => {
             .setup(instance => instance.has(propertyName))
             .returns(false);
         resolveMock(InteractionPlayer)
-            .setup(instance => instance.play(new InOperatorInteraction(propertyName)))
+            .setup(instance => instance.play(new InOperatorExpression(propertyName)))
             .returns(false);
         resolveMock(HasPropertyExplorer)
             .setup(instance => instance.has(propertyName))

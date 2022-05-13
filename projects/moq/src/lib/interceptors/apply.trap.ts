@@ -1,5 +1,5 @@
 import { Tracker } from "../tracker/tracker";
-import { MethodInteraction } from "../interactions";
+import { FunctionExpression } from "../reflector/expressions";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
 
 /**
@@ -13,7 +13,7 @@ export class ApplyTrap {
     }
 
     public intercept(target: any, thisArg: any, argArray?: any): any {
-        const expression = new MethodInteraction(argArray);
+        const expression = new FunctionExpression(argArray);
 
         this.tracker.add(expression);
 

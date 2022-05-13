@@ -1,17 +1,17 @@
-import { NewOperatorInteraction } from "../interactions";
+import { NewOperatorExpression } from "../reflector/expressions";
 import { ConstantFormatter } from "./constant.formatter";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { NewOperatorFormatter } from "./new-operator.formatter";
 
 describe("New operator formatter", () => {
     beforeEach(() => {
-        createInjector2(NewOperatorFormatter, [ConstantFormatter]);
+        createInjector(NewOperatorFormatter, [ConstantFormatter]);
     });
 
     it("Returns formatted description for method expression", () => {
         const value = ["value"];
         const valueDescription = "value description";
-        const expression = new NewOperatorInteraction(value);
+        const expression = new NewOperatorExpression(value);
 
         resolveMock(ConstantFormatter)
             .setup(instance => instance.format(value))

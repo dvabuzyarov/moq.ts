@@ -1,21 +1,16 @@
-import { Application } from "typedoc";
+import { Application, TSConfigReader, TypeDocReader } from "typedoc";
 import { MoqPlugin } from "./typedoc.plugin";
-import { ModuleKind, ScriptTarget } from "typescript";
 
 const application = new Application();
+application.options.addReader(new TSConfigReader());
+application.options.addReader(new TypeDocReader());
 
 application.bootstrap({
-    module: ModuleKind.CommonJS,
-    target: ScriptTarget.ES2020,
+    tsconfig: "./projects/moq/tsconfig.lib.prod.json",
+    entryPoints: ["./projects/moq/src/public_api.ts"],
     name: "moq.ts | documentation",
-    // theme: "markdown",
     excludePrivate: true,
-    excludeNotExported: true,
-    // excludeExternals: true,
-    preserveConstEnums: true,
-    stripInternal: true,
     disableOutputCheck: false,
-    experimentalDecorators: true,
     version: true
 });
 
@@ -23,7 +18,5 @@ if (application.converter.hasComponent("moq-ts") === false) {
     application.converter.addComponent("moq-ts", new MoqPlugin(application.converter));
 }
 
-const reflection = application.convert([
-    "./projects/moq/src/public_api.ts"
-]);
-export const docs = application.generateDocs(reflection, "./docs");
+const project = application.convert();
+export const docs = application.generateDocs(project, "./docs");

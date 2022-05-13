@@ -1,6 +1,6 @@
 import { Mock } from "../lib/mock";
 import { It } from "../lib/reflector/expression-predicates";
-import { GetPropertyInteraction, NamedMethodInteraction, SetPropertyInteraction } from "../lib/interactions";
+import { GetPropertyExpression, MethodExpression, SetPropertyExpression } from "../lib/reflector/expressions";
 
 describe("Loose configuration", () => {
     it("Returns a spy function", () => {
@@ -10,15 +10,15 @@ describe("Loose configuration", () => {
             .callback(interaction => {
                 const source: { __map: any } = (mock as any);
                 source.__map = source.__map || {};
-                if (interaction instanceof GetPropertyInteraction) {
+                if (interaction instanceof GetPropertyExpression) {
                     if (source.__map[interaction.name] === undefined) {
                         source.__map[interaction.name] = (...args) => {
-                            mock.tracker.add(new NamedMethodInteraction(interaction.name, args));
+                            mock.tracker.add(new MethodExpression(interaction.name, args));
                         };
                     }
                     return source.__map[interaction.name];
                 }
-                if (interaction instanceof SetPropertyInteraction) {
+                if (interaction instanceof SetPropertyExpression) {
                     return true;
                 }
             });
@@ -35,15 +35,15 @@ describe("Loose configuration", () => {
             .callback(interaction => {
                 const source: { __map: any } = (mock as any);
                 source.__map = source.__map || {};
-                if (interaction instanceof GetPropertyInteraction) {
+                if (interaction instanceof GetPropertyExpression) {
                     if (source.__map[interaction.name] === undefined) {
                         source.__map[interaction.name] = (...args) => {
-                            mock.tracker.add(new NamedMethodInteraction(interaction.name, args));
+                            mock.tracker.add(new MethodExpression(interaction.name, args));
                         };
                     }
                     return source.__map[interaction.name];
                 }
-                if (interaction instanceof SetPropertyInteraction) {
+                if (interaction instanceof SetPropertyExpression) {
                     return true;
                 }
             });
@@ -60,15 +60,15 @@ describe("Loose configuration", () => {
             .callback(interaction => {
                 const source: { __map: any } = (mock as any);
                 source.__map = source.__map || {};
-                if (interaction instanceof GetPropertyInteraction) {
+                if (interaction instanceof GetPropertyExpression) {
                     if (source.__map[interaction.name] === undefined) {
                         source.__map[interaction.name] = (...args) => {
-                            mock.tracker.add(new NamedMethodInteraction(interaction.name, args));
+                            mock.tracker.add(new MethodExpression(interaction.name, args));
                         };
                     }
                     return source.__map[interaction.name];
                 }
-                if (interaction instanceof SetPropertyInteraction) {
+                if (interaction instanceof SetPropertyExpression) {
                     return true;
                 }
             });
@@ -85,15 +85,15 @@ describe("Loose configuration", () => {
             .callback(interaction => {
                 const source: { __map: any } = (mock as any);
                 source.__map = source.__map || {};
-                if (interaction instanceof GetPropertyInteraction) {
+                if (interaction instanceof GetPropertyExpression) {
                     if (source.__map[interaction.name] === undefined) {
                         source.__map[interaction.name] = (...args) => {
-                            mock.tracker.add(new NamedMethodInteraction(interaction.name, args));
+                            mock.tracker.add(new MethodExpression(interaction.name, args));
                         };
                     }
                     return source.__map[interaction.name];
                 }
-                if (interaction instanceof SetPropertyInteraction) {
+                if (interaction instanceof SetPropertyExpression) {
                     return true;
                 }
             });

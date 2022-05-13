@@ -1,7 +1,7 @@
 import { Mock } from "../lib/mock";
 import { It } from "../lib/reflector/expression-predicates";
 import { Times } from "../lib/times";
-import { SetPropertyInteraction } from "../lib/interactions";
+import { SetPropertyExpression } from "../lib/reflector/expressions";
 import { nameof } from "../tests.components/nameof";
 
 interface ITestObject {
@@ -50,7 +50,7 @@ describe("Set property", () => {
         const action = () => object.property = value;
 
         expect(action).not.toThrow();
-        expect(callback).toHaveBeenCalledWith(new SetPropertyInteraction(nameof<ITestObject>("property"), value));
+        expect(callback).toHaveBeenCalledWith(new SetPropertyExpression(nameof<ITestObject>("property"), value));
     });
 
     it("Throws an exception", () => {

@@ -1,64 +1,44 @@
 import { EqualConstantMatcher } from "./equal-constant.matcher";
-import { It } from "../reflector/expression-predicates";
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { EqualMatcher } from "./equal.matcher";
+import { ItEqualityComparer } from "../expression.equality-comparers/it.equality-comparer";
 
 describe("Constant matcher", () => {
+
     beforeEach(() => {
-        const equalMatcher = jasmine.createSpyObj<EqualMatcher>("", ["matched"]);
-        createInjector([
-            {provide: EqualMatcher, useValue: equalMatcher, deps: []},
-            {provide: EqualConstantMatcher, useClass: EqualConstantMatcher, deps: [EqualMatcher]},
-        ]);
+        createInjector(EqualConstantMatcher, [ItEqualityComparer, EqualMatcher]);
     });
 
-    it("Returns true when equal matcher returns true", () => {
-        const left = {};
-        const right = {};
-        resolve(EqualMatcher)
-            .matched.withArgs(left, right).and.returnValue(true);
+    it("Returns value of ItEqualityComparer", () => {
+        const left = undefined;
+        const right = undefined;
 
-        const matcher = resolve(EqualConstantMatcher);
-        const actual = matcher.matched(left, right);
+        const expected = true;
+        resolveMock(ItEqualityComparer)
+            .setup(instance => instance.equals(left, right))
+            .returns(expected);
 
-        expect(actual).toBe(true);
+        const matcher = resolve2(EqualConstantMatcher);
+        const actual = matcher.equals(left, right);
+
+        expect(actual).toBe(expected);
     });
 
-    it("Returns false when equal matcher returns false", () => {
-        const left = {};
-        const right = {};
-        resolve(EqualMatcher)
-            .matched.withArgs(left, right).and.returnValue(false);
+    it("Returns value of EqualMatcher when ItEqualityComparer returns undefined", () => {
+        const left = undefined;
+        const right = undefined;
 
-        const matcher = resolve(EqualConstantMatcher);
-        const actual = matcher.matched(left, right);
+        const expected = true;
+        resolveMock(ItEqualityComparer)
+            .setup(instance => instance.equals(left, right))
+            .returns(undefined);
+        resolveMock(EqualMatcher)
+            .setup(instance => instance.matched(left, right))
+            .returns(expected);
 
-        expect(actual).toBe(false);
-    });
+        const matcher = resolve2(EqualConstantMatcher);
+        const actual = matcher.equals(left, right);
 
-    it("Returns true when right is a predicate that returns true", () => {
-        const left = "left";
-        const right = It.Is((instance) => {
-            expect(instance).toBe(left);
-            return true;
-        });
-
-        const matcher = resolve(EqualConstantMatcher);
-        const actual = matcher.matched(left, right);
-
-        expect(actual).toBe(true);
-    });
-
-    it("Returns false when right is a predicate that returns false", () => {
-        const left = "left";
-        const right = It.Is((instance) => {
-            expect(instance).toBe(left);
-            return false;
-        });
-
-        const matcher = resolve(EqualConstantMatcher);
-        const actual = matcher.matched(left, right);
-
-        expect(actual).toBe(false);
+        expect(actual).toBe(expected);
     });
 });

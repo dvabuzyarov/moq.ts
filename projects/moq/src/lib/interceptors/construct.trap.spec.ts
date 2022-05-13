@@ -1,12 +1,12 @@
 import { Tracker } from "../tracker/tracker";
-import { NewOperatorInteraction } from "../interactions";
+import { NewOperatorExpression } from "../reflector/expressions";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { ConstructTrap } from "./construct.trap";
 
 describe("Construct trap", () => {
     beforeEach(() => {
-        createInjector2(ConstructTrap, [
+        createInjector(ConstructTrap, [
             Tracker,
             InteractionPlayer
         ]);
@@ -24,7 +24,7 @@ describe("Construct trap", () => {
         trap.intercept(args);
 
         resolveMock(Tracker)
-            .verify(instance => instance.add(new NewOperatorInteraction(args)));
+            .verify(instance => instance.add(new NewOperatorExpression(args)));
     });
 
     it("Returns interaction play value", () => {
@@ -32,7 +32,7 @@ describe("Construct trap", () => {
         const expected = {};
 
         resolveMock(InteractionPlayer)
-            .setup(instance => instance.play(new NewOperatorInteraction(args)))
+            .setup(instance => instance.play(new NewOperatorExpression(args)))
             .returns(expected);
 
         const trap = resolve2(ConstructTrap);

@@ -2,13 +2,13 @@ import { HasMethodExplorer } from "./has-method.explorer";
 import { PresetHasMethodExplorer } from "./preset.has-method.explorer";
 import { IPreset } from "../../presets/presets/preset";
 import { Presets } from "../../presets/presets";
-import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import { MembersMethodExplorer } from "../members.explorer/members-method.explorer";
 
 describe("Has instance method explorer", () => {
 
     beforeEach(() => {
-        createInjector2(HasMethodExplorer, [Presets, MembersMethodExplorer, PresetHasMethodExplorer]);
+        createInjector(HasMethodExplorer, [Presets, MembersMethodExplorer, PresetHasMethodExplorer]);
     });
 
     it("Returns true when there is a member", () => {

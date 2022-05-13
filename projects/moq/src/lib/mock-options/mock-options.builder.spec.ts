@@ -1,10 +1,10 @@
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjectorFromProviders, resolve } from "../../tests.components/resolve.builder";
 import { MockOptionsBuilder } from "./mock-options.builder";
 import { IInjectorConfig } from "../moq";
 
 describe("Build mock options function", () => {
     beforeEach(() => {
-        createInjector([
+        createInjectorFromProviders([
             {provide: MockOptionsBuilder, useClass: MockOptionsBuilder, deps: []},
         ]);
     });

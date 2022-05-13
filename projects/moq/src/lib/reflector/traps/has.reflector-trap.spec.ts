@@ -1,11 +1,11 @@
-import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
-import { EXPRESSIONS } from "../expressions.injection-token";
-import { InOperatorExpression } from "../expressions";
+import { createInjector, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import { HasReflectorTrap } from "./has.reflector-trap";
+import { EXPRESSIONS } from "../expression-reflector";
+import { InOperatorExpression } from "../expressions";
 
 describe("Has reflector-trap", () => {
     beforeEach(() => {
-        createInjector2(HasReflectorTrap, [EXPRESSIONS]);
+        createInjector(HasReflectorTrap, [EXPRESSIONS]);
     });
 
     beforeEach(() => {

@@ -1,4 +1,4 @@
-import { GetPropertyInteraction } from "../interactions";
+import { GetPropertyExpression } from "../reflector/expressions";
 import { PropertiesValueStorage } from "./properties-value.storage";
 import { SpyFunctionProvider } from "./spy-function.provider";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
@@ -25,7 +25,7 @@ export class GetTrap {
     }
 
     public intercept(property: PropertyKey): any {
-        const interaction = new GetPropertyInteraction(property);
+        const interaction = new GetPropertyExpression(property);
 
         this.tracker.add(interaction);
 

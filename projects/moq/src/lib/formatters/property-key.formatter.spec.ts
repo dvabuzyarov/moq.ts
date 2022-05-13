@@ -1,10 +1,10 @@
 import { PropertyKeyFormatter } from "./property-key.formatter";
-import { createInjector2, resolve2 } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2 } from "../../tests.components/resolve.builder";
 
 describe("Property key formatter", () => {
 
     beforeEach(() => {
-        createInjector2(PropertyKeyFormatter, []);
+        createInjector(PropertyKeyFormatter, []);
     });
 
     it("Returns description when name is string", () => {

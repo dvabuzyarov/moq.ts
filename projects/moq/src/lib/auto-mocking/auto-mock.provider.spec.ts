@@ -1,21 +1,21 @@
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { AutoMockedStorage } from "./auto-mock.storage";
 import { Expressions } from "../reflector/expressions";
 import { It } from "moq.ts";
 import { IMock } from "../moq";
-import { ExpressionsMatcher } from "./expressions.matcher";
 import { AutoMockFactory } from "./auto-mock.factory";
 import { AutoMockProvider } from "./auto-mock.provider";
 import { Mock } from "../mock";
+import { ExpressionEqualityComparer } from "../expression.equality-comparers/expression.equality-comparer";
 
 describe("Auto mock provider", () => {
 
     beforeEach(() => {
-        createInjector2(AutoMockProvider, [AutoMockedStorage, ExpressionsMatcher, AutoMockFactory]);
+        createInjector(AutoMockProvider, [AutoMockedStorage, ExpressionEqualityComparer, AutoMockFactory]);
     });
 
     beforeEach(() => {
-        resolveMock(ExpressionsMatcher).prototypeof(ExpressionsMatcher.prototype);
+        resolveMock(ExpressionEqualityComparer).prototypeof(ExpressionEqualityComparer.prototype);
         resolveMock(AutoMockFactory).prototypeof(AutoMockFactory.prototype);
     });
 
@@ -28,8 +28,8 @@ describe("Auto mock provider", () => {
             .setup(() => It.IsAny())
             .mimics(new Map([[key, mock]]));
 
-        resolveMock(ExpressionsMatcher)
-            .setup(instance => instance.matched(expression, key))
+        resolveMock(ExpressionEqualityComparer)
+            .setup(instance => instance.equals(expression, key))
             .returns(true);
 
         const provider = resolve2(AutoMockProvider);
@@ -52,8 +52,8 @@ describe("Auto mock provider", () => {
             .setup(instance => instance.create(expression))
             .returns(mock);
 
-        resolveMock(ExpressionsMatcher)
-            .setup(instance => instance.matched(expression, It.IsAny()))
+        resolveMock(ExpressionEqualityComparer)
+            .setup(instance => instance.equals(expression, It.IsAny()))
             .returns(false);
 
         const provider = resolve2(AutoMockProvider);

@@ -14,15 +14,15 @@ export type SpiedObject<T> = T & {
 
 let injector: Injector;
 
-export function createInjector(providers: StaticProvider[]) {
-    injector = Injector.create({providers});
-    return injector;
-}
+export const createInjector = <T>(
+    subject: Type<T>,
+    dependencies: (Type<any> | InjectionToken<any>)[],
+    options: { providers?: StaticProvider[] } = {providers: []}) => {
 
-export const createInjector2 = <T>(subject: Type<T>, dependencies: (Type<any> | InjectionToken<any>)[]) => {
     const providers = [
         {provide: subject, useClass: subject, deps: dependencies},
-        ...dependencies.map(dep => ({provide: dep, useValue: new Mock().object(), deps: []}))
+        ...dependencies.map(dep => ({provide: dep, useValue: new Mock().object(), deps: []})),
+        ...options.providers
     ];
     injector = Injector.create({providers});
     return injector;

@@ -1,17 +1,26 @@
-import { MethodInteraction } from "../interactions";
+import { MethodExpression } from "../reflector/expressions";
 import { ConstantFormatter } from "./constant.formatter";
+import { PropertyKeyFormatter } from "./property-key.formatter";
 
 /**
  * @hidden
  */
 export class MethodFormatter {
 
-    constructor(private constantFormatter: ConstantFormatter) {
+    constructor(private readonly constantFormatter: ConstantFormatter,
+                private readonly propertyKeyFormatter: PropertyKeyFormatter) {
 
     }
 
-    public format(expression: MethodInteraction): string {
-        const value = this.constantFormatter.format(expression.args);
-        return `(${value})`;
+    public format(expression: MethodExpression): string {
+        const formatted: string[] = [];
+
+        for (const arg of expression.args) {
+            formatted.push(this.constantFormatter.format(arg));
+        }
+
+        const value = formatted.join(", ");
+        const propertyKey = this.propertyKeyFormatter.format(expression.name);
+        return `${propertyKey}(${value})`;
     }
 }

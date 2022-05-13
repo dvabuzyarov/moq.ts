@@ -1,11 +1,13 @@
-import { IExpression } from "./reflector/expression-reflector";
 import { Times } from "./times";
-import { Interaction } from "./interactions";
+import { Expression } from "./reflector/expressions";
 import { Tracker } from "./tracker/tracker";
 import { StaticProvider } from "./static.injector/interface/provider";
 import { InjectionFactory, TypeOfInjectionFactory } from "./injector/injection-factory";
 import { Type } from "./static.injector/type";
 import { InjectionToken } from "./static.injector/injection_token";
+import { IExpression } from "./reflector/expression-reflector";
+
+export type PromisedType<T> = T extends Promise<infer P> ? P : never;
 
 export const enum PlayableUpdateReason {
     /**
@@ -75,9 +77,21 @@ export interface IPresetBuilder<T, TValue = any> {
     returns(value: TValue): IMock<T>;
 
     /**
+     * Returns the provided value with a resolved Promise as a result of invocation an asynchronous function
+     *
+     * @param value The value
+     */
+    returnsAsync(value: PromisedType<TValue>): IMock<T>;
+
+    /**
      * Throws the provided exception.
      */
     throws<TException>(exception: TException): IMock<T>;
+
+    /**
+     * Returns the provided value with a rejected Promise as a result of interaction with an asynchronous function.
+     */
+    throwsAsync<TException>(exception: TException): IMock<T>;
 
     /**
      * @param callback A callback function that will intercept the interaction.
@@ -90,7 +104,7 @@ export interface IPresetBuilder<T, TValue = any> {
      *     .callback(({args: [channel, listener]}) => listener(undefined, response));
      * ```
      */
-    callback(callback: (interaction: Interaction) => TValue): IMock<T>;
+    callback(callback: (interaction: Expression) => TValue): IMock<T>;
 
     /**
      * Plays the setup on target invocation when predicate returns true otherwise the setup will be ignored.

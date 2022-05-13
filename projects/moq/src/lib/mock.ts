@@ -1,4 +1,3 @@
-import { IExpression } from "./reflector/expression-reflector";
 import { IMock, IMockOptions, IPresetBuilder, ISequenceVerifier } from "./moq";
 import { Times } from "./times";
 import { injectorFactory } from "./injector/injector.factory";
@@ -9,6 +8,7 @@ import { InjectionFactory, TypeOfInjectionFactory } from "./injector/injection-f
 import { Type } from "./static.injector/type";
 import { InjectionToken } from "./static.injector/injection_token";
 import { MOCK_CONSTRUCTOR } from "./injector/mock-constructor.injection-token";
+import { IExpression } from "./reflector/expression-reflector";
 
 /**
  * The default implementation of {@link IMock} interface.

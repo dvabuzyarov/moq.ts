@@ -23,7 +23,7 @@ interface IData {
 }
 
 describe("#1 Verify context of a named function expression is incorrect", () => {
-    it("the bug", () => {
+   it("the bug", () => {
         const value = 4;
         const field1 = 2;
         const myServiceMock = new Mock<IMyService>();

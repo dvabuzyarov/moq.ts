@@ -4,13 +4,13 @@ import { Expressions } from "../../reflector/expressions";
 import { ExpressionHasPropertyExplorer } from "./expression-has-property.explorer";
 import { ObjectHasPropertyExplorer } from "./object-has-property.explorer";
 import { MimicsPreset } from "../../presets/presets/mimics.preset";
-import { createInjector2, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import { It } from "moq.ts";
 
 describe("Preset has property explorer", () => {
 
     beforeEach(() => {
-        createInjector2(PresetHasPropertyExplorer, [ExpressionHasPropertyExplorer, ObjectHasPropertyExplorer]);
+        createInjector(PresetHasPropertyExplorer, [ExpressionHasPropertyExplorer, ObjectHasPropertyExplorer]);
     });
 
     it("Returns true when preset expression has property", () => {

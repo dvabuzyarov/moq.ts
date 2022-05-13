@@ -30,11 +30,17 @@ out [tests.integration](https://github.com/dvabuzyarov/moq.ts/blob/master/projec
 
 - [Mocking functions of objects](#mocking-functions-of-objects)
 - [Mocking reading properties](#mocking-reading-properties)
-- [Mocking writing property setting](#mocking-writing-property)
+- [Mocking writing property setting](#mocking-writing-properties)
 - [Mocking functions](#mocking-functions)
 - [Auto mocking](#auto-mocking)
+  - [Limitations](#limitations)
+- [async/await](#asyncawait)
+  - [ESLint [@typescript-eslint/promise-function-async]](#eslint-typescript-eslintpromise-function-asynchttpsgithubcomtypescript-eslinttypescript-eslintblobmasterpackageseslint-plugindocsrulespromise-function-asyncmd-rule)
+  - [Setup reactions](#setup-reactions)
+  - [Promise adapters](#promise-adapters)
 - [Type Discovering](#type-discovering)
 - [Mock behavior](#mock-behavior)
+    - [Play times](#setup-play-times)
     - [Injector config](#injector-config)
         - [DefaultInjectorConfig](#defaultinjectorconfig)
         - [EqualMatchingInjectorConfig and custom matchers](#equalmatchinginjectorconfig)
@@ -203,6 +209,7 @@ mock.verify(instance => instance(It.Is(value => value === 1)), Times.Exactly(1))
 ```
 
 ## Auto mocking
+>  The feature does not support async/await expressions.
 
 The library support auto mocking for deep members. Consider this case:
 
@@ -232,8 +239,9 @@ const actual = root.child.get();
 
 expect(actual).toBe(value);
 ```
-We have to create a child mock in order to set up "child" property of the root object. With auto mocking 
-this case could be rewritten as following:
+
+We have to create a child mock in order to set up "child" property of the root object. With auto mocking this case could
+be rewritten as following:
 
 ```typescript
 
@@ -247,6 +255,125 @@ const actual = root.child.get();
 
 expect(actual).toBe(value);
 ```
+
+#### Limitations
+At this moment [It predicates](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-predicates.ts) are forbidden, except the last part of an expression.
+Consider this case:
+
+```typescript
+        const a = "a";
+        const b = "b";
+        const c = "c";
+        
+        const object = new Mock<{ get(arg: string): { a: string; b: string; c: string } }>()
+            .setup(instance => instance.get("a").a)
+            .returns(a)
+            .setup(instance => instance.get("b").b)
+            .returns(a)
+            .setup(instance => instance.get(It.IsAny()).c)
+            .returns(b)
+            .object();
+```
+The library would create a brand new mock for every each setup and save it in an internal map, where the expression is a key.
+
+```typescript
+import { MethodExpression } from "./expressions";
+
+new Map<Expression, Mock>([
+    [new MethodExpression("get", ["a"]), new Mock()],
+    [new MethodExpression("get", ["b"]), new Mock()],
+    [new MethodExpression("get", [It.IsAny()]), new Mock()],
+])  
+```
+And here are 2 issues:
+1. It is not obvious how the third setup should behave. Should it create a new mock, or it should extend the previous two?
+2. In order to find the third mock in the map it needs to use the same function as a key.
+
+Those issues are not obvious and could lead to a hard detected behaviour. To prevent it and to give developers clean and robust API
+[It predicates](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/reflector/expression-predicates.ts) is forbidden in the auto-mocking feature.
+
+However, in some cases it makes sense to disabled it:
+```typescript
+import { ComplexExpressionGuard } from "moq.ts/internal";
+const injectorConfig = new EqualMatchingInjectorConfig([], [{
+  provide: ComplexExpressionGuard,
+  useValue: {verify: () => undefined} as Readonly<ComplexExpressionGuard>,
+  deps: []
+}]);
+const svg = new Mock<Selection<SVGSVGElement, unknown, HTMLElement, any>>({injectorConfig})
+  .setup(instance => instance
+    .append("g")
+    .attr("fill", "none")
+    .attr("stroke-width", 1.5)
+    .attr("stroke-linejoin", "round")
+    .attr("stroke-linecap", "round")
+    .selectAll("g")
+    .data(data)
+    .join("g")
+    .append("path")
+    .attr("class", It.IsAny())
+    .attr("d", It.IsAny()))
+  .returns(path)
+  .object();
+```
+
+## async/await
+
+
+The library supports asynchronous function with a promise-based wrappers. 
+>  async/await expressions are not supported in the auto-mocking feature.
+
+#### ESLint [@typescript-eslint/promise-function-async](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/promise-function-async.md) rule
+
+This rule will ask you to write expressions with async keyword.
+
+```typescript
+const mock = new Mock<typeof fn>()
+    .setup(async instance => instance(1))
+    .returnsAsync(2)
+    .setup(async instance => instance(2))
+    .throwsAsync(exception)
+    .object();
+```
+
+#### Setup reactions
+* returnsAsync - returns a Promise which will be resolved with the provided value;
+* throwsAsync - returns a Promise which will be rejected with the provided exception;
+
+```typescript
+async function fn(input: number) {
+    return input;
+}
+
+const exception = new Error();
+const mock = new Mock<typeof fn>()
+    .setup(instance => instance(1))
+    .returnsAsync(2)
+    // equal to
+    // .returns(Promise.resolve(2))
+    .setup(instance => instance(2))
+    .throwsAsync(exception)
+    // equal to
+    // .returns(Promise.reject(exception))
+    .object();
+
+const actual = await mock(1);
+expect(actual).toBe(2);
+
+try {
+    await mock(2);
+} catch (e) {
+    expect(e).toBe(exception);
+}
+```
+
+#### Promise adapters
+
+Due to the fact that some environments are not using the native Promise object the library provides adapters for
+resolved/rejected promise that could be overridden.
+See [ResolvedPromiseFactory](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/presets/resolved-promise.factory.ts)
+,
+[RejectedPromiseFactory](https://github.com/dvabuzyarov/moq.ts/blob/master/projects/moq/src/lib/presets/rejected-promise.factory.ts).
 
 ## Type Discovering
 
@@ -347,7 +474,7 @@ expect(typeof object).toBe("function");
 
 A mocked object is a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy),
 that configured to track any read and write operations on properties. If you write a value to an arbitrary property the
-mocked object will keep it and you can read it later on. By default, the prototype of mocked object is Function.
+mocked object will keep it, and you can read it later on. By default, the prototype of mocked object is Function.
 
 Accessing to an unset property or a method will return undefined, or a pointer to a spy function if it exists on
 prototype; You can call this function, and it will be tracked.
@@ -361,6 +488,37 @@ const mock = new Mock<ITestObject>();
 mock.setup(() => It.IsAny())
     .throws(new Error("setup is missed"));
 ```
+#### Setup play times
+It is possible to define a predicate that defines if provided setup can handle an interaction.
+
+```typescript
+import { PlayTimes } from "moq.ts";
+
+class Prototype {
+    method(): number {
+        throw new Error("Not Implemented");
+    }
+}
+
+const object = new Mock<Prototype>()
+    
+    .setup(instance => instance.method())
+    .returns(4)
+    
+    .setup(instance => instance.method())
+    // it could be any predefined funtion of PlayTimes or a custom function
+    .play(PlayTimes.Once()) 
+    .returns(2)
+    
+    .object();
+
+
+expect(object.method()).toBe(2);
+expect(object.method()).toBe(4);
+```
+
+The latest setup has the highest precedence. And it says that it could handle only one interaction. After
+that the setup will be ignored and next setup would be taken.
 
 #### Injector config
 
@@ -684,7 +842,7 @@ it("Returns new object with returns", () => {
 ## MoqAPI symbol
 
 In some scenarios it is necessary to get Moq API from mocked object. For this purposes the library provides a predefined
-symbol MoqAPI. Mocked objects in their turns exposes a symbol property to access to its Moq API.
+symbol MoqAPI. Mocked objects in their turn expose a symbol property to access to its Moq API.
 
 Since this property makes sense only in context of the moq library and is not specific for mocked types it is not
 possible to define an interaction behaviour with Setup API.
@@ -704,7 +862,7 @@ const actual = func();
 expect(actual).toBe(12);
 ```
 
-In operator does not sees this property until it is used in setups.
+In operator does not see this property until it is used in setups.
 
 ```typescript
 const object = new Mock<{}>()

@@ -1,8 +1,7 @@
 import { It } from "../lib/reflector/expression-predicates";
-import { GetPropertyExpression } from "../lib/reflector/expressions";
 import { Times } from "../lib/times";
 import { Mock } from "../lib/mock";
-import { nameof } from "../tests.components/nameof";
+import { GetPropertyExpression } from "../lib/reflector/expressions";
 
 describe("Read property", () => {
 

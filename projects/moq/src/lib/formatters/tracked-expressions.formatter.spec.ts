@@ -1,18 +1,18 @@
-import { GetPropertyInteraction, NamedMethodInteraction } from "../interactions";
+import { GetPropertyExpression, MethodExpression } from "../reflector/expressions";
 import { InteractionFormatter } from "./interaction.formatter";
 import { TrackedExpressionsFormatter } from "./tracked-expressions.formatter";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("Tracked expressions formatter", () => {
     beforeEach(() => {
-        createInjector2(TrackedExpressionsFormatter, [InteractionFormatter]);
+        createInjector(TrackedExpressionsFormatter, [InteractionFormatter]);
     });
 
     it("Returns formatted description of tracked expressions", () => {
         const getPropertyExpressionDescription = "GetProperty Name";
         const namedMethodExpressionDescription = "NamedMethod Name";
-        const getPropertyExpression = new GetPropertyInteraction("name");
-        const namedMethodExpression = new NamedMethodInteraction("name", []);
+        const getPropertyExpression = new GetPropertyExpression("name");
+        const namedMethodExpression = new MethodExpression("name", []);
 
         resolveMock(InteractionFormatter)
             .setup(instance => instance.format(getPropertyExpression))

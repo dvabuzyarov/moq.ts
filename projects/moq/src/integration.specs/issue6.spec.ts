@@ -1,6 +1,6 @@
-import { GetPropertyExpression } from "../lib/reflector/expressions";
 import { It } from "../lib/reflector/expression-predicates";
 import { Mock } from "../lib/mock";
+import { GetPropertyExpression } from "../lib/reflector/expressions";
 
 export interface IDummy {
     property: string;

@@ -7,8 +7,8 @@ import { MapMatcher } from "./map.matcher";
  */
 export class POJOMatcher implements IObjectMatcher {
     constructor(
-        private mapMatcher: MapMatcher,
-        private objectMapProvider: ObjectMapProvider) {
+        private readonly mapMatcher: MapMatcher,
+        private readonly objectMapProvider: ObjectMapProvider) {
     }
 
     /*eslint-disable-next-line @typescript-eslint/ban-types*/

@@ -7,7 +7,7 @@ import { OBJECT_MATCHERS } from "./object-matchers.injection-token";
 export class ObjectMatcher {
 
     constructor(
-        private matchers: TypeofInjectionToken<typeof OBJECT_MATCHERS>) {
+        private readonly matchers: TypeofInjectionToken<typeof OBJECT_MATCHERS>) {
     }
 
     public matched<T extends Record<string, unknown>>(left: T, right: T): boolean {

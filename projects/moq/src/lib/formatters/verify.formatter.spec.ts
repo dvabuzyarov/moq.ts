@@ -1,13 +1,13 @@
-import { GetPropertyInteraction } from "../interactions";
+import { GetPropertyExpression } from "../reflector/expressions";
 import { VerifyFormatter } from "./verify.formatter";
 import { ExpressionsFormatter } from "./expressions.formatter";
 import { TrackedExpressionsFormatter } from "./tracked-expressions.formatter";
-import { createInjector2, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { Tracker } from "../tracker/tracker";
 
 describe("Verify formatter", () => {
     beforeEach(() => {
-        createInjector2(VerifyFormatter, [ExpressionsFormatter, TrackedExpressionsFormatter, Tracker]);
+        createInjector(VerifyFormatter, [ExpressionsFormatter, TrackedExpressionsFormatter, Tracker]);
     });
 
     it("Returns formatted description for a verify assertion", () => {
@@ -16,7 +16,7 @@ describe("Verify formatter", () => {
         const expressionDescription = "expression description";
         const trackedExpressionsDescription = "tracked expressions description";
         const trackedExpressions = [];
-        const expression = new GetPropertyInteraction("name");
+        const expression = new GetPropertyExpression("name");
 
         resolveMock(Tracker)
             .setup(instance => instance.interactions())

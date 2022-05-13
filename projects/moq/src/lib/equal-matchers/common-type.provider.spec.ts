@@ -1,18 +1,17 @@
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjector, resolve2 } from "../../tests.components/resolve.builder";
 import { CommonTypeProvider } from "./common-type.provider";
 
 describe("Common type provider", () => {
+
     beforeEach(() => {
-        createInjector([
-            {provide: CommonTypeProvider, useClass: CommonTypeProvider, deps: []},
-        ]);
+        createInjector(CommonTypeProvider, []);
     });
 
     it("Returns undefined", () => {
         const left = undefined;
         const right = undefined;
 
-        const provider = resolve(CommonTypeProvider);
+        const provider = resolve2(CommonTypeProvider);
         const actual = provider.ofType(left, right);
 
         expect(actual).toBe("undefined");
@@ -22,7 +21,7 @@ describe("Common type provider", () => {
         const left = {};
         const right = {};
 
-        const provider = resolve(CommonTypeProvider);
+        const provider = resolve2(CommonTypeProvider);
         const actual = provider.ofType(left, right);
 
         expect(actual).toBe("object");
@@ -32,7 +31,7 @@ describe("Common type provider", () => {
         const left = true;
         const right = false;
 
-        const provider = resolve(CommonTypeProvider);
+        const provider = resolve2(CommonTypeProvider);
         const actual = provider.ofType(left, right);
 
         expect(actual).toBe("boolean");
@@ -42,7 +41,7 @@ describe("Common type provider", () => {
         const left = 1;
         const right = 2;
 
-        const provider = resolve(CommonTypeProvider);
+        const provider = resolve2(CommonTypeProvider);
         const actual = provider.ofType(left, right);
 
         expect(actual).toBe("number");
@@ -52,7 +51,7 @@ describe("Common type provider", () => {
         const left = "";
         const right = "value";
 
-        const provider = resolve(CommonTypeProvider);
+        const provider = resolve2(CommonTypeProvider);
         const actual = provider.ofType(left, right);
 
         expect(actual).toBe("string");
@@ -62,7 +61,7 @@ describe("Common type provider", () => {
         const left = () => undefined;
         const right = () => undefined;
 
-        const provider = resolve(CommonTypeProvider);
+        const provider = resolve2(CommonTypeProvider);
         const actual = provider.ofType(left, right);
 
         expect(actual).toBe("function");
@@ -72,7 +71,7 @@ describe("Common type provider", () => {
         const left = Symbol("a");
         const right = Symbol("z");
 
-        const provider = resolve(CommonTypeProvider);
+        const provider = resolve2(CommonTypeProvider);
         const actual = provider.ofType(left, right);
 
         expect(actual).toBe("symbol");
@@ -82,7 +81,7 @@ describe("Common type provider", () => {
         const left = BigInt("1");
         const right = BigInt("0x1fffffffffffff");
 
-        const provider = resolve(CommonTypeProvider);
+        const provider = resolve2(CommonTypeProvider);
         const actual = provider.ofType(left, right);
 
         expect(actual).toBe("bigint");

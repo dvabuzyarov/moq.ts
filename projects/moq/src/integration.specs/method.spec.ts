@@ -1,9 +1,7 @@
-import {Mock} from "../lib/mock";
-import {It} from "../lib/reflector/expression-predicates";
-import {
-    MethodExpression
-} from "../lib/reflector/expressions";
-import {Times} from "../lib/times";
+import { Mock } from "../lib/mock";
+import { It } from "../lib/reflector/expression-predicates";
+import { Times } from "../lib/times";
+import { FunctionExpression } from "../lib/reflector/expressions";
 
 type ITestFunction = (arg: number) => string;
 
@@ -27,7 +25,7 @@ describe("Method", () => {
         const value = "value";
 
         const object = new Mock<ITestFunction>()
-            .setup(instance => It.Is((expression: MethodExpression) => expression.args[0] === 1))
+            .setup(instance => It.Is((expression: FunctionExpression) => expression.args[0] === 1))
             .returns(value)
             .object();
 

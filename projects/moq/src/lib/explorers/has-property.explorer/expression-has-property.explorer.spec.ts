@@ -1,11 +1,12 @@
 import { ExpressionHasPropertyExplorer } from "./expression-has-property.explorer";
+import { It } from "../../reflector/expression-predicates";
 import {
-    GetPropertyExpression, InOperatorExpression,
+    GetPropertyExpression,
+    InOperatorExpression,
+    FunctionExpression,
     MethodExpression,
-    NamedMethodExpression,
     SetPropertyExpression
 } from "../../reflector/expressions";
-import { It } from "../../reflector/expression-predicates";
 
 describe("Expression has property explorer", () => {
 
@@ -51,7 +52,7 @@ describe("Expression has property explorer", () => {
 
     it("Returns false when expression is instance method interaction", () => {
         const name = "name";
-        const expression = new NamedMethodExpression(name, undefined);
+        const expression = new MethodExpression(name, undefined);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);
@@ -61,7 +62,7 @@ describe("Expression has property explorer", () => {
 
     it("Returns false when expression is instance method interaction with different name", () => {
         const name = "name";
-        const expression = new NamedMethodExpression("other name", undefined);
+        const expression = new MethodExpression("other name", undefined);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);
@@ -71,7 +72,7 @@ describe("Expression has property explorer", () => {
 
     it("Returns false when expression is method interaction", () => {
         const name = "name";
-        const expression = new MethodExpression(undefined);
+        const expression = new FunctionExpression(undefined);
 
         const explorer = new ExpressionHasPropertyExplorer();
         const actual = explorer.has(name, expression);

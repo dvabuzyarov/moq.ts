@@ -1,14 +1,14 @@
 import { Tracker } from "../tracker/tracker";
-import { NamedMethodInteraction } from "../interactions";
+import { MethodExpression } from "../reflector/expressions";
 import { SpyFunctionProvider } from "./spy-function.provider";
 import { InteractionPlayer } from "../interaction-players/interaction.player";
-import { createInjector, resolve } from "../../tests.components/resolve.builder";
+import { createInjectorFromProviders, resolve } from "../../tests.components/resolve.builder";
 
 describe("Spy function provider", () => {
     beforeEach(() => {
         const tracker = jasmine.createSpyObj<Tracker>("", ["add"]);
         const interactionPlayer = jasmine.createSpyObj<InteractionPlayer>("", ["play"]);
-        createInjector([
+        createInjectorFromProviders([
             {provide: Tracker, useValue: tracker, deps: []},
             {provide: InteractionPlayer, useValue: interactionPlayer, deps: []},
             {provide: SpyFunctionProvider, useClass: SpyFunctionProvider, deps: [Tracker, InteractionPlayer]},
@@ -23,7 +23,7 @@ describe("Spy function provider", () => {
         const spy = provider.get(propertyName);
         spy(arg);
 
-        expect(resolve(Tracker).add).toHaveBeenCalledWith(new NamedMethodInteraction(propertyName, [arg]));
+        expect(resolve(Tracker).add).toHaveBeenCalledWith(new MethodExpression(propertyName, [arg]));
     });
 
     it("Returns result of interaction", () => {
@@ -32,7 +32,7 @@ describe("Spy function provider", () => {
         const value = {};
 
         resolve(InteractionPlayer)
-            .play.withArgs(new NamedMethodInteraction(propertyName, [arg])).and.returnValue(value);
+            .play.withArgs(new MethodExpression(propertyName, [arg])).and.returnValue(value);
 
         const provider = resolve(SpyFunctionProvider);
         const spy = provider.get(propertyName);

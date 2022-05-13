@@ -1,4 +1,4 @@
-import { Interaction } from "../interactions";
+import { Expression } from "../reflector/expressions";
 import { PlayablePresetProvider } from "./playable-preset.provider";
 import { PresetPlayer } from "./preset.player";
 import { PresetPlayablesUpdater } from "../playables/preset-playables.updater";
@@ -14,7 +14,7 @@ export class InteractionPlayer {
 
     }
 
-    public play(interaction: Interaction): any {
+    public play(interaction: Expression): any {
         const preset = this.playablePresetProvider.get(interaction);
         this.presetPlayablesUpdater.update(interaction, preset);
         if (preset === undefined) return undefined;
