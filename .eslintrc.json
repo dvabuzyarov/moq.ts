@@ -72,7 +72,9 @@
         "prefer-object-spread": "error",
         "prefer-template": "error",
         "space-before-function-paren": "off",
-        "prefer-arrow/prefer-arrow-functions": "off"
+        "prefer-arrow/prefer-arrow-functions": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"]
       }
     },
     {
