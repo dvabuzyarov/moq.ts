@@ -8,20 +8,21 @@
   "scripts": {
     "start": "ng serve",
     "build": "ng build moq --configuration production && cpx README.md dist/moq/",
-    "build:docs": "tsc -p ./projects/docs/tsconfig.lib.prod.json",
-    "build:tests": "tsc -p ./projects/moq/tsconfig.spec.json",
-    "test": "npm run build:tests && node ./specs/moq/index.specs.js",
+    "test": "npm run tests:clean && npm run tests:build && node ./specs/moq/index.specs.js",
+    "tests:build": "tsc -p ./projects/moq/tsconfig.spec.json",
+    "tests:clean": "rimraf /specs",
+    "docs:build": "tsc -p ./projects/docs/tsconfig.lib.prod.json",
+    "docs:serve": "rimraf docs/* && npm run docs:build && npm run typedoc && serve",
     "schematics:api-render:run": "schematics ./dist/schematics:api-render  --dry-run false",
     "schematics:package-patcher:run": "schematics ./dist/schematics:package-patcher  --dry-run false",
     "schematics:build": "ng build schematics",
-    "schematics:build:tests": "ng test schematics",
-    "schematics:test": "npm run schematics:build:tests && node ./specs/schematics/index.specs.js",
+    "schematics:tests:build": "ng test schematics",
+    "schematics:test": "npm run tests:clean && npm run schematics:tests:build && node ./specs/schematics/index.specs.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "commit": "git-cz",
     "commit-retry": "git cz --retry",
-    "typedoc": "node ./dist/docs/public_api.js",
-    "serve:docs": "rimraf docs/* && npm run build:docs && npm run typedoc && serve"
+    "typedoc": "node ./dist/docs/public_api.js"
   },
   "private": true,
   "devDependencies": {
