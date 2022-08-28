@@ -2,18 +2,26 @@ import { IInjectorConfig, IMock, IPresetBuilder, ISequenceVerifier } from "./moq
 import { createInjector, resolveMock } from "../tests.components/resolve.builder";
 import { MOCK } from "./injector/mock.injection-token";
 import { DefaultInjectorConfig } from "./injector/default-injector.config";
-import * as injectorFactory from "./injector/injector.factory";
 import { MockCore } from "./core/mock-core";
 import { Mock } from "./mock";
 import * as moq from "moq.ts";
 import { InjectionToken } from "./static.injector/injection_token";
 import { Times } from "./times";
+import {injectorFactory} from "./injector/injector.factory";
 import { MOCK_CONSTRUCTOR } from "./injector/mock-constructor.injection-token";
+import createSpy = jasmine.createSpy;
+
 
 describe("Mock", () => {
+    let injectionFactoryMock;
     beforeEach(() => {
         const injector = createInjector(Mock, [MockCore]);
-        spyOn(injectorFactory, "injectorFactory").and.returnValue(injector);
+        injectionFactoryMock = createSpy().and.returnValue(injector);
+        Mock.injectionFactory = injectionFactoryMock;
+    });
+
+    afterEach(() => {
+        Mock.injectionFactory = injectorFactory;
     });
 
     it("Exposes mock name", () => {
@@ -141,7 +149,7 @@ describe("Mock", () => {
             {provide: MOCK, useValue: mock, deps: []},
             {provide: MOCK_CONSTRUCTOR, useValue: jasmine.any(Function), deps: []},
         ];
-        expect(injectorFactory.injectorFactory).toHaveBeenCalledWith(Mock.options, ...providers);
+        expect(injectionFactoryMock).toHaveBeenCalledWith(Mock.options, ...providers);
     });
 
     it("Invokes injectorFactory with overridden static options", () => {
@@ -159,7 +167,7 @@ describe("Mock", () => {
             {provide: MOCK, useValue: mock, deps: []},
             {provide: MOCK_CONSTRUCTOR, useValue: jasmine.any(Function), deps: []},
         ];
-        expect(injectorFactory.injectorFactory).toHaveBeenCalledWith({
+        expect(injectionFactoryMock).toHaveBeenCalledWith({
             name,
             target,
             injectorConfig
@@ -177,7 +185,7 @@ describe("Mock", () => {
             {provide: MOCK, useValue: mock, deps: []},
             {provide: MOCK_CONSTRUCTOR, useValue: jasmine.any(Function), deps: []},
         ];
-        expect(injectorFactory.injectorFactory).toHaveBeenCalledWith({
+        expect(injectionFactoryMock).toHaveBeenCalledWith({
             name,
             target,
             injectorConfig

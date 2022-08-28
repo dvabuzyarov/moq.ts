@@ -6,12 +6,14 @@
     "outDir": "./dist/",
     "sourceMap": true,
     "declaration": false,
-    "module": "esnext",
+    "module": "es2022",
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "ES2018",
+    "target": "es2022",
+    "allowSyntheticDefaultImports": true,
     "typeRoots": [
       "node_modules/@types"
     ],

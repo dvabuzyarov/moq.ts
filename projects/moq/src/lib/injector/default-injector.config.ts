@@ -1,18 +1,18 @@
 import { IInjectorConfig, IMockOptions } from "../moq";
-import trackerProviders from "../tracker";
-import reflectorProviders from "../reflector";
-import presetsProviders from "../presets";
-import verificationProviders from "../verification";
-import interceptorsProviders from "../interceptors";
-import playablesProviders from "../playables";
-import interactionPlayersProviders from "../interaction-players";
-import formattersProviders from "../formatters";
-import typeExplorersProviders from "../explorers";
+import trackerProviders from "../tracker/index";
+import reflectorProviders from "../reflector/index";
+import presetsProviders from "../presets/index";
+import verificationProviders from "../verification/index";
+import interceptorsProviders from "../interceptors/index";
+import playablesProviders from "../playables/index";
+import interactionPlayersProviders from "../interaction-players/index";
+import formattersProviders from "../formatters/index";
+import typeExplorersProviders from "../explorers/index";
 import { mockOptionsProviders } from "../mock-options/mock-options.providers";
 import { StaticProvider } from "../static.injector/interface/provider";
-import mockCoreProviders from "../core";
-import autoMockingProviders from "../auto-mocking";
-import expressionEqualityComparersProviders from "../expression.equality-comparers";
+import mockCoreProviders from "../core/index";
+import autoMockingProviders from "../auto-mocking/index";
+import expressionEqualityComparersProviders from "../expression.equality-comparers/index";
 
 /**
  * Provides the default configuration for an angular based injector that would be used internally by {@link Mock} instance.

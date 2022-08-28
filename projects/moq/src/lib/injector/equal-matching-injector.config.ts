@@ -1,5 +1,5 @@
 import { IMockOptions } from "../moq";
-import equalMatchersProviders from "../equal-matchers";
+import equalMatchersProviders from "../equal-matchers/index";
 import { OBJECT_MATCHERS } from "../equal-matchers/object-matchers.injection-token";
 import { DateMatcher } from "../equal-matchers/date.matcher";
 import { MapMatcher } from "../equal-matchers/map.matcher";

@@ -82,10 +82,10 @@ function compile(fileNames: string[], options: ts.CompilerOptions): void {
 }
 
 const configFileName = ts.findConfigFile(
-    "./projects/ng-auto-moq/",
+    "./projects/moq/",
     ts.sys.fileExists,
     "tsconfig.spec.json"
 );
 const configFile = ts.readConfigFile(configFileName, ts.sys.readFile);
-const compilerOptions = ts.parseJsonConfigFileContent(configFile.config, ts.sys, "./projects/ng-auto-moq/");
+const compilerOptions = ts.parseJsonConfigFileContent(configFile.config, ts.sys, "./projects/moq/");
 compile(compilerOptions.fileNames, compilerOptions.options);

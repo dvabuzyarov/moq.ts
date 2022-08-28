@@ -1,8 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "incremental": true,
     "outDir": "../../specs/moq",
-    "module": "commonjs",
     "types": [
       "jasmine",
       "node"
