@@ -40,7 +40,7 @@
     "@angular/language-service": "11.2.14",
     "@commitlint/cli": "16.2.1",
     "@commitlint/config-conventional": "16.2.1",
-    "@ngrx/store": "12.5.1",
+    "@ngrx/store": "14.3.1",
     "@qiwi/semantic-release-gh-pages-plugin": "5.2.0",
     "@semantic-release/changelog": "5.0.1",
     "@testdozer/ng-cmd-builder": "1.2.5",
