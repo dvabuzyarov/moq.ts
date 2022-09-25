@@ -26,7 +26,7 @@
   "private": true,
   "devDependencies": {
     "@angular-devkit/architect": "0.1302.5",
-    "@angular-devkit/build-angular": "13.2.5",
+    "@angular-devkit/build-angular": "13.3.9",
     "@angular-devkit/core": "13.2.5",
     "@angular-devkit/schematics": "13.2.5",
     "@angular-eslint/builder": "0.8.0-beta.7",
