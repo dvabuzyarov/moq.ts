@@ -3,12 +3,12 @@
   "schematics": {
     "api-render": {
       "description": "Renders public_api.ts and internal_api.ts files",
-      "factory": "./L10.features/L10.api-render/index",
+      "factory": "./L10.features/L10.api-render/index.ts",
       "schema": "./L10.features/L10.api-render/schema.json"
     },
     "package-patcher": {
       "description": "Patches final packages so the internal provides access to the public types",
-      "factory": "./L10.features/L10.package-patcher/index",
+      "factory": "./L10.features/L10.package-patcher/index.ts",
       "schema": "./L10.features/L10.package-patcher/schema.json"
     }
   }

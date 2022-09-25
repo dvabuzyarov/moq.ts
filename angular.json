@@ -86,9 +86,55 @@
         "build": {
           "builder": "@testdozer/ng-cmd-builder:build",
           "options": {
-            "command": "tsc",
-            "args": [
-              "-p ./projects/schematics/tsconfig.lib.prod.json"
+            "commands": [
+              {
+                "command": "ttsc",
+                "args": [
+                  "-p ./projects/schematics/tsconfig.lib.prod.json"
+                ]
+              },
+              {
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/package.json",
+                  "./dist/schematics"
+                ]
+              },
+              {
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/collection.json",
+                  "./dist/schematics"
+                ]
+              },
+              {
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/src/L10.features/L10.api-render/schema.d.ts",
+                  "./dist/schematics/L10.features/L10.api-render"
+                ]
+              },
+              {
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/src/L10.features/L10.api-render/schema.json",
+                  "./dist/schematics/L10.features/L10.api-render"
+                ]
+              },
+              {
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/src/L10.features/L10.package-patcher/schema.d.ts",
+                  "./dist/schematics/L10.features/L10.package-patcher"
+                ]
+              },
+              {
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/src/L10.features/L10.package-patcher/schema.json",
+                  "./dist/schematics/L10.features/L10.package-patcher"
+                ]
+              }
             ],
             "assets": [
               {
@@ -121,7 +167,7 @@
         "test": {
           "builder": "@testdozer/ng-cmd-builder:build",
           "options": {
-            "command": "tsc",
+            "command": "ttsc",
             "args": [
               "-p ./projects/schematics/tsconfig.spec.json"
             ]

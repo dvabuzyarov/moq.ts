@@ -4,6 +4,7 @@
   "description": "Moq library for Typescript inspired by c# moq",
   "license": "Apache-2.0",
   "readme": "README.md",
+  "type": "module",
   "author": {
     "name": "Dmitry V. Abuzyarov",
     "email": "dvabuzyarov@gmail.com"
@@ -35,6 +36,6 @@
     "moq.ts": "*"
   },
   "dependencies": {
-    "tslib": "2.3.1"
+    "tslib": "*"
   }
 }

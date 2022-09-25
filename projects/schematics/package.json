@@ -13,7 +13,7 @@
   "devDependencies": {
     "moq.ts": "*",
     "ng-auto-moq": "*",
-    "reflect-metadata": "*",
+    "core-js": "*",
     "jasmine": "*"
   },
   "private": true,
