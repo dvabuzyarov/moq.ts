@@ -185,7 +185,6 @@
       }
     }
   },
-  "defaultProject": "moq",
   "cli": {
     "analytics": "7f863846-4447-4e31-8d79-e5a9f64df4f3"
   }
