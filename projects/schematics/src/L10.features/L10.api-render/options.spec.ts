@@ -1,4 +1,9 @@
-import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
+import {
+    createInjector,
+    createMoqInjector,
+    resolve,
+    resolveMock
+} from "../../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
@@ -12,7 +17,7 @@ import { AngularWorkspace } from "@angular/cli/src/utilities/config";
 
 describe("Options", () => {
     beforeEach(() => {
-        createMoqInjector(Options);
+        createInjector(Options, [OPTIONS, GetWorkspace, JoinPath]);
     });
 
     beforeEach(() => {

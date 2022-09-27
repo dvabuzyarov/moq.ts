@@ -1,4 +1,4 @@
-import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
+import { createInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
@@ -13,7 +13,9 @@ import { Path } from "@angular-devkit/core";
 
 describe("Public files provider", () => {
     beforeEach(() => {
-        createMoqInjector(PublicFilesProvider);
+        createInjector(PublicFilesProvider, [
+            HOST, Options, CreateEmptySourceFileOperator, ModuleSpecifierTextSetSelector
+        ]);
     });
 
     it("Should be resolved", () => {

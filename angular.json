@@ -135,32 +135,6 @@
                   "./dist/schematics/L10.features/L10.package-patcher"
                 ]
               }
-            ],
-            "assets": [
-              {
-                "source": "./projects/schematics/package.json",
-                "dest": "./dist/schematics"
-              },
-              {
-                "source": "./projects/schematics/collection.json",
-                "dest": "./dist/schematics"
-              },
-              {
-                "source": "./projects/schematics/src/L10.features/L10.api-render/schema.d.ts",
-                "dest": "./dist/schematics/L10.features/L10.api-render"
-              },
-              {
-                "source": "./projects/schematics/src/L10.features/L10.api-render/schema.json",
-                "dest": "./dist/schematics/L10.features/L10.api-render"
-              },
-              {
-                "source": "./projects/schematics/src/L10.features/L10.package-patcher/schema.d.ts",
-                "dest": "./dist/schematics/L10.features/L10.package-patcher"
-              },
-              {
-                "source": "./projects/schematics/src/L10.features/L10.package-patcher/schema.json",
-                "dest": "./dist/schematics/L10.features/L10.package-patcher"
-              }
             ]
           }
         },

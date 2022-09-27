@@ -1,4 +1,4 @@
-import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
+import { createInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { It, Mock } from "moq.ts";
 import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { AsyncReturnType } from "../../L0/L0.promise/async-return-type";
@@ -17,7 +17,17 @@ import { Options } from "./options";
 
 describe("Internal api rule", () => {
     beforeEach(() => {
-        createMoqInjector(InternalApiRule);
+        createInjector(InternalApiRule, [
+            HOST,
+            InternalFilesProvider,
+            Options,
+            From,
+            Pipe,
+            CreateExportDeclarationOperator,
+            AddCommentOperator,
+            CreateSourceFileOperator,
+            PrintSourceFileOperator
+        ]);
     });
 
     it("Should be resolved", () => {

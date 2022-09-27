@@ -1,4 +1,4 @@
-import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
+import { createInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { StatementsSelector } from "./statements.selector";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
 import { ExportDeclarationsSelector } from "./export-declarations.selector";
@@ -9,7 +9,7 @@ const {SyntaxKind} = typescript;
 
 describe("Export declarations selector", () => {
     beforeEach(() => {
-        createMoqInjector(ExportDeclarationsSelector);
+        createInjector(ExportDeclarationsSelector, [StatementsSelector]);
     });
 
     it("Should be resolved", () => {

@@ -1,4 +1,4 @@
-import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
+import { createInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
 import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
@@ -17,7 +17,16 @@ import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 
 describe("Public api rule", () => {
     beforeEach(() => {
-        createMoqInjector(PublicApiRule);
+        createInjector(PublicApiRule, [
+            HOST,
+            ProjectFilesProvider,
+            Options,
+            From,
+            Pipe,
+            CreateExportDeclarationOperator,
+            AddCommentOperator,
+            CreateSourceFileOperator,
+            PrintSourceFileOperator]);
     });
 
     it("Should be resolved", () => {

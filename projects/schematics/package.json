@@ -1,5 +1,6 @@
 {
   "name": "@moq.ts/schematics",
+  "type": "commonjs",
   "peerDependencies": {
     "@angular/core": "*",
     "@angular-devkit/core": "*",

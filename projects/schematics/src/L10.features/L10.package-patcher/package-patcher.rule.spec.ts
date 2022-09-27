@@ -1,4 +1,4 @@
-import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
+import { createInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
 import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
@@ -12,7 +12,11 @@ import { JsonStringifyService } from "../../L2/L2.wrappers/json-stringify.servic
 
 describe("Package patcher rule", () => {
     beforeEach(() => {
-        createMoqInjector(PackagePatcherRule);
+        createInjector(PackagePatcherRule, [HOST,
+            Options,
+            JsonParseService,
+            JsonStringifyService,
+            JoinPath]);
     });
 
     it("Should be resolved", () => {

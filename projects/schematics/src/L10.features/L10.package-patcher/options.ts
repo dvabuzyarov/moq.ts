@@ -1,5 +1,5 @@
 import { InjectionFactory, TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
-import { Inject, Injectable } from "@angular/core";
+import { Inject } from "@angular/core";
 import { TypeofInjectionToken } from "../../injector/typeof-injection-token";
 import { OPTIONS } from "./injection-tokens/options.injection-token";
 import { GetWorkspace } from "../../L2/L2.wrappers/get-workspace.service";
@@ -7,7 +7,6 @@ import { JoinPath } from "../../L2/L2.wrappers/join-path.service";
 import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 import { JsonParseService } from "../../L2/L2.wrappers/json-parse.service";
 
-@Injectable()
 export class Options implements InjectionFactory {
     constructor(@Inject(OPTIONS)
                 private readonly options: TypeofInjectionToken<typeof OPTIONS>,
