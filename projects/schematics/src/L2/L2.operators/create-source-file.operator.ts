@@ -1,7 +1,9 @@
 import { InjectionFactory, TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { Injectable } from "@angular/core";
-import { ExportDeclaration, factory } from "typescript";
 import { CreateEmptySourceFileOperator } from "./create-empty-source-file.operator";
+import typescript, { ExportDeclaration } from "typescript";
+
+const {factory} = typescript;
 
 @Injectable()
 export class CreateSourceFileOperator implements InjectionFactory {

@@ -37,15 +37,6 @@
             "allowStaticOnly": true,
             "allowEmpty": true
           }
-        ],
-        "no-shadow": [
-          "error",
-          {
-            "allow": [
-              "Range",
-              "PlayableUpdateReason"
-            ]
-          }
         ]
       }
     },

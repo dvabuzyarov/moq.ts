@@ -1,8 +1,11 @@
 import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { StatementsSelector } from "./statements.selector";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
-import { ExportDeclaration, NodeArray, SourceFile, Statement, SyntaxKind } from "typescript";
 import { ExportDeclarationsSelector } from "./export-declarations.selector";
+
+import typescript, { ExportDeclaration, NodeArray, SourceFile, Statement } from "typescript";
+
+const {SyntaxKind} = typescript;
 
 describe("Export declarations selector", () => {
     beforeEach(() => {

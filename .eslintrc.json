@@ -21,6 +21,10 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "@typescript-eslint/member-ordering": [
+          "error",
+          { "default": ["signature", "field", "constructor", "method" ] }
+        ],
         "@angular-eslint/component-class-suffix": "off",
         "@typescript-eslint/array-type": [
           "error",

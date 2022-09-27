@@ -8,13 +8,15 @@
     "rxjs": "*",
     "@ngrx/store": "*",
     "typescript": "*",
-    "tslib": "*"
+    "tslib": "*",
+    "@testdozer/ng-injector-types" : "*"
   },
   "devDependencies": {
     "moq.ts": "*",
     "ng-auto-moq": "*",
     "core-js": "*",
-    "jasmine": "*"
+    "jasmine": "*",
+    "@angular/compiler": "*"
   },
   "private": true,
   "main": "schematics/index.js",

@@ -1,6 +1,7 @@
 import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
 import Jasmine from "jasmine";
 import "core-js/proposals/reflect-metadata.js";
+import "@angular/compiler";
 
 const jsm = new Jasmine({}) as any;
 

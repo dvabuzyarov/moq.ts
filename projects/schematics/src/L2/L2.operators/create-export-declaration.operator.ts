@@ -1,6 +1,8 @@
 import { InjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { Injectable } from "@angular/core";
-import { factory } from "typescript";
+import typescript from "typescript";
+
+const {factory} = typescript;
 
 @Injectable()
 export class CreateExportDeclarationOperator implements InjectionFactory {

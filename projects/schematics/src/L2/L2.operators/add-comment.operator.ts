@@ -1,6 +1,7 @@
 import { InjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { Injectable } from "@angular/core";
-import { addSyntheticLeadingComment, ExportDeclaration, SyntaxKind } from "typescript";
+import typescript, { ExportDeclaration } from "typescript";
+const {addSyntheticLeadingComment, SyntaxKind} = typescript;
 
 @Injectable()
 export class AddCommentOperator implements InjectionFactory {

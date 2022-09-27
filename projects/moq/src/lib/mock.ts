@@ -29,6 +29,22 @@ export class Mock<T> implements IMock<T> {
     }
 
     /**
+     * @hidden
+     * Returns a method that is internally used for creating of an angular based injector
+     */
+    static get injectionFactory() {
+        return Mock.InjectorFactory;
+    }
+
+    /**
+     * @hidden
+     * Sets a method that is internally used for creating of an angular based injector
+     */
+    static set injectionFactory(value: typeof injectorFactory) {
+        Mock.InjectorFactory = value;
+    }
+
+    /**
      * The default mock options that would applied to all instantiating Mock objects.
      * By default it sets {@link IMockOptions.target} as a function, {@link IMockOptions.injectorConfig} as
      * instance of {@link DefaultInjectorConfig} and {@link IMockOptions.name} as undefined.
@@ -50,22 +66,6 @@ export class Mock<T> implements IMock<T> {
      */
     static set options(options: IMockOptions<unknown>) {
         Mock.Options = options;
-    }
-
-    /**
-     * @hidden
-     * Returns a method that is internally used for creating of an angular based injector
-     */
-    static get injectionFactory() {
-        return Mock.InjectorFactory;
-    }
-
-    /**
-     * @hidden
-     * Sets a method that is internally used for creating of an angular based injector
-     */
-    static set injectionFactory(value: typeof injectorFactory){
-        Mock.InjectorFactory = value;
     }
 
     public get options() {

@@ -167,9 +167,13 @@
         "test": {
           "builder": "@testdozer/ng-cmd-builder:build",
           "options": {
-            "command": "ttsc",
-            "args": [
-              "-p ./projects/schematics/tsconfig.spec.json"
+            "commands": [
+              {
+                "command": "ttsc",
+                "args": [
+                  "-p ./projects/schematics/tsconfig.spec.json"
+                ]
+              }
             ]
           }
         },
@@ -189,3 +193,4 @@
     "analytics": "7f863846-4447-4e31-8d79-e5a9f64df4f3"
   }
 }
+
