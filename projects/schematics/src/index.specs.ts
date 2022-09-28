@@ -1,11 +1,7 @@
 import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
-import "reflect-metadata";
-/* eslint @typescript-eslint/naming-convention: "off" */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-require-imports */
-const Jasmine = require("jasmine");
-/* eslint-enable @typescript-eslint/no-require-imports */
-/* eslint-enable @typescript-eslint/no-var-requires */
+import Jasmine from "jasmine";
+import "core-js/proposals/reflect-metadata.js";
+import "@angular/compiler";
 
 const jsm = new Jasmine({}) as any;
 

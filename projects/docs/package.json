@@ -1,10 +1,11 @@
 {
   "name": "docs",
+  "type": "module",
   "peerDependencies": {
     "typedoc": "*",
     "typescript": "*"
   },
   "dependencies": {
-    "tslib": "2.3.1"
+    "tslib": "*"
   }
 }

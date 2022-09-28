@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
 import { InjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { createSelector } from "../../L4/L4.ngrx/create-selector";
 import { StatementsSelector } from "./statements.selector";
-import { ExportDeclaration, SyntaxKind } from "typescript";
+import typescript, { ExportDeclaration } from "typescript";
 
-@Injectable()
+const {SyntaxKind} = typescript;
+
 export class ExportDeclarationsSelector implements InjectionFactory {
     constructor(private readonly statementsSelector: StatementsSelector) {
         return this.factory() as any;

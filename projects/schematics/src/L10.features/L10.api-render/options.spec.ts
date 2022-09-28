@@ -1,18 +1,23 @@
-import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
+import {
+    createInjector,
+    createMoqInjector,
+    resolve,
+    resolveMock
+} from "../../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
 import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { AsyncReturnType } from "../../L0/L0.promise/async-return-type";
 import { OPTIONS } from "./injection-tokens/options.injection-token";
-import { AngularWorkspace } from "@angular/cli/utilities/config";
 import { ProjectDefinition, ProjectDefinitionCollection } from "@angular-devkit/core/src/workspace/definitions";
 import { GetWorkspace } from "../../L2/L2.wrappers/get-workspace.service";
 import { JoinPath } from "../../L2/L2.wrappers/join-path.service";
+import { AngularWorkspace } from "@angular/cli/src/utilities/config";
 
 describe("Options", () => {
     beforeEach(() => {
-        createMoqInjector(Options);
+        createInjector(Options, [OPTIONS, GetWorkspace, JoinPath]);
     });
 
     beforeEach(() => {

@@ -15,6 +15,7 @@ import { IExpression } from "./reflector/expression-reflector";
  */
 export class Mock<T> implements IMock<T> {
     private static Options: IMockOptions<unknown> = undefined;
+    private static InjectorFactory: typeof injectorFactory = injectorFactory;
     private readonly core: MockCore<T>;
 
     constructor(options: IMockOptions<T> = {}) {
@@ -23,8 +24,24 @@ export class Mock<T> implements IMock<T> {
             {provide: MOCK, useValue: this, deps: []},
             {provide: MOCK_CONSTRUCTOR, useValue: (opts: IMockOptions<unknown>) => new Mock(opts), deps: []},
         ];
-        const injector = injectorFactory(preOptions, ...providers);
+        const injector = Mock.InjectorFactory(preOptions, ...providers);
         this.core = injector.get(MockCore);
+    }
+
+    /**
+     * @hidden
+     * Returns a method that is internally used for creating of an angular based injector
+     */
+    static get injectionFactory() {
+        return Mock.InjectorFactory;
+    }
+
+    /**
+     * @hidden
+     * Sets a method that is internally used for creating of an angular based injector
+     */
+    static set injectionFactory(value: typeof injectorFactory) {
+        Mock.InjectorFactory = value;
     }
 
     /**

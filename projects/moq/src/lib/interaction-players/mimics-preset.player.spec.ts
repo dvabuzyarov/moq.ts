@@ -89,7 +89,7 @@ describe("Mimics preset player", () => {
     it("Plays new operator", () => {
 
         class TestClass {
-            constructor(public readonly name: string) {
+            constructor(public readonly param: string) {
             }
         }
 

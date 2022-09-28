@@ -17,7 +17,7 @@ import { ConstantFormatter } from "../formatters/constant.formatter";
 import { MOCK_CONSTRUCTOR } from "../injector/mock-constructor.injection-token";
 import { ExpressionEqualityComparer } from "../expression.equality-comparers/expression.equality-comparer";
 import { ComplexExpressionValidator } from "./expression.guards/complex-expression.validator";
-import expressionGuards from "./expression.guards";
+import expressionGuards from "./expression.guards/index";
 
 /**
  * @hidden

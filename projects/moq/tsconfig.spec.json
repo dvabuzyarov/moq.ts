@@ -1,15 +1,27 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "incremental": true,
     "outDir": "../../specs/moq",
-    "module": "commonjs",
     "types": [
       "jasmine",
       "node"
+    ],
+    "plugins": [
+      {
+        "transform": "ts-transform-esm-import",
+        "after": true,
+        "afterDeclarations": true,
+        "type": "config",
+
+        "rootDir": "./projects/moq",
+        "outDir": "../../specs/moq",
+        "resolvers": [{ "dir": "./projects/moq", "sourceDir": true }]
+      }
     ]
   },
   "include": [
-    "src/index.specs.ts",
+    "index.specs.ts",
     "**/*.spec.ts"
   ]
 }

@@ -1,10 +1,9 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/lib",
     "declarationMap": true,
-    "target": "es2015",
-    "module": "es2015",
+    "target": "es2020",
+    "module": "es2020",
     "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
@@ -26,7 +25,7 @@
     "enableResourceInlining": true
   },
   "exclude": [
-    "src/index.specs.ts",
+    "index.specs.ts",
     "**/*.spec.ts"
   ]
 }

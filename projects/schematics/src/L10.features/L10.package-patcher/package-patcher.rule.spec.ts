@@ -1,4 +1,4 @@
-import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
+import { createInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
 import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
@@ -7,12 +7,15 @@ import { Path } from "@angular-devkit/core";
 import { PackagePatcherRule } from "./package-patcher.rule";
 import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 import { JsonParseService } from "../../L2/L2.wrappers/json-parse.service";
-import { JoinPath } from "../../L2/L2.wrappers/join-path.service";
 import { JsonStringifyService } from "../../L2/L2.wrappers/json-stringify.service";
 
 describe("Package patcher rule", () => {
     beforeEach(() => {
-        createMoqInjector(PackagePatcherRule);
+        createInjector(PackagePatcherRule, [HOST,
+            Options,
+            JsonParseService,
+            JsonStringifyService
+        ]);
     });
 
     it("Should be resolved", () => {
@@ -21,26 +24,55 @@ describe("Package patcher rule", () => {
     });
 
     it("Overwrites public_api.ts file", async () => {
-        const internalPackageJson = "/dist/moq/internal/package.json" as Path;
-        const internalPackageContent = "internal package.json content";
         const moqPackageJson = "/dist/moq/package.json" as Path;
+        const name = "moq.ts";
         const moqPackageContent = "moq package.json content";
-        const main = "main";
-        const module = "module";
-        const es2015 = "es2015";
-        const esm2015 = "esm2015";
-        const fesm2015 = "fesm2015";
-        const name = "internal package.json name";
-        const relativeMain = "../main";
-        const relativeModule = "../module";
-        const relativeEs2015 = "../es2015";
-        const relativeEsm2015 = "../esm2015";
-        const relativeFesm2015 = "../fesm2015";
         const updateContent = "content";
+        const exports = {
+            "./package.json": {
+                default: "./package.json"
+            },
+            ".": {
+                types: "./index.d.ts",
+                esm2020: "./esm2020/moq.ts.mjs",
+                es2020: "./fesm2020/moq.ts.mjs",
+                es2015: "./fesm2015/moq.ts.mjs",
+                node: "./fesm2015/moq.ts.mjs",
+                default: "./fesm2020/moq.ts.mjs"
+            },
+            "./internal": {
+                types: "./internal/index.d.ts",
+                esm2020: "./esm2020/internal/moq.ts-internal.mjs",
+                es2020: "./fesm2020/moq.ts-internal.mjs",
+                es2015: "./fesm2015/moq.ts-internal.mjs",
+                node: "./fesm2015/moq.ts-internal.mjs",
+                default: "./fesm2020/moq.ts-internal.mjs"
+            }
+        };
+
+        const expected = {
+            "./package.json": {
+                default: "./package.json"
+            },
+            ".": {
+                types: "./index.d.ts",
+                esm2020: "./esm2020/moq.ts.mjs",
+                es2020: "./fesm2020/moq.ts.mjs",
+                es2015: "./fesm2015/moq.ts.mjs",
+                node: "./fesm2015/moq.ts.mjs",
+                default: "./fesm2020/moq.ts.mjs"
+            },
+            "./internal": {
+                types: "./internal/index.d.ts",
+                esm2020: "./esm2020/moq.ts.mjs",
+                es2020: "./fesm2020/moq.ts.mjs",
+                es2015: "./fesm2015/moq.ts.mjs",
+                node: "./fesm2015/moq.ts.mjs",
+                default: "./fesm2020/moq.ts.mjs"
+            }
+        };
 
         const options = new Mock<AsyncReturnType<TypeOfInjectionFactory<Options>>>()
-            .setup(instance => instance.internalPackageJson)
-            .returns(internalPackageJson)
             .setup(instance => instance.moqPackageJson)
             .returns(moqPackageJson)
             .object();
@@ -51,33 +83,14 @@ describe("Package patcher rule", () => {
             .setup(instance => instance.overwrite(It.IsAny(), It.IsAny()))
             .returns(undefined)
             .setup(instance => instance.read(moqPackageJson).toString())
-            .returns(moqPackageContent)
-            .setup(instance => instance.read(internalPackageJson).toString())
-            .returns(internalPackageContent);
+            .returns(moqPackageContent);
         resolveMock(JsonParseService)
             .setup(instance => instance(moqPackageContent))
-            .returns({main, module, es2015, esm2015, fesm2015})
-            .setup(instance => instance(internalPackageContent))
-            .returns({name});
-        resolveMock(JoinPath)
-            .setup(instance => instance("../", main))
-            .returns(relativeMain)
-            .setup(instance => instance("../", module))
-            .returns(relativeModule)
-            .setup(instance => instance("../", es2015))
-            .returns(relativeEs2015)
-            .setup(instance => instance("../", esm2015))
-            .returns(relativeEsm2015)
-            .setup(instance => instance("../", fesm2015))
-            .returns(relativeFesm2015);
+            .returns({name, exports});
         resolveMock(JsonStringifyService)
             .setup(instance => instance({
                 name,
-                main: relativeMain,
-                module: relativeModule,
-                es2015: relativeEs2015,
-                esm2015: relativeEsm2015,
-                fesm2015: relativeFesm2015
+                exports: expected
             }))
             .returns(updateContent);
 
@@ -86,7 +99,7 @@ describe("Package patcher rule", () => {
 
         expect(actual).toBe(resolve(HOST));
         resolveMock(HOST)
-            .verify(instance => instance.overwrite(internalPackageJson, updateContent));
+            .verify(instance => instance.overwrite(moqPackageJson, updateContent));
     });
 
 });

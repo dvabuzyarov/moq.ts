@@ -1,6 +1,5 @@
 import { UnaryFunction } from "./unary-function";
 import { InjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
-import { Injectable } from "@angular/core";
 
 /* eslint-disable max-len */
 export function pipe<T>(): UnaryFunction<T, T>;
@@ -21,7 +20,6 @@ export function pipe(...operations: UnaryFunction<any, any>[]) {
 }
 
 
-@Injectable()
 export class Pipe implements InjectionFactory {
     constructor() {
         return this.factory() as any;

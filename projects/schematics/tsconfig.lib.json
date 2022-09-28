@@ -1,10 +1,9 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/schematics",
-    "target": "es2015",
-    "module": "commonjs",
+    "target": "ES2020",
+    "module": "CommonJS",
     "declaration": true,
     "inlineSources": true,
     "types": [],
@@ -20,7 +19,7 @@
     "enableIvy": false
   },
   "exclude": [
-    "src/test.ts",
+    "**/index.specs.ts",
     "**/*.spec.ts"
   ]
 }

@@ -1,4 +1,3 @@
-import { Inject } from "@angular/core";
 import { TypeofInjectionToken } from "../../injector/typeof-injection-token";
 import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { Options } from "./options";
@@ -12,35 +11,35 @@ import { DeletePathsOperator } from "../../L2/L2.operators/delete-paths.operator
 
 export class DeleteFilesRule {
     constructor(
-        @Inject(HOST)
+        // @Inject(HOST)
         private readonly tree: TypeofInjectionToken<typeof HOST>,
-        @Inject(Options)
+        // @Inject(Options)
         private readonly options: TypeOfInjectionFactory<Options>,
-        @Inject(From)
+        // @Inject(From)
         private readonly from: TypeOfInjectionFactory<From>,
-        @Inject(Pipe)
+        // @Inject(Pipe)
         private readonly pipe: TypeOfInjectionFactory<Pipe>,
-        @Inject(MergeOperator)
+        // @Inject(MergeOperator)
         private readonly merge: TypeOfInjectionFactory<MergeOperator>,
-        @Inject(FilterOperator)
+        // @Inject(FilterOperator)
         private readonly filter: TypeOfInjectionFactory<FilterOperator>,
-        @Inject(DeletePathsOperator)
+        // @Inject(DeletePathsOperator)
         private readonly deletePaths: TypeOfInjectionFactory<DeletePathsOperator>,
-        @Inject(DirEntryPathsSelector)
+        // @Inject(DirEntryPathsSelector)
         private readonly dirEntryPathSelector: TypeOfInjectionFactory<DirEntryPathsSelector>) {
     }
 
     async apply() {
-        const {fesm2015Folder, bundlesFolder, internalEsm2015Folder} = await this.options;
+        const {fesm2015Folder, fesm2020Folder, internalEsm2020Folder} = await this.options;
         return this.from(
             [],
             this.pipe(
                 this.merge(
                     this.dirEntryPathSelector(this.tree.getDir(fesm2015Folder)),
-                    this.dirEntryPathSelector(this.tree.getDir(bundlesFolder))
+                    this.dirEntryPathSelector(this.tree.getDir(fesm2020Folder))
                 ),
                 this.filter(new RegExp(/moq.ts-internal/, "i")),
-                this.merge([internalEsm2015Folder]),
+                this.merge([internalEsm2020Folder]),
                 this.deletePaths()
             )
         );

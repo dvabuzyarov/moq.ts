@@ -1,8 +1,8 @@
 import { InjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
-import { Injectable } from "@angular/core";
-import { factory } from "typescript";
+import typescript from "typescript";
 
-@Injectable()
+const {factory} = typescript;
+
 export class CreateExportDeclarationOperator implements InjectionFactory {
     constructor() {
         return this.factory() as any;
@@ -11,7 +11,6 @@ export class CreateExportDeclarationOperator implements InjectionFactory {
     factory() {
         return (paths: string[]) => paths
             .map(path => factory.createExportDeclaration(
-                undefined,
                 undefined,
                 false,
                 undefined,

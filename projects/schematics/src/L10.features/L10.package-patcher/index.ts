@@ -3,7 +3,6 @@ import { ISchema } from "./schema";
 import { JsonObject } from "@angular-devkit/core";
 import { OPTIONS } from "./injection-tokens/options.injection-token";
 import { PackagePatcherRule } from "./package-patcher.rule";
-import { Injector } from "@angular/core";
 import { Options } from "./options";
 import selectors from "../../L2/L2.selectors";
 import l2operators from "../../L2/L2.operators/";
@@ -24,6 +23,7 @@ import { MergeOperator } from "../../L2/L2.operators/merge.operator";
 import { FilterOperator } from "../../L2/L2.operators/filter.operator";
 import { DeletePathsOperator } from "../../L2/L2.operators/delete-paths.operator";
 import { DirEntryPathsSelector } from "../../L2/L2.selectors/dir-entry-paths.selector";
+import { Injector } from "../../static.injector/injector";
 
 export default (options: JsonObject & ISchema) => (host: Tree, context: SchematicContext) => {
     const injector = Injector.create({
@@ -43,8 +43,7 @@ export default (options: JsonObject & ISchema) => (host: Tree, context: Schemati
                     HOST,
                     Options,
                     JsonParseService,
-                    JsonStringifyService,
-                    JoinPath
+                    JsonStringifyService
                 ]
             },
             {provide: PublicApiPatcherRule, useClass: PublicApiPatcherRule, deps: [HOST, Options]},

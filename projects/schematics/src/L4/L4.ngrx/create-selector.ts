@@ -2,9 +2,8 @@ import {
     createSelector as originalCreateSelector,
     MemoizedSelector,
     MemoizedSelectorWithProps,
-    Selector,
-    SelectorWithProps
-} from "@ngrx/store";
+} from "./create-selector.ngrx";
+import { Selector, SelectorWithProps } from "./models.ngrx";
 
 export type InjectableSelector<S, R, P = unknown> = { factory(): (s: S) => R } | Selector<S, R>;
 export type InjectableSelectorWithProps<S, P, R> = { factory(): (s: S, p: P) => R } | SelectorWithProps<S, P, R>;

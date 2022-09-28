@@ -3,4 +3,4 @@
 
 npm run lint
 npm test
-npm run schematics:test
+#npm run schematics:test

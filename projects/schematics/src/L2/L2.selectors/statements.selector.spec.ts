@@ -1,11 +1,11 @@
-import { createMoqInjector, resolve } from "../../L1.unit-test.components/createMoqInjector";
+import { createInjector, createMoqInjector, resolve } from "../../L1.unit-test.components/createMoqInjector";
 import { StatementsSelector } from "./statements.selector";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
 import { NodeArray, SourceFile, Statement } from "typescript";
 
 describe("Statements selector", () => {
     beforeEach(() => {
-        createMoqInjector(StatementsSelector);
+        createInjector(StatementsSelector);
     });
 
     it("Should be resolved", () => {
