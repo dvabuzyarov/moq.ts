@@ -51,10 +51,9 @@ describe("Options", () => {
         const moqOutputFolder = "dist/moq";
         const moqPackageJson = "dist/moq/package.json";
         const publicApiTs = "dist/moq/public_api.d.ts";
-        const internalPackageJson = "dist/moq/internal/package.json";
-        const bundlesFolder = "dist/moq/bundles/";
+        const fesm2020Folder = "dist/moq/fesm2020/";
         const fesm2015Folder = "dist/moq/fesm2015/";
-        const internalEsm2015Folder = "dist/moq/esm2015/";
+        const internalEsm2020Folder = "dist/moq/esm2020/";
 
         const project = dataMock<ProjectDefinition>({sourceRoot});
 
@@ -85,14 +84,12 @@ describe("Options", () => {
             .returns(moqPackageJson)
             .setup(instance => instance(moqOutputFolder, "public_api.d.ts"))
             .returns(publicApiTs)
-            .setup(instance => instance(moqOutputFolder, "/internal", "package.json"))
-            .returns(internalPackageJson)
-            .setup(instance => instance(moqOutputFolder, "/bundles/"))
-            .returns(bundlesFolder)
+            .setup(instance => instance(moqOutputFolder, "/fesm2020/"))
+            .returns(fesm2020Folder)
             .setup(instance => instance(moqOutputFolder, "/fesm2015/"))
             .returns(fesm2015Folder)
-            .setup(instance => instance(moqOutputFolder, "/esm2015/internal/"))
-            .returns(internalEsm2015Folder);
+            .setup(instance => instance(moqOutputFolder, "/esm2020/internal/"))
+            .returns(internalEsm2020Folder);
         resolveMock(HOST)
             .setup(instance => instance.read(ngPackagePath).toString())
             .returns(ngPackageContent);
@@ -108,10 +105,9 @@ describe("Options", () => {
             publicApiTs,
             moqOutputFolder,
             moqPackageJson,
-            internalPackageJson,
-            bundlesFolder,
+            fesm2020Folder,
             fesm2015Folder,
-            internalEsm2015Folder
+            internalEsm2020Folder
         } as AsyncReturnType<TypeOfInjectionFactory<Options>>;
         expect(actual).toEqual(expected);
     });

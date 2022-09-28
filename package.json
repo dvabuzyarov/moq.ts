@@ -43,7 +43,6 @@
     "@angular/language-service": "14.2.3",
     "@commitlint/cli": "17.1.2",
     "@commitlint/config-conventional": "17.1.0",
-    "@ngrx/store": "14.3.1",
     "@qiwi/semantic-release-gh-pages-plugin": "5.2.3",
     "@semantic-release/changelog": "6.0.1",
     "@testdozer/ng-cmd-builder": "2.2.0",
@@ -51,6 +50,7 @@
     "@types/node": "18.7.20",
     "@typescript-eslint/eslint-plugin": "5.38.0",
     "@typescript-eslint/parser": "5.38.0",
+    "core-js": "3.25.2",
     "cpx": "1.5.0",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "8.24.0",
@@ -67,13 +67,12 @@
     "semantic-release": "19.0.5",
     "serve": "14.0.1",
     "ts-node": "10.9.1",
+    "ts-transform-esm-import": "0.9.0",
     "tslib": "2.4.0",
+    "ttypescript": "1.5.13",
     "typedoc": "0.21.9",
     "typescript": "4.8.3",
-    "zone.js": "0.11.8",
-    "ts-transform-esm-import": "0.9.0",
-    "ttypescript": "1.5.13",
-    "core-js": "3.25.2"
+    "zone.js": "0.11.8"
   },
   "release": {
     "branches": [

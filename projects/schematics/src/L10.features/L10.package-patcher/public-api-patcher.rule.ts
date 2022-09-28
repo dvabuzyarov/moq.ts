@@ -1,4 +1,3 @@
-import { Inject } from "@angular/core";
 import { TypeofInjectionToken } from "../../injector/typeof-injection-token";
 import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
 import { Options } from "./options";
@@ -6,9 +5,9 @@ import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 
 export class PublicApiPatcherRule {
     constructor(
-        @Inject(HOST)
+        // @Inject(HOST)
         private readonly tree: TypeofInjectionToken<typeof HOST>,
-        @Inject(Options)
+        // @Inject(Options)
         private readonly options: TypeOfInjectionFactory<Options>) {
     }
 
