@@ -19,18 +19,26 @@
                   "-p projects/moq/ng-package.json",
                   "--config projects/moq/tsconfig.lib.json"
                 ]
-              },
-              {
-                "command": "npm pkg delete scripts.prepublishOnly",
-                "options": {
-                  "cwd": "./dist/moq"
-                }
               }
             ]
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/moq/tsconfig.lib.prod.json"
+              "commands": [
+                {
+                  "command": "ng-packagr",
+                  "args": [
+                    "-p projects/moq/ng-package.json",
+                    "--config projects/moq/tsconfig.lib.prod.json"
+                  ]
+                },
+                {
+                  "command": "npm pkg delete scripts.prepublishOnly",
+                  "options": {
+                    "cwd": "./dist/moq"
+                  }
+                }
+              ]
             }
           }
         },
