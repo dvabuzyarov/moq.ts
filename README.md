@@ -13,6 +13,9 @@
 
 Moq for Typescript. Inspired by c# [Moq library](https://github.com/moq/moq4).
 
+> :warning: **[Starting with the 10 version the package follows new standard of APF.](https://angular.io/guide/angular-package-format)**
+> Which introduced support of ES modules and drops commonjs.
+
 #### Install
 
 npm install moq.ts --save-dev

@@ -34,7 +34,7 @@ jobs:
           restore-keys: v1-npm-deps-
       - run: npm ci
       - run: npm run lint
-      - run: npm run test
+      - run: npm run tests:coverage
       - run: npm run schematics:test
       - run: npm run schematics:build
       - run: npm install -g @angular-devkit/schematics-cli

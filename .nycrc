@@ -1,7 +1,7 @@
 {
   "branches": 86,
   "lines": 95,
-  "functions": 100,
+  "functions": 86,
   "statements": 95,
   "all": false,
   "check-coverage": true,
