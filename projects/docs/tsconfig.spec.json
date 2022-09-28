@@ -5,6 +5,18 @@
     "types": [
       "jasmine",
       "node"
+    ],
+    "plugins": [
+      {
+        "transform": "ts-transform-esm-import",
+        "after": true,
+        "afterDeclarations": true,
+        "type": "config",
+
+        "rootDir": "./projects/docs",
+        "outDir": "../../specs/docs",
+        "resolvers": [{ "dir": "./projects/docs", "sourceDir": true }]
+      }
     ]
   },
   "files": [

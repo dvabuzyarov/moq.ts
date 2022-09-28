@@ -14,9 +14,9 @@
         "afterDeclarations": true,
         "type": "config",
 
-        "rootDir": "./projects/moq",
-        "outDir": "../../specs/moq",
-        "resolvers": [{ "dir": "./projects/moq", "sourceDir": true }]
+        "rootDir": "./projects/schematics",
+        "outDir": "../../specs/schematics",
+        "resolvers": [{ "dir": "./projects/schematics", "sourceDir": true }]
       }
     ]
   },
