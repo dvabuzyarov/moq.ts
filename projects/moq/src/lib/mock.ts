@@ -9,6 +9,7 @@ import { Type } from "./static.injector/type";
 import { InjectionToken } from "./static.injector/injection_token";
 import { MOCK_CONSTRUCTOR } from "./injector/mock-constructor.injection-token";
 import { IExpression } from "./reflector/expression-reflector";
+import { Tracker } from "./tracker/tracker";
 
 /**
  * The default implementation of {@link IMock} interface.
@@ -72,7 +73,7 @@ export class Mock<T> implements IMock<T> {
         return this.core.options;
     }
 
-    public get tracker() {
+    public get tracker(): Tracker {
         return this.core.tracker;
     }
 
