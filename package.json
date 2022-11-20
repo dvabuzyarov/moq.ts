@@ -29,7 +29,7 @@
   "private": true,
   "devDependencies": {
     "@angular-devkit/architect": "0.1402.3",
-    "@angular-devkit/build-angular": "14.2.3",
+    "@angular-devkit/build-angular": "14.2.10",
     "@angular-devkit/core": "14.2.3",
     "@angular-devkit/schematics": "14.2.3",
     "@angular-eslint/builder": "14.1.2",
