@@ -47,7 +47,7 @@
     "@semantic-release/changelog": "6.0.1",
     "@testdozer/ng-cmd-builder": "2.2.0",
     "@types/jasmine": "4.3.0",
-    "@types/node": "18.7.20",
+    "@types/node": "18.11.9",
     "@typescript-eslint/eslint-plugin": "5.38.0",
     "@typescript-eslint/parser": "5.38.0",
     "core-js": "3.26.1",
