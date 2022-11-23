@@ -59,7 +59,7 @@
     "eslint-plugin-prefer-arrow": "1.2.3",
     "husky": "8.0.2",
     "jasmine": "4.5.0",
-    "jasmine-core": "4.4.0",
+    "jasmine-core": "4.5.0",
     "moq.ts": "9.0.2",
     "ng-auto-moq": "6.2.0",
     "ng-packagr": "14.2.2",
