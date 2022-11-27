@@ -55,7 +55,7 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint": "8.28.0",
     "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-jsdoc": "39.6.2",
+    "eslint-plugin-jsdoc": "39.6.4",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "husky": "8.0.2",
     "jasmine": "4.5.0",
