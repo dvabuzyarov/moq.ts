@@ -10,14 +10,35 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@testdozer/ng-cmd-builder:build",
           "options": {
-            "tsConfig": "projects/moq/tsconfig.lib.json",
-            "project": "projects/moq/ng-package.json"
+            "commands": [
+              {
+                "command": "ng-packagr",
+                "args": [
+                  "-p projects/moq/ng-package.json",
+                  "--config projects/moq/tsconfig.lib.json"
+                ]
+              }
+            ]
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/moq/tsconfig.lib.prod.json"
+              "commands": [
+                {
+                  "command": "ng-packagr",
+                  "args": [
+                    "-p projects/moq/ng-package.json",
+                    "--config projects/moq/tsconfig.lib.prod.json"
+                  ]
+                },
+                {
+                  "command": "npm pkg delete scripts.prepublishOnly",
+                  "options": {
+                    "cwd": "./dist/moq"
+                  }
+                }
+              ]
             }
           }
         },
@@ -86,34 +107,54 @@
         "build": {
           "builder": "@testdozer/ng-cmd-builder:build",
           "options": {
-            "command": "tsc",
-            "args": [
-              "-p ./projects/schematics/tsconfig.lib.prod.json"
-            ],
-            "assets": [
+            "commands": [
               {
-                "source": "./projects/schematics/package.json",
-                "dest": "./dist/schematics"
+                "command": "ttsc",
+                "args": [
+                  "-p ./projects/schematics/tsconfig.lib.prod.json"
+                ]
               },
               {
-                "source": "./projects/schematics/collection.json",
-                "dest": "./dist/schematics"
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/package.json",
+                  "./dist/schematics"
+                ]
               },
               {
-                "source": "./projects/schematics/src/L10.features/L10.api-render/schema.d.ts",
-                "dest": "./dist/schematics/L10.features/L10.api-render"
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/collection.json",
+                  "./dist/schematics"
+                ]
               },
               {
-                "source": "./projects/schematics/src/L10.features/L10.api-render/schema.json",
-                "dest": "./dist/schematics/L10.features/L10.api-render"
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/src/L10.features/L10.api-render/schema.d.ts",
+                  "./dist/schematics/L10.features/L10.api-render"
+                ]
               },
               {
-                "source": "./projects/schematics/src/L10.features/L10.package-patcher/schema.d.ts",
-                "dest": "./dist/schematics/L10.features/L10.package-patcher"
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/src/L10.features/L10.api-render/schema.json",
+                  "./dist/schematics/L10.features/L10.api-render"
+                ]
               },
               {
-                "source": "./projects/schematics/src/L10.features/L10.package-patcher/schema.json",
-                "dest": "./dist/schematics/L10.features/L10.package-patcher"
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/src/L10.features/L10.package-patcher/schema.d.ts",
+                  "./dist/schematics/L10.features/L10.package-patcher"
+                ]
+              },
+              {
+                "command": "cpx",
+                "args": [
+                  "./projects/schematics/src/L10.features/L10.package-patcher/schema.json",
+                  "./dist/schematics/L10.features/L10.package-patcher"
+                ]
               }
             ]
           }
@@ -121,9 +162,13 @@
         "test": {
           "builder": "@testdozer/ng-cmd-builder:build",
           "options": {
-            "command": "tsc",
-            "args": [
-              "-p ./projects/schematics/tsconfig.spec.json"
+            "commands": [
+              {
+                "command": "ttsc",
+                "args": [
+                  "-p ./projects/schematics/tsconfig.spec.json"
+                ]
+              }
             ]
           }
         },
@@ -139,8 +184,8 @@
       }
     }
   },
-  "defaultProject": "moq",
   "cli": {
     "analytics": "7f863846-4447-4e31-8d79-e5a9f64df4f3"
   }
 }
+

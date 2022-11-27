@@ -2,7 +2,7 @@
 [![NPM version:latest](https://img.shields.io/npm/v/moq.ts/latest.svg?style=flat-square)](https://www.npmjs.com/package/moq.ts)
 [![NPM version:next](https://img.shields.io/npm/v/moq.ts/next.svg?style=flat-square)](https://www.npmjs.com/package/moq.ts)
 [![npm downloads](https://img.shields.io/npm/dt/moq.ts.svg?style=flat-square)](https://www.npmjs.com/package/moq.ts)
-[![Dependency Status](http://img.shields.io/david/dvabuzyarov/moq.ts.svg?style=flat-square)](https://david-dm.org/dvabuzyarov/moq.ts)
+[![Code Coverage](https://img.shields.io/nycrc/dvabuzyarov/moq.ts)](https://github.com/dvabuzyarov/moq.ts/)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
@@ -12,6 +12,9 @@
 # moq.ts | [Documentation](https://dvabuzyarov.github.io/moq.ts/)
 
 Moq for Typescript. Inspired by c# [Moq library](https://github.com/moq/moq4).
+
+> :warning: **[Starting with the 10 version the package follows new standard of APF.](https://angular.io/guide/angular-package-format)**
+> Which introduced support of ES modules and drops commonjs.
 
 #### Install
 

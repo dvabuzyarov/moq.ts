@@ -1,4 +1,4 @@
-import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
+import { createInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
 import { ExportDeclaration, SourceFile, StringLiteral } from "typescript";
 import { ExportDeclarationsSelector } from "./export-declarations.selector";
@@ -6,7 +6,7 @@ import { ModuleSpecifierTextSetSelector } from "./module-specifier-text-set.sele
 
 describe("Module specifier text set selector", () => {
     beforeEach(() => {
-        createMoqInjector(ModuleSpecifierTextSetSelector);
+        createInjector(ModuleSpecifierTextSetSelector, [ExportDeclarationsSelector]);
     });
 
     it("Should be resolved", () => {

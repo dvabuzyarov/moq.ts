@@ -3,7 +3,6 @@ import { ISchema } from "./schema";
 import { JsonObject } from "@angular-devkit/core";
 import { OPTIONS } from "./injection-tokens/options.injection-token";
 import { PublicApiRule } from "./public-api.rule";
-import { Injector } from "@angular/core";
 import { Options } from "./options";
 import { ProjectFilesProvider } from "./project-files.provider";
 import { From } from "../../L2/L2.hof/from";
@@ -27,6 +26,7 @@ import { CreateEmptySourceFileOperator } from "../../L2/L2.operators/create-empt
 import { ModuleSpecifierTextSetSelector } from "../../L2/L2.selectors/module-specifier-text-set.selector";
 import { InternalApiRule } from "./internal-api.rule";
 import { HighOrderRule } from "./high-order.rule";
+import { Injector } from "../../static.injector/injector";
 
 export default (options: JsonObject & ISchema) => (host: Tree, context: SchematicContext) => {
     const injector = Injector.create({

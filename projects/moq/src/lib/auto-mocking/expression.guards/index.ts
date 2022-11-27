@@ -9,7 +9,7 @@ import { InOperatorExpressionValidator } from "./in-operator-expression.validato
 import { InstanceMethodExpressionValidator } from "./instance-method-expression.validator";
 import { NewOperatorExpressionValidator } from "./new-operator-expression.validator";
 import { ComplexExpressionErrorFormatter } from "./expression.formatters/complex-expression.error-formatter";
-import expressionFormatters from "./expression.formatters";
+import expressionFormatters from "./expression.formatters/index";
 
 /**
  * @hidden

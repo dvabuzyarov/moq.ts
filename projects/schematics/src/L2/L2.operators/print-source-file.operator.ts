@@ -1,8 +1,8 @@
 import { InjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
-import { Injectable } from "@angular/core";
-import { createPrinter, NewLineKind, SourceFile } from "typescript";
+import typescript, { SourceFile } from "typescript";
 
-@Injectable()
+const {createPrinter, NewLineKind} = typescript;
+
 export class PrintSourceFileOperator implements InjectionFactory {
     constructor() {
         return this.factory() as any;

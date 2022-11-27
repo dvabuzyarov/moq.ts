@@ -3,7 +3,7 @@
   "compilerOptions": {
     "declarationMap": true,
     "outDir": "../../dist/docs",
-    "target": "es2015",
+    "target": "es2020",
     "moduleResolution": "node",
     "module": "commonjs",
     "inlineSources": true,

@@ -1,12 +1,23 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../specs/schematics",
-    "module": "commonjs",
+    "incremental": true,
     "types": [
       "jasmine",
       "node"
+    ],
+    "plugins": [
+      {
+        "transform": "ts-transform-esm-import",
+        "after": true,
+        "afterDeclarations": true,
+        "type": "config",
+
+        "rootDir": "./projects/schematics",
+        "outDir": "../../specs/schematics",
+        "resolvers": [{ "dir": "./projects/schematics", "sourceDir": true }]
+      }
     ]
   },
   "include": [

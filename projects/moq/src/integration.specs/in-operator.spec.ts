@@ -65,7 +65,6 @@ describe("Mock: In operator", () => {
             .prototypeof(TestObject.prototype)
             .object();
 
-        // because nameof<ITestObject>("property") in new TestObject() === false
         expect(nameof<ITestObject>("property") in object).toBe(false);
         expect(nameof<ITestObject>("method") in object).toBe(true);
     });
@@ -85,7 +84,7 @@ describe("Mock: In operator", () => {
             .mimics(new TestObject())
             .object();
 
-        expect(nameof<ITestObject>("property") in object).toBe(false);
+        expect(nameof<ITestObject>("property") in object).toBe(true);
         expect(nameof<ITestObject>("method") in object).toBe(true);
     });
 

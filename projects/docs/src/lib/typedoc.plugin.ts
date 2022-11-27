@@ -1,23 +1,30 @@
-import { Reflection, ReflectionFlag, ReflectionKind } from "typedoc/dist/lib/models/reflections/abstract";
-import { Component, ConverterComponent } from "typedoc/dist/lib/converter/components";
-import { Converter } from "typedoc/dist/lib/converter/converter";
-import { Context } from "typedoc/dist/lib/converter/context";
-import { ContainerReflection } from "typedoc/dist/lib/models/reflections/container";
-import { CommentPlugin } from "typedoc/dist/lib/converter/plugins";
-import { DeclarationReflection } from "typedoc";
+import {
+    ContainerReflection,
+    Context,
+    Converter,
+    DeclarationReflection,
+    Reflection,
+    ReflectionFlag,
+    ReflectionKind,
+    Application
+} from "typedoc";
+
+export function load(app: Application): void {
+    new MoqPlugin(app).initialize();
+}
 
 const moduleName = "moq.ts";
 
-@Component({name: "moq-ts"})
-export class MoqPlugin extends ConverterComponent {
+export class MoqPlugin  {
     private moduleRenames: ContainerReflection[];
 
+    constructor(private readonly app: Application) {
+    }
+
     initialize() {
-        this.listenTo(this.owner, {
-            [Converter.EVENT_BEGIN]: this.onBegin,
-            [Converter.EVENT_CREATE_DECLARATION]: this.onDeclaration,
-            [Converter.EVENT_RESOLVE_BEGIN]: this.onBeginResolve,
-        });
+        this.app.converter.on(Converter.EVENT_BEGIN, this.onBegin);
+        this.app.converter.on(Converter.EVENT_CREATE_DECLARATION, this.onDeclaration);
+        this.app.converter.on(Converter.EVENT_RESOLVE_BEGIN, this.onBeginResolve);
     }
 
     private onBegin(context: Context) {

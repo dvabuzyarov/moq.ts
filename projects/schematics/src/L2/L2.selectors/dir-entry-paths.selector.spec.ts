@@ -1,11 +1,11 @@
-import { createMoqInjector, resolve } from "../../L1.unit-test.components/createMoqInjector";
+import { createInjector, createMoqInjector, resolve } from "../../L1.unit-test.components/createMoqInjector";
 import { DirEntryPathsSelector } from "./dir-entry-paths.selector";
 import { DirEntry } from "@angular-devkit/schematics";
 import { It, Mock } from "moq.ts";
 
 describe("Dir entry paths selector", () => {
     beforeEach(() => {
-        createMoqInjector(DirEntryPathsSelector);
+        createInjector(DirEntryPathsSelector);
     });
 
     it("Should be resolved", () => {

@@ -1,0 +1,14 @@
+{
+  "branches": 86,
+  "lines": 95,
+  "functions": 86,
+  "statements": 95,
+  "all": false,
+  "check-coverage": true,
+  "exclude": [
+    "**/lib/*.spec.js",
+    "**/index.specs.js",
+    "**/tests.components/*"
+  ],
+  "reporter": ["cobertura", "text"]
+}

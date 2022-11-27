@@ -1,4 +1,3 @@
-import { Inject } from "@angular/core";
 import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 import { TypeofInjectionToken } from "../../injector/typeof-injection-token";
 import { TypeOfInjectionFactory } from "../../L0/L0.injection-factory/injection-factory";
@@ -13,22 +12,22 @@ import { Options } from "./options";
 
 export class InternalApiRule {
     constructor(
-        @Inject(HOST)
+        // @Inject(HOST)
         private readonly tree: TypeofInjectionToken<typeof HOST>,
         private readonly privateFilesProvider: InternalFilesProvider,
-        @Inject(Options)
+        // @Inject(Options)
         private readonly options: TypeOfInjectionFactory<Options>,
-        @Inject(From)
+        // @Inject(From)
         private readonly from: TypeOfInjectionFactory<From>,
-        @Inject(Pipe)
+        // @Inject(Pipe)
         private readonly pipe: TypeOfInjectionFactory<Pipe>,
-        @Inject(CreateExportDeclarationOperator)
+        // @Inject(CreateExportDeclarationOperator)
         private readonly createExportDeclarations: TypeOfInjectionFactory<CreateExportDeclarationOperator>,
-        @Inject(AddCommentOperator)
+        // @Inject(AddCommentOperator)
         private readonly addComment: TypeOfInjectionFactory<AddCommentOperator>,
-        @Inject(CreateSourceFileOperator)
+        // @Inject(CreateSourceFileOperator)
         private readonly createSourceFile: TypeOfInjectionFactory<CreateSourceFileOperator>,
-        @Inject(PrintSourceFileOperator)
+        // @Inject(PrintSourceFileOperator)
         private readonly printSourceFile: TypeOfInjectionFactory<PrintSourceFileOperator>) {
     }
 

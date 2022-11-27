@@ -1,4 +1,4 @@
-import { createMoqInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
+import { createInjector, resolve, resolveMock } from "../../L1.unit-test.components/createMoqInjector";
 import { Options } from "./options";
 import { It, Mock } from "moq.ts";
 import { dataMock } from "../../L1.unit-test.components/data-mock";
@@ -12,7 +12,7 @@ import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 
 describe("Project files provider", () => {
     beforeEach(() => {
-        createMoqInjector(ProjectFilesProvider);
+        createInjector(ProjectFilesProvider, [HOST, Options, DirEntryPathsSelector]);
     });
 
     it("Should be resolved", () => {

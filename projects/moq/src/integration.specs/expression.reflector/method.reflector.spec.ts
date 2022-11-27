@@ -1,5 +1,5 @@
 import { EXPRESSION_REFLECTOR } from "../../lib/reflector/expression-reflector";
-import reflectorProviders from "../../lib/reflector";
+import reflectorProviders from "../../lib/reflector/index";
 import { createInjectorFromProviders, resolve2 } from "../../tests.components/resolve.builder";
 import { MethodExpression } from "../../lib/reflector/expressions";
 import { It } from "../../lib/reflector/expression-predicates";
