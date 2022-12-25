@@ -50,7 +50,7 @@
     "@types/node": "18.11.17",
     "@typescript-eslint/eslint-plugin": "5.47.0",
     "@typescript-eslint/parser": "5.47.0",
-    "core-js": "3.26.1",
+    "core-js": "3.27.0",
     "cpx": "1.5.0",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "8.30.0",
