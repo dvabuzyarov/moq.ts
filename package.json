@@ -43,7 +43,7 @@
     "@angular/language-service": "14.2.12",
     "@commitlint/cli": "17.4.3",
     "@commitlint/config-conventional": "17.4.3",
-    "@qiwi/semantic-release-gh-pages-plugin": "5.2.4",
+    "@qiwi/semantic-release-gh-pages-plugin": "5.2.5",
     "@semantic-release/changelog": "6.0.2",
     "@testdozer/ng-cmd-builder": "2.2.0",
     "@types/jasmine": "4.3.1",
