@@ -11,7 +11,7 @@ export class HighOrderRule {
 
     async apply() {
         await this.packagePatcherRule.apply();
-        await this.publicApiPatcherRule.apply();
+        // await this.publicApiPatcherRule.apply();
         return this.deleteFilesRule.apply();
     }
 }
