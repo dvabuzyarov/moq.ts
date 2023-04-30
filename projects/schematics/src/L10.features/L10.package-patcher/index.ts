@@ -13,7 +13,6 @@ import { JoinPath } from "../../L2/L2.wrappers/join-path.service";
 import { CONTEXT } from "../../L0/L0.injection-tokens/context.injection-token";
 import { HOST } from "../../L0/L0.injection-tokens/host.injection-token";
 import { JsonParseService } from "../../L2/L2.wrappers/json-parse.service";
-import { PublicApiPatcherRule } from "./public-api-patcher.rule";
 import { JsonStringifyService } from "../../L2/L2.wrappers/json-stringify.service";
 import { HighOrderRule } from "./high-order.rule";
 import { DeleteFilesRule } from "./delete-files.rule";
@@ -24,6 +23,7 @@ import { FilterOperator } from "../../L2/L2.operators/filter.operator";
 import { DeletePathsOperator } from "../../L2/L2.operators/delete-paths.operator";
 import { DirEntryPathsSelector } from "../../L2/L2.selectors/dir-entry-paths.selector";
 import { Injector } from "../../static.injector/injector";
+import { InternalPackageRule } from "./internal-package.rule";
 
 export default (options: JsonObject & ISchema) => (host: Tree, context: SchematicContext) => {
     const injector = Injector.create({
@@ -46,7 +46,7 @@ export default (options: JsonObject & ISchema) => (host: Tree, context: Schemati
                     JsonStringifyService
                 ]
             },
-            {provide: PublicApiPatcherRule, useClass: PublicApiPatcherRule, deps: [HOST, Options]},
+            {provide: InternalPackageRule, useClass: InternalPackageRule, deps: [HOST, Options]},
             {
                 provide: DeleteFilesRule,
                 useClass: DeleteFilesRule,
@@ -55,7 +55,7 @@ export default (options: JsonObject & ISchema) => (host: Tree, context: Schemati
             {
                 provide: HighOrderRule,
                 useClass: HighOrderRule,
-                deps: [PackagePatcherRule, PublicApiPatcherRule, DeleteFilesRule]
+                deps: [PackagePatcherRule, InternalPackageRule, DeleteFilesRule]
             },
         ]
     });

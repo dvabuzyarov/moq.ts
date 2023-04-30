@@ -37,6 +37,52 @@
                   "options": {
                     "cwd": "./dist/moq"
                   }
+                },
+                {
+                  "command": "tsup",
+                  "args": [
+                    "--entry.moq projects/moq/src/public_api.ts",
+                    "--format cjs",
+                    "--out-dir ./dist/moq/cjs"
+                  ]
+                },
+                {
+                  "command": "tsup projects/moq/src/public.ts",
+                  "args": [
+                    "--dts-only",
+                    "--out-dir ./dist/moq/"
+                  ]
+                },
+                {
+                  "command": "tsup projects/moq/src/internal_api.ts",
+                  "args": [
+                    "--dts-only",
+                    "--out-dir ./dist/moq/internal"
+                  ]
+                },
+                {
+                  "command": "renamer",
+                  "args": [
+                    "--find public.d.ts --replace index.d.ts",
+                    "./dist/moq/*",
+                    "--force"
+                  ]
+                },
+                {
+                  "command": "renamer",
+                  "args": [
+                    "--find internal_api.d.ts --replace index.d.ts *",
+                    "\"./dist/moq/internal/*\"",
+                    "--force"
+                  ]
+                },
+                {
+                  "command": "renamer",
+                  "args": [
+                    "--find moq.js --replace moq.ts.cjs *",
+                    "\"./dist/moq/cjs/*\"",
+                    "--force"
+                  ]
                 }
               ]
             }

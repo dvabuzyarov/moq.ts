@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dvabuzyarov/moq.ts.svg?branch=master)](https://travis-ci.org/dvabuzyarov/moq.ts)
+[![Build Status](https://github.com/dvabuzyarov/moq.ts/actions/workflows/main.yml/badge.svg)](https://github.com/dvabuzyarov/moq.ts/actions/workflows/main.yml)
 [![NPM version:latest](https://img.shields.io/npm/v/moq.ts/latest.svg?style=flat-square)](https://www.npmjs.com/package/moq.ts)
 [![NPM version:next](https://img.shields.io/npm/v/moq.ts/next.svg?style=flat-square)](https://www.npmjs.com/package/moq.ts)
 [![npm downloads](https://img.shields.io/npm/dt/moq.ts.svg?style=flat-square)](https://www.npmjs.com/package/moq.ts)
@@ -12,9 +12,6 @@
 # moq.ts | [Documentation](https://dvabuzyarov.github.io/moq.ts/)
 
 Moq for Typescript. Inspired by c# [Moq library](https://github.com/moq/moq4).
-
-> :warning: **[Starting with the 10 version the package follows new standard of APF.](https://angular.io/guide/angular-package-format)**
-> Which introduced support of ES modules and drops commonjs.
 
 #### Install
 
@@ -380,7 +377,7 @@ See [ResolvedPromiseFactory](https://github.com/dvabuzyarov/moq.ts/blob/master/p
 
 ## Type Discovering
 
-Despite the fact that Mock class is generic type where T parameter is stands for mocked type it works only at design
+Despite the fact that Mock class is generic type where T parameter stands for mocked type it works only at design
 time. At the runtime phase the type is not available and Moq library relays on other ways to discover the type
 information. It is required to implement correct behaviour of mocked object.
 
@@ -844,7 +841,7 @@ it("Returns new object with returns", () => {
 
 ## MoqAPI symbol
 
-In some scenarios it is necessary to get Moq API from mocked object. For this purposes the library provides a predefined
+In some scenarios it is necessary to get Moq API from mocked object. For these purposes the library provides a predefined
 symbol MoqAPI. Mocked objects in their turn expose a symbol property to access to its Moq API.
 
 Since this property makes sense only in context of the moq library and is not specific for mocked types it is not
