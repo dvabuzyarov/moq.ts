@@ -5,13 +5,10 @@
   "license": "Apache-2.0",
   "readme": "README.md",
   "type": "module",
-  "main": "./cjs/moq.ts.js",
+  "main": "cjs/moq.ts.cjs",
   "exports": {
     "." : {
-      "import": "./cjs/moq.ts.js"
-    },
-    "./internal": {
-      "import": "./cjs/moq.ts.js"
+      "require": "./cjs/moq.ts.cjs"
     }
   },
   "author": {

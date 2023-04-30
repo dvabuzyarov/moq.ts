@@ -42,7 +42,6 @@ describe("Options", () => {
     });
 
     it("Returns options", async () => {
-        const publicJs = "public api path";
         const sourceRoot = "source root";
         const projectName = "project name";
         const ngPackagePath = "ng-package.json";
@@ -54,6 +53,8 @@ describe("Options", () => {
         const fesm2020Folder = "dist/moq/fesm2020/";
         const fesm2015Folder = "dist/moq/fesm2015/";
         const internalEsm2020Folder = "dist/moq/esm2020/";
+        const internalLibFolder = "dist/moq/internal/lib/";
+        const libFolder = "dist/moq/lib/";
 
         const project = dataMock<ProjectDefinition>({sourceRoot});
 
@@ -74,8 +75,6 @@ describe("Options", () => {
             .setup(instance => instance.project)
             .returns(projectName);
         resolveMock(JoinPath)
-            .setup(instance => instance(sourceRoot, "public.ts"))
-            .returns(publicJs)
             .setup(instance => instance(sourceRoot, "../", "ng-package.json"))
             .returns(ngPackagePath)
             .setup(instance => instance(sourceRoot, "../", dest))
@@ -89,7 +88,11 @@ describe("Options", () => {
             .setup(instance => instance(moqOutputFolder, "/fesm2015/"))
             .returns(fesm2015Folder)
             .setup(instance => instance(moqOutputFolder, "/esm2020/internal/"))
-            .returns(internalEsm2020Folder);
+            .returns(internalEsm2020Folder)
+            .setup(instance => instance(moqOutputFolder, "/internal/lib/"))
+            .returns(internalLibFolder)
+            .setup(instance => instance(moqOutputFolder, "/lib/"))
+            .returns(libFolder);
         resolveMock(HOST)
             .setup(instance => instance.read(ngPackagePath).toString())
             .returns(ngPackageContent);
@@ -101,13 +104,14 @@ describe("Options", () => {
         const actual = await resolve<Options>();
 
         const expected = {
-            publicJs,
             publicApiTs,
             moqOutputFolder,
             moqPackageJson,
             fesm2020Folder,
             fesm2015Folder,
-            internalEsm2020Folder
+            internalEsm2020Folder,
+            internalLibFolder,
+            libFolder
         } as AsyncReturnType<TypeOfInjectionFactory<Options>>;
         expect(actual).toEqual(expected);
     });

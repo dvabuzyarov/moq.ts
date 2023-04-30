@@ -47,7 +47,7 @@
                   ]
                 },
                 {
-                  "command": "tsup projects/moq/src/public_api.ts",
+                  "command": "tsup projects/moq/src/public.ts",
                   "args": [
                     "--dts-only",
                     "--out-dir ./dist/moq/"
@@ -63,7 +63,7 @@
                 {
                   "command": "renamer",
                   "args": [
-                    "--find public_api.d.ts --replace index.d.ts",
+                    "--find public.d.ts --replace index.d.ts",
                     "./dist/moq/*",
                     "--force"
                   ]
@@ -79,7 +79,7 @@
                 {
                   "command": "renamer",
                   "args": [
-                    "--find moq.js --replace moq.ts.js *",
+                    "--find moq.js --replace moq.ts.cjs *",
                     "\"./dist/moq/cjs/*\"",
                     "--force"
                   ]

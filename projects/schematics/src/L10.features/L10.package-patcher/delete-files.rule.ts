@@ -30,16 +30,28 @@ export class DeleteFilesRule {
     }
 
     async apply() {
-        const {fesm2015Folder, fesm2020Folder, internalEsm2020Folder} = await this.options;
+        const {
+            fesm2015Folder,
+            fesm2020Folder,
+            internalEsm2020Folder,
+            libFolder,
+            internalLibFolder,
+            publicApiTs
+        } = await this.options;
         return this.from(
             [],
             this.pipe(
                 this.merge(
                     this.dirEntryPathSelector(this.tree.getDir(fesm2015Folder)),
-                    this.dirEntryPathSelector(this.tree.getDir(fesm2020Folder))
+                    this.dirEntryPathSelector(this.tree.getDir(fesm2020Folder)),
                 ),
                 this.filter(new RegExp(/moq.ts-internal/, "i")),
-                this.merge([internalEsm2020Folder]),
+                this.merge([
+                    internalEsm2020Folder,
+                    internalLibFolder,
+                    libFolder,
+                    publicApiTs
+                ]),
                 this.deletePaths()
             )
         );
