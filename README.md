@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dvabuzyarov/moq.ts.svg?branch=master)](https://travis-ci.org/dvabuzyarov/moq.ts)
+[![Build Status](https://github.com/dvabuzyarov/moq.ts/actions/workflows/main.yml/badge.svg)](https://github.com/dvabuzyarov/moq.ts/actions/workflows/main.yml)
 [![NPM version:latest](https://img.shields.io/npm/v/moq.ts/latest.svg?style=flat-square)](https://www.npmjs.com/package/moq.ts)
 [![NPM version:next](https://img.shields.io/npm/v/moq.ts/next.svg?style=flat-square)](https://www.npmjs.com/package/moq.ts)
 [![npm downloads](https://img.shields.io/npm/dt/moq.ts.svg?style=flat-square)](https://www.npmjs.com/package/moq.ts)
@@ -12,9 +12,6 @@
 # moq.ts | [Documentation](https://dvabuzyarov.github.io/moq.ts/)
 
 Moq for Typescript. Inspired by c# [Moq library](https://github.com/moq/moq4).
-
-> :warning: **[Starting with the 10 version, the package follows the new standard of APF.](https://angular.io/guide/angular-package-format)**
-> Which introduced support of ES modules and drops commonjs.
 
 #### Install
 
