@@ -14,10 +14,10 @@ export class InternalPackageRule {
     async apply() {
         const {internalPackage} = await this.options;
         const content = {
-            "main": "../cjs/moq.ts.cjs",
-            "typings": "index.d.ts",
-            "sideEffects": false,
-            "name": "moq.ts/internal"
+            main: "../cjs/moq.ts.cjs",
+            typings: "index.d.ts",
+            sideEffects: false,
+            name: "moq.ts/internal"
         };
         this.tree.create(internalPackage, JSON.stringify(content));
         return this.tree;
