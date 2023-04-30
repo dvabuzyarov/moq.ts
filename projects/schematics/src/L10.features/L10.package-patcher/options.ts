@@ -33,6 +33,7 @@ export class Options implements InjectionFactory {
         const fesm2015Folder = this.join(moqOutputFolder, "/fesm2015/");
         const internalEsm2020Folder = this.join(moqOutputFolder, "/esm2020/internal/");
         const internalLibFolder = this.join(moqOutputFolder, "/internal/lib/");
+        const internalPackage = this.join(moqOutputFolder, "/internal/package.json");
         const libFolder = this.join(moqOutputFolder, "/lib/");
         return {
             publicApiTs,
@@ -42,7 +43,8 @@ export class Options implements InjectionFactory {
             fesm2015Folder,
             internalEsm2020Folder,
             internalLibFolder,
-            libFolder
+            libFolder,
+            internalPackage
         };
     }
 }

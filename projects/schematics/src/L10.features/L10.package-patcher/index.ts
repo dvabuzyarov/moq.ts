@@ -23,6 +23,7 @@ import { FilterOperator } from "../../L2/L2.operators/filter.operator";
 import { DeletePathsOperator } from "../../L2/L2.operators/delete-paths.operator";
 import { DirEntryPathsSelector } from "../../L2/L2.selectors/dir-entry-paths.selector";
 import { Injector } from "../../static.injector/injector";
+import { InternalPackageRule } from "./internal-package.rule";
 
 export default (options: JsonObject & ISchema) => (host: Tree, context: SchematicContext) => {
     const injector = Injector.create({
@@ -45,6 +46,7 @@ export default (options: JsonObject & ISchema) => (host: Tree, context: Schemati
                     JsonStringifyService
                 ]
             },
+            {provide: InternalPackageRule, useClass: InternalPackageRule, deps: [HOST, Options]},
             {
                 provide: DeleteFilesRule,
                 useClass: DeleteFilesRule,
@@ -53,7 +55,7 @@ export default (options: JsonObject & ISchema) => (host: Tree, context: Schemati
             {
                 provide: HighOrderRule,
                 useClass: HighOrderRule,
-                deps: [PackagePatcherRule, DeleteFilesRule]
+                deps: [PackagePatcherRule, InternalPackageRule, DeleteFilesRule]
             },
         ]
     });

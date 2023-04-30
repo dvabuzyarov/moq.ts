@@ -54,6 +54,7 @@ describe("Options", () => {
         const fesm2015Folder = "dist/moq/fesm2015/";
         const internalEsm2020Folder = "dist/moq/esm2020/";
         const internalLibFolder = "dist/moq/internal/lib/";
+        const internalPackage = "dist/moq/internal/package.json";
         const libFolder = "dist/moq/lib/";
 
         const project = dataMock<ProjectDefinition>({sourceRoot});
@@ -92,7 +93,9 @@ describe("Options", () => {
             .setup(instance => instance(moqOutputFolder, "/internal/lib/"))
             .returns(internalLibFolder)
             .setup(instance => instance(moqOutputFolder, "/lib/"))
-            .returns(libFolder);
+            .returns(libFolder)
+            .setup(instance => instance(moqOutputFolder, "/internal/package.json"))
+            .returns(internalPackage);
         resolveMock(HOST)
             .setup(instance => instance.read(ngPackagePath).toString())
             .returns(ngPackageContent);
@@ -111,7 +114,8 @@ describe("Options", () => {
             fesm2015Folder,
             internalEsm2020Folder,
             internalLibFolder,
-            libFolder
+            libFolder,
+            internalPackage
         } as AsyncReturnType<TypeOfInjectionFactory<Options>>;
         expect(actual).toEqual(expected);
     });
