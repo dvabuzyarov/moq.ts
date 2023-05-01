@@ -17,7 +17,8 @@ export class InternalPackageRule {
             main: "../cjs/moq.ts.cjs",
             typings: "index.d.ts",
             sideEffects: false,
-            name: "moq.ts/internal"
+            name: "moq.ts/internal",
+            type: "commonjs"
         };
         this.tree.create(internalPackage, JSON.stringify(content));
         return this.tree;
