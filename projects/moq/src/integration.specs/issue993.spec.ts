@@ -15,6 +15,7 @@ describe("#993 How does mimics work? ", () => {
         }
 
         public c() {
+            return undefined;
         }
     }
 
