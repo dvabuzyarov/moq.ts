@@ -61,7 +61,7 @@
     "husky": "8.0.3",
     "jasmine": "4.5.0",
     "jasmine-core": "4.5.0",
-    "moq.ts": "10.0.2",
+    "moq.ts": "10.0.6",
     "ng-auto-moq": "6.2.0",
     "ng-packagr": "14.2.2",
     "rxjs": "7.8.0",
