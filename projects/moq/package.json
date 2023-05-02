@@ -5,7 +5,6 @@
   "license": "Apache-2.0",
   "readme": "README.md",
   "type": "module",
-  "main": "cjs/moq.ts.cjs",
   "exports": {
     "." : {
       "require": "./cjs/moq.ts.cjs"

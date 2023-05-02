@@ -15,7 +15,6 @@ describe("#993 How does mimics work? ", () => {
         }
 
         public c() {
-            console.log("Real c called");
         }
     }
 

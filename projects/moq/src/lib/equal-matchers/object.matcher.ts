@@ -11,8 +11,8 @@ export class ObjectMatcher {
     }
 
     public matched<T extends Record<string, unknown>>(left: T, right: T): boolean {
-        if (left === null && right === null) return true;
         if (left === right) return true;
+        if (left == null || right == null) return false;
         for (const matcher of this.matchers) {
             const matched = matcher.matched(left, right);
             if (matched === undefined) {

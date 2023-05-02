@@ -30,6 +30,26 @@ describe("Object matcher", () => {
         expect(actual).toBe(true);
     });
 
+    it("Returns false when left is null and right is not", () => {
+        const left = null;
+        const right = undefined;
+
+        const provider = resolve2(ObjectMatcher);
+        const actual = provider.matched(left, right);
+
+        expect(actual).toBe(false);
+    });
+
+    it("Returns false when left is not null and right is", () => {
+        const left = undefined;
+        const right = null;
+
+        const provider = resolve2(ObjectMatcher);
+        const actual = provider.matched(left, right);
+
+        expect(actual).toBe(false);
+    });
+
     it("Returns false when all matchers return undefined", () => {
         const left = {};
         const right = {};
