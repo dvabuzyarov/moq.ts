@@ -15,6 +15,17 @@ export class ConstantFormatter {
 
             return `[${description}]`;
         }
+        if (typeof object === 'object' && object?.toString() === '[object Object]') {
+            var description = [];
+
+            for (const key in object) {
+                const value = object[key];
+
+                description.push(`'${key}': ${this.format(value)}`);
+            }
+
+            return `{${description.join(', ')}}`;
+        }
         return `${object}`;
     }
 }

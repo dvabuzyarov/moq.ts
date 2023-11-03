@@ -77,7 +77,7 @@ describe("Constant formatter", () => {
         const matcher = resolve2(ConstantFormatter);
         const actual = matcher.format(value);
 
-        expect(actual).toBe("[object Object]");
+        expect(actual).toBe("{'property': 'value'}");
     });
 
     it("Returns formatted description for array", () => {
