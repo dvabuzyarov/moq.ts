@@ -1,4 +1,4 @@
-import { ExpressionFormatter } from "./expression.formatter";
+import { GuardedExpressionFormatter } from "./guarded-expression.formatter";
 import { createInjector, resolve2, resolveMock } from "../../../../tests.components/resolve.builder";
 import {
     FunctionExpression,
@@ -11,10 +11,10 @@ import { PropertyKeyFormatter } from "../../../formatters/property-key.formatter
 import { MethodExpressionFormatter } from "../../../formatters/method-expression.formatter";
 import { ObjectFormatter } from "../../../object-formatters/object.formatter";
 
-describe("Expression formatter", () => {
+describe("Guarded expression formatter", () => {
 
     beforeEach(() => {
-        createInjector(ExpressionFormatter, [
+        createInjector(GuardedExpressionFormatter, [
             FunctionExpressionFormatter,
             PropertyKeyFormatter,
             MethodExpressionFormatter,
@@ -31,7 +31,7 @@ describe("Expression formatter", () => {
             .setup(instance => instance.format(expression))
             .returns(presentation);
 
-        const formatter = resolve2(ExpressionFormatter);
+        const formatter = resolve2(GuardedExpressionFormatter);
         const actual = formatter.format(expression, name);
 
         expect(actual).toEqual(presentation);
@@ -47,7 +47,7 @@ describe("Expression formatter", () => {
             .setup(instance => instance.format(propertyName))
             .returns(presentation);
 
-        const formatter = resolve2(ExpressionFormatter);
+        const formatter = resolve2(GuardedExpressionFormatter);
         const actual = formatter.format(expression, name);
 
         expect(actual).toEqual(`.${presentation}`);
@@ -62,7 +62,7 @@ describe("Expression formatter", () => {
             .setup(instance => instance.format(expression))
             .returns(presentation);
 
-        const formatter = resolve2(ExpressionFormatter);
+        const formatter = resolve2(GuardedExpressionFormatter);
         const actual = formatter.format(expression, name);
 
         expect(actual).toEqual(`.${presentation}`);
@@ -77,7 +77,7 @@ describe("Expression formatter", () => {
             .setup(instance => instance.format(expression.args))
             .returns(presentation);
 
-        const formatter = resolve2(ExpressionFormatter);
+        const formatter = resolve2(GuardedExpressionFormatter);
         const actual = formatter.format(expression, name);
 
         expect(actual).toEqual(`new ${name}(${presentation})`);

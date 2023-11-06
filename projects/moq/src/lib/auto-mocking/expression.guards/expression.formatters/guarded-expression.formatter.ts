@@ -10,7 +10,7 @@ import { PropertyKeyFormatter } from "../../../formatters/property-key.formatter
 import { MethodExpressionFormatter } from "../../../formatters/method-expression.formatter";
 import { ObjectFormatter } from "../../../object-formatters/object.formatter";
 
-export class ExpressionFormatter {
+export class GuardedExpressionFormatter {
     constructor(
         private readonly functionFormatter: FunctionExpressionFormatter,
         private readonly propertyKeyFormatter: PropertyKeyFormatter,

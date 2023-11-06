@@ -1,7 +1,7 @@
 import { ComplexExpressionErrorFormatter } from "./complex-expression.error-formatter";
 import { MOCK_OPTIONS } from "../../../mock-options/mock-options.injection-token";
 import { NamePrefixProvider } from "../../name-formatters/name-prefix.provider";
-import { ExpressionFormatter } from "./expression.formatter";
+import { GuardedExpressionFormatter } from "./guarded-expression.formatter";
 import { StringErrorStyler } from "./string.error-styler";
 import { createInjector, resolve2, resolveMock } from "../../../../tests.components/resolve.builder";
 import { Expressions } from "../../../reflector/expressions";
@@ -9,7 +9,7 @@ import { Expressions } from "../../../reflector/expressions";
 describe("Complex expression error formatter", () => {
 
     beforeEach(() => {
-        createInjector(ComplexExpressionErrorFormatter, [MOCK_OPTIONS, NamePrefixProvider, ExpressionFormatter, StringErrorStyler]);
+        createInjector(ComplexExpressionErrorFormatter, [MOCK_OPTIONS, NamePrefixProvider, GuardedExpressionFormatter, StringErrorStyler]);
     });
 
     it("Returns styled string representation for expressions", () => {
@@ -28,7 +28,7 @@ describe("Complex expression error formatter", () => {
         resolveMock(NamePrefixProvider)
             .setup(instance => instance.get(name))
             .returns(instanceName);
-        resolveMock(ExpressionFormatter)
+        resolveMock(GuardedExpressionFormatter)
             .setup(instance => instance.format(firstExpression, instanceName))
             .returns(firstRepresentation)
             .setup(instance => instance.format(secondExpression, instanceName))
