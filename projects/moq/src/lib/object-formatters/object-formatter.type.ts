@@ -1,8 +1,7 @@
 /**
- *  A custom matcher should implement this interface and be registered with EqualMatchingInjectorConfig.
- *  The parameters are always not null or undefined, and they are always not equal (!==).
+ *  A custom formatter should implement this interface and be registered with EqualMatchingInjectorConfig.
  *
- *  @return undefined if the matcher is not intended to compare objects of such type, otherwise result of comparision.
+ *  @return undefined if the formatter is not intended to format the object of such type, otherwise returns a string.
  *
  *  ``` typescript
  *  // A custom matcher that matches Moment and Date objects
@@ -37,7 +36,7 @@
  *  expect(actual).toBe(2);
  *  ```
  */
-export interface IObjectMatcher {
+export interface IObjectFormatter {
     /*eslint-disable-next-line @typescript-eslint/ban-types*/
-    matched<T extends object>(left: T, right: T): boolean | undefined;
+    format<T>(instance: T | undefined | null): string | undefined;
 }

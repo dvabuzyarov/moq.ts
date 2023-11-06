@@ -1,15 +1,15 @@
-import { Expressions } from "../../reflector/expressions";
-import { FunctionFormatter } from "../../formatters/function.formatter";
-import { PropertyKeyFormatter } from "../../formatters/property-key.formatter";
-import { MethodFormatter } from "../../formatters/method.formatter";
-import { ConstantFormatter } from "../../formatters/constant.formatter";
-import { NamePrefixProvider } from "./name-prefix.provider";
 import {
-    GetPropertyExpression,
+    Expressions,
     FunctionExpression,
+    GetPropertyExpression,
     MethodExpression,
     NewOperatorExpression
 } from "../../reflector/expressions";
+import { FunctionExpressionFormatter } from "../../formatters/function-expression.formatter";
+import { PropertyKeyFormatter } from "../../formatters/property-key.formatter";
+import { MethodExpressionFormatter } from "../../formatters/method-expression.formatter";
+import { NamePrefixProvider } from "./name-prefix.provider";
+import { ObjectFormatter } from "../../object-formatters/object.formatter";
 
 /**
  * @hidden
@@ -17,10 +17,10 @@ import {
 export class AutoMockNameFormatter {
     constructor(
         private readonly namePrefixProvider: NamePrefixProvider,
-        private readonly methodFormatter: FunctionFormatter,
+        private readonly methodFormatter: FunctionExpressionFormatter,
         private readonly propertyKeyFormatter: PropertyKeyFormatter,
-        private readonly namedMethodFormatter: MethodFormatter,
-        private readonly constantFormatter: ConstantFormatter) {
+        private readonly namedMethodFormatter: MethodExpressionFormatter,
+        private readonly objectFormatter: ObjectFormatter) {
     }
 
     public format<T>(name: string | undefined, expression: Expressions<T>): string {
@@ -35,7 +35,7 @@ export class AutoMockNameFormatter {
             return `${prefix}.${this.namedMethodFormatter.format(expression)}`;
         }
         if (expression instanceof NewOperatorExpression) {
-            return `new ${name}(${this.constantFormatter.format(expression.args)})`;
+            return `new ${name}(${this.objectFormatter.format(expression.args)})`;
         }
 
         return `${name}[${expression}]`;

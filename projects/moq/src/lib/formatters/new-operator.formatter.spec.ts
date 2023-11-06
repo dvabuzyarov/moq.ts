@@ -1,11 +1,11 @@
 import { NewOperatorExpression } from "../reflector/expressions";
-import { ConstantFormatter } from "./constant.formatter";
 import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { NewOperatorFormatter } from "./new-operator.formatter";
+import { ObjectFormatter } from "../object-formatters/object.formatter";
 
 describe("New operator formatter", () => {
     beforeEach(() => {
-        createInjector(NewOperatorFormatter, [ConstantFormatter]);
+        createInjector(NewOperatorFormatter, [ObjectFormatter]);
     });
 
     it("Returns formatted description for method expression", () => {
@@ -13,7 +13,7 @@ describe("New operator formatter", () => {
         const valueDescription = "value description";
         const expression = new NewOperatorExpression(value);
 
-        resolveMock(ConstantFormatter)
+        resolveMock(ObjectFormatter)
             .setup(instance => instance.format(value))
             .returns(valueDescription);
 

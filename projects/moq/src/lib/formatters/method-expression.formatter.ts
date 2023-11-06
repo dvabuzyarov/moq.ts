@@ -1,13 +1,13 @@
 import { MethodExpression } from "../reflector/expressions";
-import { ConstantFormatter } from "./constant.formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
+import { ObjectFormatter } from "../object-formatters/object.formatter";
 
 /**
  * @hidden
  */
-export class MethodFormatter {
+export class MethodExpressionFormatter {
 
-    constructor(private readonly constantFormatter: ConstantFormatter,
+    constructor(private readonly objectFormatter: ObjectFormatter,
                 private readonly propertyKeyFormatter: PropertyKeyFormatter) {
 
     }
@@ -16,7 +16,7 @@ export class MethodFormatter {
         const formatted: string[] = [];
 
         for (const arg of expression.args) {
-            formatted.push(this.constantFormatter.format(arg));
+            formatted.push(this.objectFormatter.format(arg));
         }
 
         const value = formatted.join(", ");

@@ -5,17 +5,17 @@ import {
     MethodExpression,
     NewOperatorExpression
 } from "../../../reflector/expressions";
-import { FunctionFormatter } from "../../../formatters/function.formatter";
+import { FunctionExpressionFormatter } from "../../../formatters/function-expression.formatter";
 import { PropertyKeyFormatter } from "../../../formatters/property-key.formatter";
-import { MethodFormatter } from "../../../formatters/method.formatter";
-import { ConstantFormatter } from "../../../formatters/constant.formatter";
+import { MethodExpressionFormatter } from "../../../formatters/method-expression.formatter";
+import { ObjectFormatter } from "../../../object-formatters/object.formatter";
 
 export class ExpressionFormatter {
     constructor(
-        private readonly functionFormatter: FunctionFormatter,
+        private readonly functionFormatter: FunctionExpressionFormatter,
         private readonly propertyKeyFormatter: PropertyKeyFormatter,
-        private readonly instanceMethodFormatter: MethodFormatter,
-        private readonly constantFormatter: ConstantFormatter) {
+        private readonly instanceMethodFormatter: MethodExpressionFormatter,
+        private readonly objectFormatter: ObjectFormatter) {
     }
 
     public format(expression: Expressions<unknown>, name: string) {
@@ -29,7 +29,7 @@ export class ExpressionFormatter {
             return `.${this.instanceMethodFormatter.format(expression)}`;
         }
         if (expression instanceof NewOperatorExpression) {
-            return `new ${name}(${this.constantFormatter.format(expression.args)})`;
+            return `new ${name}(${this.objectFormatter.format(expression.args)})`;
         }
 
         return `[${expression}]`;

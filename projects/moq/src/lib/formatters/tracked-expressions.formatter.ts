@@ -1,4 +1,4 @@
-import { InteractionFormatter } from "./interaction.formatter";
+import { ExpressionFormatter } from "./expression.formatter";
 import { Expression } from "../reflector/expressions";
 
 /**
@@ -6,7 +6,7 @@ import { Expression } from "../reflector/expressions";
  */
 export class TrackedExpressionsFormatter {
 
-    constructor(private interactionFormatter: InteractionFormatter) {
+    constructor(private readonly interactionFormatter: ExpressionFormatter) {
 
     }
 

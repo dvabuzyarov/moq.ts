@@ -13,6 +13,7 @@ import { StaticProvider } from "../static.injector/interface/provider";
 import mockCoreProviders from "../core/index";
 import autoMockingProviders from "../auto-mocking/index";
 import expressionEqualityComparersProviders from "../expression.equality-comparers/index";
+import objectFormatters from "../object-formatters/index";
 
 /**
  * Provides the default configuration for an angular based injector that would be used internally by {@link Mock} instance.
@@ -37,6 +38,7 @@ export class DefaultInjectorConfig implements IInjectorConfig {
             ...expressionEqualityComparersProviders,
             ...typeExplorersProviders,
             ...mockCoreProviders,
+            ...objectFormatters,
             ...this.providers,
         ];
     }

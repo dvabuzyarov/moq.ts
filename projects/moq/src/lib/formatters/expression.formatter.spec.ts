@@ -1,31 +1,31 @@
-import { InteractionFormatter } from "./interaction.formatter";
+import { ExpressionFormatter } from "./expression.formatter";
 import {
+    FunctionExpression,
     GetPropertyExpression,
     InOperatorExpression,
-    FunctionExpression,
     MethodExpression,
     NewOperatorExpression,
     SetPropertyExpression
 } from "../reflector/expressions";
 import { GetPropertyFormatter } from "./get-property.formatter";
 import { SetPropertyFormatter } from "./set-property.formatter";
-import { MethodFormatter } from "./method.formatter";
-import { FunctionFormatter } from "./function.formatter";
+import { MethodExpressionFormatter } from "./method-expression.formatter";
+import { FunctionExpressionFormatter } from "./function-expression.formatter";
 import { It } from "../reflector/expression-predicates";
-import { ConstantFormatter } from "./constant.formatter";
 import { InOperatorFormatter } from "./in-operator.formatter";
 import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 import { NewOperatorFormatter } from "./new-operator.formatter";
+import { ObjectFormatter } from "../object-formatters/object.formatter";
 
 describe("Expression formatter", () => {
 
     beforeEach(() => {
-        createInjector(InteractionFormatter, [
+        createInjector(ExpressionFormatter, [
             GetPropertyFormatter,
             SetPropertyFormatter,
-            FunctionFormatter,
-            MethodFormatter,
-            ConstantFormatter,
+            FunctionExpressionFormatter,
+            MethodExpressionFormatter,
+            ObjectFormatter,
             InOperatorFormatter,
             NewOperatorFormatter
         ]);
@@ -39,7 +39,7 @@ describe("Expression formatter", () => {
             .setup(instance => instance.format(expression))
             .returns(expected);
 
-        const formatter = resolve2(InteractionFormatter);
+        const formatter = resolve2(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);
@@ -54,7 +54,7 @@ describe("Expression formatter", () => {
             .setup(instance => instance.format(expression))
             .returns(expected);
 
-        const formatter = resolve2(InteractionFormatter);
+        const formatter = resolve2(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);
@@ -68,7 +68,7 @@ describe("Expression formatter", () => {
             .setup(instance => instance.format(expression))
             .returns(expected);
 
-        const formatter = resolve2(InteractionFormatter);
+        const formatter = resolve2(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);
@@ -78,11 +78,11 @@ describe("Expression formatter", () => {
         const expression = new FunctionExpression(["value"]);
         const expected = "method description";
 
-        resolveMock(FunctionFormatter)
+        resolveMock(FunctionExpressionFormatter)
             .setup(instance => instance.format(expression))
             .returns(expected);
 
-        const formatter = resolve2(InteractionFormatter);
+        const formatter = resolve2(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);
@@ -92,11 +92,11 @@ describe("Expression formatter", () => {
         const expression = new MethodExpression("name", ["value"]);
         const expected = "named method description";
 
-        resolveMock(MethodFormatter)
+        resolveMock(MethodExpressionFormatter)
             .setup(instance => instance.format(expression))
             .returns(expected);
 
-        const formatter = resolve2(InteractionFormatter);
+        const formatter = resolve2(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);
@@ -106,11 +106,11 @@ describe("Expression formatter", () => {
         const expression = new It(() => undefined);
         const expected = "It description";
 
-        resolveMock(ConstantFormatter)
+        resolveMock(ObjectFormatter)
             .setup(instance => instance.format(expression))
             .returns(expected);
 
-        const formatter = resolve2(InteractionFormatter);
+        const formatter = resolve2(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);
@@ -124,7 +124,7 @@ describe("Expression formatter", () => {
             .setup(instance => instance.format(expression))
             .returns(expected);
 
-        const formatter = resolve2(InteractionFormatter);
+        const formatter = resolve2(ExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(expected);

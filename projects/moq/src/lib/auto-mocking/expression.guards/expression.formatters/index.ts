@@ -2,11 +2,11 @@ import { ComplexExpressionErrorFormatter } from "./complex-expression.error-form
 import { MOCK_OPTIONS } from "../../../mock-options/mock-options.injection-token";
 import { NamePrefixProvider } from "../../name-formatters/name-prefix.provider";
 import { ExpressionFormatter } from "./expression.formatter";
-import { FunctionFormatter } from "../../../formatters/function.formatter";
+import { FunctionExpressionFormatter } from "../../../formatters/function-expression.formatter";
 import { PropertyKeyFormatter } from "../../../formatters/property-key.formatter";
-import { MethodFormatter } from "../../../formatters/method.formatter";
-import { ConstantFormatter } from "../../../formatters/constant.formatter";
+import { MethodExpressionFormatter } from "../../../formatters/method-expression.formatter";
 import { StringErrorStyler } from "./string.error-styler";
+import { ObjectFormatter } from "../../../object-formatters/object.formatter";
 
 export default [
     {
@@ -20,7 +20,7 @@ export default [
     {
         provide: ExpressionFormatter,
         useClass: ExpressionFormatter,
-        deps: [FunctionFormatter, PropertyKeyFormatter, MethodFormatter, ConstantFormatter]
+        deps: [FunctionExpressionFormatter, PropertyKeyFormatter, MethodExpressionFormatter, ObjectFormatter]
     },
     {provide: StringErrorStyler, useClass: StringErrorStyler, deps: []},
 ];

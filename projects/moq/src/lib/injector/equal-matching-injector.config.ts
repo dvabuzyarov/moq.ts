@@ -17,7 +17,7 @@ import { StaticProvider } from "../static.injector/interface/provider";
  * and introduce deep equal comparison logic as well as an extension point for custom matchers.
  *
  * ```typescript
- *  import { EqualMatchingInjectorConfig, Mock } from "moq.ts";
+ *  import { Mock } from "moq.ts";
  *
  *  const mock = new Mock<(args: number[]) => number>()
  *  .setup(instance => instance([2, 1]))
@@ -109,7 +109,7 @@ import { StaticProvider } from "../static.injector/interface/provider";
  *  ```
  */
 export class EqualMatchingInjectorConfig extends DefaultInjectorConfig {
-    constructor(private matchers: StaticProvider[] = [],
+    constructor(private readonly matchers: StaticProvider[] = [],
                 providers: StaticProvider[] = []) {
         super(providers);
     }

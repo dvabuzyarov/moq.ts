@@ -1,12 +1,12 @@
 import { SetPropertyExpression } from "../reflector/expressions";
 import { SetPropertyFormatter } from "./set-property.formatter";
-import { ConstantFormatter } from "./constant.formatter";
 import { PropertyKeyFormatter } from "./property-key.formatter";
 import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { ObjectFormatter } from "../object-formatters/object.formatter";
 
 describe("Set property formatter", () => {
     beforeEach(() => {
-        createInjector(SetPropertyFormatter, [ConstantFormatter, PropertyKeyFormatter]);
+        createInjector(SetPropertyFormatter, [ObjectFormatter, PropertyKeyFormatter]);
     });
 
     it("Returns formatted description for set property expression", () => {
@@ -16,7 +16,7 @@ describe("Set property formatter", () => {
         const valueDescription = "value description";
         const expression = new SetPropertyExpression(name, value);
 
-        resolveMock(ConstantFormatter)
+        resolveMock(ObjectFormatter)
             .setup(instance => instance.format(value))
             .returns(valueDescription);
         resolveMock(PropertyKeyFormatter)

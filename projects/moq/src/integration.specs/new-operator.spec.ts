@@ -93,7 +93,7 @@ describe("Mock: new operator", () => {
 
         expect(() => mock.verify(instance => new instance(value)))
             .toThrowError(
-                "new constructor(['value']) should be called once, but was called 0 time(s)\n" +
+                "new constructor([value]) should be called once, but was called 0 time(s)\n" +
                 "-------------------------------------\n" +
                 "Tracked calls:\n" +
                 "\n" +

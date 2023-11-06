@@ -1,17 +1,17 @@
 import { NewOperatorExpression } from "../reflector/expressions";
-import { ConstantFormatter } from "./constant.formatter";
+import { ObjectFormatter } from "../object-formatters/object.formatter";
 
 /**
  * @hidden
  */
 export class NewOperatorFormatter {
 
-    constructor(private constantFormatter: ConstantFormatter) {
+    constructor(private objectFormatter: ObjectFormatter) {
 
     }
 
     public format(expression: NewOperatorExpression): string {
-        const value = this.constantFormatter.format(expression.args);
+        const value = this.objectFormatter.format(expression.args);
         return `new constructor(${value})`;
     }
 }

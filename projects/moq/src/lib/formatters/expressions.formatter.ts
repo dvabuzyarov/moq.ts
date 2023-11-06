@@ -1,5 +1,5 @@
 import { Expressions } from "../reflector/expressions";
-import { InteractionFormatter } from "./interaction.formatter";
+import { ExpressionFormatter } from "./expression.formatter";
 import { TypeofInjectionToken } from "../injector/typeof-injection-token";
 import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
 
@@ -8,7 +8,7 @@ import { MOCK_OPTIONS } from "../mock-options/mock-options.injection-token";
  */
 export class ExpressionsFormatter {
 
-    constructor(private readonly interactionFormatter: InteractionFormatter,
+    constructor(private readonly interactionFormatter: ExpressionFormatter,
                 private readonly options: TypeofInjectionToken<typeof MOCK_OPTIONS>) {
 
     }

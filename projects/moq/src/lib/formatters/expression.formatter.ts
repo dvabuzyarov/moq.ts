@@ -1,30 +1,31 @@
 import {
-    GetPropertyExpression,
-    InOperatorExpression,
     Expression,
     FunctionExpression,
-    MethodExpression, NewOperatorExpression,
+    GetPropertyExpression,
+    InOperatorExpression,
+    MethodExpression,
+    NewOperatorExpression,
     SetPropertyExpression
 } from "../reflector/expressions";
 import { It } from "../reflector/expression-predicates";
 import { GetPropertyFormatter } from "./get-property.formatter";
 import { SetPropertyFormatter } from "./set-property.formatter";
-import { FunctionFormatter } from "./function.formatter";
-import { MethodFormatter } from "./method.formatter";
-import { ConstantFormatter } from "./constant.formatter";
+import { FunctionExpressionFormatter } from "./function-expression.formatter";
+import { MethodExpressionFormatter } from "./method-expression.formatter";
 import { InOperatorFormatter } from "./in-operator.formatter";
 import { NewOperatorFormatter } from "./new-operator.formatter";
+import { ObjectFormatter } from "../object-formatters/object.formatter";
 
 /**
  * @hidden
  */
-export class InteractionFormatter {
+export class ExpressionFormatter {
 
     constructor(private readonly getPropertyFormatter: GetPropertyFormatter,
                 private readonly setPropertyFormatter: SetPropertyFormatter,
-                private readonly methodFormatter: FunctionFormatter,
-                private readonly namedMethodFormatter: MethodFormatter,
-                private readonly constantFormatter: ConstantFormatter,
+                private readonly methodFormatter: FunctionExpressionFormatter,
+                private readonly namedMethodFormatter: MethodExpressionFormatter,
+                private readonly objectFormatter: ObjectFormatter,
                 private readonly inOperatorFormatter: InOperatorFormatter,
                 private readonly newOperatorFormatter: NewOperatorFormatter) {
 
@@ -37,7 +38,7 @@ export class InteractionFormatter {
         if (interaction instanceof FunctionExpression) return this.methodFormatter.format(interaction);
         if (interaction instanceof MethodExpression) return this.namedMethodFormatter.format(interaction);
         if (interaction instanceof NewOperatorExpression) return this.newOperatorFormatter.format(interaction);
-        if (interaction instanceof It) return this.constantFormatter.format(interaction);
+        if (interaction instanceof It) return this.objectFormatter.format(interaction);
 
         return undefined;
     }

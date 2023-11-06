@@ -1,11 +1,11 @@
 import { FunctionExpression } from "../reflector/expressions";
-import { ConstantFormatter } from "./constant.formatter";
-import { FunctionFormatter } from "./function.formatter";
+import { FunctionExpressionFormatter } from "./function-expression.formatter";
 import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
+import { ObjectFormatter } from "../object-formatters/object.formatter";
 
-describe("Function formatter", () => {
+describe("Function expression formatter", () => {
     beforeEach(() => {
-        createInjector(FunctionFormatter, [ConstantFormatter]);
+        createInjector(FunctionExpressionFormatter, [ObjectFormatter]);
     });
 
     it("Returns formatted description for method expression", () => {
@@ -13,11 +13,11 @@ describe("Function formatter", () => {
         const valueDescription = "value description";
         const expression = new FunctionExpression(value);
 
-        resolveMock(ConstantFormatter)
+        resolveMock(ObjectFormatter)
             .setup(instance => instance.format(value))
             .returns(valueDescription);
 
-        const formatter = resolve2(FunctionFormatter);
+        const formatter = resolve2(FunctionExpressionFormatter);
         const actual = formatter.format(expression);
 
         expect(actual).toBe(`(${valueDescription})`);

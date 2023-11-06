@@ -6,15 +6,20 @@ import {
     MethodExpression,
     NewOperatorExpression
 } from "../../../reflector/expressions";
-import { FunctionFormatter } from "../../../formatters/function.formatter";
+import { FunctionExpressionFormatter } from "../../../formatters/function-expression.formatter";
 import { PropertyKeyFormatter } from "../../../formatters/property-key.formatter";
-import { MethodFormatter } from "../../../formatters/method.formatter";
-import { ConstantFormatter } from "../../../formatters/constant.formatter";
+import { MethodExpressionFormatter } from "../../../formatters/method-expression.formatter";
+import { ObjectFormatter } from "../../../object-formatters/object.formatter";
 
 describe("Expression formatter", () => {
 
     beforeEach(() => {
-        createInjector(ExpressionFormatter, [FunctionFormatter, PropertyKeyFormatter, MethodFormatter, ConstantFormatter]);
+        createInjector(ExpressionFormatter, [
+            FunctionExpressionFormatter,
+            PropertyKeyFormatter,
+            MethodExpressionFormatter,
+            ObjectFormatter
+        ]);
     });
 
     it("Returns function presentation", () => {
@@ -22,7 +27,7 @@ describe("Expression formatter", () => {
         const expression = new FunctionExpression([]);
         const presentation = "presentation";
 
-        resolveMock(FunctionFormatter)
+        resolveMock(FunctionExpressionFormatter)
             .setup(instance => instance.format(expression))
             .returns(presentation);
 
@@ -53,7 +58,7 @@ describe("Expression formatter", () => {
         const expression = new MethodExpression("property name", []);
         const presentation = "presentation";
 
-        resolveMock(MethodFormatter)
+        resolveMock(MethodExpressionFormatter)
             .setup(instance => instance.format(expression))
             .returns(presentation);
 
@@ -68,7 +73,7 @@ describe("Expression formatter", () => {
         const expression = new NewOperatorExpression([]);
         const presentation = "presentation";
 
-        resolveMock(ConstantFormatter)
+        resolveMock(ObjectFormatter)
             .setup(instance => instance.format(expression.args))
             .returns(presentation);
 

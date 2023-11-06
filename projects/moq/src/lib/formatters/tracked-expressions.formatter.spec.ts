@@ -1,11 +1,11 @@
 import { GetPropertyExpression, MethodExpression } from "../reflector/expressions";
-import { InteractionFormatter } from "./interaction.formatter";
+import { ExpressionFormatter } from "./expression.formatter";
 import { TrackedExpressionsFormatter } from "./tracked-expressions.formatter";
 import { createInjector, resolve2, resolveMock } from "../../tests.components/resolve.builder";
 
 describe("Tracked expressions formatter", () => {
     beforeEach(() => {
-        createInjector(TrackedExpressionsFormatter, [InteractionFormatter]);
+        createInjector(TrackedExpressionsFormatter, [ExpressionFormatter]);
     });
 
     it("Returns formatted description of tracked expressions", () => {
@@ -14,7 +14,7 @@ describe("Tracked expressions formatter", () => {
         const getPropertyExpression = new GetPropertyExpression("name");
         const namedMethodExpression = new MethodExpression("name", []);
 
-        resolveMock(InteractionFormatter)
+        resolveMock(ExpressionFormatter)
             .setup(instance => instance.format(getPropertyExpression))
             .returns(getPropertyExpressionDescription)
             .setup(instance => instance.format(namedMethodExpression))

@@ -10,14 +10,14 @@ import { AutoMockOptionsBuilder } from "./auto-mock-options.builder";
 import { AutoMockNameFormatter } from "./name-formatters/auto-mock-name.formatter";
 import { AutoMockInjectorConfig } from "./auto-mock-injector.config";
 import { NamePrefixProvider } from "./name-formatters/name-prefix.provider";
-import { FunctionFormatter } from "../formatters/function.formatter";
+import { FunctionExpressionFormatter } from "../formatters/function-expression.formatter";
 import { PropertyKeyFormatter } from "../formatters/property-key.formatter";
-import { MethodFormatter } from "../formatters/method.formatter";
-import { ConstantFormatter } from "../formatters/constant.formatter";
+import { MethodExpressionFormatter } from "../formatters/method-expression.formatter";
 import { MOCK_CONSTRUCTOR } from "../injector/mock-constructor.injection-token";
 import { ExpressionEqualityComparer } from "../expression.equality-comparers/expression.equality-comparer";
 import { ComplexExpressionValidator } from "./expression.guards/complex-expression.validator";
 import expressionGuards from "./expression.guards/index";
+import { ObjectFormatter } from "../object-formatters/object.formatter";
 
 /**
  * @hidden
@@ -28,7 +28,7 @@ export default [
     {
         provide: AutoMockNameFormatter,
         useClass: AutoMockNameFormatter,
-        deps: [NamePrefixProvider, FunctionFormatter, PropertyKeyFormatter, MethodFormatter, ConstantFormatter]
+        deps: [NamePrefixProvider, FunctionExpressionFormatter, PropertyKeyFormatter, MethodExpressionFormatter, ObjectFormatter]
     },
     {
         provide: AutoMockOptionsBuilder,

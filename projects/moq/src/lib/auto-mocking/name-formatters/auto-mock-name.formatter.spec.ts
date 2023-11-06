@@ -1,8 +1,7 @@
 import { AutoMockNameFormatter } from "./auto-mock-name.formatter";
-import { FunctionFormatter } from "../../formatters/function.formatter";
+import { FunctionExpressionFormatter } from "../../formatters/function-expression.formatter";
 import { PropertyKeyFormatter } from "../../formatters/property-key.formatter";
-import { MethodFormatter } from "../../formatters/method.formatter";
-import { ConstantFormatter } from "../../formatters/constant.formatter";
+import { MethodExpressionFormatter } from "../../formatters/method-expression.formatter";
 import { NamePrefixProvider } from "./name-prefix.provider";
 import { createInjector, resolve2, resolveMock } from "../../../tests.components/resolve.builder";
 import {
@@ -12,16 +11,17 @@ import {
     NewOperatorExpression,
     SetPropertyExpression
 } from "../../reflector/expressions";
+import { ObjectFormatter } from "../../object-formatters/object.formatter";
 
 describe("Auto mock name formatter", () => {
 
     beforeEach(() => {
         createInjector(AutoMockNameFormatter, [
             NamePrefixProvider,
-            FunctionFormatter,
+            FunctionExpressionFormatter,
             PropertyKeyFormatter,
-            MethodFormatter,
-            ConstantFormatter
+            MethodExpressionFormatter,
+            ObjectFormatter
         ]);
     });
 
@@ -35,7 +35,7 @@ describe("Auto mock name formatter", () => {
             .setup(instance => instance.get(name))
             .returns(prefix);
 
-        resolveMock(FunctionFormatter)
+        resolveMock(FunctionExpressionFormatter)
             .setup(instance => instance.format(expression))
             .returns(postfix);
 
@@ -76,7 +76,7 @@ describe("Auto mock name formatter", () => {
             .setup(instance => instance.get(name))
             .returns(prefix);
 
-        resolveMock(MethodFormatter)
+        resolveMock(MethodExpressionFormatter)
             .setup(instance => instance.format(expression))
             .returns(postfix);
 
@@ -97,7 +97,7 @@ describe("Auto mock name formatter", () => {
             .setup(instance => instance.get(name))
             .returns(prefix);
 
-        resolveMock(ConstantFormatter)
+        resolveMock(ObjectFormatter)
             .setup(instance => instance.format(args))
             .returns(postfix);
 
