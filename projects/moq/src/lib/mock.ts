@@ -46,7 +46,7 @@ export class Mock<T> implements IMock<T> {
     }
 
     /**
-     * The default mock options that would apply to all instantiating Mock objects.
+     * The default mock options that would appnpmly to all instantiating Mock objects.
      * By default it sets {@link IMockOptions.target} as a function, {@link IMockOptions.injectorConfig} as
      * instance of {@link DefaultInjectorConfig} and {@link IMockOptions.name} as undefined.
      * If an options are passed as constructor parameter {@link Mock.constructor} they will override the default options.
