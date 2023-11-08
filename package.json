@@ -62,7 +62,7 @@
     "jasmine": "4.6.0",
     "jasmine-core": "4.6.0",
     "moq.ts": "10.0.8",
-    "ng-auto-moq": "6.2.0",
+    "ng-auto-moq": "6.2.3",
     "ng-packagr": "14.2.2",
     "rxjs": "7.8.1",
     "semantic-release": "19.0.5",
