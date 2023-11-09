@@ -69,7 +69,7 @@
     "serve": "14.2.1",
     "ts-node": "10.9.1",
     "ts-transform-esm-import": "0.9.0",
-    "tslib": "2.5.2",
+    "tslib": "2.6.2",
     "ttypescript": "1.5.15",
     "typedoc": "0.24.7",
     "typescript": "4.8.4",
