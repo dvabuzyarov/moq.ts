@@ -30,8 +30,8 @@ export class PresetBuilder<T, TValue = any> implements IPresetBuilder<T> {
 
     }
 
-    public returnsAsync(value: PromisedType<TValue>): IMock<T> {
-        return this.returnsAsyncPresetFactory(this.target, this.playable, value);
+    public returnsAsync(value: PromisedType<TValue>, ...otherValues: PromisedType<TValue>[]): IMock<T> {
+        return this.returnsAsyncPresetFactory(this.target, this.playable, [value, ...otherValues]);
     }
 
     public throwsAsync<TException>(exception: TException): IMock<T> {
@@ -42,8 +42,8 @@ export class PresetBuilder<T, TValue = any> implements IPresetBuilder<T> {
         return this.mimicsPresetFactory(this.target, this.playable, origin);
     }
 
-    public returns(value: TValue): IMock<T> {
-        return this.returnsPresetFactory(this.target, this.playable, value);
+    public returns(value: TValue, ...otherValues: TValue[]): IMock<T> {
+        return this.returnsPresetFactory(this.target, this.playable, [value, ...otherValues]);
     }
 
     public throws<TException>(exception: TException): IMock<T> {

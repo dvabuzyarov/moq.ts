@@ -33,7 +33,7 @@ describe("Throws async preset factory", () => {
         const builder = resolve2(ThrowsAsyncPresetFactory);
         const actual = builder(target, playable, exception);
 
-        const expected = new ReturnsPreset(playable, target, promise);
+        const expected = new ReturnsPreset(playable, target, [promise]);
         resolveMock(Presets).verify(instance => instance.add(expected));
         expect(actual).toBe(resolve2(Mock));
     });

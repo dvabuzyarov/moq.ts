@@ -16,13 +16,15 @@ describe("Preset player", () => {
     it("Plays returns preset and returns result", () => {
         const expression = {} as Expression;
 
-        const value = "value";
-        const preset = new ReturnsPreset<unknown, string>(undefined, undefined, value);
+        const values = ["first", "second", "last"];
+        const preset = new ReturnsPreset<unknown, string>(undefined, undefined, values);
 
         const player = resolve2(PresetPlayer);
-        const actual = player.play(preset, expression);
 
-        expect(actual).toBe(value);
+        expect(player.play(preset, expression)).toBe(values[0]);
+        expect(player.play(preset, expression)).toBe(values[1]);
+        expect(player.play(preset, expression)).toBe(values[2]);
+        expect(player.play(preset, expression)).toBe(values[2]);
     });
 
     it("Plays callback preset and returns result", () => {

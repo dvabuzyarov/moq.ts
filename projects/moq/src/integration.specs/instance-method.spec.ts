@@ -17,9 +17,20 @@ describe("Instance method", () => {
             .returns(value)
             .object();
 
-        const actual = object.method(1);
+        expect(object.method(1)).toBe(value);
+        expect(object.method(1)).toBe(value);
+    });
 
-        expect(actual).toBe(value);
+    it("Returns values with a simple setup", () => {
+        const object = new Mock<ITestObject>()
+            .setup(instance => instance.method(1))
+            .returns("first", "second", "last")
+            .object();
+
+        expect(object.method(1)).toBe("first");
+        expect(object.method(1)).toBe("second");
+        expect(object.method(1)).toBe("last");
+        expect(object.method(1)).toBe("last");
     });
 
     it("Returns value with a predicated setup", () => {

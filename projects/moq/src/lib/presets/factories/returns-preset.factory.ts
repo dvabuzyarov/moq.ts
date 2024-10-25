@@ -14,8 +14,8 @@ export class ReturnsPresetFactory<T, TValue = any> implements InjectionFactory {
     }
 
     factory() {
-        return (target: Expressions<T>, playable: IPlayable, value: TValue) => {
-            const preset = new ReturnsPreset(playable, target, value);
+        return (target: Expressions<T>, playable: IPlayable, values: TValue[]) => {
+            const preset = new ReturnsPreset(playable, target, values);
             this.presets.add(preset);
             return this.rootMock;
         };

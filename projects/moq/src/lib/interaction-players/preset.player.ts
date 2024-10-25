@@ -19,7 +19,7 @@ export class PresetPlayer {
 
     public play<T>(preset: IPreset<T>, interaction: Expression): any {
         if (preset instanceof ReturnsPreset) {
-            return preset.value;
+            return preset.nextValue();
         }
         if (preset instanceof CallbacksPreset) {
             return this.callbackPresetPlayer.play(preset.callback, interaction);

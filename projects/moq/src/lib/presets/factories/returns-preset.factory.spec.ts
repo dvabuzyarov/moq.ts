@@ -25,9 +25,9 @@ describe("Returns preset factory", () => {
         const playable = PlayTimes.Always();
 
         const builder = resolve2(ReturnsPresetFactory);
-        const actual = builder(target, playable, value);
+        const actual = builder(target, playable, [value]);
 
-        const expected = new ReturnsPreset(playable, target, value);
+        const expected = new ReturnsPreset(playable, target, [value]);
         resolveMock(Presets).verify(instance => instance.add(expected));
         expect(actual).toBe(resolve2(Mock));
     });

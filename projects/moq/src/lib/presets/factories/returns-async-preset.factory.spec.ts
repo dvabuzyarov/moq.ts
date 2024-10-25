@@ -31,9 +31,9 @@ describe("Returns async preset factory", () => {
             .returns(promise);
 
         const builder = resolve2<ReturnsAsyncPresetFactory<any, Promise<string>>>(ReturnsAsyncPresetFactory);
-        const actual = builder(target, playable, value);
+        const actual = builder(target, playable, [value]);
 
-        const expected = new ReturnsPreset(playable, target, promise);
+        const expected = new ReturnsPreset(playable, target, [promise]);
         resolveMock(Presets).verify(instance => instance.add(expected));
         expect(actual).toBe(resolve2(Mock));
     });

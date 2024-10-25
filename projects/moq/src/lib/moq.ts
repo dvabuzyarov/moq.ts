@@ -65,23 +65,28 @@ export interface IPlayable {
  */
 export interface IPresetBuilder<T, TValue = any> {
     /**
-     * Returns the provided value as a result of interaction in case of
+     * Returns the provided values as a result of interaction in case of
      * - get property value
      * - invocation a function
      *
      * Controls write operation in case of
      * - property assignment (true - the assignment is allowed, false - the assignment is not allowed)
      *
-     * @param value The value
+     * When the values are exhausted, the last given value is returned for
+     * subsequent calls.
+     *
+     * @param value The first value to return
+     * @param otherValues Other values to return
      */
-    returns(value: TValue): IMock<T>;
+    returns(value: TValue, ...otherValues: TValue[]): IMock<T>;
 
     /**
-     * Returns the provided value with a resolved Promise as a result of invocation an asynchronous function
+     * Returns the provided values with resolved promises as a result of invocations of an asynchronous function
      *
      * @param value The value
+     * @param otherValues Other values to return
      */
-    returnsAsync(value: PromisedType<TValue>): IMock<T>;
+    returnsAsync(value: PromisedType<TValue>, ...otherValues: PromisedType<TValue>[]): IMock<T>;
 
     /**
      * Throws the provided exception.

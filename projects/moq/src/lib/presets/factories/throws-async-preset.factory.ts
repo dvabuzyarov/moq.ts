@@ -17,7 +17,7 @@ export class ThrowsAsyncPresetFactory<T, TValue = any> implements InjectionFacto
 
     factory() {
         return <TException>(target: Expressions<T>, playable: IPlayable, exception: TException) => {
-            const preset = new ReturnsPreset(playable, target, this.rejectedPromise(exception));
+            const preset = new ReturnsPreset(playable, target, [this.rejectedPromise(exception)]);
             this.presets.add(preset);
             return this.rootMock;
         };

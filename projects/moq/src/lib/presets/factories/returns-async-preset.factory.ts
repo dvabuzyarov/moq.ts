@@ -16,8 +16,8 @@ export class ReturnsAsyncPresetFactory<T, TValue = any> implements InjectionFact
     }
 
     factory() {
-        return (target: Expressions<T>, playable: IPlayable, value: PromisedType<TValue>) => {
-            const preset = new ReturnsPreset(playable, target, this.resolvedPromise(value));
+        return (target: Expressions<T>, playable: IPlayable, values: PromisedType<TValue>[]) => {
+            const preset = new ReturnsPreset(playable, target, values.map(v => this.resolvedPromise(v)));
             this.presets.add(preset);
             return this.rootMock;
         };

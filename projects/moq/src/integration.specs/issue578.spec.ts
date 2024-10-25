@@ -31,6 +31,22 @@ describe("#578 support async functions", () => {
         expect(actual).toBe(2);
     });
 
+    it("returns async for multiple values", async () => {
+        async function fn(): Promise<string> {
+            return "";
+        }
+
+        const mock = new Mock<typeof fn>()
+            .setup(async instance => instance())
+            .returnsAsync("first", "second", "last")
+            .object();
+
+        expect(await mock()).toBe("first");
+        expect(await mock()).toBe("second");
+        expect(await mock()).toBe("last");
+        expect(await mock()).toBe("last");
+    });
+
     it("throws async", async () => {
         async function fn() {
             return 1;

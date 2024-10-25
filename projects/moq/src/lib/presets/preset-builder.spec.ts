@@ -44,7 +44,7 @@ describe("Preset builder", () => {
         const root = {} as IMock<any>;
 
         resolveMock(ReturnsPresetFactory)
-            .setup(instance => instance(resolve2(Target), PlayTimes.Always(), value))
+            .setup(instance => instance(resolve2(Target), PlayTimes.Always(), [value]))
             .returns(root);
 
         const builder = resolve2(PresetBuilder);
@@ -86,7 +86,7 @@ describe("Preset builder", () => {
         const root = {} as IMock<any>;
 
         resolveMock<ReturnsAsyncPresetFactory<any, Promise<string>>>(ReturnsAsyncPresetFactory)
-            .setup(instance => instance(resolve2(Target), PlayTimes.Always(), value))
+            .setup(instance => instance(resolve2(Target), PlayTimes.Always(), [value]))
             .returns(root);
 
         const builder = resolve2<PresetBuilder<any, Promise<string>>>(PresetBuilder);
@@ -122,12 +122,12 @@ describe("Preset builder", () => {
         builder.throwsAsync(undefined);
 
         const target = resolve2(Target);
-        resolveMock(ReturnsPresetFactory).verify(instance => instance(target, playable, undefined));
+        resolveMock(ReturnsPresetFactory).verify(instance => instance(target, playable, [undefined]));
         resolveMock(ThrowsPresetFactory).verify(instance => instance(target, playable, undefined));
         resolveMock(MimicsPresetFactory).verify(instance => instance(target, playable, undefined));
         resolveMock(CallbackPresetFactory).verify(instance => instance(target, playable, undefined));
         resolveMock<ReturnsAsyncPresetFactory<any>>(ReturnsAsyncPresetFactory)
-            .verify(instance => instance(target, playable, undefined));
+            .verify(instance => instance(target, playable, [undefined]));
         resolveMock(ThrowsAsyncPresetFactory).verify(instance => instance(target, playable, undefined));
         expect(actual).toBe(builder);
     });
